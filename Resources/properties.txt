@@ -1,0 +1,3 @@
+debug_mode=false
+skip_splash_screen=false
+take_over_ai=False

@@ -1,0 +1,82 @@
+"assassin_quickstep"
+{
+    "AbilityBehavior"       "UNIT_TARGET | POINT_TARGET |  NEEDS_CLEAR_TERRAIN | FAKE_ACTION | DOESNT_CONSUME_MOVE"
+    "AbilityAOETeamFilter   "TEAM_ALL"
+    "AbilityCastRange"      "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange"   "stat(%CASTER, #rangedAttackMinRange)"
+    "AbilityCooldown"       "2"
+    "AbilityAPCost"         "1"
+    "AnimationID"           "SpecialAttack"
+    "CastFXId"              "ShadowStrikeCastFXMega"
+    "Icon"                  "NokAttack"
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "duration"          "2"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+
+        "SetToContext"
+        {
+            "Context"           "currentContext()"
+            "Key"               "#sourcePosition"
+            "Value"             "unitPosition(%SOURCE)"
+            "Type"              "FIELD_OBJECT"
+        }
+
+        "SetToContext"
+        {
+            "Context"           "currentContext()"
+            "Key"               "#targetPosition"
+            "Value"             "%TARGET"
+            "Type"              "FIELD_OBJECT"
+        }
+
+        "StartLogicTick"
+        {
+            "Time"              "0.5"
+            "TickType"          "PriorityCenter"
+            "Position"          "%targetPosition"
+        }
+
+        "MoveUnit"
+        {
+            "Target"            %SOURCE"
+            "Position"          "newPoint(1000, 1000, 0)"
+        }
+
+        "AttachEffect"
+        {
+            "EffectName"        "ShadowStrikeCastFXMega"
+            "Target"            "%sourcePosition"
+        }
+
+        "Delay"
+        {
+            "Time" "0.1"
+            "Actions"
+            {
+                "MoveUnit"
+                {
+                    "Target"            "%SOURCE"
+                    "Position"          "%targetPosition"
+                }
+
+                "AttachEffect"
+                {
+                    "EffectName"        "ShadowStrikeCastFXMega"
+                    "Target"            "%targetPosition"
+                }
+
+            }
+        }
+    }
+
+}

@@ -1,0 +1,96 @@
+"high_enchantress_spore_shower"
+{
+    "AbilityBehavior"           "MELEE"
+    "AbilityTeamFilter"         "TEAM_ENEMY"
+    "AbilityCastRange"          "stat(%CASTER, #meleeRange)"
+    "AbilityCooldown"           "2"
+    "AbilityAPCost"             "stat(%CASTER, #attackCostAP)"
+    "AnimationID"               "SpellCastA"
+    "Icon"                      "SporeShower"
+    "CastFXId"                  "EnchantressSporeShowerCastFXMega"
+
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_EXPRESSION"
+            "damage"                    "stat(%CASTER, #attackDamage)"
+        }
+
+        "02"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "poisonDuration"            "2"
+        }
+
+        "03"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "sleepDuration"             "1"
+        }
+        "20"
+        {
+            "var_type" "FIELD_STRING"
+            "iconDamageType"  "damageArmor"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "Hit"
+        {
+            "Target"                "%TARGET"
+            "EffectName"            "EnchantressSporeShowerHitFXMega" 
+            "Tags"                  "stringList(#MELEE, #TARGETED)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"              "DAMAGE_ARMOR"
+                    "Damage"            "expr(%damage)"
+                }
+            }
+
+            "Actions"    
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "modifier_new_poison"
+                    "Target"            "%TARGET"
+                    "Duration"          "%poisonDuration"
+                    "Refresh"           "1"
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"      "modifier_asleep"
+                    "Target"            "%TARGET"
+                    "Duration"          "%sleepDuration"
+                    "Refresh"           "1"
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight"            "2.5"
+            "Considerations"
+            {
+
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve"             "Linear|-0.1|1|1|0"
+                    "Consideration"     "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange"      "10"  
+                    }
+                }
+            }
+        }
+    }
+}

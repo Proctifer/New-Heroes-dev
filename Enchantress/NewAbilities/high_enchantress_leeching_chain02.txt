@@ -1,0 +1,268 @@
+"high_enchantress_leeching_chain02"
+{
+    "AbilityBehavior"           "UNIT_TARGET"
+    "AbilityTeamFilter"         "TEAM_ENEMY"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange"       "stat(%CASTER, #rangedAttackMinRange)" 
+    "AbilityCooldown"           "2"
+    "AbilityAPCost"             "1"
+    "AnimationID"               "SpellCastB"
+    "CastFXId"                  "HighEnchantressParasiteBlastCastFXMega"
+    "Icon"                      "LeechingChain"
+   
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "damage"            "stat(%CASTER, #attackDamage)-1"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "drainedDamage"     "1"
+        }
+
+        "20"
+        {
+            "var_type" "FIELD_STRING"
+            "iconDamageType"  "damagePhysical"
+        }
+
+        "03"
+        {
+            "var_type"                  "FIELD_FLOAT"        
+            "ricochetNextTargetRange"   "1"
+        }
+
+        "05"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "maxTargets"        "3"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "SetStat"
+        {
+            "Target"        "%SOURCE"
+            "Stat"          "#numberOfTargetsDrained"
+            "Value"         "0"
+        }
+
+        "CreateObjectList"
+        {
+            "Name"              "#hitUnits"
+        }
+
+        "TrackingProjectile"
+        {
+            "Target"            "%TARGET"
+            "SourcePos"         "unitPosition(%SOURCE, #CastPoint)"
+            "TargetPos"         "unitPosition(%TARGET, #Chest)"
+            "Model"             "EnchantressParasiteBlastProjectile"
+
+            "Params" 
+            {
+                "damage" 
+                { 
+                    "type"      "FIELD_FLOAT"
+                    "value"     "expr(%damage)"
+                }
+            }
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {   
+        "Hit"
+        {
+            "Target"            "%TARGET"
+            "Tags"              "stringList(#MAGICAL)"
+            "EffectName"        "EnchantressParasiteBlastHitFXMega" 
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_PHYSICAL"
+                    "Damage"        "%damage"
+                }
+                
+            }
+
+            "Actions"
+            {
+                "Conditional" 
+                {
+                    "Condition" "hitConnected(%HIT) && hitEffectiveDamage(%HIT) > 0 && not(isOnState(%TARGET, #DEAD))"
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "enchantress_drained_modifier" 
+                            "Target"            "%TARGET"
+                            "Params"
+                            {
+                                "drainSource"
+                                {
+                                    "type"      "FIELD_OBJECT"
+                                    "value"     "%HITSOURCE"
+                                }
+                            }
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "enchantress_drained_used_modifier" 
+                            "Target"            "%HITSOURCE"
+                            "Refresh"           "1"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "high_enchantress_multiple_drained_manager_modifier" 
+                            "Target"            "%HITSOURCE"
+                        }
+                    }
+                }
+            }
+        }
+
+        "AddObjectToList" 
+        {
+            "List"                      "%hitUnits"
+            "Value"                     "%TARGET"
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"                "%TARGET"
+                "Radius"                "%ricochetNextTargetRange"
+                "Teams"                 "TEAM_ENEMY"
+                "ExcludedUnits"         "%hitUnits"
+                "MaxTargets"            "1"
+            }
+
+            "IteratorName"              "#newTarget"
+        
+            "Actions"    
+            {
+                "Conditional"
+                {
+                    "Condition"         "listCount(%hitUnits) < %maxTargets"
+
+                    "Actions" 
+                    {
+                        "TrackingProjectile"
+                        {
+                            "Target"                "%newTarget"
+                            "SourcePos"             "unitPosition(%TARGET, #Chest)"
+                            "TargetPos"             "unitPosition(%newTarget, #Chest)"
+                            "Model"                 "EnchantressParasiteBlastProjectile"
+
+                            "Params" 
+                            {
+                                "damage" 
+                                { 
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "%damage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "3"
+            "Considerations"
+            {
+
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "expr(%AbilityCastRange)"  
+                    }
+                }
+
+                "Ignores targets already drained"
+                {
+                    "Curve"                 "Linear|-1|1|1|0"
+                    "Consideration"         "TargetHasModifier"
+                    "Params"
+                    {
+                        "ModifierName"      "enchantress_drained_modifier"  
+                    }
+                }
+
+                "Only can drain one target at the same time"
+                {
+                    "Curve"                 "Linear|-1|1|1|0"
+                    "Consideration"         "TargetHasModifier"
+                    "Params"
+                    {
+                        "ModifierName"      "enchantress_drained_used_modifier"  
+                        "Owner"             "1"
+                    }
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "high_enchantress_multiple_drained_manager_modifier"
+        {
+            "OnAdded"
+            {
+                "SetStat"
+                {
+                    "Target"        "%TARGET"
+                    "Stat"          "#numberOfTargetsDrained"
+                    "Value"         "stat(%TARGET, #numberOfTargetsDrained) + 1"
+                }
+            }
+
+            "OnRemoved"
+            {
+                "Conditional"
+                {
+                    "Condition"         "safeEquals(stat(%TARGET, #numberOfTargetsDrained), 1) || safeEquals(stat(%TARGET, #numberOfTargetsDrained), 0)"
+
+                    "Actions" 
+                    {   
+                        "RemoveModifier"
+                        {
+                            "ModifierName"      "enchantress_drained_used_modifier"
+                            "Target"            "%TARGET"
+                        }
+                    }
+
+                    "ElseActions"
+                    {
+                        "SetStat"
+                        {
+                            "Target"        "%TARGET"
+                            "Stat"          "#numberOfTargetsDrained"
+                            "Value"         "stat(%TARGET, #numberOfTargetsDrained) - 1"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

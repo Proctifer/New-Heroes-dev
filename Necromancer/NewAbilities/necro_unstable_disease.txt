@@ -1,0 +1,178 @@
+"necro_unstable_disease"
+{
+    "AbilityBehavior"                   "UNIT_TARGET"
+    "AbilityTeamFilter"                 "TEAM_ENEMY"
+    "AbilityCastRange"                  "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange"               "stat(%CASTER, #rangedAttackMinRange)" 
+    "AbilityCooldown"                   "3"
+    "AbilityAPCost"                     "1"
+    "AnimationID"                       "Attack"
+    "CastFXId"                          "PoisonShotCastFXMega"
+    "Icon"                              "HunterMark"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_EXPRESSION"
+            "RangedDmg"                 "stat(%CASTER, #attackDamage)+1"
+        }
+
+        "02"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "epicRadius"                 "1"
+        }
+        "03"
+        {
+            "var_type"                  "FIELD_EXPRESSION"
+            "epicDamage"                 "stat(%CASTER, #attackDamage)+1"
+        }
+
+        "04"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "poisonDuration"                 "2"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "TrackingProjectile"
+        {
+            "Target"                    "%TARGET"
+            "SourcePos"                 "unitPosition(%TARGET, #Base)"
+            "TargetPos"                 "unitPosition(%TARGET, #Base)"
+            "Model"                     "EmptyProjectile"
+
+            "Params" 
+            {
+                "damage" 
+                { 
+                    "type"              "FIELD_FLOAT"
+                    "value"             "expr(%RangedDmg)"
+                }
+            }
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {
+        "AttachEffect"
+        {
+            "EffectName"    "MatriarchMotherlodeHitFXMega"
+            "Target"        "unitPosition(%TARGET)"
+        }
+
+        "Hit"
+        {
+            "Target"                    "%TARGET"
+            "EffectName"                "AcidFloorExplosionFXMega" 
+            "Tags"                      "stringList(#PROJECTILE, #TARGETED, #MAGICAL)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"              "DAMAGE_MAGICAL"
+                    "Damage"            "%damage"
+                }
+            }
+
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition"         "isOnState(%TARGET, #DEAD)"
+                    "Actions"
+                    {
+                        "MarkHitLegendary"
+                        {
+                        }
+
+                        "SetToContext"
+                        {
+                            "Context"       "currentContext()"
+                            "Key"           "#explodeDelay"
+                            "Value"         "randomBetween(1,1)"
+                            "Type"          "FIELD_FLOAT"
+                        }
+
+                        "StartLogicTick"
+                        {
+                            "Time"          "%explodeDelay"
+                            "TickType"      "FX"
+                            "Position"      "unitPosition(%SOURCE)"
+                        }
+
+                        "Delay"
+                        {
+                            "Time"          "%explodeDelay"
+                            "Actions"
+                            {
+                                "AttachEffect"
+                                {
+                                    "EffectName"    "AcidFloorExplosionFXMega"
+                                    "Target"        "unitPosition(%TARGET, #Chest)"
+                                }
+
+                                "ActOnTargets"
+                                {
+                                    "Target"
+                                    {
+                                        "Center"        "unitPosition(%TARGET)"
+                                        "Radius"        "%epicRadius"
+                                        "Teams"         "TEAM_ENEMY"
+                                    }
+
+                                    "IteratorName"      "#newTarget"
+                                
+                                    "Actions"    
+                                    {
+                                        "Hit"
+                                        {
+                                            "Target"        "%newTarget"
+                                            "EffectName"    "RicochetHitFXMega" 
+                                            "Tags"          "stringList(#ENVIRONMENTAL, #AOE)"
+
+                                            "InitActions"
+                                            {
+                                                "AddDamage"
+                                                {
+                                                    "Type"        "DAMAGE_MAGICAL"
+                                                    "Damage"      "expr(%epicDamage)"
+                                                }
+                                            }
+
+                                            "Actions"
+                                            {
+                                               
+                                               "ApplyModifier"
+                                                {
+                                                    "ModifierName"      "modifier_new_poison"
+                                                    "Target"            "%HITTARGET"
+                                                    "Duration"          "%poisonDuration"
+                                                    "Refresh"           "1"
+                                                }
+                                           }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    "ElseActions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "modifier_new_poison"
+                            "Target"            "%HITTARGET"
+                            "Duration"          "%poisonDuration"
+                            "Refresh"           "1"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

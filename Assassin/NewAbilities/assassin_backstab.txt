@@ -1,0 +1,128 @@
+"assassin_backstab"
+{
+    "AbilityBehavior"           "UNIT_TARGET"
+    "AbilityTeamFilter"         "TEAM_ENEMY"
+    
+    "AbilityCastRange"          "20"
+    "AbilityCooldown"           "4"
+    "AbilityAPCost"             "2"
+    "AnimationID"               "Attack"
+    "CastFXId"                  "ShadowStrikeCastFXMega"
+    "Icon"                      "OpportunityStrike"
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"              "FIELD_EXPRESSION"
+            "damage"                "stat(%CASTER, #attackDamage)"
+        }
+        "02"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "dodgeChance"      "70"
+        }
+        "03"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "duration"      "1"
+        }
+    }
+
+    
+
+    "OnAbilityAction"
+    {
+        "SetToContext"
+        {
+            "Context" "currentContext()"
+            "Key" "#targetPosition"
+            "Value" "hexPosition(hexNeighbour(unitHex(%TARGET), unitHex(%TARGET), 3))"
+            "Type" "FIELD_OBJECT"
+        }
+
+        "AttachEffect"
+        {
+            "EffectName"    "ShadowStrikeTeleportFXMega"
+            "Target"        "%SOURCE"
+        }
+
+        "MoveUnit"
+        {
+            "Target"        "%SOURCE"
+            "Position"      "%targetPosition"
+        }
+
+        "ApplyModifier"
+        {
+            "ModifierName"      "assassin_backstab_detect_modifier"
+            "Target"            "%SOURCE"
+            "Duration"          "0"
+        }
+
+        "QueueAttackUnit"
+        {
+            "Target"                "%SOURCE"
+            "AttackTarget"          "%TARGET"
+        }
+
+        "RemoveModifier"
+        {
+            "ModifierName"      "assassin_backstab_detect_modifier"
+            "Target"            "%SOURCE"
+        }
+		
+		"SetStat"
+        {
+            "Target" "%SOURCE"
+            "Stat" "#actionsAvailable"
+            "Value" "stat(%SOURCE, #actionsAvailable) + 1"
+        }
+		
+    }        
+            
+    "Modifiers"
+    {
+	
+        "assassin_backstab_detect_modifier"
+        {
+            "OnUnitDiedGlobal"
+            {
+                "Conditional" 
+                {
+                    "Condition" "equal(%INSTIGATOR, %TARGET) && matchesGroup(unitGroup(%DEAD), @UnitGroup(BadSide)) && not(isOnState(%DEAD, #NO_SKULL)) && not(isOnState(%DEAD, #IS_CINEMATIC))"
+                    "Actions"
+                    {
+                       "ApplyModifier"
+                        {
+                            "ModifierName"      "assassin_dodge_increase_modifier"
+                            "Target"            "%TARGET"
+                            "Duration"          "%duration"
+                            "Refresh"           "1"
+                        }
+
+                       "HitLegendaryTriggered"
+						{
+							"Unit"              "%SOURCE"
+						}
+						
+                    }
+					
+                }
+            }
+        }
+        "assassin_dodge_increase_modifier"
+        {
+            "Tags"              "shield"
+            "EffectName"        "AsraSpiderStanceStatusFXMega"
+            "Icon"              "SpiderStance"
+            "IconPriority"      "50"
+
+            "PropertiesAdd"
+            {
+                "evasion"       "(%dodgeChance)/100"
+            }
+        }
+    }
+}

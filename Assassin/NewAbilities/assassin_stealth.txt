@@ -1,0 +1,163 @@
+"assassin_stealth"
+{
+    "AbilityBehavior"       "UNIT_TARGET | POSITIVE_EFFECT"
+    "AbilityTeamFilter"     "TEAM_FRIENDLY"
+
+    "AnimationID"           "SpellCastB"
+    "CastFXId"              "ShadowStrikeCastFXMega"
+    "Icon"                  "AjaxsBlessing"
+
+    "AbilityCastRange"      "0"
+    "AbilityCooldown"       "4"
+    "AbilityAPCost"         "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      	"FIELD_FLOAT"
+            "duration"      	"2"
+		}
+
+		"02"
+		{
+			"var_type"      	"FIELD_FLOAT"
+            "extraDamage"   	"3"
+        }
+		
+		"03"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"extraExtraDamage"	"4"
+		}
+    }
+
+
+    "OnAbilityAction"
+    {
+	
+		"Conditional"
+        {
+            "Condition" "hasModifier(%TARGET, #athletics_endturn_trait_modifier_active)"
+            
+            "Actions" 
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "assassin_stealth_epic_modifier"
+                    "Target"            "%TARGET"
+                    "Duration"          "%duration"
+                    "Refresh"           "1"
+                }
+
+				"ApplyModifier"
+                {
+                    "ModifierName"      "assassin_stealth_modifier"
+                    "Target"            "%TARGET"
+                    "Duration"          "%duration"
+                    "Refresh"           "1"
+                }
+
+				"RemoveModifier"
+				{
+					"ModifierName"		"athletics_endturn_trait_modifier_active"
+					"Target"			"%TARGET"
+				}
+
+                "HitLegendaryTriggered"
+                {
+                    "Unit"              "%TARGET"
+                }
+            }
+
+            "ElseActions"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "assassin_stealth_modifier"
+                    "Target"            "%TARGET"
+                    "Duration"          "%duration"
+                    "Refresh"           "1"
+                }
+            }
+        }
+		
+		"Conditional"
+		{
+			"Condition" "hasModifier(%TARGET, #assassin_counterattack_epic_modifier)"
+			
+			"Actions"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"      "assassin_stealth_epic_epic_modifier"
+                    "Target"            "%TARGET"
+                    "Duration"          "%duration"
+                    "Refresh"           "1"
+				}
+				
+				"RemoveModifier"
+				{
+					"ModifierName"		"assassin_counterattack_epic_modifier"
+					"Target"			"%TARGET"
+				}
+			
+				"HitLegendaryTriggered"
+                {
+                    "Unit"              "%TARGET"
+                }
+			}
+		}
+    }
+
+    "Modifiers"
+    {
+        "assassin_stealth_modifier"
+        {
+            "Tags"              "shield"
+            "Icon"              "ShieldOfShadows"
+            "IconPriority"      "50"
+            
+            "States"
+            {
+                "NON_TARGETABLE"            "1"
+                "INVISIBLE"                 "1"
+                "CANT_BE_POISONED"          "1"
+                "CANT_BE_BURNT"             "1"
+                "CANT_BE_BLED"              "1"
+                "CANT_BE_STUNNED"           "1"
+                "CANT_BE_ROOTED"            "1"
+                "CANT_BE_ASLEPT"            "1"
+                "CANT_BE_FROZEN"            "1"
+            }
+        }
+		
+		"assassin_stealth_epic_modifier"
+		{
+            "Tags"              "shield"
+            "EffectName"        "AsraSpiderStanceStatusFXMega"
+            "Icon"              "Enraged01"
+            "IconPriority"      "50"
+			
+			"PropertiesAdd"
+            {
+                "extraDamage"       "%extraDamage"
+            }
+            
+        }
+		
+		"assassin_stealth_epic_epic_modifier"
+		{
+            "Tags"              "shield"
+            "EffectName"        "AsraSpiderStanceStatusFXMega"
+            "Icon"              "Enraged01"
+            "IconPriority"      "50"
+			
+			"PropertiesAdd"
+            {
+                "extraDamage"       "%extraExtraDamage"
+            }
+            
+        }
+    }
+}

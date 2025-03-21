@@ -1,0 +1,107 @@
+"MinionAssassin"
+{
+	"UniqueId" "Assassin"
+	"Model" "BanditHighwayMan"
+	"MetaExo" "ExoSkeletonHumanSylvanElf_MetaDataAsset"
+	"Name" "MINION_ASSASSIN"
+	"InheritsFrom" "Hero"
+	"cinematicTags" "Heroe|Minion|Female|ct_minion|ct_athletics|ct_social|ct_perception|UPGRADES_athletic"
+	"nextLevelArchetype" "MinionAssassinLvl2"
+	"AttackType" "PHYSICAL"
+	"Icon" "Asst_Banner_Ranger"
+	"Background" "hero_roster_legend_bg_forest"
+	"UnitOnMap" "Asst_Party_SylvanElf"
+	"PortraitBackgroundColor" "cd7332"
+
+	"stats"
+	{
+		"level" "1"
+		"health_max" "4"
+		"armor_max" "0"
+		"armor_regen_per_turn" "0"
+		"baseDamage" "5"
+		"rangedAttackRange" "2"
+		"rangedAttackMinRange" "1"
+		"evasion" "0.4"
+		"visualMoveSpeed" "3"
+		"visualRunSpeed" "3"
+		"walkSpeed" "3"
+	}
+
+	"skills"
+	{
+		"100" "agility_trait"
+		"101" "dodge_trait"
+		"102" "athletics_endturn_trait"
+	}
+
+	"skillProgression"
+	{
+		"1"
+		{
+			"1" "assassin_stealth"
+		}
+
+		"2"
+		{
+			"1" "assassin_counterattack"
+			"2" "assassin_dagger"
+		}
+
+		"3"
+		{
+			"1" "assassin_backstab"
+			"2" "assassin_quickstep"
+		}
+	}
+
+	"defaultSkill" "assassin_lethal_strike"
+
+	"soundConfig"
+	{
+		"assetId" "DynamicSoundGroupGeraldSounds"
+		"sounds"
+		{
+			"receiveDamage" "krl_sfx_combatGeneric_humanFemaleHit"
+			"receiveArmorDamage" "krl_sfx_combatGeneric_armorHit"
+			"death" "krl_sfx_combatGeneric_humanFemaleDeath"
+			"useSkill" "krl_va_combatGerald_action"
+			"startTurn" "krl_va_combatGerald_turnStart"
+			"promote" "krl_va_combatGerald_promote"
+			"selectHero" "krl_va_combatGerald_select"
+		}
+	}
+}
+
+"MinionAssassinLvl2"
+{
+	"InheritsFrom" "MinionAssassin"
+	"nextLevelArchetype" "MinionAssassinLvl3"
+
+	"stats"
+	{
+		"level" "2"
+		"health_max" "5"
+		"armor_max" "0"
+		"armor_regen_per_turn" "2"
+		"baseDamage" "7"
+		"evasion" "0.4"
+		"walkSpeed" "3"
+	}
+}
+
+"MinionAssassinLvl3"
+{
+	"InheritsFrom" "MinionAssassin"
+
+	"stats"
+	{
+		"level" "3"
+		"health_max" "7"
+		"armor_max" "0"
+		"armor_regen_per_turn" "2"
+		"baseDamage" "8"
+		"evasion" "0.4"
+		"walkSpeed" "4"
+	}
+}

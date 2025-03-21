@@ -1,0 +1,133 @@
+"cleric_whack"
+{
+    "AbilityBehavior"   "MELEE | HAS_CHANCE_TO_HIT"
+    "AbilityTeamFilter" "TEAM_ENEMY"
+    "AbilityCastRange"  "stat(%CASTER, #meleeRange)"
+    "AbilityCooldown"   "0"
+    "AbilityAPCost"     "stat(%CASTER, #attackCostAP)"
+    "AnimationID"       "Attack"
+    "Icon"              "AreaKnockbackMeleeAttack"
+    "CastFXId"          "CommonSlashSoundFXMega"
+
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type" "FIELD_EXPRESSION"
+            "MinDamage"  "stat(%CASTER, #attackDamage)-1"
+        }
+
+        "02"
+        {
+            "var_type" "FIELD_EXPRESSION"        
+            "MaxDamage"  "stat(%CASTER, #attackDamage)+1"
+        }
+		"03"
+        {
+            "var_type"                  "FIELD_EXPRESSION"
+            "extraArmor"                "1+stat(%CASTER, #level)"
+        }
+
+        "04"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "duration"              "2"   
+        }
+    }
+
+
+
+    "OnAbilityAction"
+    {
+        "Hit"
+        {
+            "Target" "%TARGET"
+            "EffectName" "GenericHitFXMega" 
+            "Tags" "stringList(#MELEE, #TARGETED)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_PHYSICAL"
+                    "Damage"        "randomI(expr(%MinDamage), expr(%MaxDamage))"
+                }
+            }
+			
+			"Actions"
+            {
+                "Conditional"
+                {
+                    "Condition"     "stat(%CASTER, #walkSpeedUsed)==0"
+
+                    "Actions" 
+                    {
+						"ApplyModifier"
+						{
+							"ModifierName"      "modifier_whack_epic"
+							"Target"            "%SOURCE"
+							"Duration"          "%duration"
+						}
+
+                        "MarkHitLegendary"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+	
+	"Modifiers"
+	{
+		"modifier_whack_epic"
+		{
+            "Icon"                      "Fortify"
+            "IconPriority"              "50"
+
+            "PropertiesAdd"
+            {
+                "armor_max"             "1+stat(%TARGET, #level)"
+            }
+
+            "OnAdded"
+            {
+                "GiveArmor"
+                {
+                    "Target"            "%TARGET"
+                    "ArmorAmount"       "1+stat(%TARGET, #level)"
+                }
+            }
+
+            "OnRemoved"
+            {
+                "GiveArmor"
+                {
+                    "Target"            "%TARGET"
+                    "ArmorAmount"       "0"
+                }
+            }
+		}
+	}
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "2.3"
+            "Considerations"
+            {
+
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "10"  
+                    }
+                }
+            }
+        }
+    }
+}

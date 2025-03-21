@@ -1,0 +1,112 @@
+"cleric_salvation"
+{
+    "AbilityBehavior"           "POINT_TARGET | AOE | NEEDS_VALID_TERRAIN"
+
+
+    "AnimationID"               "SpellCastA"
+    "CastFXId"                  "MagicBoltCastFXMega"
+    "Icon"                      "WarDrums"
+    
+    "AbilityAOEKind"            "RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster"  "0"
+    "AbilityAOEAffectsCaster"   "1"
+
+    "AbilityAOETeamFilter"      "TEAM_ENEMY"
+    "AbilityAOERange"           "%aoeRadius"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"           "4"
+    "AbilityAPCost"             "1"
+
+     "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "attackBonus"   "-99"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "aoeRadius"     "1"
+        }
+
+        "03"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "duration"      "1"
+        }
+        "04"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "extraDuration"      "2"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+        
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"        "%TARGET"
+                "Radius"        "%aoeRadius"
+                "Teams"         "TEAM_ENEMY"
+                "CustomFilter"  "customUnitFilter(#theUnit, not(isOnState(%theUnit, #PROP)))"
+            }
+
+            "IteratorName" "#newTarget"
+        
+            "Actions"    
+            {
+                "Conditional"
+                {
+                    "Condition" "hasModifier(%CASTER, #modifier_communion_self)"
+
+                    "Actions" 
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "modifier_cleric_salvation"
+                            "Target"            "%newTarget"
+                            "Duration"          "%extraDuration"
+                        }
+
+                        "MarkHitLegendary"
+                        {
+                        }
+                    }
+
+                    "ElseActions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "modifier_cleric_salvation"
+                            "Target"            "%newTarget"
+                            "Duration"          "%duration"
+                        }
+                    }                   
+                }
+            }
+        }
+        
+    }
+
+    "Modifiers"
+    {
+        "modifier_cleric_salvation"
+        {
+            "Icon"              "SpikeReforge"
+            "IconPriority"      "50"
+            "EffectName"        "CleaverUndyingRageStatusFXMega"
+
+
+            "PropertiesAdd"
+            {
+                "extraDamage"   "%attackBonus"
+            }
+        }
+    }
+}

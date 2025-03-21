@@ -1,0 +1,90 @@
+"necro_skeleton_summon"
+{
+
+
+    "AbilityBehavior"           "POINT_TARGET | POSITIVE_EFFECT | NEEDS_CLEAR_TERRAIN"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange) - 2"
+    "AbilityCooldown"           "3"
+    "AbilityPrewarmCooldown"    "1"
+    "AbilityAPCost"             "2"
+
+
+    "AnimationID"               "SpellCastB"
+    "CastFXId"                  "GenericNaturaCastSummonFXMega"
+    "Icon"                      "Reassemble"
+
+     "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" 		"FIELD_EXPRESSION"
+            "duration" 		"stat(%CASTER, #attackDamage)"
+        }
+
+        "02"
+        {
+            "var_type" 			"FIELD_FLOAT"
+            "characterLevel" 	"1"
+        }
+
+    }
+
+
+     "OnAbilityAction"
+    { 
+        "SpawnUnit"
+        {
+            "UnitName" "#SkeletonSummon"
+            "Position" "%TARGET"
+            "UnitGroup" "unitGroup(%CASTER)"
+            "IsAI" "0"
+            "AddToInitiativeOrder" "0"
+            "OnSpawn"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"    "modifier_summon_skeleton"
+                    "Target"          "%UNIT"
+                    "Duration"        "expr(%duration)"
+                }
+                
+                "PlayActivityAnimation"
+                {
+                    "Target" "%UNIT"
+                    "Animation" "Reassemble"
+                }
+
+                "PlaySound"
+                {
+                    "Sound" "#krl_sfx_combatUndead_skeletonReassemble"
+                }
+            }
+        }
+        
+        "AttachEffect"
+        {
+            "EffectName"       "SummonCultistSmokeFXMega"
+            "Target"           "%TARGET"
+        }
+    }
+
+
+    "Modifiers"
+    {
+        "modifier_summon_skeleton"
+        {
+            "Icon"                      "Summoned"
+            "IconPriority"              "60"
+            "LocalizationId"            "generic_modifier_summoned"
+
+            "OnRemoved"
+            {
+                "KillUnit"
+                {
+                    "Target"        "%TARGET"
+                }
+            }
+        }
+    }
+
+}

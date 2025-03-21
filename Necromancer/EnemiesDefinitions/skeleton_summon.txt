@@ -1,0 +1,145 @@
+	"SkeletonSummon"
+	{
+		"Model" "SkeletonWarrior01"
+		"Name" "SUMMONED_SKELETON"
+		"InheritsFrom" "Base"
+
+		"stats"
+		{
+
+			"level" "1"
+				
+			"health_max" "3"
+			"armor_max" "0"		
+			
+			
+			"baseDamage"  "4"
+
+			"walkSpeed" "3"
+			"initiativeModifier" "100"
+			"rangedAttackRange" "0"
+
+
+		}
+
+		"skills"
+		{
+			"100" "skeleton_bloodless_trait"
+ 		}
+
+ 		"defaultSkill" "common_melee_attack"
+		
+		"states"
+ 		{
+ 			"CANT_BE_POISONED" "1"
+            "CANT_BE_BLED" "1"
+ 		}
+	}
+
+	"ZombieFarmer" 
+	{
+		"Model" "ZombieFarmer"
+		"Name" "UNDEAD_ZOMBIE_FARMER"
+		"InheritsFrom" "Base"
+
+		"stats"
+		{
+
+			"level" "1"
+				
+			"health_max" "6"
+			"armor_max" "0"	
+			"armor_regen_per_turn" "0"
+			"rangedAttackRange" "0"
+
+			"baseDamage"  "3"
+			
+			"walkSpeed" "2"
+
+			"initiativeModifier" "2"
+
+			"visualMoveSpeed" "6"
+			"visualRunSpeed" "6"
+
+		}
+
+
+		"skills"
+		{
+			"100" "skeleton_bloodless_trait"
+ 		}
+
+ 		"defaultSkill" "zombie_lifesteal"
+		
+		"states"
+ 		{
+ 			"CANT_BE_POISONED" "1"
+            "CANT_BE_BLED" "1"
+ 		}
+
+ 		"soundConfig"
+		{
+			"assetId" "DynamicSoundGroupZombiesSounds"
+			"sounds"
+			{
+				"receiveDamage" "krl_va_combatZombieFarmer_hit"
+				"receiveArmorDamage" "krl_sfx_combatGeneric_armorHit"
+				"death" "krl_va_combatZombieFarmer_death"
+			}
+		}
+	}
+
+	"ZombieWarrior" 
+	{
+		"Model" "ZombieWarrior"
+		"Name" "UNDEAD_ZOMBIE_WARRIOR"
+		"InheritsFrom" "Base"
+
+		"stats"
+		{
+
+			"level" "1"
+				
+			"health_max" "6"
+			"armor_max" "3"
+			"armor_regen_per_turn" "1"
+			
+			"baseDamage"  "3"
+			
+			"walkSpeed" "2"
+			"armorOfThornsDamage"	"1"
+			
+			"rangedAttackRange" "0"
+
+			"initiativeModifier" "2"
+
+			"visualMoveSpeed" "6"
+			"visualRunSpeed" "6"
+
+		}
+
+
+		"skills"
+		{
+			"100" "skeleton_bloodless_trait"
+		}
+
+ 		"defaultSkill" "zombie_lifesteal"
+
+		"states"
+ 		{
+ 			"CANT_BE_POISONED" "1"
+            "CANT_BE_BLED" "1"
+ 		}
+
+ 		"soundConfig"
+		{
+			"assetId" "DynamicSoundGroupZombiesSounds"
+			"sounds"
+			{
+				"receiveDamage" "krl_va_combatZombieWarrior_hit"
+				"receiveArmorDamage" "krl_sfx_combatGeneric_armorHit"
+				"death" "krl_va_combatZombieWarrior_death"
+			}
+		}
+	}

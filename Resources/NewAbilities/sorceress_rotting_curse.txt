@@ -1,0 +1,122 @@
+"sorceress_rotting_curse"
+{
+    "AbilityBehavior"           "UNIT_TARGET"
+    "AbilityTeamFilter"         "TEAM_ENEMY"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange"       "stat(%CASTER, #rangedAttackMinRange)"
+    "AbilityCooldown"           "4"
+    "AbilityAPCost"             "1"
+    "AnimationID"               "SpecialAttack"
+    "Icon"                      "RottingCurse"
+    "CastFXId"                  "SorceressHexCastFXMega"
+    "LocalizationId"            "stormcloud_sorcerer_rotting_curse"
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "rootDuration"      "1"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"        
+            "poisonDuration"    "1"
+        }
+
+        "03"
+        {
+            "var_type"              "FIELD_EXPRESSION"        
+            "damage"          "stat(%CASTER, #attackDamage)"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "Hit"
+        {
+            "Target"                "%TARGET"
+            "EffectName"            "SorceressRootingCurseHitFXMega" 
+            "Tags"                  "stringList(#PROJECTILE, #TARGETED, #MAGICAL, #INTERNAL)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_MAGICAL"
+                    "Damage"        "%damage"
+                }
+            }
+
+          
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "not(isOnState(%HITTARGET, #DEAD))"
+
+                    "Actions" 
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_rooted"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%rootDuration"
+                            "Refresh"       "1"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_new_poison"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%poisonDuration"
+                            "Refresh"       "1"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight"            "2.3"
+            "Considerations"
+            {
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve"             "Linear|-0.1|1|1|0"
+                    "Consideration"     "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange"      "expr(%AbilityCastRange)"  
+                    }
+                }
+
+                "Ignores targets already rooted"
+                {
+                    "Curve" "Linear|-1|1|1|0"
+                    "Consideration" "TargetHasModifier"
+                    "Params"
+                    {
+                        "ModifierName" "modifier_rooted"  
+                    }
+                }
+
+                "Ignores targets already poisoned"
+                {
+                    "Curve" "Linear|-1|1|1|0"
+                    "Consideration" "TargetHasModifier"
+                    "Params"
+                    {
+                        "ModifierName" "modifier_new_poison"  
+                    }
+                }
+            }
+        }
+    }
+}

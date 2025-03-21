@@ -1,0 +1,117 @@
+"high_enchantress_sylvan_bolt"
+{
+    "AbilityBehavior"   		"UNIT_TARGET"
+    "AbilityTeamFilter" 		"TEAM_ENEMY"
+    "AbilityCastRange" 			"stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange" 		"2" 
+    "AbilityCooldown"   		"0"
+    "AbilityAPCost"     		"1"
+    "AnimationID"   			"Attack"
+    "CastFXId" 					"EnchantressSylvanBoltCastFXMega"
+    "Icon" 						"SylvanBolt"
+   
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" 			"FIELD_EXPRESSION"
+            "damage"  			"stat(%CASTER, #attackDamage)"
+        }
+        "20"
+        {
+            "var_type" "FIELD_STRING"
+            "iconDamageType"  "damageMagical"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "TrackingProjectile"
+        {
+            "Target"            "%TARGET"
+            "SourcePos"         "unitPosition(%SOURCE, #CastPoint)"
+            "TargetPos"         "unitPosition(%TARGET, #Chest)"
+            "Model" 			"EnchantressSylvanBoltProjectile"
+
+            "Params" 
+            {
+                "damage" 
+                { 
+                    "type" 		"FIELD_FLOAT"
+                    "value" 	"expr(%damage)"
+                }
+            }
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {   
+        "Hit"
+        {
+            "Target" 			"%TARGET"
+            "Tags" 				"stringList(#RAY, #MAGICAL)"
+            "EffectName" 		"EnchantressSylvanBoltHitFXMega" 
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_MAGICAL"
+                    "Damage"        "%damage"
+                }
+                
+                "Conditional"
+                {
+                    "Condition" "isOnState(%HITTARGET, #WEAKENED)"
+
+                    "Actions" 
+                    {
+                        "MarkHitLegendary"
+                        {
+                        }
+                    }
+                }
+            }
+
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "hitIsLegendary(%HIT)"
+
+                    "Actions" 
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_rooted"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%rootDuration"
+                            "Refresh"   "1"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "2.3"
+            "Considerations"
+            {
+
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "expr(%AbilityCastRange)"  
+                    }
+                }
+            }
+        }
+    }
+}

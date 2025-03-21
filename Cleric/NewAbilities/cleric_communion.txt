@@ -1,0 +1,105 @@
+"cleric_communion"
+{       
+    "AbilityBehavior"           "UNIT_TARGET | POSITIVE_EFFECT"
+    "AbilityTeamFilter"         "TEAM_FRIENDLY"
+    "AbilityCustomTargetFilter" "not(equal(%UNIT, %SOURCE))"
+
+    "AnimationID"               "SpellCastA"
+    "CastFXId"                  "GenericHolyCastFXMega"
+    "Icon"                      "BlessingOfBattle"
+
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"           "3"
+    "AbilityAPCost"             "1"
+
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          	"FIELD_FLOAT"
+            "duration"          	"2"
+        }
+        
+        "02"
+        {
+            "var_type"          	"FIELD_EXPRESSION"
+            "DamageSelf"            "floor(stat(%CASTER, #level)/2)+1"
+        }
+		
+		"03"
+        {
+            "var_type"          	"FIELD_EXPRESSION"
+            "DamageAlly"            "ceil(stat(%CASTER, #level)/2)"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+        "ApplyModifier"
+        {
+            "ModifierName"      "modifier_communion"
+            "Target"            "%TARGET"
+            "Duration"          "%duration"
+
+            "Params"
+            {
+                "ally_damage" 
+                {
+                    "type"      "FIELD_FLOAT"
+                    "value"     "expr(%DamageAlly)"
+                }
+            }
+        }
+
+        "ApplyModifier"
+        {
+            "ModifierName"      "modifier_communion_self"
+            "Target"            "%CASTER"
+            "Duration"          "%duration"
+
+            "Params"
+            {
+                "self_damage" 
+                {
+                    "type"      "FIELD_FLOAT"
+                    "value"     "expr(%DamageSelf)"
+                }
+            }
+        }
+
+    }
+
+
+    "Modifiers"
+    {
+        "modifier_communion"
+        {
+            "EffectName"        "MartyrsInspirationStatusFXMega"
+            "Icon"              "Martyr"
+            "IconPriority"      "50"
+
+            
+
+            "PropertiesAdd"
+            {
+                "extraDamage"   "%ally_damage"
+            }
+        }
+		
+		"modifier_communion_self"
+        {
+            "EffectName"        "MartyrsInspirationStatusFXMega"
+            "Icon"              "Martyr"
+            "IconPriority"      "50"
+
+            
+
+            "PropertiesAdd"
+            {
+                "extraDamage"   "%self_damage"
+            }
+        }
+    }
+}

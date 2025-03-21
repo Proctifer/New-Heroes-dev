@@ -1,0 +1,161 @@
+"regson_eldritch_fury"
+{
+    "AbilityBehavior"       "UNIT_TARGET | POSITIVE_EFFECT"
+    "AbilityTeamFilter"     "TEAM_FRIENDLY"
+
+    "AnimationID"           "SpellCastA"
+    "Icon"                  "EldritchFury"
+    "CastFXId"              "RegsonEldritchFuryCastFXMega"
+
+    "AbilityCastRange"      "0"
+    "AbilityCastMinRange"   "0"  
+    "AbilityCooldown"       "4"
+    "AbilityAPCost"         "2"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "epic_heal"     "3"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_EXPRESSION"
+            "damage"        "stat(%CASTER, #health_missing)"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "Heal"
+        {
+            "Target"          "%TARGET"
+            "HealAmount"      "stat(%TARGET, #health_missing)"
+        }
+
+        "AttachEffect"
+        {
+            "EffectName"      "RegsonHealingFXMega"
+            "Target"          "%TARGET"
+        }
+
+        "PlayAnimation"
+        {
+            "Target"          "%TARGET"
+            "Animation"       "EldritchFuryIn"
+        }
+
+        "ApplyModifier"
+        {
+            "ModifierName"    "regson_focus_state_modifier"
+            "Target"          "%TARGET"
+            "Params"
+            {
+                "fury_damage"
+                {
+                    "type"      "FIELD_FLOAT"
+                    "value"     "%damage"
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "regson_focus_state_modifier"
+        {
+            "AnimationOverride"     "EldritchFuryLoop"
+            "Icon"                  "Eldritch Fury"
+            "IconPriority"          "50"
+            "EffectName"            "RegsonFocusStateFXMega"
+
+            "OnHitEnd"
+            {
+                "PlaySound"
+                {
+                    "Sound" "#krl_sfx_regsonCombat_eldritchFuryTakeHit"
+                }
+            }
+
+            "OnTurnStarted"
+            {
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"                "%TARGET"
+                        "Radius"                "1"
+                        "Teams"                 "TEAM_ENEMY"
+                        "CustomFilter"          "customUnitFilter(#theUnit, not(isOnState(%theUnit, #NO_SKULL)))"
+                    }
+
+                    "IteratorName"          "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "Hit"
+                        {
+                            "Target"            "%newTarget"
+                            "EffectName"        "RegsonEldritchFuryHitFXMega" 
+                            "Tags"              "stringList(#AOE)"
+
+                            "InitActions"
+                            {
+                                "AddDamage"
+                                {
+                                    "Type"          "DAMAGE_TRUE"
+                                    "Damage"        "%fury_damage"
+                                }
+                            }
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName"            "RegsonEldritchFuryReleaseFXMega"
+                            "Target"                "%TARGET"
+                        }
+                    }
+                }
+
+                "Conditional"
+                {
+                    "Condition" "hasModifier(%TARGET, #regson_eldritch_state_modifier)"
+
+                    "Actions" 
+                    {
+                        "Heal"
+                        {
+                            "Target"          "%TARGET"
+                            "HealAmount"      "%epic_heal"
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName"      "RegsonHealingFXMega"
+                            "Target"          "%TARGET"
+                        }
+
+                        "HitLegendaryTriggered"
+                        {
+                            "Unit"              "%TARGET"
+                        }
+                    }
+                }
+
+                "PlayAnimation"
+                {
+                    "Target"          "%TARGET"
+                    "Animation"       "EldritchFuryOut"
+                }
+
+                "RemoveModifier"
+                {
+                    "ModifierName"           "regson_focus_state_modifier"
+                    "Target"                 "%TARGET"
+                }
+            }
+        }
+    }
+}

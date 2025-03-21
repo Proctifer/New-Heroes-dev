@@ -1,0 +1,240 @@
+"necro_pestilence"
+{
+    "AbilityBehavior"               "POINT_TARGET | AOE | NEEDS_VALID_TERRAIN"
+    "AbilityAOETeamFilter"          "TEAM_ALL"
+    "AnimationID"                   "SpellCastA"
+    "CastFXId"                      "PoisonShotCastFXMega"
+    "Icon"                          "SpawnAcidOnDeath"
+    "AbilityAOEKind"                "RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster"      "0"
+    "AbilityAOEAffectsCaster"       "1"
+    "AbilityAOERange"               "%aoeRadius"
+    "AbilityCastRange"              "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"               "2"
+    "AbilityAPCost"                 "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "aoeRadius"            "1"
+        }
+
+        "02"
+        {
+            "var_type"            "FIELD_EXPRESSION"
+            "damage"              "ceil(stat(%CASTER,#attackDamage)/2)"
+        }
+
+        "03"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "extraDamage"         "2"
+        }
+
+        "04"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "poisonDuration"      "1"
+        }
+
+        "05"
+        {
+            "var_type"            "FIELD_EXPRESSION"
+            "floorDuration"       "stat(%CASTER, #level)"
+        }
+
+        "06" 
+        {
+            "var_type"            "FIELD_FLOAT"
+            "stunDuration"        "1"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "TrackingProjectile"
+        {
+            "SourcePos"            "%TARGET"
+            "TargetPos"            "%TARGET"
+            "Model"                "EmptyProjectile"
+
+            "Params" 
+            {
+                "damage" 
+                {
+                    "type"         "FIELD_FLOAT"
+                    "value"        "expr(%damage)"
+                }
+
+                "extraDamage" 
+                {
+                    "type"         "FIELD_FLOAT"
+                    "value"        "%extraDamage"
+                }
+
+                 "floorDuration" 
+                {
+                    "type"         "FIELD_FLOAT"
+                    "value"        "expr(%floorDuration)"
+                }
+            }
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {
+        "AttachEffect"
+        {
+            "EffectName"    "AcidFloorExplosionFXMega"
+            "Target"        "%TARGET"
+        }
+        "StartLogicTick"
+        {
+            "Time"          "1"
+            "TickType"      "ActiveUnit "
+            "Position"      "unitPosition(%SOURCE)"
+        }
+
+        "Delay"
+        {
+            "Time" "0.0"
+            "Actions"
+            {
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"           "%TARGET"
+                        "Radius"           "%aoeRadius"
+                        "Teams"            "TEAM_ALL"
+                    }
+
+                    "IteratorName"         "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "Hit"
+                        {
+                            "Target"        "%newTarget"
+                            "Tags"          "stringList(#MAGICAL, #AOE)"
+
+                            "Actions"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"      "modifier_new_poison"
+                                    "Target"            "%newTarget"
+                                    "Duration"          "%poisonDuration"
+                                    "Refresh"           "1"
+                                }
+                            }
+                        }
+                    }
+                }
+
+                "SpawnUnit"
+                {
+                    "UnitName"               "#DummyUnit"
+                    "Position"               "%TARGET"
+                    "UnitGroup"              "unitGroup(%CASTER)"
+                    "IsAI"                   "0"
+                    "Nick"                   "#FireballFloorController"
+                    "InheritsInitiative"     "1"
+
+                    "OnSpawn"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"   "remove_another_unit_modifier"
+                            "Target"         "%UNIT"
+                            "Duration"       "%floorDuration"
+                            "Params"
+                            {
+                                "UNIT" {
+                                    "type"      "FIELD_OBJECT"
+                                    "value"     "%UNIT"
+                                }
+                            }
+                        }
+
+                        "SetToContext"
+                        {
+                            "Context"        "projectileContext(%projectile)"
+                            "Key"            "#controllerUnit"
+                            "Value"          "%UNIT"
+                            "Type"           "FIELD_OBJECT"
+                        }
+                    }
+                }
+
+                "ActOnHexas"
+                {
+                    "Center"                 "positionHex(%TARGET)"
+                    "Range"                  "%aoeRadius"
+                    "IteratorName"           "#hexa"
+                
+                    "Actions"    
+                    {
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"        "hexPosition(%hexa)"
+                                "Radius"        "0"
+                                "Teams"         "TEAM_ALL"
+                                "Flags"         "INCLUDE_NON_TARGETABLE"
+                            }
+
+                            "IteratorName"      "#newTarget"
+                        
+                            "Actions"    
+                            {
+                                "RemoveModifier"
+                                {
+                                    "ModifierTag"    "floor_effect"
+                                    "Target"         "%newTarget"
+                                }
+                            }
+                        }
+
+                        "SpawnUnit"
+                        {
+                            "UnitName"               "#DummyUnit"
+                            "Position"               "hexPosition(%hexa)"
+                            "UnitGroup"              "unitGroup(%CASTER)"
+                            "IsAI"                   "0"
+                            "Nick"                   "#FireballFloor"
+                            "InheritsInitiative"     "1"
+                            
+                            "OnSpawn"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"    "acid_floor_tile_modifier"
+                                    "Target"          "%UNIT"
+                                }
+
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"    "remove_another_unit_modifier"
+                                    "Target"          "wrapContext(projectileContext(%projectile), %controllerUnit)"
+                                    "Params"
+                                    {
+
+                                        "UNIT" {
+                                            "type"      "FIELD_OBJECT"
+                                            "value"     "%UNIT"
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

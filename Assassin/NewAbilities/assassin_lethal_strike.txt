@@ -1,0 +1,107 @@
+"assassin_lethal_strike"
+{
+    "AbilityBehavior"   "MELEE | HAS_CHANCE_TO_HIT"
+    "AbilityTeamFilter" "TEAM_ENEMY"
+    "AbilityCastRange" "stat(%CASTER, #meleeRange)"
+    "AbilityCooldown"   "0"
+    "AbilityAPCost"     "stat(%CASTER, #attackCostAP)"
+    "AnimationID"   "Attack"
+    "Icon" "Slash"
+    "CastFXId" "CommonSlashSoundFXMega"
+
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"      "FIELD_EXPRESSION"
+            "MinDamage"     "stat(%CASTER, #attackDamage)-1"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_EXPRESSION"        
+            "MaxDamage"     "stat(%CASTER, #attackDamage)+1"
+        }
+
+        "03"
+        {
+            "var_type"      "FIELD_EXPRESSION"
+            "damage"        "randomI(expr(%MinDamage), expr(%MaxDamage))"
+        }
+        
+        "04"
+        {
+            "var_type"      "FIELD_EXPRESSION"
+            "epicDamage"    "ceil(stat(%CASTER, #attackDamage)/3)"
+        }
+    }
+
+
+
+    "OnAbilityAction"
+    {
+        "Hit"
+        {
+            "Target" "%TARGET"
+            "EffectName" "GenericHitFXMega" 
+            "Tags" "stringList(#MELEE, #TARGETED)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_PHYSICAL"
+                    "Damage"        "randomI(expr(%MinDamage), expr(%MaxDamage))"
+                }
+                
+                "Conditional"
+                {
+                    "Condition"         "not(isOnState(%TARGET, #CANT_BE_BACKSTABBED)) && %BACKSTAB"
+                    
+                    "Actions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL"
+                            "Damage"        "expr(%epicDamage)"
+                        } 
+
+                        "MarkHitLegendary"
+                        {
+                        }
+                    }
+
+                    "ElseActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL"
+                            "Damage"        "expr(%extraDamage)"
+                        } 
+                    }
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "2.3"
+            "Considerations"
+            {
+
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "10"  
+                    }
+                }
+            }
+        }
+    }
+}

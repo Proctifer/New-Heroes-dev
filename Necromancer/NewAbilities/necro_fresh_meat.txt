@@ -1,0 +1,81 @@
+"necro_fresh_meat"
+{
+
+
+    "AbilityBehavior"       	"POINT_TARGET | POSITIVE_EFFECT | NEEDS_CLEAR_TERRAIN"
+    "AbilityCastRange" 			"stat(%CASTER, #rangedAttackRange) - 2"
+    "AbilityCooldown"      		"3"
+    "AbilityPrewarmCooldown"	"1"
+    "AbilityAPCost"       		"2"
+
+
+    "AnimationID"               "SpecialAttack"
+    "CastFXId"                  "GenericNaturaCastSummonFXMega"
+    "Icon"                      "VenomousEmbrace"
+
+     "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_EXPRESSION"
+            "duration" "ceil(stat(%CASTER, #attackDamage))"
+        }
+
+        "02"
+        {
+            "var_type" "FIELD_FLOAT"
+            "characterLevel" "1"
+        }
+
+    }
+
+
+     "OnAbilityAction"
+    { 
+        "SpawnUnit"
+        {
+            "UnitName" "#ZombieFarmer"
+            "Position" "%TARGET"
+            "UnitGroup" "unitGroup(%CASTER)"
+            "IsAI" "0"
+            "AddToInitiativeOrder" "0"
+            "OnSpawn"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"    "modifier_summon_zombie"
+                    "Target"          "%UNIT"
+                    "Duration"        "expr(%duration)"
+                }
+                
+	         }
+        }
+		
+        "AttachEffect"
+        {
+            "EffectName"       "SummonCultistSmokeFXMega"
+            "Target"           "%TARGET"
+        }
+
+    }
+
+
+    "Modifiers"
+    {
+        "modifier_summon_zombie"
+        {
+            "Icon"                      "Summoned"
+            "IconPriority"              "60"
+            "LocalizationId"            "generic_modifier_summoned"
+
+            "OnRemoved"
+            {
+                "KillUnit"
+                {
+                    "Target"        "%TARGET"
+                }
+            }
+        }
+    }
+
+}

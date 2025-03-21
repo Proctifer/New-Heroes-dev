@@ -1,0 +1,30 @@
+"UNIT_HIGH_ENCHANTRESS_LORE" = "Plagued by the dark magic their people have exploited, a small group of Enchantresses seek to use their powers to combat the evil that has consumed their home."
+
+
+"SKILL_high_enchantress_sylvan_bolt_NAME" = "Sylvan Bolt"
+"SKILL_high_enchantress_sylvan_bolt_DESCRIPTION" = "Casts a simple magic bolt that damages its target."
+"SKILL_high_enchantress_sylvan_bolt_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Applies <style="concept">rooted</style> to <style="debuff">weakened</style> targets."
+"SKILL_high_enchantress_sylvan_bolt_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#iconDamageType}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_high_enchantress_havoc_spirit_NAME" = "Havoc Spirit"
+"SKILL_high_enchantress_havoc_spirit_DESCRIPTION" = "Phases between up to {maxTargets} enemies of up to 1 hex away from each other, damaging units struck before returning to the starting hex."
+"SKILL_high_enchantress_havoc_spirit_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Applies <style="debuff">bleeding</style> to <style="concept">immobilized</style> targets."
+"SKILL_high_enchantress_havoc_spirit_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#iconDamageType}</style>\nEPIC bleeding duration: <style="highlight"> {bleedDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_high_enchantress_spore_shower_NAME" = "Spore Shower"
+"SKILL_high_enchantress_spore_shower_DESCRIPTION" = "Showers an adjacent target with armor-corroding spores that apply <style="debuff">poisoned</style> and <style="debuff">asleep</style>."
+"SKILL_high_enchantress_spore_shower_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#iconDamageType}</style>.\nPoisoned duration: <style="highlight">{poisonDuration} {icon#turns}</style>\nAsleep duration: <style="highlight">{sleepDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_high_enchantress_natures_blood_NAME" = "Nature's Blood"
+"SKILL_high_enchantress_natures_blood_DESCRIPTION" = "Exudes healing sap to restore some health and remove <style="debuff">burning</style> and <style="debuff">poisoned</style> status."
+"SKILL_high_enchantress_natures_blood_DESCRIPTION_DATA" = "Healing: <style="buff"> {heal} {icon#statHP}</style>\nRange: <style="highlight">SELF</style>"
+
+"SKILL_high_enchantress_wild_omen_NAME" = "Wild Omen"
+"SKILL_high_enchantress_wild_omen_DESCRIPTION" = "Casts magic mist up to {range} hexes away, damaging and applying <style="debuff">asleep</style> to all units caught by it."
+"SKILL_high_enchantress_wild_omen_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If the target is killed, it activates the <style="highlight">Preparation</style> cooldown reduction."
+"SKILL_high_enchantress_wild_omen_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#iconDamageType}</style>\nAsleep duration: <style="highlight">{duration} {icon#turns}</style>\nRange: <style="highlight">{range}</style>"
+
+"SKILL_high_enchantress_leeching_chain02_NAME" = "Leeching Chain"
+"SKILL_high_enchantress_leeching_chain02_DESCRIPTION" = "Shoots a magical seed at a target, which chains between adjacent enemies. The seed deals damage and applies <style="debuff">drained</style> if it deals HP damage.\n<style="debuff">Drained</style> units get their HP stolen by the High Enchantress at the end of their turn."
+"SKILL_high_enchantress_leeching_chain02_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#iconDamageType}</style>\nDrained damage: <style="damage">{drainedDamage}{icon#damageTrue}</style>\nMax. Targets: <style="highlight">{maxTargets}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_high_enchantress_leeching_chain02_DESCRIPTION_EXTRA" = "<style="debuff">Drained</style> lasts until either the target or the High Enchantress falls.</style>"

@@ -1,0 +1,73 @@
+"high_enchantress_natures_blood"
+{
+    "AbilityBehavior"                   "UNIT_TARGET | POSITIVE_EFFECT"
+    "AbilityTeamFilter"                 "TEAM_FRIENDLY"
+
+    "AnimationID"                       "SpellCastB"
+    "Icon"                              "HealingSap"
+    "CastFXId"                          "EnchantressSylvanBoltCastFXMega"
+
+    "AbilityCastRange"                  "0"
+    "AbilityCooldown"                   "2"
+    "AbilityAPCost"                     "1"
+
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_EXPRESSION"
+            "heal"                      "stat(%CASTER, #attackDamage)"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "Heal"
+        {
+            "Target"                    "%TARGET"
+            "HealAmount"                "expr(%heal)"
+        }
+
+        "AttachEffect"
+        {
+            "EffectName"                "HealingFXMega"
+            "Target"                    "%TARGET"
+        }
+
+        "RemoveModifier"
+        {
+            "ModifierName"              "modifier_burning"
+            "Target"                    "%TARGET"
+        }
+
+        "RemoveModifier"
+        {
+            "ModifierName"              "modifier_new_poison"
+            "Target"                    "%TARGET"
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight"            "3"
+            "Considerations"
+            {
+                "Has a minimum of health missing"
+                {
+                    "Curve"             "Linear|10|1|0|0.9"
+                    "Consideration"     "HealthMissingRelativeToValue"
+                    "Params"
+                    {
+                        "Value"             "ceil(stat(%CASTER, #health_max)/3) * 2 + 1"
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+

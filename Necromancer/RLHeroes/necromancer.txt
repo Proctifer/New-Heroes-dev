@@ -1,0 +1,116 @@
+"MinionNecromancer"
+{
+	"UniqueId" "Necromancer"
+	"Model" "Necromancer"
+	"MetaExo" "ExoSkeletonRenegadeOrcShaman_MetaDataAsset"
+	"Name" "MINION_NECROMANCER"
+	"InheritsFrom" "Hero"
+	"cinematicTags" "Necromancer|Heroe|Minion|Male|ct_minion|ct_ranged|ct_magic|ct_perception|ct_knowledge|ct_dark|ct_unholy|ct_|UPGRADES_magic"
+	"nextLevelArchetype" "MinionNecromancerLvl2"
+	"AttackType" "MAGIC"
+	"Icon" "Asst_Banner_Arcane"
+	"Background" "hero_roster_legend_bg_forest"
+	"PortraitBackgroundColor" "37946E"
+	"UnitOnMap" "Asst_Party_RenegadeOrcShaman"
+
+	"stats"
+	{
+		"level" "1"
+		"health_max" "4"
+		"armor_max" "0"
+		"armor_regen_per_turn" "0"
+		"armor_gain_passTurn" "0"
+		"baseDamage" "3"
+		"rangedAttackRange" "4"
+		"rangedAttackMinRange" "2"
+		"walkSpeed" "1"
+		"visualMoveSpeed" "6"
+		"visualRunSpeed" "6"
+	}
+
+	"skills"
+	{
+		"100" "magic_endturn_trait"
+		"100" "skeleton_bloodless_trait"
+	}
+
+	"states"
+	{
+		"CANT_BE_BLED" "1"
+		"CANT_BE_POISONED" "1"
+	}
+
+	"skillProgression"
+	{
+		"1"
+		{
+			"1" "necro_skeleton_summon"
+		}
+
+		"2"
+		{
+			"1" "necro_pestilence"
+			"2" "necro_fresh_meat"
+		}
+
+		"3"
+		{
+			"1" "necro_unstable_disease"
+			"2" "necro_lord_of_the_horde"
+		}
+	}
+
+	"defaultSkill" "necro_bolt_of_sickness"
+
+	"soundConfig"
+	{
+		"assetId" "DynamicSoundGroupGeraldSounds"
+		"sounds"
+		{
+			"receiveDamage" "krl_va_combatGerald_hit"
+			"receiveArmorDamage" "krl_sfx_combatGeneric_armorHit"
+			"death" "krl_va_combatGerald_death"
+			"useSkill" "krl_va_combatGerald_action"
+			"startTurn" "krl_va_combatGerald_turnStart"
+			"promote" "krl_va_combatGerald_promote"
+			"selectHero" "krl_va_combatGerald_select"
+		}
+	}
+}
+
+"MinionNecromancerLvl2"
+{
+	"InheritsFrom" "MinionNecromancer"
+	"nextLevelArchetype" "MinionNecromancerLvl3"
+
+	"stats"
+	{
+		"level" "2"
+		"health_max" "5"
+		"armor_max" "0"
+		"armor_regen_per_turn" "0"
+		"armor_gain_passTurn" "0"
+		"baseDamage" "4"
+		"rangedAttackRange" "5"
+		"rangedAttackMinRange" "2"
+		"walkSpeed" "1"
+	}
+}
+
+"MinionNecromancerLvl3"
+{
+	"InheritsFrom" "MinionNecromancer"
+
+	"stats"
+	{
+		"level" "3"
+		"health_max" "7"
+		"armor_max" "0"
+		"armor_regen_per_turn" "0"
+		"armor_gain_passTurn" "0"
+		"baseDamage" "5"
+		"rangedAttackRange" "5"
+		"rangedAttackMinRange" "2"
+		"walkSpeed" "2"
+	}
+}

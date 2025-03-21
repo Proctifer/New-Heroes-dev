@@ -1,0 +1,136 @@
+"cleric_providence"
+{
+    "AbilityBehavior"           "UNIT_TARGET | POSITIVE_EFFECT | AOE"
+    "AbilityTeamFilter"         "TEAM_FRIENDLY"
+    "AbilityCastRange"          "0"
+    "AbilityCooldown"           "4"
+    "AbilityAPCost"             "1"
+    "AbilityAOETeamFilter"      "TEAM_FRIENDLY"
+    "AbilityAOERange"           "%aoeRadius"
+    "AbilityAOEKind"            "RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster"  "1"
+    "AbilityAOEAffectsCaster"   "1"
+
+    "AnimationID"               "SpellCastB"
+    "CastFXId"                  "KnightHoldTheLineCastFXMega"
+    "Icon"                      "AjaxsBlessing"
+
+
+     "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "cooldownOffset"    "1"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "aoeRadius"         "1"
+        }
+        "03"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "duration"          "2"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_EXPRESSION"
+            "DamageAlly"            "ceil(stat(%CASTER, #level)/2)"
+        }       
+    }
+
+
+    "OnAbilityAction"
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%TARGET"
+                "Radius"            "%aoeRadius"
+                "Teams"             "TEAM_FRIENDLY"
+            }
+
+            "IteratorName" "#newTarget"
+        
+            "Actions"    
+            {               
+               "OffsetCooldown"
+                {
+                    "Target"        "%newTarget"
+                    "Offset"        "0-%cooldownOffset"
+                }
+                
+                "UnitRaiseMessage"
+                {
+                    "Unit"      "%newTarget"
+                    "#Text"     "REPLENISHED!!"
+                    "Icon"      "Preparation"
+                }
+
+                "Conditional"
+                {
+                    "Condition" "hasModifier(%newTarget, #modifier_communion) || hasModifier(%newTarget, #modifier_communion_self)"
+                    
+                    "Actions"
+                    {
+                        "RemoveModifier"
+                        {
+                            "ModifierName"      "modifier_communion"
+                            "Target"            "%newTarget"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "modifier_communion"
+                            "Target"            "%newTarget"
+                            "Duration"          "%duration"
+
+                            "Params"
+                            {
+                                "ally_damage" 
+                                {
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "expr(%DamageAlly)"
+                                }
+                            }
+                        }
+
+                        "HitLegendaryTriggered"
+                        {
+                            "Unit"      "%newTarget"
+                        }
+                        
+
+                    }
+                }
+
+            }
+
+        }
+    }
+
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "4"
+            "Considerations"
+            {
+
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "10"  
+                    }
+                }
+            }
+        }
+    }
+}

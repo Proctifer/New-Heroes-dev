@@ -1,0 +1,121 @@
+"MinionCleric" 
+{
+	"UniqueId" "Cleric"
+	"Model" "HumanCleric"
+	"MetaExo" "ExoSkeletonHumanCleric_MetaDataAsset"
+	"Name" "MINION_CLERIC"
+	"InheritsFrom" "Hero"
+	"cinematicTags""Minion|Cleric|Male|ct_minion|ct_human|ct_holy|ct_magic|ct_social|ct_wisdom|UPGRADES_magic"
+	"nextLevelArchetype" "MinionClericLvl2"
+	"Icon" "Asst_Banner_Cleric"
+	"Background" "hero_roster_legend_bg_forest"
+	"AttackType" "PHYSICAL"
+	"PortraitBackgroundColor" "f5ee93"
+	"UnitOnMap" "Asst_Party_Knight"
+
+	"stats"
+	{
+
+		"level" 				"1"
+						
+		"health_max" 			"5"
+		"armor_max" 			"4"
+		"armor_regen_per_turn" 	"0"
+		"baseDamage"  			"4"
+		"holyPoints"			"0"
+		"armor_gain_passTurn" 	"0"
+
+		"rangedAttackRange" 	"3" 
+		
+		"walkSpeed" 			"2"
+	}
+
+	"skills"
+	{
+		"11" 	"cleric_unshakable"
+		"100" 	"magic_endturn_trait"
+		}
+
+		"skillProgression"
+		{
+		"1" 
+			{
+				"1" "cleric_communion"
+			}
+
+			"2" 
+			{
+				"1" "cleric_salvation"
+				"2" "cleric_providence"
+			}
+
+			"3"
+			{
+				"1" "cleric_divine_intervention"
+				"2" "cleric_smite"
+			}
+		}
+
+		"defaultSkill" "cleric_whack"
+
+		"soundConfig"
+	{
+		"assetId" "DynamicSoundGroupGeraldSounds"
+		"sounds"
+		{
+			"receiveDamage" 		"krl_sfx_combatGeneric_humanMaleHit"
+			"receiveArmorDamage" 	"krl_sfx_combatGeneric_armorHit"
+			"death" 				"krl_sfx_combatGeneric_humanMaleDeath"
+			"useSkill" 				"krl_va_combatGerald_action"
+			"startTurn" 			"krl_va_combatGerald_turnStart"
+			"promote" 				"krl_va_combatGerald_promote"
+			"selectHero" 			"krl_va_combatGerald_select"
+		}
+	}
+}
+
+
+"MinionClericLvl2"
+{
+	"InheritsFrom" "MinionCleric"
+	"nextLevelArchetype" "MinionClericLvl3"
+
+	"stats"
+	{
+
+		"level" 				"2"
+						
+		"health_max" 			"6"
+		"armor_max" 			"5"
+		"armor_regen_per_turn" 	"0"
+		"baseDamage"  			"4"
+		"holyPoints"			"0"
+		
+		"rangedAttackRange" 	"3" 
+
+		"walkSpeed" 			"2"
+	}
+}
+
+
+"MinionClericLvl3" 
+{
+	"InheritsFrom" "MinionCleric"
+
+	"stats"
+	{
+
+		"level" 				"3"
+						
+		"health_max" 			"8"
+		"armor_max" 			"5"
+		"armor_regen_per_turn" 	"0"
+		"baseDamage"  			"5"
+		"holyPoints"			"0"
+		"armor_gain_passTurn" 	"0"
+
+		"rangedAttackRange" 	"4"
+
+		"walkSpeed" 			"2"
+	}
+}

@@ -1,0 +1,39 @@
+"UNIT_MINION_NECROMANCER_NAME_0001" = "Necromancer"
+"UNIT_MINION_NECROMANCER_LORE" = "Sulfur and rot trails in their wake; these dark wizards are no strangers to death. Though they are shunned for their practices, they have emerged to fight beyond their last breath against the forces of darkness."
+
+"UNIT_SUMMON_SKELETON_NAME_" = "Skeleton Summon"
+
+
+"SKILL_necro_bolt_of_sickness_NAME" = "Bolt of Sickness"
+"SKILL_necro_bolt_of_sickness_DESCRIPTION" = "Casts a simple magic bolt that damages its target."
+"SKILL_necro_bolt_of_sickness_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If the target dies, a pool of acid spawns in their place."
+"SKILL_necro_bolt_of_sickness_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinRangedDmg} - {MaxRangedDmg} {icon#damageMagical}</style>\nEPIC acid duration: <style="highlight"> {AcidDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_test_ability_NAME" = "Test Ability"
+"SKILL_test_ability_DESCRIPTION" = "ERm test."
+"SKILL_test_ability_DESCRIPTION_DATA" = "Summon duration: <style="highlight">Shield? {icon#turns}\nRange: <style="highlight">I guess</style>"
+
+"SKILL_necro_skeleton_summon_NAME" = "Walking Dead"
+"SKILL_necro_skeleton_summon_DESCRIPTION" = "Summons an expendable, weaker skeleton to fight."
+"SKILL_necro_skeleton_summon_DESCRIPTION_DATA" = "Summon duration: <style="highlight">{duration} {icon#turns}\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_necro_pestilence_NAME" = "Pestilence"
+"SKILL_necro_pestilence_DESCRIPTION" = "Cast a wave of decay on empty hexes that inflicts <style="debuff">poison</style> on enemies that walk on it."
+"SKILL_necro_pestilence_DESCRIPTION_DATA" = "Poison pool duration: <style="highlight">{floorDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_necro_fresh_meat_NAME" = "Fresh Meat"
+"SKILL_necro_fresh_meat_DESCRIPTION" = "Summons the resurrected corpse of a now forgotten soul. Its melee attacks restore 1 health."
+"SKILL_necro_fresh_meat_DESCRIPTION_DATA" = "Summon duration: <style="highlight">{duration} {icon#turns}\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_necro_unstable_disease_NAME" = "Unstable Disease"
+"SKILL_necro_unstable_disease_DESCRIPTION" = "Unleash a draconic spell that deals magic damage and inflicts <style="debuff">poison</style> on an single enemy."
+"SKILL_necro_unstable_disease_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If the target is killed, it explodes, spreading the disease to nearby units within a {epicRadius}-hex radius."
+"SKILL_necro_unstable_disease_DESCRIPTION_DATA" = "Damage: <style="damage">{RangedDmg} {icon#damageMagical}</style>\nPoison duration: <style="highlight">{poisonDuration} {icon#turns}</style>\nEPIC damage: <style="damage">{epicDamage} {icon#damageMagical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_necro_lord_of_the_horde_NAME" = "Lord of the Horde"
+"SKILL_necro_lord_of_the_horde_DESCRIPTION" = "Summons the resurrected corpse of a seasoned warrior. Its combat prowess surpasses the limits of death itself. Its melee attacks restore 1 health and it reflects damage back to melee attackers."
+"SKILL_necro_lord_of_the_horde_DESCRIPTION_DATA" = "Summon duration: <style="highlight">{duration} {icon#turns}\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_zombie_lifesteal_NAME" = "Life Steal"
+"SKILL_zombie_lifesteal_DESCRIPTION" = "Strikes a target and heals in the process."
+"SKILL_zombie_lifesteal_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nEpic healing: <style="buff">{heal} {icon#statHP}</style>\nRange: <style="highlight">MELEE</style>"

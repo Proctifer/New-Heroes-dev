@@ -1,0 +1,167 @@
+"high_enchantress_wild_omen"
+{
+    
+    
+    "AbilityBehavior"   "POINT_TARGET | AOE | NEEDS_CLEAR_LINE_OF_SIGHT_EXCEPT_UNITS"
+    "AnimationID"   "SpellCastB"
+    "CastFXId"      "HighEnchantressParasiteBlastCastFXMega"
+    "Icon"          "GaAttack"
+    
+    "AbilityTeamFilter" "TEAM_ENEMY"
+    "AbilityAOERange" "%distanceToTravel"
+    "AbilityAOEKind" "RANGE_TUNNEL"
+    "AbilityAOEWidth" "1"
+    "AbilityAOECenterOnCaster" "1"
+    "AbilityAOEAffectsCaster" "0"
+    "AbilityCastRange" "%distanceToTravel"
+    "AbilityCooldown"   "4"
+    "AbilityAPCost"     "1"
+    
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type" "FIELD_EXPRESSION"
+            "damage"  "stat(%CASTER, #attackDamage)-3"
+        }
+
+        "02"
+        {
+            "var_type" "FIELD_EXPRESSION"
+            "duration"  "2"
+        }
+
+        "03"
+        {
+            "var_type" "FIELD_EXPRESSION"
+            "range"  "stat(%CASTER, #rangedAttackRange)"
+        }
+
+        "04"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "distanceToTravel"      "3"
+        }
+
+        "05"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "cooldownOffset"        "1"
+        }
+
+        "20"
+        {
+            "var_type" "FIELD_STRING"
+            "iconDamageType"  "damageMagical"
+        }
+    }
+
+    "OnAbilityStart"
+    {
+        "StartLogicTick"
+        {
+            "Time" "0.5"
+            "TickType" "PriorityCenter"
+            "Position" "unitPosition(%SOURCE)"
+        }
+    }
+    
+    "OnAbilityAction"
+    {
+        "PlaySound"
+        {
+            "Sound" "#krl_sfx_combatGeneric_fumesExplosion"
+        }
+
+        "ActOnHexas"
+        {
+            "Kind"              "RANGE_TUNNEL"
+            "Origin"            "unitHex(%SOURCE)"
+            "End"               "positionHex(%TARGET)"
+            "Range"             "%distanceToTravel"
+            "MinRange"          "1"
+            "Random"            "0"
+            "IteratorName"      "#hexa"
+            "IteratorIndexName" "#hexaIndex"
+        
+            "Actions"    
+            {
+                "AttachEffect"
+                {
+                    "EffectName" "SBFAspectMagicAttackExplosionFXMega"
+                    "Target" "hexPosition(%hexa)"
+                }
+
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"      "hexPosition(%hexa)"
+                        "Radius"      "0"
+                        "Teams"       "TEAM_ALL"
+                    }
+
+                    "IteratorName" "#newTarget"
+                 
+                    "Actions"    
+                    {
+                        "Hit"
+                        {
+                            "Target" "%newTarget"
+                            "Tags" "stringList(#AOE)"
+
+                            "InitActions"
+                            {
+                                "AddDamage"
+                                {
+                                    "Type"          "DAMAGE_MAGICAL"
+                                    "Damage"        "expr(%damage)"
+                                }
+                            }
+
+                            "Actions"
+                            {
+                                "Conditional"
+                                {
+                                    "Condition" "isOnState(%newTarget, #DEAD) && not(isOnState(%newTarget, #PROP))"
+                                    
+                                    "Actions" 
+                                    {
+                                        "MarkHitLegendary"
+                                        {
+                                        }
+                                        
+                                        "UnitRaiseMessage"
+                                        {
+                                            "Unit" "%HITSOURCE"
+                                            "#Text" "REPLENISHED!!"
+                                            "Icon" "Preparation"
+                                        }
+
+                                        "OffsetCooldown"
+                                        {
+                                            "Target" "%HITSOURCE"
+                                            "Offset" "0-%cooldownOffset"
+                                        }
+                                    }
+                                    
+                                    "ElseActions"
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "modifier_asleep"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "expr(%duration)"
+                                            "Refresh"       "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

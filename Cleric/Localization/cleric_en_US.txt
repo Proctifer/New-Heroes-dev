@@ -1,0 +1,57 @@
+"UNIT_MINION_CLERIC_NAME_0001" = "Cleric"
+"UNIT_MINION_CLERIC_LORE" = "The clerics enact their holy power through combat and devout study of divine magic. They speak their message softly but carry a big stick for good measure."
+
+
+
+"SKILL_cleric_whack_NAME" = "Whack"
+"SKILL_cleric_whack_DESCRIPTION" = "Strikes the target, dealing physical damage."
+"SKILL_cleric_whack_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Gains temporary extra armor for executing the attack without moving."
+"SKILL_cleric_whack_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nEpic Armor: <style="buff">+{extraArmor} {icon#statArmor}</style>\nRange: <style="highlight">MELEE</style>"
+
+"SKILL_cleric_unshakable_NAME" = "Unshakable"
+"SKILL_cleric_unshakable_DESCRIPTION" = "The Cleric demonstrates his unwavering faith by standing still, gaining extra armor and becoming immune to knockback until his next turn if he does not move."
+"SKILL_cleric_unshakable_DESCRIPTION_DATA" = "Bonus Armor: <style="buff">+{extraArmor} {icon#statArmor}</style>"
+
+"SKILL_cleric_communion_NAME" = "Communion"
+"SKILL_cleric_communion_DESCRIPTION" = "With a prayer, the Cleric gives a selected ally and himself increased attack."
+"SKILL_cleric_communion_DESCRIPTION_DATA" = "Self Attack Bonus: <style="buff">+{DamageSelf} {icon#damagePhysical}</style>\nAlly Attack Bonus: <style="buff">+{DamageAlly} {icon#damagePhysical}</style>\nDuration: <style="highlight">{duration}</style> {icon#turns}\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_cleric_communion_DESCRIPTION_EXTRA" = "<style="extra">The Cleric must buff an ally in order to gain the effect.</style>"
+
+"SKILL_cleric_salvation_NAME" = "Salvation"
+"SKILL_cleric_salvation_DESCRIPTION" = "Prays for a miracle, reducing the attack damage stat of enemies in a targeted area to 1 for 1 turn."
+"SKILL_cleric_salvation_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Increased duration if the Cleric has the <style="highlight">Communion</style> buff."
+"SKILL_cleric_salvation_DESCRIPTION_DATA" = "Duration: <style="highlight">{duration}</style> {icon#turns}\nEPIC duration: <style="highlight">{extraDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_cleric_providence_NAME" = "Providence"
+"SKILL_cleric_providence_DESCRIPTION" = "The Cleric rejuvenates himself and surrounding allies with a holy blessing, recharging their ability cooldowns."
+"SKILL_cleric_providence_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Reapplies the <style="highlight">Communion</style> buff to allies that already have the buff."
+"SKILL_cleric_providence_DESCRIPTION_DATA" = "Cooldown Reduction: <style="highlight">{cooldownOffset}</style> {icon#turns}\nRange: <style="highlight">SELF</style>"
+
+"SKILL_cleric_divine_intervention_NAME" = "Divine Intervention"
+"SKILL_cleric_divine_intervention_DESCRIPTION" = "Invokes holy power to summon a beam of cleansing light which heals and removes all <style="debuff">weakened</style> effects."
+"SKILL_cleric_divine_intervention_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Grants damage reduction if the Cleric has the <style="highlight">Communion</style> buff."
+"SKILL_cleric_divine_intervention_DESCRIPTION_DATA" = "Damage Reduction: <style="buff">{damageReduction} {icon#damageTrue}</style>\nDuration: <style="highlight">{duration}</style> {icon#turns}\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_cleric_smite_NAME" = "Smite"
+"SKILL_cleric_smite_DESCRIPTION" = "Calls upon the wrath of the heavens centered around a targeted enemy, hitting it twice and many enemies up to 3 hexes away from the target once with divine lightning."
+"SKILL_cleric_smite_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nNumber of Bolts: <style="highlight">{numberOfHits}</style>\nAOE size: <style="highlight">{aoeRadius}</style>"
+"SKILL_cleric_smite_DESCRIPTION_EXTRA" = "<style="extra">This skill will not repeat targets.</style>"
+
+
+"COMBAT_MODIFIER_cleric_unshakable_modifier_TITLE" = "Unshakable Faith"
+"COMBAT_MODIFIER_cleric_unshakable_modifier_DESCRIPTION" = "This unit is blessed by <style="highlight">Unshakable</style>, increasing armor while standing still."
+
+"COMBAT_MODIFIER_modifier_cleric_salvation_TITLE" = "Enfeebled"
+"COMBAT_MODIFIER_modifier_cleric_salvation_DESCRIPTION" = "This unit's damage stat is reduced to 1. Flat damage scaling on abilities is unaffected."
+
+"COMBAT_MODIFIER_modifier_communion_TITLE" = "Communion"
+"COMBAT_MODIFIER_modifier_communion_DESCRIPTION" = "This unit is blessed by <style="highlight">Communion</style>, increasing their damage."
+
+"COMBAT_MODIFIER_modifier_communion_self_TITLE" = "Communion"
+"COMBAT_MODIFIER_modifier_communion_self_DESCRIPTION" = "This unit is blessed by <style="highlight">Communion</style>, increasing their damage."
+
+"COMBAT_MODIFIER_cleric_divine_intervention_modifier_TITLE" = "Divine Intervention"
+"COMBAT_MODIFIER_cleric_divine_intervention_modifier_DESCRIPTION" = "This unit is protected, reducing all incoming damage by 1."
+
+"COMBAT_MODIFIER_modifier_whack_epic_TITLE" = "Bolstered"
+"COMBAT_MODIFIER_modifier_whack_epic_DESCRIPTION" = "The Cleric has gained armor from killing a unit."

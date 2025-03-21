@@ -1,0 +1,233 @@
+"cleric_divine_intervention"
+{
+    "AbilityBehavior"           "POINT_TARGET | AOE | POSITIVE_EFFECT | DOESNT_CONSUME_MOVE | FAKE_ACTION"
+    "AbilityAOETeamFilter"      "TEAM_FRIENDLY"
+
+    "AnimationID"               "SpellCastB"
+    "CastFXId"                  "HealingCastFXMega"
+    "Icon"                      "ShieldWall02"
+    
+    "AbilityAOEKind"            "RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster"  "0"
+    "AbilityAOEAffectsCaster"   "1"
+
+    "AbilityAOERange"           "%aoeRadius"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"           "3"
+    "AbilityAPCost"             "0"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      			"FIELD_FLOAT"
+            "damageReduction"           "-1"
+        }
+
+        "02"
+        {
+            "var_type"      			"FIELD_FLOAT"
+            "aoeRadius"     			"1"
+        }
+		
+		"03"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"2"
+		}
+
+        "04"
+        {
+            "var_type"					"FIELD_EXPRESSION"
+			"heal"					    "ceil(stat(%CASTER, #attackDamage) / 2)"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+        "Conditional" 
+        {
+            "Condition" "hasModifier(%CASTER, #modifier_communion_self)"
+
+            "Actions"
+            {
+                "StartLogicTick"
+                {
+                    "Time"          "1.5"
+                    "TickType"      "PriorityCenter"
+                    "Position"      "unitPosition(%TARGET)"
+                }
+
+                "Delay"
+                {
+                    "Time"          "1"
+                    "Actions"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName" "DivineInterventionStrikeFXMega"
+                            "Target"     "%TARGET"
+                        }
+
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"        "%TARGET"
+                                "Radius"        "%aoeRadius"
+                                "Teams"         "TEAM_FRIENDLY"
+                                "CustomFilter"  "customUnitFilter(#theUnit, not(isOnState(%theUnit, #PROP)))"
+                            }
+
+                            "IteratorName" "#newTarget"
+                        
+                            "Actions"    
+                            {
+                                "Heal"
+                                {
+                                    "Target"        "%newTarget"
+                                    "HealAmount"    "expr(%heal)"
+                                }
+
+                                "RemoveModifier"
+                                {
+                                    "ModifierTag"   "dot"
+                                    "Target"        "%newTarget"
+                                }
+
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"      "cleric_divine_intervention_modifier"
+                                    "Target"            "%newTarget"
+                                    "Duration"          "%duration"
+                                }
+
+                                "HitLegendaryTriggered"
+                                {
+                                    "Unit"              "%newTarget"
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            "ElseActions"
+            {
+                "StartLogicTick"
+                {
+                    "Time"          "1.5"
+                    "TickType"      "PriorityCenter"
+                    "Position"      "unitPosition(%TARGET)"
+                }
+
+                "Delay"
+                {
+                    "Time"          "1"
+                    "Actions"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName" "DivineInterventionStrikeFXMega"
+                            "Target"     "%TARGET"
+                        }
+
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"        "%TARGET"
+                                "Radius"        "%aoeRadius"
+                                "Teams"         "TEAM_FRIENDLY"
+                                "CustomFilter"  "customUnitFilter(#theUnit, not(isOnState(%theUnit, #PROP)))"
+                            }
+
+                            "IteratorName" "#newTarget"
+                        
+                            "Actions"    
+                            {
+                                "Heal"
+                                {
+                                    "Target"        "%newTarget"
+                                    "HealAmount"    "expr(%heal)"
+                                }
+
+                                "RemoveModifier"
+                                {
+                                    "ModifierTag"   "dot"
+                                    "Target"        "%newTarget"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+	
+	"Modifiers"
+	{
+		"cleric_divine_intervention_modifier"
+		{
+			"EffectName"                "AjaxsBlessingAuraFXMega"
+            "Icon"                      "ShieldOfRetribution"
+            "IconPriority"              "50"
+
+            
+            "OnHitPreProcessDamages"
+            {
+                "AddDamage"
+                {
+                    "Type"              "DAMAGE_PHYSICAL"
+                    "Damage"            "%damageReduction"
+                }
+
+                "AddDamage"
+                {
+                    "Type"              "DAMAGE_MAGICAL"
+                    "Damage"            "%damageReduction"
+                }
+
+                "AddDamage"
+                {
+                    "Type"              "DAMAGE_TRUE"
+                    "Damage"            "%damageReduction"
+                }
+
+                "AttachEffect"
+                {
+                    "EffectName"        "MartyrsInspirationShieldFXMega"
+                    "Target"            "%ATTACKED"
+                }
+            }
+		}
+	}
+	
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "3"
+            "Considerations"
+            {
+                "Has a minimum of health missing"
+                {
+                    "Curve" "Linear|10|1|0|0.9"
+                    "Consideration" "HealthMissingRelativeToValue"
+                    "Params"
+                    {
+                        "Value" "expr(%heal) * 0.3"  
+                    }
+                }
+
+                "Priorizes target with more missing health percent"
+                {
+                    "Curve" "Logistic|10|0.7|0.3|0.5"
+                    "Consideration" "HealthMissingRelativeToValue"
+                }
+            }
+        }
+    }
+}

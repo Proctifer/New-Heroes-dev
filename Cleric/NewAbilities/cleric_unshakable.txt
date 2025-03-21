@@ -1,0 +1,113 @@
+"cleric_unshakable"
+{
+    "AbilityBehavior"       "PASSIVE"
+    "Icon"                  "ShieldUp"
+
+     "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "extraArmor"       		"2"
+        }
+    }
+
+    "Modifiers"
+    {
+        "cleric_unshakable_modifier_provider"
+        {
+            "Passive"       "1"
+
+            "OnTurnStarted"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"      "cleric_unshakable_modifier"
+                    "Target"            "%TARGET"
+                }
+                
+                "ApplyModifier"
+                {
+                    "ModifierName"      "cleric_unshakable_monitor_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
+        }
+
+        "cleric_unshakable_monitor_modifier"
+        {
+            "OnUnitLeavingNode"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"      "cleric_unshakable_monitor_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
+            
+            "OnTurnFinished"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "cleric_unshakable_modifier"
+                    "Target"            "%TARGET"
+                    "Duration"          "%duration"
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"      "stoic_stance_trait_modifier"
+                    "Target"            "%TARGET"
+                    "Duration"          "%duration"
+                }
+
+                "RemoveModifier"
+                {
+                    "ModifierName"      "cleric_unshakable_monitor_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
+        }
+        
+        "cleric_unshakable_modifier"
+        {
+            "EffectName"                "KnightHoldTheLineStatusFXMega"
+            "Icon"          			"Fortify"
+            "IconPriority"  			"50"
+
+
+            "PropertiesAdd"
+            {
+                "armor_max"             "%extraArmor"
+            }
+
+            "OnRemoved"
+            {
+                "GiveArmor"
+                {
+                    "Target" "%TARGET"
+                    "ArmorAmount" "0"
+                }
+            }
+            
+            "OnAdded"
+            {
+                "GiveArmor"
+                {
+                    "Target"            "%TARGET"
+                    "ArmorAmount"       "%extraArmor"
+                }
+            }
+        }
+
+        "stoic_stance_trait_modifier"
+        {
+            "Passive" "1"
+
+            "States"
+            {
+                "CANT_BE_KNOCKED_BACK" "1"
+            }
+        }
+    }
+}

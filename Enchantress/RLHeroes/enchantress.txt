@@ -1,0 +1,118 @@
+"MinionEnchantress" 
+{
+	"UniqueId" "Enchantress"
+	"Model" "HighEnchantress"
+	"MetaExo" "ExoSkeletonHumanArcaneMage_MetaDataAsset"
+	"Name" "HIGH_ENCHANTRESS"
+	"InheritsFrom" "Hero"
+	"cinematicTags" "Enchantress|Minion|Female|ct_female|ct_minion|ct_survival|ct_wisdom|ct_ranged|ct_magic|UPGRADES_magic"
+	"nextLevelArchetype" "MinionEnchantressLvl2"
+	"Icon" "Asst_Banner_Arcane"
+	"Background" "hero_roster_legend_bg_forest"
+	"AttackType" "MAGIC"
+	"PortraitBackgroundColor" "CCDBBB"
+	"UnitOnMap" "Asst_Party_Mage"
+
+	"stats"
+	{
+		"level" "1"
+							
+		"health_max" "5"
+		"armor_max" "0"
+		"armor_regen_per_turn" "0"
+		"baseDamage"  "4"
+
+		"rangedAttackRange" "3"
+			
+			
+		"walkSpeed" "2"
+	}
+
+	"skills"
+	{
+		"100" "silveroak_forest_step_trait"
+		"101" "silveroak_sylvan_awareness"
+		"100" "magic_endturn_trait"
+	}
+
+	"skillProgression"
+	{
+		"1" 
+		{
+			"1" "high_enchantress_havoc_spirit"
+		}
+
+		"2" 
+		{
+			"1" "high_enchantress_spore_shower"
+			"2" "high_enchantress_natures_blood"
+		}
+
+		"3"
+		{
+			"1" "high_enchantress_wild_omen"
+			"2" "high_enchantress_leeching_chain02"
+		}
+	}
+
+	"defaultSkill" "high_enchantress_sylvan_bolt"
+
+	"soundConfig"
+	{	
+		"assetId" "DynamicSoundGroupSilveroakEnchantressSounds"
+		"sounds"
+		{  
+			"receiveDamage"      "krl_va_combatEnchantress_hit"
+			"receiveArmorDamage" "krl_sfx_combatGeneric_armorHit"
+			"death"              "krl_va_combatEnchantress_death"
+			"useSkill"           ""
+			"startTurn"          ""
+			"promote"            ""
+			"selectHero"         "krl_va_combatSorceress_action"
+		}
+	}
+}
+
+
+"MinionEnchantressLvl2" 
+{
+	"InheritsFrom" "MinionEnchantress"
+	"nextLevelArchetype" "MinionEnchantressLvl3"
+
+	"stats"
+	{
+		"level" "2"
+							
+		"health_max" "7"
+		"armor_max" "0"
+		"armor_regen_per_turn" "0"
+		"armor_gain_passTurn" "0"
+
+		"baseDamage"  "5"
+
+		"rangedAttackRange" "3" 
+		"walkSpeed" "3"
+	}
+}
+
+
+"MinionEnchantressLvl3" 
+{
+	"InheritsFrom" "MinionEnchantress"
+
+	"stats"
+	{
+
+		"level" "3"
+							
+		"health_max" "10"
+		"armor_max" "0"
+		"armor_regen_per_turn" "0"
+		"armor_gain_passTurn" "0"
+
+		"baseDamage"  "6"
+
+		"rangedAttackRange" "3"
+		"walkSpeed" "3"
+	}
+}

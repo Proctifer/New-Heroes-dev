@@ -1,0 +1,130 @@
+"assassin_counterattack"
+{
+    "AbilityBehavior"       "UNIT_TARGET | POSITIVE_EFFECT"
+    "AbilityTeamFilter"     "TEAM_FRIENDLY"
+
+    "AnimationID"           "SpellCastB"
+    "CastFXId"              "OrcCleaverParryStanceCastFXMega"
+    "Icon"                  "Remise"
+
+    "AbilityCastRange"      "0"
+    "AbilityCooldown"       "3"
+    "AbilityAPCost"         "1"
+
+     "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "duration"      "2"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "dodgeChance"   "100"
+        }
+		
+		"03"
+		{
+			"var_type" 		"FIELD_FLOAT"
+			"extraDamage"	"3"
+		}
+    }
+
+
+    "OnAbilityAction"
+    {
+		"Conditional"
+		{
+			"Condition" "hasModifier(%TARGET, #athletics_endturn_trait_modifier_active)"
+			
+			"Actions"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"      "assassin_counterattack_epic_modifier"
+					"Target"            "%TARGET"
+					"Duration"          "%duration"
+					"Refresh"           "1"
+				}
+			
+				"HitLegendaryTriggered"
+				{
+					"Unit"              "%TARGET"
+				}
+				
+				"ApplyModifier"
+				{
+					"ModifierName"      "assassin_counterattack_modifier"
+					"Target"            "%TARGET"
+					"Duration"          "%duration"
+					"Refresh"           "1"
+				}
+			}
+			
+			"ElseActions"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"      "assassin_counterattack_modifier"
+					"Target"            "%TARGET"
+					"Duration"          "%duration"
+					"Refresh"           "1"
+				}
+			}
+		}
+    }
+
+    "Modifiers"
+    {
+        "assassin_counterattack_modifier"
+        {
+            "Tags"              "shield"
+            "EffectName"        "CleaverParryStanceStatusFXMega"
+            "Icon"              "ParryStance"
+            "IconPriority"      "50"
+
+            "PropertiesAdd"
+            {
+                "evasion"       "(%dodgeChance)/100"
+            }
+
+            "OnPostHit"
+            {
+                "Conditional"
+                {
+                    "Condition" "hasTags(hitTags(%HIT), #MELEE, #TARGETED)"
+                    "Actions"
+                    {
+                        "QueueAttackUnit"
+                        {
+                            "Target"                "%TARGET"
+                            "AttackTarget"          "%ATTACKER"
+                        }
+                        
+                        "RemoveModifier"
+                        {
+                            "ModifierName"      "assassin_counterattack_modifier"
+                            "Target"            "%TARGET"
+                        }
+                    }
+                }
+            }
+        }
+		
+		"assassin_counterattack_epic_modifier"
+		{
+            "Tags"              "shield"
+            "EffectName"        "CleaverParryStanceStatusFXMega"
+            "Icon"              "Enraged01"
+            "IconPriority"      "50"
+
+            "PropertiesAdd"
+            {
+				"extraDamage"       "%extraDamage"
+            }
+        }
+		
+    }
+}

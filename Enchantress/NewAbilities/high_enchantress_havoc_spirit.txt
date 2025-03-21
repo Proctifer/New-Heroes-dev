@@ -1,0 +1,271 @@
+"high_enchantress_havoc_spirit"
+{
+    "AbilityBehavior"           "UNIT_TARGET"
+    "AbilityTeamFilter"         "TEAM_ENEMY"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)+1"
+    "AbilityCastMinRange"       "0"
+    "AbilityCooldown"           "4"
+    "AbilityAPCost"             "2"
+    "AnimationID"               "SpellCastB"
+    "Icon"                      "NokAttack"
+    "CastFXId"                  "HighEnchantressParasiteBlastCastFXMega"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_EXPRESSION"
+            "damage"                    "stat(%CASTER, #attackDamage)-1"
+        }
+
+        "02"
+        {
+            "var_type"                  "FIELD_FLOAT"        
+            "nextTargetRange"           "2"
+        }
+
+        "03" 
+        {
+            "var_type"                  "FIELD_EXPRESSION"
+            "bleedDuration"             "2"
+        }
+
+        "04"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "maxTargets"                "3"
+        }
+
+        "05"
+        {
+            "var_type"                  "FIELD_EXPRESSION"        
+            "rangeTooltìp"              "stat(%CASTER, #rangedAttackRange)"
+        }
+
+        "06"
+        {
+            "var_type"                  "FIELD_EXPRESSION"        
+            "nextTargetRangeTooltip"   "(expr(%nextTargetRange))-1"
+        }
+
+        "20"
+        {
+            "var_type" "FIELD_STRING"
+            "iconDamageType"  "damagePhysical"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "SetToContext"
+        {
+            "Context"                   "currentContext()"
+            "Key"                       "#sourcePosition"
+            "Value"                     "unitPosition(%SOURCE)"
+            "Type"                      "FIELD_OBJECT"
+        }
+
+        "CreateObjectList"
+        {
+            "Name"              "#hitUnits"
+        }
+
+        "TrackingProjectile"
+        {
+            "Target"                "%TARGET"
+            "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+            "TargetPos"             "unitPosition(%TARGET, #Chest)"
+            "Model"                 "SBFAspectPhysicalProjectile" 
+
+            "Params" 
+            {
+                "damage" 
+                {
+                    "type"          "FIELD_FLOAT"
+                    "value"         "expr(%damage)"
+                }
+
+                "maxTargets" 
+                {
+                    "type"          "FIELD_FLOAT"
+                    "value"         "%maxTargets"
+                }
+
+                "firstHit" 
+                {
+                    "type"          "FIELD_FLOAT"
+                    "value"         "1"
+                }
+            }
+        }
+
+        "AttachEffect"
+        {
+            "EffectName"            "RegsonTwilightStepSmokeFXMega"
+            "Target"                "unitPosition(%SOURCE)"
+        }
+
+        "MoveUnit"
+        {
+            "Target"                "%SOURCE"
+            "Position"              "newPoint(1000, 1000, 0)"
+        }
+
+        "ApplyModifier"
+        {
+            "ModifierName"          "disable_unit_modifier"
+            "Target"                "%SOURCE"
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {   
+        "Hit"
+        {
+            "Target"            "%TARGET"
+            "EffectName"        "SBFAspectPhysicalHitFXMega" 
+            "Tags"              "stringList(#PROJECTILE)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_PHYSICAL"
+                    "Damage"        "%damage"
+                }
+                
+                "Conditional"
+                {
+                    "Condition" "isOnState(%HITTARGET, #IMMOBILIZED)"
+
+                    "Actions" 
+                    {
+                        "MarkHitLegendary"
+                        {
+                        }
+                    }
+                }
+            }
+            
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "hitIsLegendary(%HIT)"
+
+                    "Actions" 
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_new_bleeding"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "expr(%bleedDuration)"
+                            "Refresh"       "1"
+                        }
+                    }
+                }
+            }
+        }
+
+        "AddObjectToList" 
+        {
+            "List"                      "%hitUnits"
+            "Value"                     "%TARGET"
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"                "%TARGET"
+                "Radius"                "%nextTargetRange"
+                "Teams"                 "TEAM_ENEMY"
+                "ExcludedUnits"         "%hitUnits"
+                "MaxTargets"            "1"
+            }
+
+            "IteratorName"              "#newTarget"
+        
+            "Actions"    
+            {
+                "Conditional"
+                {
+                    "Condition"         "listCount(%hitUnits) < %maxTargets"
+
+                    "Actions" 
+                    {
+                        "TrackingProjectile"
+                        {
+                            "Target"                "%newTarget"
+                            "SourcePos"             "unitPosition(%TARGET, #Chest)"
+                            "TargetPos"             "unitPosition(%newTarget, #Chest)"
+                            "Model"                 "SBFAspectPhysicalProjectile"
+
+                            "Params" 
+                            {
+                                "damage" 
+                                {
+                                    "type"         "FIELD_FLOAT"
+                                    "value"        "%damage"
+                                }
+
+                                "maxTargets" 
+                                {
+                                    "type"          "FIELD_FLOAT"
+                                    "value"         "%maxTargets"
+                                }
+                            }
+                        }
+                    }
+
+                    "ElseActions"
+                    {
+                        "MoveUnit"
+                        {
+                            "Target"        "%SOURCE"
+                            "Position"      "%sourcePosition"
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName"            "RegsonTwilightStepSmokeFXMega"
+                            "Target"                "unitPosition(%SOURCE)"
+                        }
+
+                        "RemoveModifier"
+                        {
+                            "ModifierName"    "disable_unit_modifier"
+                            "Target"         "%SOURCE"
+                        }
+
+                        "PlaySound"
+                        {
+                            "Sound" "#krl_sfx_combatSBF_physicalReappear"
+                        }
+                    }
+                }
+            }
+            
+            "ActionsIfNotFound"
+            {
+                 "MoveUnit"
+                {
+                    "Target"        "%SOURCE"
+                    "Position"      "%sourcePosition"
+                }
+
+                "AttachEffect"
+                {
+                    "EffectName"            "RegsonTwilightStepSmokeFXMega"
+                    "Target"                "unitPosition(%SOURCE)"
+                }
+
+                "RemoveModifier"
+                {
+                    "ModifierName"    "disable_unit_modifier"
+                    "Target"         "%SOURCE"
+                }
+            }
+        }
+    }
+}

@@ -37,6 +37,13 @@
 
     "OnAbilityAction"
     {
+		"RemoveModifier"
+		{
+			"ModifierName"		"modifier_communion"
+			"Target"			"%TARGET"
+		}
+		
+	
         "ApplyModifier"
         {
             "ModifierName"      "modifier_communion"
@@ -52,6 +59,12 @@
                 }
             }
         }
+		
+		"RemoveModifier"
+		{
+			"ModifierName"		"modifier_communion_self"
+			"Target"			"%CASTER"
+		}
 
         "ApplyModifier"
         {

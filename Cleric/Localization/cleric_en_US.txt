@@ -24,7 +24,7 @@
 
 "SKILL_cleric_providence_NAME" = "Providence"
 "SKILL_cleric_providence_DESCRIPTION" = "The Cleric rejuvenates himself and surrounding allies with a holy blessing, recharging their ability cooldowns."
-"SKILL_cleric_providence_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Reapplies the <style="highlight">Communion</style> buff to allies that already have the buff."
+"SKILL_cleric_providence_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Reapplies the <style="highlight">Communion</style> buff to allies that already have the buff, including himself."
 "SKILL_cleric_providence_DESCRIPTION_DATA" = "Cooldown Reduction: <style="highlight">{cooldownOffset}</style> {icon#turns}\nRange: <style="highlight">SELF</style>"
 
 "SKILL_cleric_divine_intervention_NAME" = "Divine Intervention"
@@ -39,7 +39,7 @@
 
 
 "COMBAT_MODIFIER_cleric_unshakable_modifier_TITLE" = "Unshakable Faith"
-"COMBAT_MODIFIER_cleric_unshakable_modifier_DESCRIPTION" = "This unit is blessed by <style="highlight">Unshakable</style>, increasing armor while standing still."
+"COMBAT_MODIFIER_cleric_unshakable_modifier_DESCRIPTION" = "This unit is blessed by <style="highlight">Unshakable</style>, increasing armor while standing still and granting immunity to knockback."
 
 "COMBAT_MODIFIER_modifier_cleric_salvation_TITLE" = "Enfeebled"
 "COMBAT_MODIFIER_modifier_cleric_salvation_DESCRIPTION" = "This unit's damage stat is reduced to 1. Flat damage scaling on abilities is unaffected."

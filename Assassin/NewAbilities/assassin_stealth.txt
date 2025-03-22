@@ -115,13 +115,13 @@
         "assassin_stealth_modifier"
         {
             "Tags"              "shield"
+            "EffectName"        "AsraSpiderStanceStatusFXMega"
             "Icon"              "ShieldOfShadows"
             "IconPriority"      "50"
             
             "States"
             {
                 "NON_TARGETABLE"            "1"
-                "INVISIBLE"                 "1"
                 "CANT_BE_POISONED"          "1"
                 "CANT_BE_BURNT"             "1"
                 "CANT_BE_BLED"              "1"

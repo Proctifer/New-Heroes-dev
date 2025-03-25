@@ -25,8 +25,13 @@
 
 "SKILL_assassin_backstab_NAME" = "Backstab"
 "SKILL_assassin_backstab_DESCRIPTION" = "The Assassin teleports behind a targeted enemy and performs <style="highlight">Lethal Strike</style> on them."
-"SKILL_assassin_backstab_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If the target is killed, the assassin gains an increased dodge change."
+"SKILL_assassin_backstab_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If the target is killed, the assassin gains an increased dodge chance."
 "SKILL_assassin_backstab_DESCRIPTION_DATA" = "EPIC dodge chance: <style="highlight">{dodgeChance}%</style>\nEPIC duration: <style="highlight">{duration} {icon#turns}</style>\nRange: <style="highlight">GLOBAL</style>"
+
+"SKILL_assassin_sneak_attack_NAME" = "Sneak Attack"
+"SKILL_assassin_sneak_attack_DESCRIPTION" = "The Assassin delivers an armor-piercing strike to his target."
+"SKILL_assassin_sneak_attack_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If the assassin is invisible and executes the attack as a backstab, resets the duration of invisibility and all damage buffs he currently has."
+"SKILL_assassin_sneak_attack_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nRange: <style="highlight">MELEE</style>"
 
 
 "SKILL_assassin_quickstep_NAME" = "Quickstep"

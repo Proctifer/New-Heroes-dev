@@ -30,7 +30,7 @@
 
 "SKILL_assassin_sneak_attack_NAME" = "Sneak Attack"
 "SKILL_assassin_sneak_attack_DESCRIPTION" = "The Assassin delivers an armor-piercing strike to his target."
-"SKILL_assassin_sneak_attack_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If the assassin is invisible and executes the attack as a backstab, resets the duration of invisibility and all damage buffs he currently has."
+"SKILL_assassin_sneak_attack_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If the assassin kills his target while invisible, resets the duration of invisibility and all damage buffs he currently has."
 "SKILL_assassin_sneak_attack_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nRange: <style="highlight">MELEE</style>"
 
 

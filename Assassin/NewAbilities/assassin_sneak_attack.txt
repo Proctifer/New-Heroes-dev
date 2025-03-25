@@ -39,10 +39,13 @@
             		"Type"            "DAMAGE_TRUE"
                     "Damage"        "expr(%damage)"
             	}
+            }
 
+            "Actions"
+            {
             	"Conditional"
             	{
-            		"Condition"	"(not(isOnState(%TARGET, #CANT_BE_BACKSTABBED)) && %BACKSTAB) && hasModifier(%CASTER, #assassin_stealth_modifier)"
+            		"Condition"	"isOnState(%TARGET, #DEAD) && hasModifier(%CASTER, #assassin_stealth_modifier)"
 
             		"Actions"
             		{
@@ -56,12 +59,12 @@
 						}
 
 						"ApplyModifier"
-						{
-						    "ModifierName"      "assassin_stealth_modifier"
-						    "Target"            "%CASTER"
-						    "Duration"          "%duration"
-						    "Refresh"           "1"
-						}
+		                {
+		                    "ModifierName"      "assassin_stealth_modifier"
+		                    "Target"            "%CASTER"
+		                    "Duration"          "%duration"
+		                    "Refresh"           "1"
+		                }
 
 						"Conditional"
 						{
@@ -110,7 +113,6 @@
             		}
             	}
             }
-
 
     	}
     }

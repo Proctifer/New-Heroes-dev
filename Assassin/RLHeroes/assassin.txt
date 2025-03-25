@@ -51,7 +51,7 @@
 		"3"
 		{
 			"1" "assassin_backstab"
-			"2" "assassin_quickstep"
+			"2" "assassin_sneak_attack"
 		}
 	}
 

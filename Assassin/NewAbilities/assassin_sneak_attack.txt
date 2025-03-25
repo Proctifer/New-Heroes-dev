@@ -1,0 +1,140 @@
+"assassin_sneak_attack"
+{
+	"AbilityBehavior"	"MELEE"
+	"AbilityTeamFilter" "TEAM_ENEMY"
+    "AbilityCastRange" "stat(%CASTER, #meleeRange)"
+    "AbilityCooldown"   "1"
+    "AbilityAPCost"     "2"
+    "AnimationID"   "Attack"
+    "Icon" "Rupture"
+    "CastFXId" "RuptureCastFXMega"
+
+    "AbilitySpecial"
+    {
+    	"01"
+    	{
+    		"var_type"	"FIELD_EXPRESSION"
+    		"damage"	"stat(%CASTER, #attackDamage)"
+    	}
+
+    	"02"
+    	{
+    		"var_type"	"FIELD_FLOAT"
+    		"duration"	"2"
+    	}
+    }
+
+    "OnAbilityAction"
+    {
+    	"Hit"
+    	{
+    		"Target" "%TARGET"
+            "EffectName" "RuptureHitFXMega" 
+            "Tags" "stringList(#MELEE, #TARGETED)"
+
+            "InitActions"
+            {
+            	"AddDamage"
+            	{
+            		"Type"            "DAMAGE_TRUE"
+                    "Damage"        "expr(%damage)"
+            	}
+            }
+
+            "Actions"
+            {
+            	"Conditional"
+            	{
+            		"Condition"	"isOnState(%TARGET, #DEAD) && hasModifier(%CASTER, #assassin_stealth_modifier)"
+
+            		"Actions"
+            		{
+            			"MarkHitLegendary"
+            			{}
+
+            			"RemoveModifier"
+						{
+							"ModifierName"	"assassin_stealth_modifier"
+							"Target"	"%CASTER"
+						}
+
+						"ApplyModifier"
+		                {
+		                    "ModifierName"      "assassin_stealth_modifier"
+		                    "Target"            "%CASTER"
+		                    "Duration"          "%duration"
+		                    "Refresh"           "1"
+		                }
+
+						"Conditional"
+						{
+							"Condition"	"hasModifier(%CASTER, #assassin_stealth_epic_modifier)"
+							
+							"Actions"
+							{
+								"RemoveModifier"
+								{
+									"ModifierName"	"assassin_stealth_epic_modifier"
+									"Target"	"%CASTER"
+								}
+
+								"ApplyModifier"
+						        {
+						            "ModifierName"      "assassin_stealth_epic_modifier"
+						            "Target"            "%CASTER"
+						            "Duration"          "%duration"
+						            "Refresh"           "1"
+						        }
+							}
+						}
+
+						"Conditional"
+						{
+							"Condition"	"hasModifier(%CASTER, #assassin_stealth_epic_epic_modifier)"
+
+							"Actions"
+							{
+								"RemoveModifier"
+								{
+									"ModifierName"	"assassin_stealth_epic_epic_modifier"
+									"Target"	"%CASTER"
+								}
+
+								"ApplyModifier"
+						        {
+						            "ModifierName"      "assassin_stealth_epic_epic_modifier"
+						            "Target"            "%CASTER"
+						            "Duration"          "%duration"
+						            "Refresh"           "1"
+						        }
+							}
+						}
+
+            		}
+            	}
+            }
+
+    	}
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "2.3"
+            "Considerations"
+            {
+
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "10"  
+                    }
+                }
+            }
+        }
+    }
+}

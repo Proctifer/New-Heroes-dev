@@ -16,7 +16,7 @@
         "01"
         {
             "var_type" "FIELD_EXPRESSION"
-            "RangedDmg"  "floor(stat(%CASTER, #attackDamage)/2)"
+            "RangedDmg"  "floor(stat(%CASTER, #attackDamage)/3)"
         }
     }
 

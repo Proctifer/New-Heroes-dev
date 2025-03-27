@@ -35,6 +35,15 @@
 
     "OnAbilityAction"
     {
+	
+		"ApplyModifier"
+		{
+			"ModifierName"      "assassin_counterattack_modifier"
+			"Target"            "%TARGET"
+			"Duration"          "%duration"
+			"Refresh"           "1"
+		}
+		
 		"Conditional"
 		{
 			"Condition" "hasModifier(%TARGET, #athletics_endturn_trait_modifier_active)"
@@ -53,25 +62,34 @@
 				{
 					"Unit"              "%TARGET"
 				}
+			}
+			
+		}
+		
+		"Conditional"
+		{
+			"Condition" "hasModifier(%TARGET, #assassin_stealth_epic_modifier)"
+			
+			"Actions"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"		"assassin_stealth_epic_modifier"
+					"Target"			"%TARGET"
+				}
 				
 				"ApplyModifier"
 				{
-					"ModifierName"      "assassin_counterattack_modifier"
-					"Target"            "%TARGET"
-					"Duration"          "%duration"
-					"Refresh"           "1"
+					"ModifierName"      "assassin_counterattack_epic_modifier"
+                    "Target"            "%TARGET"
+                    "Duration"          "%duration"
+                    "Refresh"           "1"
 				}
-			}
 			
-			"ElseActions"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"      "assassin_counterattack_modifier"
-					"Target"            "%TARGET"
-					"Duration"          "%duration"
-					"Refresh"           "1"
-				}
+				"HitLegendaryTriggered"
+                {
+                    "Unit"              "%TARGET"
+                }
 			}
 		}
     }

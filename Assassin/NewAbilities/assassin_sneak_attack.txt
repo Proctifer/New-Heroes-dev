@@ -66,49 +66,7 @@
 		                    "Refresh"           "1"
 		                }
 
-						"Conditional"
-						{
-							"Condition"	"hasModifier(%CASTER, #assassin_stealth_epic_modifier)"
-							
-							"Actions"
-							{
-								"RemoveModifier"
-								{
-									"ModifierName"	"assassin_stealth_epic_modifier"
-									"Target"	"%CASTER"
-								}
-
-								"ApplyModifier"
-						        {
-						            "ModifierName"      "assassin_stealth_epic_modifier"
-						            "Target"            "%CASTER"
-						            "Duration"          "%duration"
-						            "Refresh"           "1"
-						        }
-							}
-						}
-
-						"Conditional"
-						{
-							"Condition"	"hasModifier(%CASTER, #assassin_stealth_epic_epic_modifier)"
-
-							"Actions"
-							{
-								"RemoveModifier"
-								{
-									"ModifierName"	"assassin_stealth_epic_epic_modifier"
-									"Target"	"%CASTER"
-								}
-
-								"ApplyModifier"
-						        {
-						            "ModifierName"      "assassin_stealth_epic_epic_modifier"
-						            "Target"            "%CASTER"
-						            "Duration"          "%duration"
-						            "Refresh"           "1"
-						        }
-							}
-						}
+						
 
             		}
             	}

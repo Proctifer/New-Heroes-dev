@@ -1,15 +1,16 @@
 "assassin_counterattack"
 {
-    "AbilityBehavior"       "UNIT_TARGET | POSITIVE_EFFECT"
-    "AbilityTeamFilter"     "TEAM_FRIENDLY"
+    "AbilityBehavior"               "UNIT_TARGET | POSITIVE_EFFECT"
+    "AbilityTeamFilter"             "TEAM_FRIENDLY"
+    "AbilityTargetFilterFlags"      "INCLUDE_NON_TARGETABLE"
 
-    "AnimationID"           "SpellCastB"
-    "CastFXId"              "OrcCleaverParryStanceCastFXMega"
-    "Icon"                  "Remise"
+    "AnimationID"                   "SpellCastB"
+    "CastFXId"                      "OrcCleaverParryStanceCastFXMega"
+    "Icon"                          "Remise"
 
-    "AbilityCastRange"      "0"
-    "AbilityCooldown"       "3"
-    "AbilityAPCost"         "1"
+    "AbilityCastRange"              "0"
+    "AbilityCooldown"               "3"
+    "AbilityAPCost"                 "1"
 
      "AbilitySpecial"
     {

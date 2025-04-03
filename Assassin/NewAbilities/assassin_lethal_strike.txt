@@ -31,8 +31,8 @@
         
         "04"
         {
-            "var_type"      "FIELD_EXPRESSION"
-            "epicDamage"    "ceil(stat(%CASTER, #attackDamage)/3)"
+            "var_type"      "FIELD_FLOAT"
+            "epicDamage"    "2"
         }
     }
 
@@ -63,21 +63,12 @@
                         "AddDamage"
                         {
                             "Type"          "DAMAGE_PHYSICAL"
-                            "Damage"        "expr(%epicDamage)"
+                            "Damage"        "%epicDamage"
                         } 
 
                         "MarkHitLegendary"
                         {
                         }
-                    }
-
-                    "ElseActions"
-                    {
-                        "AddDamage"
-                        {
-                            "Type"          "DAMAGE_PHYSICAL"
-                            "Damage"        "expr(%extraDamage)"
-                        } 
                     }
                 }
             }

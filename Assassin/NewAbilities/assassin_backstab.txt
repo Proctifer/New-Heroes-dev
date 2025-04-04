@@ -38,7 +38,7 @@
         {
             "Context" "currentContext()"
             "Key" "#targetPosition"
-            "Value" "hexPosition(hexNeighbour(unitHex(%TARGET), unitHex(%SOURCE), 3))"
+            "Value" "hexPosition(hexNeighbourOrNextFree(unitHex(%TARGET), unitHex(%SOURCE), 3))"
             "Type" "FIELD_OBJECT"
         }
 

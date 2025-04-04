@@ -24,7 +24,7 @@
 "SKILL_assassin_dagger_DESCRIPTION_EXTRA" = "<style="extra">The Assassin can use another skill and all remaining movement after this one.</style>"
 
 "SKILL_assassin_backstab_NAME" = "Backstab"
-"SKILL_assassin_backstab_DESCRIPTION" = "The Assassin teleports behind a targeted enemy and performs <style="highlight">Lethal Strike</style> on them."
+"SKILL_assassin_backstab_DESCRIPTION" = "The Assassin teleports to the opposite side of the targeted enemy and performs <style="highlight">Lethal Strike</style> on them. If there are no free hexes behind the target, the assassin will teleport in front of them."
 "SKILL_assassin_backstab_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If the target is killed, the assassin gains an increased dodge chance."
 "SKILL_assassin_backstab_DESCRIPTION_DATA" = "EPIC dodge chance: <style="highlight">{dodgeChance}%</style>\nEPIC duration: <style="highlight">{duration} {icon#turns}</style>\nRange: <style="highlight">GLOBAL</style>"
 

@@ -15,7 +15,7 @@
         "01"
         {
             "var_type"                  "FIELD_EXPRESSION"
-            "RangedDmg"                 "stat(%CASTER, #attackDamage)+1"
+            "RangedDmg"                 "stat(%CASTER, #attackDamage)"
         }
 
         "02"

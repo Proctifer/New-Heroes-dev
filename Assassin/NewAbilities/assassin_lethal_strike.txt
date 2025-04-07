@@ -14,13 +14,13 @@
         "01"
         {
             "var_type"      "FIELD_EXPRESSION"
-            "MinDamage"     "stat(%CASTER, #attackDamage)-1"
+            "MinDamage"     "ceil(stat(%CASTER, #attackDamage)/2)+1"
         }
 
         "02"
         {
             "var_type"      "FIELD_EXPRESSION"        
-            "MaxDamage"     "stat(%CASTER, #attackDamage)+1"
+            "MaxDamage"     "ceil(stat(%CASTER, #attackDamage)/2)+3"
         }
 
         "03"
@@ -31,8 +31,8 @@
         
         "04"
         {
-            "var_type"      "FIELD_FLOAT"
-            "epicDamage"    "2"
+            "var_type"      "FIELD_EXPRESSION"
+            "epicDamage"    "floor(stat(%CASTER, #attackDamage)/2)"
         }
     }
 

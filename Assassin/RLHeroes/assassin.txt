@@ -84,7 +84,7 @@
 		"health_max" "5"
 		"armor_max" "0"
 		"armor_regen_per_turn" "2"
-		"baseDamage" "6"
+		"baseDamage" "7"
 		"evasion" "0.4"
 		"walkSpeed" "3"
 	}
@@ -100,7 +100,7 @@
 		"health_max" "7"
 		"armor_max" "0"
 		"armor_regen_per_turn" "2"
-		"baseDamage" "7"
+		"baseDamage" "9"
 		"evasion" "0.4"
 		"walkSpeed" "3"
 	}

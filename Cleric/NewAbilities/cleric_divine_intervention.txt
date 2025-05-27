@@ -5,7 +5,7 @@
 
     "AnimationID"               "SpellCastB"
     "CastFXId"                  "HealingCastFXMega"
-    "Icon"                      "ShieldWall02"
+    "Icon"                      "Divine Intervention"
     
     "AbilityAOEKind"            "RANGE_CIRCLE"
     "AbilityAOECenterOnCaster"  "0"

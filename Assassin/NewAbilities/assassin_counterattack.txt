@@ -6,7 +6,7 @@
 
     "AnimationID"                   "SpellCastB"
     "CastFXId"                      "OrcCleaverParryStanceCastFXMega"
-    "Icon"                          "Remise"
+    "Icon"                          "Counterattack"
 
     "AbilityCastRange"              "0"
     "AbilityCooldown"               "3"
@@ -36,13 +36,39 @@
 
     "OnAbilityAction"
     {
-	
-		"ApplyModifier"
+	    "ApplyModifier"
 		{
 			"ModifierName"      "assassin_counterattack_modifier"
 			"Target"            "%TARGET"
 			"Duration"          "%duration"
 			"Refresh"           "1"
+		}
+		
+		"Conditional"
+		{
+			"Condition" "hasModifier(%TARGET, #assassin_bloodlust_modifier)"
+			
+			"Actions"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"		"assassin_bloodlust_modifier"
+					"Target"			"%TARGET"
+				}
+				
+				"ApplyModifier"
+				{
+					"ModifierName"      "assassin_bloodlust_modifier"
+                    "Target"            "%TARGET"
+                    "Duration"          "%duration"
+                    "Refresh"           "1"
+				}
+			
+				"HitLegendaryTriggered"
+                {
+                    "Unit"              "%TARGET"
+                }
+			}
 		}
 		
 		"Conditional"
@@ -53,44 +79,22 @@
 			{
 				"ApplyModifier"
 				{
-					"ModifierName"      "assassin_counterattack_epic_modifier"
+					"ModifierName"      "assassin_bloodlust_modifier"
 					"Target"            "%TARGET"
 					"Duration"          "%duration"
 					"Refresh"           "1"
 				}
 			
-				"HitLegendaryTriggered"
+				"RemoveModifier"
+				{
+					"ModifierName"		"athletics_endturn_trait_modifier_active"
+					"Target"			"%TARGET"
+				}
+
+                "HitLegendaryTriggered"
 				{
 					"Unit"              "%TARGET"
 				}
-			}
-			
-		}
-		
-		"Conditional"
-		{
-			"Condition" "hasModifier(%TARGET, #assassin_stealth_epic_modifier)"
-			
-			"Actions"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName"		"assassin_stealth_epic_modifier"
-					"Target"			"%TARGET"
-				}
-				
-				"ApplyModifier"
-				{
-					"ModifierName"      "assassin_counterattack_epic_modifier"
-                    "Target"            "%TARGET"
-                    "Duration"          "%duration"
-                    "Refresh"           "1"
-				}
-			
-				"HitLegendaryTriggered"
-                {
-                    "Unit"              "%TARGET"
-                }
 			}
 		}
     }
@@ -129,19 +133,6 @@
                         }
                     }
                 }
-            }
-        }
-		
-		"assassin_counterattack_epic_modifier"
-		{
-            "Tags"              "shield"
-            "EffectName"        "CleaverParryStanceStatusFXMega"
-            "Icon"              "Enraged01"
-            "IconPriority"      "50"
-
-            "PropertiesAdd"
-            {
-				"extraDamage"       "%extraDamage"
             }
         }
 		

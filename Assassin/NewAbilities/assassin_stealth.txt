@@ -5,7 +5,7 @@
 
     "AnimationID"           "SpellCastB"
     "CastFXId"              "ShadowStrikeCastFXMega"
-    "Icon"                  "AjaxsBlessing"
+    "Icon"                  "Stealth"
 
     "AbilityCastRange"      "0"
     "AbilityCooldown"       "4"
@@ -29,7 +29,42 @@
 
     "OnAbilityAction"
     {
-		"Conditional"
+		"ApplyModifier"
+        {
+            "ModifierName"      "assassin_stealth_modifier"
+            "Target"            "%TARGET"
+            "Duration"          "%duration"
+            "Refresh"           "1"
+        }
+		
+        "Conditional"
+		{
+			"Condition" "hasModifier(%TARGET, #assassin_bloodlust_modifier)"
+			
+			"Actions"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"		"assassin_bloodlust_modifier"
+					"Target"			"%TARGET"
+				}
+				
+				"ApplyModifier"
+				{
+					"ModifierName"      "assassin_bloodlust_modifier"
+                    "Target"            "%TARGET"
+                    "Duration"          "%duration"
+                    "Refresh"           "1"
+				}
+				
+				"HitLegendaryTriggered"
+                {
+                    "Unit"              "%TARGET"
+                }
+			}
+		}
+        
+        "Conditional"
         {
             "Condition" "hasModifier(%TARGET, #athletics_endturn_trait_modifier_active)"
             
@@ -37,7 +72,7 @@
             {
                 "ApplyModifier"
                 {
-                    "ModifierName"      "assassin_stealth_epic_modifier"
+                    "ModifierName"      "assassin_bloodlust_modifier"
                     "Target"            "%TARGET"
                     "Duration"          "%duration"
                     "Refresh"           "1"
@@ -55,69 +90,6 @@
                 }
             }
         }
-		
-		"Conditional"
-		{
-			"Condition" "hasModifier(%TARGET, #assassin_counterattack_epic_modifier)"
-			
-			"Actions"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"      "assassin_stealth_epic_modifier"
-                    "Target"            "%TARGET"
-                    "Duration"          "%duration"
-                    "Refresh"           "1"
-				}
-				
-				"RemoveModifier"
-				{
-					"ModifierName"		"assassin_counterattack_epic_modifier"
-					"Target"			"%TARGET"
-				}
-			
-				"HitLegendaryTriggered"
-                {
-                    "Unit"              "%TARGET"
-                }
-			}
-		}
-		
-		"Conditional"
-		{
-			"Condition" "hasModifier(%TARGET, #assassin_stealth_epic_modifier)"
-			
-			"Actions"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName"		"assassin_stealth_epic_modifier"
-					"Target"			"%TARGET"
-				}
-				
-				"ApplyModifier"
-				{
-					"ModifierName"      "assassin_stealth_epic_modifier"
-                    "Target"            "%TARGET"
-                    "Duration"          "%duration"
-                    "Refresh"           "1"
-				}
-				
-				"HitLegendaryTriggered"
-                {
-                    "Unit"              "%TARGET"
-                }
-			}
-		}
-		
-		"ApplyModifier"
-        {
-            "ModifierName"      "assassin_stealth_modifier"
-            "Target"            "%TARGET"
-            "Duration"          "%duration"
-            "Refresh"           "1"
-        }
-		
     }
 
     "Modifiers"
@@ -126,7 +98,7 @@
         {
             "Tags"              "shield"
             "EffectName"        "AsraSpiderStanceStatusFXMega"
-            "Icon"              "ShieldOfShadows"
+            "Icon"              "SpiderStance"
             "IconPriority"      "50"
             
             "States"
@@ -142,10 +114,9 @@
             }
         }
 		
-		"assassin_stealth_epic_modifier"
+		"assassin_bloodlust_modifier"
 		{
             "Tags"              "shield"
-            "EffectName"        "AsraSpiderStanceStatusFXMega"
             "Icon"              "Enraged01"
             "IconPriority"      "50"
 			
@@ -153,8 +124,6 @@
             {
                 "extraDamage"       "%extraDamage"
             }
-            
         }
-		
     }
 }

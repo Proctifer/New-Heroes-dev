@@ -5,8 +5,8 @@
     "AbilityCastRange" "stat(%CASTER, #meleeRange)"
     "AbilityCooldown"   "0"
     "AbilityAPCost"     "stat(%CASTER, #attackCostAP)"
-    "AnimationID"   "Attack"
-    "Icon" "Slash"
+    "AnimationID"       "Attack"
+    "Icon"              "Lethal Strike"
     "CastFXId" "CommonSlashSoundFXMega"
 
     "AbilitySpecial" 
@@ -63,7 +63,7 @@
                         "AddDamage"
                         {
                             "Type"          "DAMAGE_PHYSICAL"
-                            "Damage"        "%epicDamage"
+                            "Damage"        "expr(%epicDamage)"
                         } 
 
                         "MarkHitLegendary"

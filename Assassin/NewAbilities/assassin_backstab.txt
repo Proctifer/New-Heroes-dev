@@ -8,7 +8,7 @@
     "AbilityAPCost"             "2"
     "AnimationID"               "Attack"
     "CastFXId"                  "ShadowStrikeCastFXMega"
-    "Icon"                      "OpportunityStrike"
+    "Icon"                      "Backstab"
 
    
     "AbilitySpecial" 
@@ -20,13 +20,13 @@
         }
         "02"
         {
-            "var_type"      "FIELD_FLOAT"
-            "dodgeChance"      "70"
+            "var_type"              "FIELD_FLOAT"
+            "dodgeChance"           "70"
         }
         "03"
         {
-            "var_type"      "FIELD_FLOAT"
-            "duration"      "1"
+            "var_type"              "FIELD_FLOAT"
+            "duration"              "2"
         }
     }
 
@@ -36,10 +36,10 @@
     {
         "SetToContext"
         {
-            "Context" "currentContext()"
-            "Key" "#targetPosition"
-            "Value" "hexPosition(hexNeighbourOrNextFree(unitHex(%TARGET), unitHex(%SOURCE), 3))"
-            "Type" "FIELD_OBJECT"
+            "Context"   "currentContext()"
+            "Key"       "#targetPosition"
+            "Value"     "hexPosition(hexNeighbourOrNextFree(unitHex(%TARGET), unitHex(%SOURCE), 3))"
+            "Type"      "FIELD_OBJECT"
         }
 
         "AttachEffect"
@@ -70,10 +70,10 @@
         "RemoveModifier"
         {
             "ModifierName"      "assassin_backstab_detect_modifier"
-            "Target"            "%SOURCE"
+            "Target"            "%TARGET"
         }
-		
-		"SetStat"
+
+        "SetStat"
         {
             "Target" "%SOURCE"
             "Stat" "#actionsAvailable"
@@ -87,11 +87,12 @@
 	
         "assassin_backstab_detect_modifier"
         {
-            "OnUnitDiedGlobal"
+            "OnPostHitGlobal"
             {
                 "Conditional" 
                 {
-                    "Condition" "equal(%INSTIGATOR, %TARGET) && matchesGroup(unitGroup(%DEAD), @UnitGroup(BadSide)) && not(isOnState(%DEAD, #NO_SKULL)) && not(isOnState(%DEAD, #IS_CINEMATIC))"
+                    "Condition" "hitConnected(%HIT) && isOnState(%ATTACKED, #DEAD) && equal(%TARGET, %ATTACKER) "
+                    
                     "Actions"
                     {
                        "ApplyModifier"
@@ -101,22 +102,25 @@
                             "Duration"          "%duration"
                             "Refresh"           "1"
                         }
-
+                       
                        "HitLegendaryTriggered"
 						{
-							"Unit"              "%SOURCE"
+							"Unit"              "%TARGET"
 						}
-						
                     }
-					
+                }
+
+                "RemoveModifier"
+                {
+                    "ModifierName"      "assassin_backstab_detect_modifier"
+                    "Target"            "%TARGET"
                 }
             }
         }
+
         "assassin_dodge_increase_modifier"
         {
-            "Tags"              "shield"
-            "EffectName"        "AsraSpiderStanceStatusFXMega"
-            "Icon"              "SpiderStance"
+            "Icon"              "Rally"
             "IconPriority"      "50"
 
             "PropertiesAdd"

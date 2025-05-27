@@ -5,7 +5,7 @@
 
     "AnimationID"               "SpellCastA"
     "CastFXId"                  "MagicBoltCastFXMega"
-    "Icon"                      "WarDrums"
+    "Icon"                      "Salvation"
     
     "AbilityAOEKind"            "RANGE_CIRCLE"
     "AbilityAOECenterOnCaster"  "0"

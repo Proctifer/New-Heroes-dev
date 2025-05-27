@@ -7,15 +7,15 @@
     "AbilityCooldown"               "4"
     "AbilityAPCost"                 "2"
 
-    "AbilityAOEKind" "RANGE_CIRCLE"
-    "AbilityAOETeamFilter"  "TEAM_ENEMY"
-    "AbilityAOECenterOnCaster" "0"
-    "AbilityAOEAffectsCaster" "1"
-    "AbilityAOERange" "%aoeRadius"
+    "AbilityAOEKind"                "RANGE_CIRCLE"
+    "AbilityAOETeamFilter"          "TEAM_ENEMY"
+    "AbilityAOECenterOnCaster"      "0"
+    "AbilityAOEAffectsCaster"       "1"
+    "AbilityAOERange"               "%aoeRadius"
 
     "AnimationID"                   "SpellCastB"
     "CastFXId"                      "GenericHolyCastFXMega"
-    "Icon"                          "HolyWrath"
+    "Icon"                          "Smite"
    
     "AbilitySpecial" 
     {

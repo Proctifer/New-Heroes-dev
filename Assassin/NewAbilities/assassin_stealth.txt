@@ -38,31 +38,26 @@
         }
 		
         "Conditional"
-		{
-			"Condition" "hasModifier(%TARGET, #assassin_bloodlust_modifier)"
+	{
+		"Condition" "hasModifier(%TARGET, #assassin_bloodlust_modifier)"
 			
-			"Actions"
+		"Actions"
+		{
+			"RemoveModifier"
 			{
-				"RemoveModifier"
-				{
-					"ModifierName"		"assassin_bloodlust_modifier"
-					"Target"			"%TARGET"
-				}
-				
-				"ApplyModifier"
-				{
-					"ModifierName"      "assassin_bloodlust_modifier"
-                    "Target"            "%TARGET"
-                    "Duration"          "%duration"
-                    "Refresh"           "1"
-				}
-				
-				"HitLegendaryTriggered"
-                {
-                    "Unit"              "%TARGET"
-                }
+				"ModifierName"		"assassin_bloodlust_modifier"
+				"Target"			"%TARGET"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"      "assassin_bloodlust_modifier"
+				"Target"            "%TARGET"
+				"Duration"          "%duration"
+				"Refresh"           "1"
 			}
 		}
+	}
         
         "Conditional"
         {

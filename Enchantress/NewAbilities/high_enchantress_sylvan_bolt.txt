@@ -17,6 +17,13 @@
             "var_type" 			"FIELD_EXPRESSION"
             "damage"  			"stat(%CASTER, #attackDamage)"
         }
+
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "rootDuration"      "1"
+        }
+        
         "20"
         {
             "var_type" "FIELD_STRING"

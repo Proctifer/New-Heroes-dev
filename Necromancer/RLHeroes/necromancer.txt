@@ -16,7 +16,7 @@
 	"stats"
 	{
 		"level" "1"
-		"health_max" "4"
+		"health_max" "3"
 		"armor_max" "0"
 		"armor_regen_per_turn" "0"
 		"armor_gain_passTurn" "0"
@@ -86,7 +86,7 @@
 	"stats"
 	{
 		"level" "2"
-		"health_max" "5"
+		"health_max" "4"
 		"armor_max" "0"
 		"armor_regen_per_turn" "0"
 		"armor_gain_passTurn" "0"

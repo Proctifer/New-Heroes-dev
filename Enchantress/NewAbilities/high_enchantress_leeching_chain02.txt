@@ -4,7 +4,7 @@
     "AbilityTeamFilter"         "TEAM_ENEMY"
     "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
     "AbilityCastMinRange"       "stat(%CASTER, #rangedAttackMinRange)" 
-    "AbilityCooldown"           "2"
+    "AbilityCooldown"           "4"
     "AbilityAPCost"             "1"
     "AnimationID"               "SpellCastB"
     "CastFXId"                  "HighEnchantressParasiteBlastCastFXMega"

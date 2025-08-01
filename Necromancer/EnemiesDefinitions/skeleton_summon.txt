@@ -47,7 +47,7 @@
 
 			"level" "1"
 				
-			"health_max" "6"
+			"health_max" "5"
 			"armor_max" "0"	
 			"armor_regen_per_turn" "0"
 			"rangedAttackRange" "0"
@@ -100,7 +100,7 @@
 
 			"level" "1"
 				
-			"health_max" "6"
+			"health_max" "5"
 			"armor_max" "3"
 			"armor_regen_per_turn" "1"
 			

@@ -121,6 +121,12 @@ do
 												if( cinematicMapHelper.HeroByTag("Cleric") == nil ) then
 		                                    		table.insert(heroesAvailable, "Cleric")
 		                                    	end
+												if( cinematicMapHelper.HeroByTag("Assassin") == nil ) then
+		                                    		table.insert(heroesAvailable, "Assassin")
+		                                    	end
+												if( cinematicMapHelper.HeroByTag("Musketeer") == nil ) then
+		                                    		table.insert(heroesAvailable, "Musketeer")
+		                                    	end
 
 		                                    	d.data.options = cinematicMapHelper.RandomItemN(heroesAvailable, 3)	
 		                                    end,
@@ -568,7 +574,65 @@ do
 														},
 														{
 															type = DialogType.Response,
-															text = || __R(66, "Not right now."),
+															text = || __R(67, "Talk to the Assassin."),
+															condition = |d| cinematicMapHelper.InList(d.data.options, "Assassin"),
+												    		who = || "mapCinematicId",
+												    		children ={
+												    			{
+																	type = DialogType.Dialog,
+																	text = || __D(67, "\"Let us proceed. I will be your shadow.\" said the Assassin."),
+														    		who = || "mapCinematicId",
+														    		children = {
+														    			{
+																			type = DialogType.Response,
+																			text = || __R(68, "Recruit him."),
+																			
+																			onChoose = function(d,n)
+																            	cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitAssassin")
+																            end,
+																			exit = true
+																		},
+																		{
+																			type = DialogType.Response,
+																			text = || __R(69, "Look for other recruits."),
+																			jumpTo = "recruits"
+																		}
+														    		}
+																}
+												    		}
+														},
+														{
+															type = DialogType.Response,
+															text = || __R(70, "Talk to the Musketeer."),
+															condition = |d| cinematicMapHelper.InList(d.data.options, "Musketeer"),
+												    		who = || "mapCinematicId",
+												    		children ={
+												    			{
+																	type = DialogType.Dialog,
+																	text = || __D(71, "\"Right then,\" the Musketeer said, propping his rifle over his shoulder.\n\n\"Happy Hour's almost over anyway. Let's get shooting!\""),
+														    		who = || "mapCinematicId",
+														    		children = {
+														    			{
+																			type = DialogType.Response,
+																			text = || __R(72, "Recruit him."),
+																			
+																			onChoose = function(d,n)
+																            	cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitMusketeer")
+																            end,
+																			exit = true
+																		},
+																		{
+																			type = DialogType.Response,
+																			text = || __R(73, "Look for other recruits."),
+																			jumpTo = "recruits"
+																		}
+														    		}
+																}
+												    		}
+														},
+														{
+															type = DialogType.Response,
+															text = || __R(74, "Not right now."),
 												    		jumpTo = "return"
 														}
 										        	}
@@ -578,12 +642,12 @@ do
 		                                
 		                                {
 		                                    type = DialogType.Response,
-		                                    text = || __R(67, "Talk to the patrons."),
+		                                    text = || __R(75, "Talk to the patrons."),
 										    children = {
 												{
 													type = DialogType.Dialog,
 													condition = |d| cinematicMapHelper.RandomChance(0.3) and not dialogs.HasFlag(d, "gotRumor3"),
-													text = || __D(68, "After talking to one of the patrons for a while, he said:##\"I used to be an adventurer like you ...##but then I took an arrow to the knee.\""),
+													text = || __D(76, "After talking to one of the patrons for a while, he said:##\"I used to be an adventurer like you ...##but then I took an arrow to the knee.\""),
 										    		who = || "mapCinematicId",
 										    		onChoose = function(d)
 									    				dialogs.SetFlag(d, "gotRumor3");
@@ -613,7 +677,7 @@ do
 												{
 													type = DialogType.Dialog,
 													condition = |d| cinematicMapHelper.RandomChance(0.3) and not dialogs.HasFlag(d, "gotRumor7"),
-													text = || __D(69, "After talking to one of the patrons for a while, he said:##\"If you want to survive as an adventuring party, it's key to have a diverse set of skills.##Oh! I miss adventuring so!\""),
+													text = || __D(77, "After talking to one of the patrons for a while, he said:##\"If you want to survive as an adventuring party, it's key to have a diverse set of skills.##Oh! I miss adventuring so!\""),
 										    		who = || "mapCinematicId",
 										    		onChoose = function(d)
 									    				dialogs.SetFlag(d, "gotRumor7");
@@ -623,7 +687,7 @@ do
 												{
 													type = DialogType.Dialog,
 													condition = |d| cinematicMapHelper.RandomChance(0.3) and not dialogs.HasFlag(d, "gotRumor8"),
-													text = || __D(70, "After talking to one of the patrons for a while, he said:##\"I heard there are some adventurers like you scattered round these parts....##Maybe you can convince them to join your party.\""),
+													text = || __D(78, "After talking to one of the patrons for a while, he said:##\"I heard there are some adventurers like you scattered round these parts....##Maybe you can convince them to join your party.\""),
 										    		who = || "mapCinematicId",
 										    		onChoose = function(d)
 									    				dialogs.SetFlag(d, "gotRumor8");
@@ -633,7 +697,7 @@ do
 												{
 													type = DialogType.Dialog,
 													condition = |d| cinematicMapHelper.RandomChance(0.3) and not dialogs.HasFlag(d, "gotRumor9"),
-													text = || __D(71, "After talking to one of the patrons for a while, he said:##\"Oh yes! Choosing what gear to carry on an adventure can be a daunting task, but having some tools on you can be a life saver.\""),
+													text = || __D(79, "After talking to one of the patrons for a while, he said:##\"Oh yes! Choosing what gear to carry on an adventure can be a daunting task, but having some tools on you can be a life saver.\""),
 										    		who = || "mapCinematicId",
 										    		onChoose = function(d)
 									    				dialogs.SetFlag(d, "gotRumor9");
@@ -653,7 +717,7 @@ do
 												{
 													type = DialogType.Dialog,
 													condition = |d| cinematicMapHelper.RandomChance(0.3) and not dialogs.HasFlag(d, "gotRumor11"),
-													text = || __D(72, "After talking to one of the patrons for a while, he said:##\"Yeah, I did one of those tarot readings once.##I ended up finding some treasure on the way home, but my buddy said he got cursed because of it.\""),
+													text = || __D(80, "After talking to one of the patrons for a while, he said:##\"Yeah, I did one of those tarot readings once.##I ended up finding some treasure on the way home, but my buddy said he got cursed because of it.\""),
 										    		who = || "mapCinematicId",
 										    		onChoose = function(d)
 									    				dialogs.SetFlag(d, "gotRumor11");
@@ -663,7 +727,7 @@ do
 												{
 													type = DialogType.Dialog,
 													condition = |d| cinematicMapHelper.RandomChance(0.3) and not dialogs.HasFlag(d, "gotRumor12"),
-													text = || __D(73, "After talking to one of the patrons for a while, he said:##\"A companion is never gonna give you up.##Never gonna let you down.##Never gonna run around and desert you.\""),
+													text = || __D(81, "After talking to one of the patrons for a while, he said:##\"A companion is never gonna give you up.##Never gonna let you down.##Never gonna run around and desert you.\""),
 										    		who = || "mapCinematicId",
 										    		onChoose = function(d)
 									    				dialogs.SetFlag(d, "gotRumor12");
@@ -673,7 +737,7 @@ do
 												{
 													type = DialogType.Dialog,
 													condition = |d| cinematicMapHelper.RandomChance(0.3) and not dialogs.HasFlag(d, "gotRumor13"),
-													text = || __D(74, "After talking to one of the patrons for a while, he said:##\"Fortune is a cruel maiden ...##but she does favor the blessed.\""),
+													text = || __D(82, "After talking to one of the patrons for a while, he said:##\"Fortune is a cruel maiden ...##but she does favor the blessed.\""),
 										    		who = || "mapCinematicId",
 										    		onChoose = function(d)
 									    				dialogs.SetFlag(d, "gotRumor13");
@@ -683,7 +747,7 @@ do
 												{
 													type = DialogType.Dialog,
 													condition = |d| cinematicMapHelper.RandomChance(0.3) and not dialogs.HasFlag(d, "gotRumor14"),
-													text = || __D(75, "After talking to one of the patrons for a while, he said:##\"I got 99 problems ...##but a drink ain't one.\""),
+													text = || __D(83, "After talking to one of the patrons for a while, he said:##\"I got 99 problems ...##but a drink ain't one.\""),
 										    		who = || "mapCinematicId",
 										    		onChoose = function(d)
 									    				dialogs.SetFlag(d, "gotRumor14");
@@ -703,7 +767,7 @@ do
 												{
 													type = DialogType.Dialog,
 													condition = |d| cinematicMapHelper.RandomChance(0.3) and not dialogs.HasFlag(d, "gotRumor16"),
-													text = || __D(76, "After talking to one of the patrons for a while, he said:##\"Last Easter, I found an egg.##I cracked it open and it was empty.##Just a joke ... I guess.\""),
+													text = || __D(84, "After talking to one of the patrons for a while, he said:##\"Last Easter, I found an egg.##I cracked it open and it was empty.##Just a joke ... I guess.\""),
 										    		who = || "mapCinematicId",
 										    		onChoose = function(d)
 									    				dialogs.SetFlag(d, "gotRumor16");
@@ -713,7 +777,7 @@ do
 												{
 													type = DialogType.Dialog,
 													condition = |d| cinematicMapHelper.RandomChance(0.3) and not dialogs.HasFlag(d, "gotRumor17"),
-													text = || __D(77, "After talking to one of the patrons for a while, he said:##\"Your mother was a hamster, and your father smelt of elderberries!\""),
+													text = || __D(85, "After talking to one of the patrons for a while, he said:##\"Your mother was a hamster, and your father smelt of elderberries!\""),
 										    		who = || "mapCinematicId",
 										    		onChoose = function(d)
 									    				dialogs.SetFlag(d, "gotRumor17");
@@ -723,7 +787,7 @@ do
 												{
 													type = DialogType.Dialog,
 													condition = |d| cinematicMapHelper.RandomChance(0.3) and not dialogs.HasFlag(d, "gotRumor19"),
-													text = || __D(78, "After talking to one of the patrons for a while, he said:##\"Does your party have a name?##Mine was called John and the Fab 7.##Funny thing is, there was no John and we were only 4.\""),
+													text = || __D(86, "After talking to one of the patrons for a while, he said:##\"Does your party have a name?##Mine was called John and the Fab 7.##Funny thing is, there was no John and we were only 4.\""),
 										    		who = || "mapCinematicId",
 										    		onChoose = function(d)
 									    				dialogs.SetFlag(d, "gotRumor19");
@@ -732,7 +796,7 @@ do
 												},
 												{
 													type = DialogType.Dialog,
-													text = || __D(79, "After talking to one of the patrons for a while, he said:##\"Hmm ... let me think ... ask me again later.\""),
+													text = || __D(87, "After talking to one of the patrons for a while, he said:##\"Hmm ... let me think ... ask me again later.\""),
 										    		who = || "mapCinematicId",
 										    		jumpTo = "return"
 												}
@@ -1013,6 +1077,20 @@ do
 																			cinematicMapHelper.Sequence({
 																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
 																				{"MinionCleric"}, checkRecruited
+																				)
+																				}
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitAssassin", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"MinionAssassin"}, checkRecruited
+																				)
+																				}
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitMusketeer", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"MinionMusketeer"}, checkRecruited
 																				)
 																				}
 																			))

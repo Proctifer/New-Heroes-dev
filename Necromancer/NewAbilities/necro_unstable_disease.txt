@@ -8,7 +8,7 @@
     "AbilityAPCost"                     "1"
     "AnimationID"                       "Attack"
     "CastFXId"                          "PoisonShotCastFXMega"
-    "Icon"                              "HunterMark"
+    "Icon"                              "UnstableDisease"
 
     "AbilitySpecial"
     {

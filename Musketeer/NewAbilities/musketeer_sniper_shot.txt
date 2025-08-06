@@ -1,0 +1,148 @@
+"musketeer_sniper_shot"
+{
+    
+    
+    "AbilityBehavior"   						"UNIT_TARGET | HAS_CHANCE_TO_HIT"
+    "AbilityTeamFilter" 						"TEAM_ENEMY"
+    "AbilityCastRange" 							"expr(%maxRange)"
+    "AbilityCastMinRange" 						"stat(%CASTER, #rangedAttackMinRange)"
+    "AbilityCooldown"   						"5"
+    "AbilityAPCost"     						"2"
+    "AnimationID"   							"SpecialAttack"
+    "Icon" 										"SniperShot"
+    "CastFXId" 									"KebabCastFXMega"
+	"AbilityCanExecute"                 		"hasModifier(%SOURCE, #musketeer_ammo_this_turn_modifier)"
+	"AbilityCustomTargetFilter"         		"not(isOnState(%UNIT, #BOSS))"
+
+   
+    "AbilitySpecial" 
+    { 
+        "01"
+        {
+            "var_type" 						"FIELD_EXPRESSION"
+            "MinRangedDmg"  				"(ceil(stat(%TARGET, #health_max)*(0.3+0.1*stat(%CASTER, #level))))"
+        }
+
+        "02"
+        {
+            "var_type" 						"FIELD_EXPRESSION"        
+            "MaxRangedDmg"  				"ceil(stat(%TARGET, #health_max)*1)"
+        }
+		
+        "03"
+        {
+            "var_type" 						"FIELD_EXPRESSION"        
+            "maxRange"  					"floor(stat(%SOURCE, #rangedAttackRange)*1.5)"
+        }
+		
+		"04"
+		{
+			"var_type"						"FIELD_EXPRESSION"
+			"minPercentage"					"30 + (10*stat(%CASTER, #level))"
+		}
+		
+		"05"
+		{
+			"var_type"						"FIELD_EXPRESSION"
+			"maxPercentage"					"100"
+		}
+		
+		"06"
+		{
+			"var_type"						"FIELD_EXPRESSION"
+			"maxDamage"						"expr(%maxRange) + stat(%CASTER, #attackDamage)"
+		}
+    }
+
+
+    "OnAbilityAction"
+    {
+		"Delay"
+		{
+			"Time"			"0.2"
+			"Actions"
+			{
+				"TrackingProjectile"
+				{
+					"Target"               	"%TARGET"
+					"SourcePos"             "unitPosition(%SOURCE, #Base)"
+					"TargetPos"             "unitPosition(%TARGET, #Chest)"
+					"Model" 				"KebabShotProjectile"
+					"WillHit" 				"hitChanceCalc(%TARGET)"
+					"MissPosition" 			"unitPosition(%TARGET)"
+
+					"Params" 
+					{
+						"damage" 
+						{
+							"type" "FIELD_FLOAT"
+							"value" "randomI(expr(%MinRangedDmg), expr(%MaxRangedDmg))"
+						}
+						
+						"range"
+						{
+							"type"	"FIELD_FLOAT"
+							"value"	"expr(%maxRange)"
+						}
+					}
+				}
+			}
+		}
+    }
+
+    "OnProjectileHitUnit"
+    {
+        "Hit"
+        {
+            "Target" "%TARGET"
+            "EffectName" "GenericHitFXMega" 
+            "Tags" "stringList(#PROJECTILE, #TARGETED)"
+
+            "InitActions"
+            {
+				"Conditional"		
+				{
+					"Condition"		"hasModifier(%CASTER, #silver_ammo_modifier)"
+
+					"Actions"
+					{
+						"AddDamage"
+						{
+							"Type"          "DAMAGE_TRUE"
+							"Damage"        "%damage"
+						}
+					}
+					
+					"ElseActions"
+					{
+						"AddDamage"
+						{
+							"Type"          "DAMAGE_PHYSICAL"
+							"Damage"        "%damage"
+						}
+					}
+				}
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "2.3"
+            "Considerations"
+            {
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "expr(%AbilityCastRange)"  
+                    }
+                }
+            }
+        }
+    }
+}

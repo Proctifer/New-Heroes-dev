@@ -1,0 +1,171 @@
+"musketeer_shrapnel_shot"
+{
+    "AbilityBehavior"       			"POINT_TARGET | AOE | NEEDS_VALID_TERRAIN"
+    "AbilityTeamFilter" 				"TEAM_ENEMY"
+
+    "AnimationID"   					"Attack"
+    "Icon" 								"Cocoon_Explosion"
+    "CastFXId" 							"DwarfzookaCastFXMega"
+   
+   
+    "AbilityAOEKind" 					"RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster" 			"0"
+    "AbilityAOEAffectsCaster" 			"0"
+    "AbilityAOETeamFilter" 				"TEAM_ENEMY"
+
+    "AbilityAOERange" 					"%aoeRadius"
+    "AbilityCastRange" 					"floor(stat(%CASTER, #rangedAttackRange)/2)"
+    "AbilityCooldown"   				"3"
+    "AbilityAPCost"     				"2"
+	"AbilityCanExecute"             	"hasModifier(%SOURCE, #musketeer_ammo_this_turn_modifier)"
+
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"            		"FIELD_FLOAT"
+            "aoeRadius"            		"1"
+        }
+
+        "02"
+        {
+            "var_type"          		"FIELD_EXPRESSION"
+            "directDamage"            	"ceil(stat(%CASTER,#attackDamage)/2)"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "TrackingProjectile"
+        {
+            "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+            "TargetPos"             "%TARGET"
+            "Model" 				"BombardierDwarfZookaProjectile"
+
+            "Params" 
+            {
+                "damage" 
+                {
+                    "type" 		"FIELD_FLOAT"
+                    "value" 	"expr(%directDamage)"
+                }
+            }
+        }
+    }
+    
+
+    "OnProjectileHitUnit"
+    {
+        "AttachEffect"
+        {
+            "EffectName" 		"DwarfzookaExplosionFXMega"
+            "Target" 			"%TARGET"
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"      	"%TARGET"
+                "Radius"     	"%aoeRadius"
+                "Teams"     	"TEAM_ENEMY"
+            }
+
+            "IteratorName" "#newTarget"
+        
+            "Actions"    
+            {
+                "Hit"
+                {
+                    "Target" 			"%newTarget"
+                    "EffectName" 		"FireballHitFXMega" 
+                    "Tags" 				"stringList(#AOE)"
+
+                    "InitActions"
+                    {
+						"Conditional"
+						{
+							"Condition"			"hasModifier(%CASTER, #silver_ammo_modifier)"
+							
+							"Actions"
+							{
+								"AddDamage"
+								{
+									"Type"            	"DAMAGE_TRUE"
+									"Damage"        	"%damage"
+								}
+							}
+							
+							"ElseActions"
+							{
+								"AddDamage"
+								{
+									"Type"            	"DAMAGE_PHYSICAL"
+									"Damage"        	"%damage"
+								}
+							}
+						}
+                    }
+                }
+
+                "Delay"
+                {
+                    "Time"          "0.7"
+                                
+                    "Actions"
+                    {
+                        "Hit"
+                        {
+                            "Target" 			"%newTarget"
+                            "EffectName" 		"FireballHitFXMega" 
+                            "Tags" 				"stringList(#AOE)"
+
+                            "InitActions"
+                            {
+                                "Conditional"
+                                {
+                                    "Condition"			"hasModifier(%CASTER, #silver_ammo_modifier)"
+                                    
+                                    "Actions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"            	"DAMAGE_TRUE"
+                                            "Damage"        	"%damage"
+                                        }
+                                    }
+                                    
+                                    "ElseActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"            	"DAMAGE_PHYSICAL"
+                                            "Damage"        	"%damage"
+                                        }
+                                    }
+                                }
+
+                                "ActOnHexas"
+                                {
+                                    "Center" 			"positionHex(%TARGET)"
+                                    "Range" 			"%aoeRadius"
+                                    "IteratorName" 		"#hexa"
+                                    
+                                    "Actions"
+                                    {
+                                        "AttachEffect"
+                                        {
+                                            "EffectName"    "DwarfzookaExplosionFXMega"
+                                            "Target"        "hexPosition(%hexa)"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

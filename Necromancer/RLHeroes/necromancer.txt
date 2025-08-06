@@ -30,8 +30,8 @@
 
 	"skills"
 	{
-		"100" "magic_endturn_trait"
 		"100" "skeleton_bloodless_trait"
+		"100" "magic_endturn_trait"
 	}
 
 	"states"

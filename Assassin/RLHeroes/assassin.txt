@@ -5,7 +5,7 @@
 	"MetaExo" "ExoSkeletonHumanSylvanElf_MetaDataAsset"
 	"Name" "MINION_ASSASSIN"
 	"InheritsFrom" "Hero"
-	"cinematicTags" "Heroe|Minion|Female|ct_minion|ct_athletics|ct_social|ct_perception|UPGRADES_athletic"
+	"cinematicTags" "Heroe|Minion|Male|Assassin|ct_minion|ct_athletics|ct_social|ct_perception|UPGRADES_athletic"
 	"nextLevelArchetype" "MinionAssassinLvl2"
 	"AttackType" "PHYSICAL"
 	"Icon" "Asst_Banner_Ranger"

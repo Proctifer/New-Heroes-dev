@@ -1,0 +1,115 @@
+"MinionMusketeer" 
+	{
+		"UniqueId" "Musketeer"
+		"Model" "BanditArcher"
+		"MetaExo" "ExoSkeletonHumanRanger_MetaDataAsset"
+		"Name" "MUSKETEER"
+		"InheritsFrom" "Hero"
+		"cinematicTags" "Heroe|Minion|Male|Musketeer|ct_minion|ct_ranged|ct_craft|ct_perception|ct_social|UPGRADES_crafty"
+		"nextLevelArchetype" "MinionMusketeerLvl2"
+		"AttackType" "ARTILLERY"
+		"Icon" "Asst_Banner_Ranger"
+		"Background" "hero_roster_legend_bg_forest"
+		"UnitOnMap" "Asst_Party_Ranger"
+		"PortraitBackgroundColor" "99635E"
+
+		"stats"
+		{
+			"level" "1"
+
+			"health_max" 				"3"
+			"armor_max" 				"0"
+			"armor_regen_per_turn" 		"0"
+
+			"baseDamage"  				"4"
+
+			"rangedAttackRange" 		"4" 
+			"rangedAttackMinRange" 		"2"
+			
+			
+			"walkSpeed" 				"2"
+		}
+
+		"skills"
+		{
+			"11" 		"musketeer_double_barrel_provider_trait"
+			"100" 		"crafty_endturn_trait"
+ 		}
+
+		"skillProgression"
+ 		{
+ 			"1" 
+ 			{
+ 				"1" "musketeer_sniper_shot"
+ 			}
+
+ 			"2" 
+ 			{
+ 				"1" "musketeer_hunters_mark"
+ 				"2" "musketeer_silver_bullet"
+ 			}
+
+ 			"3"
+ 			{
+ 				"1" "musketeer_shrapnel_shot"
+ 				"2" "musketeer_open_season"
+ 			}
+ 		}
+
+ 		"defaultSkill" "musketeer_double_barrel"
+
+ 		"soundConfig"
+		{
+			"assetId" "DynamicSoundGroupBombardierSounds"
+			"sounds"
+			{
+				"receiveArmorDamage" "krl_sfx_combatGeneric_armorHit"
+				"useSkill" "krl_va_combatRanger_action"
+			}
+		}
+	}
+
+
+	"MinionMusketeerLvl2" 
+	{
+		"InheritsFrom" "MinionMusketeer"
+		"nextLevelArchetype" "MinionMusketeerLvl3"
+
+		"stats"
+		{
+			"level" "2"
+
+			"health_max" 				"4"
+			"armor_max" 				"0"
+			"armor_regen_per_turn" 		"0"
+
+			"baseDamage"  				"5"
+
+			"rangedAttackRange" 		"5"
+			"rangedAttackMinRange" 		"2"
+			
+			"walkSpeed" 				"2"
+		}
+	}
+
+	"MinionMusketeerLvl3" 
+	{
+		"InheritsFrom" "MinionMusketeer"
+
+		"stats"
+		{
+			"level" "3"
+
+			"health_max" 				"5"
+			"armor_max" 				"0"
+			"armor_regen_per_turn" 		"0"
+
+			"baseDamage"  				"6"
+
+			"rangedAttackRange" 		"7"
+			"rangedAttackMinRange" 		"2"
+			
+			"walkSpeed" 				"2"
+		}
+	}
+

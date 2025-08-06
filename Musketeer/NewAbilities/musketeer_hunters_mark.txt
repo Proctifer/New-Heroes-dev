@@ -1,0 +1,210 @@
+"musketeer_hunters_mark"
+{
+    
+    
+    "AbilityBehavior"   			"UNIT_TARGET | HAS_CHANCE_TO_HIT"
+    "AbilityTeamFilter" 			"TEAM_ENEMY"
+    "AbilityCastRange" 				"stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange" 			"stat(%CASTER, #rangedAttackMinRange)"
+    "AbilityCooldown"   			"3"
+    "AbilityAPCost"     			"1"
+    "AnimationID"   				"Attack"
+    "Icon" 							"HuntersMark"
+    "CastFXId" 						"OrcHunterSleepingArrowCastFXMega"
+	"AbilityCanExecute"             "hasModifier(%SOURCE, #musketeer_ammo_this_turn_modifier)"
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type" "FIELD_EXPRESSION"
+            "MinRangedDmg"  "stat(%CASTER, #attackDamage)*0"
+        }
+
+        "02"
+        {
+            "var_type" "FIELD_EXPRESSION"        
+            "MaxRangedDmg"  "stat(%CASTER, #attackDamage)*0"
+        }
+
+        "03"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "duration"              "3"
+        }
+
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "extraDamagePerHit"     "3"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+		"Delay"
+		{
+			"Time"			"0.4"
+			"Actions"
+			{
+				"TrackingProjectile"
+				{
+					"Target"               "%TARGET"
+					"SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+					"TargetPos"             "unitPosition(%TARGET, #Chest)"
+					"Model" "SleepingArrowProjectile"
+					"WillHit" "hitChanceCalc(%TARGET)"
+					"MissPosition" "unitPosition(%TARGET)"
+
+					"Params" 
+					{
+						"damage" 
+						{
+							"type" "FIELD_FLOAT"
+							"value" "1"
+						}
+					}
+				}
+			}
+		}
+    }
+
+    "OnProjectileHitUnit"
+    {
+
+        "Hit"
+        {
+            "Target" "%TARGET"
+            "EffectName" "OrcHunterSleepingArrowHitFXMega" 
+            "Tags" "stringList(#PROJECTILE, #TARGETED)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_PHYSICAL"
+                    "Damage"        "%damage"
+                }
+            }
+
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "not(hasModifier(%TARGET, #hunters_mark_modifier))"
+                    "Actions" 
+                    {
+                        "AddHitTag"
+                        {
+                            "Tag" "#HWANG_SHADOW_MARK_FIRST_TIME"
+                        }
+                    }
+                }
+
+                "Conditional"
+                {
+                    "Condition" "not(isOnState(%TARGET, #PROP))"
+                    "Actions" 
+                    {
+                        "Conditional"
+                        {
+                            "Condition" "hitIsLegendary(%HIT)"
+                            "Actions" 
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"  "hunters_mark_modifier"
+                                    "Target"        "%TARGET"
+                                    "Duration"      "%duration * 2"
+                                    "Refresh"       "1"
+                                }
+                            }
+
+                            "ElseActions" 
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"  "hunters_mark_modifier"
+                                    "Target"        "%TARGET"
+                                    "Duration"      "%duration"
+                                    "Refresh"       "1"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "hunters_mark_modifier"
+        {
+            "EffectName"                    "TrollEnrageStatusFXMega"
+            "Icon"                          "Hexed"
+            "IconPriority"                  "60"
+
+            "IncompatibleStates" "CANT_BE_SHADOW_MARK"
+
+            "OnHitPreProcessDamages"
+            {
+                "AddDamage"
+                {
+                    "Type"              "DAMAGE_PHYSICAL"
+                    "Damage"            "%extraDamagePerHit"
+                }
+				
+				"AttachEffect"
+                {
+                    "EffectName"      "ArmorOfThornsReforgedTriggeredFXMega" 
+                    "Target"          "%TARGET"
+                }
+			}
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "2.4"
+            "Considerations"
+            {
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve"             "Linear|-0.1|1|1|0"
+                    "Consideration"     "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange"      "expr(%AbilityCastRange)"  
+                    }
+                }
+
+                "surrounded by several units"
+                {
+                    "Curve"             "Linear|2|1|0.2|0"
+                    "Consideration"     "UnitsSurrounding"
+                    "Params"
+                    {
+                        "Max"           "5"
+                        "TeamFilter"    "TEAM_FRIENDLY"
+                        "Range"         "1"
+                    }
+                }
+
+                "Ignores targets already hexed"
+                {
+                    "Curve"             "Linear|-1|1|1|0.2"
+                    "Consideration"     "TargetHasModifier"
+                    "Params"
+                    {
+                        "ModifierName"  "modifier_hex_blast"  
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,199 @@
+"musketeer_double_barrel"
+{
+
+	"AbilityBehavior"   		"UNIT_TARGET | HAS_CHANCE_TO_HIT"
+    "AbilityTeamFilter" 		"TEAM_ENEMY"
+    "AbilityCastRange" 			"stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange" 		"stat(%CASTER, #rangedAttackMinRange)"
+    "AbilityCooldown"   		"0"
+    "AbilityAPCost"     		"stat(%CASTER, #attackCostAP)"
+    "AnimationID"   			"Attack"
+    "Icon" 						"BasicGun"
+    "CastFXId" 					"ShortFuseCastFXMega"
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type" 			"FIELD_EXPRESSION"
+            "MinRangedDmg"  	"floor(stat(%CASTER, #attackDamage)/2)-1"
+        }
+
+        "02"
+        {
+            "var_type" 			"FIELD_EXPRESSION"        
+            "MaxRangedDmg"  	"ceil(stat(%CASTER, #attackDamage)/2)"
+        }
+		
+		"03"
+        {
+            "var_type" 			"FIELD_EXPRESSION"        
+            "epicDamage"  		"ceil(stat(%CASTER, #attackDamage)/2)"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+        "Conditional"
+		{
+			"Condition"     "hasModifier(%CASTER, #musketeer_ammo_this_turn_modifier)"
+
+			"Actions"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"			"musketeer_ammo_this_turn_modifier"
+					"Target"				"%CASTER"
+				}
+				
+				"SetStat"
+				{
+					"Target" 		"%SOURCE"
+					"Stat" 			"#actionsAvailable"
+					"Value" 		"stat(%SOURCE, #actionsAvailable) + 1"
+				}
+				
+				"ApplyModifier"
+				{
+					"ModifierName"  "musketeer_walk_or_act_modifier"
+                    "Target"        "%SOURCE"
+                    "Duration"      "1" 
+                    "Refresh"       "1" 
+				}
+			}
+			
+			"ElseActions"
+			{
+				"SetStat"
+				{
+					"Target" 		"%SOURCE"
+					"Stat" 			"#actionsAvailable"
+					"Value" 		"0"
+				}
+			}
+		}
+		
+		"Delay"
+		{
+			"Time" "0.2"
+			"Actions"
+			{
+				"TrackingProjectile"
+				{
+					"Target"               	"%TARGET"
+					"SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+					"TargetPos"             "unitPosition(%TARGET, #Chest)"
+					"Model" 				"ArrowOfSorrowProjectile"
+					"WillHit" 				"hitChanceCalc(%TARGET)"
+					"MissPosition" 			"unitPosition(%TARGET)"
+
+					"Params" 
+					{
+						"damage" 
+						{
+							"type" 			"FIELD_FLOAT"
+							"value" 		"randomI(expr(%MinRangedDmg), expr(%MaxRangedDmg))"
+						}
+						
+						"epicDamage"
+						{
+							"type" 			"FIELD_FLOAT"
+							"value"			"expr(%MaxRangedDmg)"
+						}
+					}
+				}
+			}
+		}
+    }
+
+    "OnProjectileHitUnit"
+    {
+        "Hit"
+        {
+            "Target" "%TARGET"
+            "EffectName" "GenericHitFXMega" 
+            "Tags" "stringList(#PROJECTILE, #TARGETED)"
+
+			"InitActions"
+			{
+				"Conditional"
+				{
+					"Condition" "hasModifier(%CASTER, #silver_ammo_modifier)"
+
+					"Actions" 
+					{
+						"Conditional"
+						{
+							"Condition"		"hasModifier(%CASTER, #crafty_endturn_trait_modifier_active)"
+							
+							"Actions"
+							{
+								"AddDamage"
+								{
+									"Type"          "DAMAGE_TRUE"
+									"Damage"        "%epicDamage"
+								}
+								
+								"MarkHitLegendary"
+								{
+								}
+							}
+							
+							"ElseActions"
+							{
+								"AddDamage"
+								{
+									"Type"			"DAMAGE_TRUE"
+									"Damage"		"%damage"
+								}
+							}
+						}
+					}
+					
+					"ElseActions"
+					{
+						"Conditional"
+						{
+							"Condition"		"hasModifier(%CASTER, #crafty_endturn_trait_modifier_active)"
+							
+							"Actions"
+							{
+								"AddDamage"
+								{
+									"Type"          "DAMAGE_PHYSICAL"
+									"Damage"        "%epicDamage"
+								}
+								
+								"MarkHitLegendary"
+								{
+								}
+							}
+							
+							"ElseActions"
+							{
+								"AddDamage"
+								{
+									"Type"			"DAMAGE_PHYSICAL"
+									"Damage"		"%damage"
+								}
+							}
+						}
+					}
+				}
+			}
+        }
+    }
+	
+	"Modifiers"
+    {
+        "musketeer_walk_or_act_modifier"
+        {
+            "States"
+            {
+                "WALKING_ENDS_TURN" "1"
+            }
+        }
+    }
+}

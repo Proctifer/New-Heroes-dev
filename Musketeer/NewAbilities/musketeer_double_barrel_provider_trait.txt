@@ -1,0 +1,38 @@
+"musketeer_double_barrel_provider_trait"
+{
+	"AbilityBehavior"			"PASSIVE"
+	"Icon"						"MithrilJacket"
+	
+	"AbilitySpecial"
+	{
+		"01"
+        {
+            "var_type"               "FIELD_INTEGER"
+            "duration"               "1"
+        }
+	}
+	
+	"Modifiers"
+	{
+		"musketeer_double_barrel_modifier_provider"
+		{
+			"Passive"					"1"
+			
+			"OnTurnStarted"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "musketeer_ammo_this_turn_modifier"
+                    "Target"            "%TARGET"
+                    "Duration"          "%duration"
+                }
+            }
+		}
+		
+		"musketeer_ammo_this_turn_modifier"
+		{
+			
+		}
+	}
+
+}

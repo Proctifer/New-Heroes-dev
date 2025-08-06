@@ -68,6 +68,12 @@ do
 												if( cinematicMapHelper.HeroByTag("Cleric") == nil ) then
 		                                    		table.insert(heroesAvailable, "cleric")
 		                                    	end
+												if( cinematicMapHelper.HeroByTag("Assassin") == nil ) then
+		                                    		table.insert(heroesAvailable, "assassin")
+		                                    	end
+												if( cinematicMapHelper.HeroByTag("Musketeer") == nil ) then
+		                                    		table.insert(heroesAvailable, "musketeer")
+		                                    	end
 
 
 		                                    	local heroToRecruit = cinematicMapHelper.RandomItem(heroesAvailable)
@@ -400,7 +406,7 @@ do
 															children = {
 																{
 																	type = DialogType.Dialog,
-							                                    	text = || __D(54, "The sapling withered into a pile of dust.\n\n\"Let us quell this dark magic from the realm!\""),
+							                                    	text = || __D(54, "The sapling withered into a pile of dust.\n\n\"Let us quell this dark magic from the realm. You have my aid!\""),
 														    		who = || "mapCinematicId",
 														    		exit = true
 																}
@@ -421,12 +427,12 @@ do
 										            children = {
 										    			{
 															type = DialogType.Response,
-															text = || __R(57, "Ask it to join you."),
+															text = || __R(57, "Ask them to join you."),
 															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitNecromancer"),
 															children = {
 																{
 																	type = DialogType.Dialog,
-							                                    	text = || __D(58, "The necromancer grabbed its staff and chuckled.\n\n\"Defeating a greater evil will favor the greater good!\""),
+							                                    	text = || __D(58, "The necromancer grabbed their staff and chuckled.\n\n\"Defeating a greater evil will favor the greater good! You have my army!\""),
 														    		who = || "mapCinematicId",
 														    		exit = true
 																}
@@ -452,7 +458,59 @@ do
 															children = {
 																{
 																	type = DialogType.Dialog,
-							                                    	text = || __D(62, "The cleric hoisted his shield, clapped each of us on the back, and said,\n\n\"May the heavens guide us ... through me!\""),
+							                                    	text = || __D(62, "The cleric hoisted his shield, clapped each of us on the back, and said,\n\n\"May the heavens guide us ... through me! You have my shield!\""),
+														    		who = || "mapCinematicId",
+														    		exit = true
+																}
+													        }
+														}
+														
+														
+														
+														
+														
+										    		}
+										        },
+										        {
+										            type = DialogType.Dialog,
+										            condition = |d| d.data.recruit == "assassin",
+										            text = || __D(63, "The strange emerged from the shadows behind us, revealing himself to be an assassin.\n\n\"Need a blade or two?\""),
+										    		who = || "mapCinematicId",
+										            children = {
+										    			{
+															type = DialogType.Response,
+															text = || __R(64, "Ask him to join you."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitAssassin"),
+															children = {
+																{
+																	type = DialogType.Dialog,
+							                                    	text = || __D(65, "The Assassin crossed his blades and bowed his head.\n\n\"They won't know what hit them. You have my daggers.\""),
+														    		who = || "mapCinematicId",
+														    		exit = true
+																}
+													        }
+														}
+														
+														
+														
+														
+														
+										    		}
+										        },
+										        {
+										            type = DialogType.Dialog,
+										            condition = |d| d.data.recruit == "musketeer",
+										            text = || __D(66, "The stranger was a musketeer polishing the barrel of his gun. His mustache bristled as he spoke.\n\n\"What are you aiming to do?\""),
+										    		who = || "mapCinematicId",
+										            children = {
+										    			{
+															type = DialogType.Response,
+															text = || __R(67, "Ask him to join you."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitMusketeer"),
+															children = {
+																{
+																	type = DialogType.Dialog,
+							                                    	text = || __D(68, "The Musketeer cocked his gun and stood up,\n\n\"You have my boomstick!\""),
 														    		who = || "mapCinematicId",
 														    		exit = true
 																}
@@ -593,6 +651,20 @@ do
 																			cinematicMapHelper.Sequence({
 																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
 																				{"MinionCleric"}
+																				)
+																				}
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitAssassin", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"MinionAssassin"}
+																				)
+																				}
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitMusketeer", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"MinionMusketeer"}
 																				)
 																				}
 																			))												

@@ -68,6 +68,12 @@ do
 												if( cinematicMapHelper.HeroByTag("Cleric") == nil ) then
 		                                    		table.insert(heroesAvailable, "cleric")
 		                                    	end
+												if( cinematicMapHelper.HeroByTag("Assassin") == nil ) then
+		                                    		table.insert(heroesAvailable, "assassin")
+		                                    	end
+												if( cinematicMapHelper.HeroByTag("Musketeer") == nil ) then
+		                                    		table.insert(heroesAvailable, "musketeer")
+		                                    	end
 
 		                                    	local heroToRecruit = cinematicMapHelper.RandomItem(heroesAvailable)
 
@@ -886,12 +892,12 @@ do
 															type = DialogType.Custom,
 															subtype = "item",
 						                  					item = || "healthPotion",
-															text = || __R(95, "Heal it."),
+															text = || __R(95, "Heal them."),
 															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitNecromancer"),
 															children = {
 																{
 																	type = DialogType.Dialog,
-							                                    	text = || __D(96, "We gave it one of our potions and waited until it felt better.\n\n\"Thanks to you, I have not found my grave today. Allow me to repay you.\""),
+							                                    	text = || __D(96, "We gave them one of our potions and waited until them felt better.\n\n\"Thanks to you, I have not found my grave today. Allow me to repay you.\""),
 														    		who = || "mapCinematicId",
 														    		exit = true
 																}
@@ -902,12 +908,12 @@ do
 															type = DialogType.Custom,
 															subtype = "item",
 						                  					item = || "elixirOfLife",
-															text = || __R(97, "Heal it."),
+															text = || __R(97, "Heal them."),
 															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitNecromancer"),
 															children = {
 																{
 																	type = DialogType.Dialog,
-							                                    	text = || __D(98, "We gave it one of our potions and waited until it felt better.\n\n\"Thanks to you, I have not found my grave today. Allow me to repay you.\""),
+							                                    	text = || __D(98, "We gave them one of our potions and waited until them felt better.\n\n\"Thanks to you, I have not found my grave today. Allow me to repay you.\""),
 														    		who = || "mapCinematicId",
 														    		exit = true
 																}
@@ -918,12 +924,12 @@ do
 															type = DialogType.Custom,
 															subtype = "item",
 						                  					item = || "bandage",
-															text = || __R(99, "Heal it."),
+															text = || __R(99, "Heal them."),
 															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitNecromancer"),
 															children = {
 																{
 																	type = DialogType.Dialog,
-							                                    	text = || __D(100, "We gave it one of our bandages and waited until it felt better.\n\n\"Thanks to you, I have not found my grave today. Allow me to repay you.\""),
+							                                    	text = || __D(100, "We gave them one of our bandages and waited until them felt better.\n\n\"Thanks to you, I have not found my grave today. Allow me to repay you.\""),
 														    		who = || "mapCinematicId",
 														    		exit = true
 																}
@@ -940,7 +946,7 @@ do
 										        {
 										            type = DialogType.Dialog,
 										            condition = |d| d.data.recruit == "cleric",
-										            text = || __D(94, "As we got closer, we found an a cleric with grievous (although not mortal) wounds.\n\n\"... I see ... the light ...\""),
+										            text = || __D(94, "As we got closer, we found a cleric with grievous (although not mortal) wounds.\n\n\"... I see ... the light ...\""),
 										    		who = || "mapCinematicId",
 										            children = {
 										    			{
@@ -963,7 +969,7 @@ do
 															type = DialogType.Custom,
 															subtype = "item",
 						                  					item = || "elixirOfLife",
-															text = || __R(97, "Heal it."),
+															text = || __R(97, "Heal him."),
 															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitCleric"),
 															children = {
 																{
@@ -979,7 +985,7 @@ do
 															type = DialogType.Custom,
 															subtype = "item",
 						                  					item = || "bandage",
-															text = || __R(99, "Heal it."),
+															text = || __R(99, "Heal him."),
 															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitCleric"),
 															children = {
 																{
@@ -997,12 +1003,134 @@ do
 											            	jumpTo = "keepGoing"
 										            	}
 										    		}
+										        },
+										        {
+										            type = DialogType.Dialog,
+										            condition = |d| d.data.recruit == "assassin",
+										            text = || __D(102, "As we got closer, we found an assassin with grievous (although not mortal) wounds.\n\n\"... Death can have me when it earns me ...\""),
+										    		who = || "mapCinematicId",
+										            children = {
+										    			{
+															type = DialogType.Custom,
+															subtype = "item",
+						                  					item = || "healthPotion",
+															text = || __R(103, "Heal him."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitAssassin"),
+															children = {
+																{
+																	type = DialogType.Dialog,
+							                                    	text = || __D(104, "We gave him one of our potions and waited until he felt better.\n\n\"Death will not claim me today. You have my gratitude.\""),
+														    		who = || "mapCinematicId",
+														    		exit = true
+																}
+													        }
+														},
+
+														{
+															type = DialogType.Custom,
+															subtype = "item",
+						                  					item = || "elixirOfLife",
+															text = || __R(105, "Heal him."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitAssassin"),
+															children = {
+																{
+																	type = DialogType.Dialog,
+							                                    	text = || __D(106, "We gave him one of our potions and waited until he felt better.\n\n\"Death will not claim me today. You have my gratitude.\""),
+														    		who = || "mapCinematicId",
+														    		exit = true
+																}
+													        }
+														},
+
+														{
+															type = DialogType.Custom,
+															subtype = "item",
+						                  					item = || "bandage",
+															text = || __R(107, "Heal him."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitAssassin"),
+															children = {
+																{
+																	type = DialogType.Dialog,
+							                                    	text = || __D(108, "We gave him one of our bandages and waited until he felt better.\n\n\"Death will not claim me today. You have my gratitude.\""),
+														    		who = || "mapCinematicId",
+														    		exit = true
+																}
+													        }
+														},
+
+														{
+											            	type = DialogType.Response,
+											            	text = || __R(109, "Keep going."),
+											            	jumpTo = "keepGoing"
+										            	}
+										    		}
+										        },
+										        {
+										            type = DialogType.Dialog,
+										            condition = |d| d.data.recruit == "musketeer",
+										            text = || __D(110, "As we got closer, we found a musketeer with grievous (although not mortal) wounds.\n\n\"... I'm not ready to bite the bullet ... just yet ...\""),
+										    		who = || "mapCinematicId",
+										            children = {
+										    			{
+															type = DialogType.Custom,
+															subtype = "item",
+						                  					item = || "healthPotion",
+															text = || __R(111, "Heal him."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitMusketeer"),
+															children = {
+																{
+																	type = DialogType.Dialog,
+							                                    	text = || __D(112, "We gave him one of our potions and waited until he felt better.\n\n\"Crikey, I thought I was done for! Lemme buy you a beer!\""),
+														    		who = || "mapCinematicId",
+														    		exit = true
+																}
+													        }
+														},
+
+														{
+															type = DialogType.Custom,
+															subtype = "item",
+						                  					item = || "elixirOfLife",
+															text = || __R(113, "Heal him."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitMusketeer"),
+															children = {
+																{
+																	type = DialogType.Dialog,
+							                                    	text = || __D(114, "We gave him one of our potions and waited until he felt better.\n\n\"Crikey, I thought I was done for! Lemme buy you a beer!\""),
+														    		who = || "mapCinematicId",
+														    		exit = true
+																}
+													        }
+														},
+
+														{
+															type = DialogType.Custom,
+															subtype = "item",
+						                  					item = || "bandage",
+															text = || __R(115, "Heal him."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitMusketeer"),
+															children = {
+																{
+																	type = DialogType.Dialog,
+							                                    	text = || __D(116, "We gave him one of our bandages and waited until he felt better.\n\n\"Crikey, I thought I was done for! Lemme buy you a beer!\""),
+														    		who = || "mapCinematicId",
+														    		exit = true
+																}
+													        }
+														},
+
+														{
+											            	type = DialogType.Response,
+											            	text = || __R(117, "Keep going."),
+											            	jumpTo = "keepGoing"
+										            	}
+										    		}
 										        }
 										    }
 										},
 										{
 							            	type = DialogType.Response,
-							            	text = || __R(93, "Keep going."),
+							            	text = || __R(118, "Keep going."),
 							            	jumpTo = "keepGoing"
 						            	}
 									}
@@ -1128,7 +1256,21 @@ do
 																				{"MinionClericLvl2"}
 																				)
 																				}
-																			))		
+																			))	,
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitAssassin", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"MinionAssassinLvl2"}
+																				)
+																				}
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitMusketeer", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"MinionMusketeerLvl2"}
+																				)
+																				}
+																			))	
 								}))
 	helper.AddQuest(quest)
 	quest.revealDistance = 0

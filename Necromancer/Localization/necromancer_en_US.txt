@@ -26,7 +26,7 @@
 "SKILL_necro_fresh_meat_DESCRIPTION_DATA" = "Summon duration: <style="highlight">{duration} {icon#turns}\nRange: <style="highlight">{AbilityCastRange}</style>"
 
 "SKILL_necro_unstable_disease_NAME" = "Unstable Disease"
-"SKILL_necro_unstable_disease_DESCRIPTION" = "Unleash a draconic spell that deals magic damage and inflicts <style="debuff">poison</style> on an single enemy."
+"SKILL_necro_unstable_disease_DESCRIPTION" = "Unleash a draconic spell that deals magic damage and inflicts <style="debuff">poison</style> on a single enemy."
 "SKILL_necro_unstable_disease_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If the target is killed, it explodes, spreading the disease to nearby units within a {epicRadius}-hex radius."
 "SKILL_necro_unstable_disease_DESCRIPTION_DATA" = "Damage: <style="damage">{RangedDmg} {icon#damageMagical}</style>\nPoison duration: <style="highlight">{poisonDuration} {icon#turns}</style>\nEPIC damage: <style="damage">{epicDamage} {icon#damageMagical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
 

@@ -1,0 +1,37 @@
+"musketeer_silver_bullet"
+{
+	"AbilityBehavior"                   "UNIT_TARGET | POSITIVE_EFFECT | DOESNT_CONSUME_MOVE | FAKE_ACTION"
+    "AbilityTeamFilter"                 "TEAM_FRIENDLY"
+    "AnimationID"                       "SpellCastA"
+    "CastFXId"                          "DwarfzookaCastFXMega"
+    "Icon"                              "SilverBullet"
+    "AbilityCastRange"                  "0"
+    "AbilityCooldown"                   "2"
+    "AbilityAPCost"                     "0"
+
+	"AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" 					"FIELD_FLOAT"
+            "duration" 					"1"
+        }
+	}
+
+	"OnAbilityAction"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"      "silver_ammo_modifier"
+			"Target"            "%TARGET"
+			"Duration"			"1"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"silver_ammo_modifier"
+		{
+		}
+	}
+}

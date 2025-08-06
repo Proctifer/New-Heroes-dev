@@ -1,0 +1,44 @@
+"UNIT_MUSKETEER_NAME_0001" = "Musketeer"
+"UNIT_MUSKETEER_LORE" = "Professional marksmen who combine their unparalled accuracy with versatile weaponry."
+
+"SKILL_musketeer_steady_aim_trait_NAME" = "Steady Aim"
+"SKILL_musketeer_steady_aim_trait_DESCRIPTION" = "The Musketeer gains +1 damage as long as he stays still during any turn."
+
+"SKILL_musketeer_double_barrel_provider_trait_NAME" = "Full Mithril Arsenal"
+"SKILL_musketeer_double_barrel_provider_trait_DESCRIPTION" = "The Musketeer can use his basic attack twice in one turn, but cannot use his movement once a shot is fired."
+
+"SKILL_musketeer_double_barrel_NAME" = "Loaded Barrel"
+"SKILL_musketeer_double_barrel_DESCRIPTION" = "Fires a round at an enemy, dealing physical damage."
+"SKILL_musketeer_double_barrel_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinRangedDmg} - {MaxRangedDmg} {icon#damagePhysical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_musketeer_double_barrel_DESCRIPTION_EPIC" = "<style="epic">EPIC: </style>Bullets are guaranteed to deal maximum damage if the Musketeer has the Lock and Load bonus active."
+
+"SKILL_musketeer_sniper_shot_NAME" = "Sniper Shot"
+"SKILL_musketeer_sniper_shot_DESCRIPTION" = "The truest shot to ever pierce the air, dealing damage equal to a percentage of the target's max health."
+"SKILL_musketeer_sniper_shot_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{minPercentage}% - {maxPercentage}% {icon#damagePhysical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_musketeer_silver_bullet_NAME" = "Silver Bullet"
+"SKILL_musketeer_silver_bullet_DESCRIPTION" = "The Musketeer loads his next shot with a silver bullet, allowing him to deal true damage with all types of attacks this turn."
+"SKILL_musketeer_silver_bullet_DESCRIPTION_DATA" = "Duration: <style="highlight">{duration} {icon#turns}</style>"
+
+"SKILL_musketeer_hunters_mark_NAME" = "Hunter's Mark"
+"SKILL_musketeer_hunters_mark_DESCRIPTION" = "Marks a target with a bullet dealing 1 physical damage and inflicting a debuff that makes them take a flat amount of extra damage from all sources."
+"SKILL_musketeer_hunters_mark_DESCRIPTION_DATA" = "Extra damage: <style="damage">+{extraDamagePerHit}</style> {icon#damagePhysical}\nDuration: <style="highlight">{duration}</style> {icon#turns}\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_musketeer_shrapnel_shot_NAME" = "Shrapnel Shot"
+"SKILL_musketeer_shrapnel_shot_DESCRIPTION" = "Unloads a barrage of cannonfire on a selected 1-hex area, creating an explosion that damages every enemy caught in the explosions."
+"SKILL_musketeer_shrapnel_shot_DESCRIPTION_DATA" = "Damage: <style="damage">{directDamage} {icon#damagePhysical}</style>\nNumber of explosions: <style="highlight">2</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_musketeer_open_season_NAME" = "Open Season"
+"SKILL_musketeer_open_season_DESCRIPTION" = "The Musketeer fires a bullet that deals damage equal to the distance between the Musketeer and the target, plus some base damage."
+"SKILL_musketeer_open_season_DESCRIPTION_DATA" = "Base damage: <style="damage">{baseDamage}</style> {icon#damagePhysical}\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_musketeer_open_season_DESCRIPTION_EPIC" = "<style="epic">Epic:</style> If the Musketeer kills a target with at least 8 max HP, he can perform another action this turn."
+
+"COMBAT_MODIFIER_steady_aim_modifier_TITLE" = "Steady Aim"
+"COMBAT_MODIFIER_steady_aim_modifier_DESCRIPTION" = "The Musketeer has +1 damage so long as he stays still for this turn."
+
+"COMBAT_MODIFIER_hunters_mark_modifier_TITLE" = "Hunter's Mark"
+"COMBAT_MODIFIER_hunters_mark_modifier_DESCRIPTION" = "This unit receives +{extraDamagePerHit} extra physical damage from all sources of damage."
+
+"COMBAT_MODIFIER_modifier_most_dangerous_game_TITLE" = "Most Dangerous Hunter"
+"COMBAT_MODIFIER_modifier_most_dangerous_game_DESCRIPTION" = "The Musketeer has bonus range for the rest of combat."
+

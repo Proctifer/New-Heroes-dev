@@ -68,6 +68,12 @@ do
 												if( cinematicMapHelper.HeroByTag("Cleric") == nil ) then
 		                                    		table.insert(heroesAvailable, "cleric")
 		                                    	end
+												if( cinematicMapHelper.HeroByTag("Assassin") == nil ) then
+		                                    		table.insert(heroesAvailable, "assassin")
+		                                    	end
+												if( cinematicMapHelper.HeroByTag("Musketeer") == nil ) then
+		                                    		table.insert(heroesAvailable, "musketeer")
+		                                    	end
 
 		                                    	local heroToRecruit = cinematicMapHelper.RandomItem(heroesAvailable)
 
@@ -283,6 +289,34 @@ do
 															exit = true
 														}
 													}
+										        },
+										        {
+										            type = DialogType.Dialog,
+										            condition = |d| d.data.recruit == "assassin",
+										            text = || __D(26, "A few minutes after blowing the horn, we felt someone tap our shoulder. We turned around to find an Assassin."),
+										    		who = || "mapCinematicId",
+										            children = {
+										    			{
+															type = DialogType.Response,
+															text = || __R(27, "Talk to the assassin."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitAssassin"),
+															exit = true
+														}
+													}
+										        },
+										        {
+										            type = DialogType.Dialog,
+										            condition = |d| d.data.recruit == "Musketeer",
+										            text = || __D(28, "A few minutes after blowing the horn, a musketeer approached us."),
+										    		who = || "mapCinematicId",
+										            children = {
+										    			{
+															type = DialogType.Response,
+															text = || __R(29, "Talk to the musketeer."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitMusketeer"),
+															exit = true
+														}
+													}
 										        }
 										    }
 										}
@@ -404,7 +438,21 @@ do
 																				{"MinionCleric"}
 																				)
 																				}
-																			))																																		
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitAssassin", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"MinionAssassin"}
+																				)
+																				}
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitMusketeer", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"MinionMusketeer"}
+																				)
+																				}
+																			))																																	
 								}))
 
 	quest.results = {

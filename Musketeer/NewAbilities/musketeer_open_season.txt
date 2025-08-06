@@ -1,0 +1,123 @@
+"musketeer_open_season"
+{
+	"AbilityBehavior"   		"UNIT_TARGET | HAS_CHANCE_TO_HIT"
+    "AbilityTeamFilter" 		"TEAM_ENEMY"
+    "AbilityCastRange" 			"stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange" 		"stat(%CASTER, #rangedAttackMinRange)"
+    "AbilityCooldown"   		"2"
+    "AbilityAPCost"     		"2"
+    "AnimationID"   			"SpecialAttack"
+    "Icon" 						"MainTarget"
+    "CastFXId" 					"CommonArrowCastSoundFXMega"
+	"AbilityCanExecute"         "hasModifier(%SOURCE, #musketeer_ammo_this_turn_modifier)"
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type" 			"FIELD_EXPRESSION"
+            "baseDamage"  		"floor(stat(%CASTER, #attackDamage)/3)"
+        }
+
+        "02"
+        {
+            "var_type" 			"FIELD_EXPRESSION"        
+            "bonusDamage"  		"stat(%CASTER, #rangedAttackRange)"
+        }
+		
+		"03"
+        {
+            "var_type" 			"FIELD_FLOAT"        
+            "extraRange"  		"1"
+        }
+		
+		"04"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"duration"			"2"
+		}
+    }
+
+
+    "OnAbilityAction"
+    {
+        "TrackingProjectile"
+        {
+            "Target"               	"%TARGET"
+            "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+            "TargetPos"             "unitPosition(%TARGET, #Chest)"
+            "Model"  				"SimpleArrowProjectile"
+            "WillHit" 				"hitChanceCalc(%TARGET)"
+            "MissPosition" 			"unitPosition(%TARGET)"
+
+            "Params" 
+            {
+                "damage" 
+                {
+                    "type" 			"FIELD_FLOAT"
+                    "value" 		"expr(%baseDamage) + hexDistance(unitHex(%SOURCE), unitHex(%TARGET))"
+                }
+            }
+			
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {
+        "Hit"
+        {
+            "Target" "%TARGET"
+            "EffectName" "GenericHitFXMega" 
+            "Tags" "stringList(#PROJECTILE, #TARGETED)"
+
+            "InitActions"
+            {
+                "Conditional"		
+				{
+					"Condition"		"hasModifier(%CASTER, #silver_ammo_modifier)"
+
+					"Actions"
+					{
+						"AddDamage"
+						{
+							"Type"          "DAMAGE_TRUE"
+							"Damage"        "%damage"
+						}
+					}
+					
+					"ElseActions"
+					{
+						"AddDamage"
+						{
+							"Type"          "DAMAGE_PHYSICAL"
+							"Damage"        "%damage"
+						}
+					}
+				}
+            }
+			
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition"     "stat(%TARGET, #health_max) > 7 && isOnState(%TARGET, #DEAD) && not(isOnState(%TARGET, #PROP))"
+
+                    "Actions" 
+                    {
+                        "MarkHitLegendary"
+                        {
+                        }
+						
+						"SetStat"
+						{
+							"Target" 		"%SOURCE"
+							"Stat" 			"#actionsAvailable"
+							"Value" 		"stat(%SOURCE, #actionsAvailable) + 1"
+						}
+                    }
+                }
+            }
+        }
+    }
+}

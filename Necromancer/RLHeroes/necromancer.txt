@@ -91,9 +91,9 @@
 		"armor_regen_per_turn" "0"
 		"armor_gain_passTurn" "0"
 		"baseDamage" "4"
-		"rangedAttackRange" "5"
+		"rangedAttackRange" "4"
 		"rangedAttackMinRange" "2"
-		"walkSpeed" "1"
+		"walkSpeed" "2"
 	}
 }
 

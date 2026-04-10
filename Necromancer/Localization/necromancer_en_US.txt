@@ -1,5 +1,5 @@
 "UNIT_MINION_NECROMANCER_NAME_0001" = "Necromancer"
-"UNIT_MINION_NECROMANCER_LORE" = "Sulfur and rot trails in their wake; these dark wizards are no strangers to death. Though they are shunned for their practices, they have emerged to fight beyond their last breath against the forces of darkness."
+"UNIT_MINION_NECROMANCER_LORE" = "Sulfur and rot trails in their wake; a necromancer is no strangers to death. Typically these dark wizards pursue their own objectives, but they have emerged now to fight beyond their last breath against the darkness."
 
 "UNIT_SUMMON_SKELETON_NAME_" = "Skeleton Summon"
 
@@ -9,11 +9,7 @@
 "SKILL_necro_bolt_of_sickness_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If the target dies, a pool of acid spawns in their place."
 "SKILL_necro_bolt_of_sickness_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinRangedDmg} - {MaxRangedDmg} {icon#damageMagical}</style>\nEPIC acid duration: <style="highlight"> {AcidDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
 
-"SKILL_test_ability_NAME" = "Test Ability"
-"SKILL_test_ability_DESCRIPTION" = "ERm test."
-"SKILL_test_ability_DESCRIPTION_DATA" = "Summon duration: <style="highlight">Shield? {icon#turns}\nRange: <style="highlight">I guess</style>"
-
-"SKILL_necro_skeleton_summon_NAME" = "Walking Dead"
+""SKILL_necro_skeleton_summon_NAME" = "Walking Dead"
 "SKILL_necro_skeleton_summon_DESCRIPTION" = "Summons an expendable, weaker skeleton to fight."
 "SKILL_necro_skeleton_summon_DESCRIPTION_DATA" = "Summon duration: <style="highlight">{duration} {icon#turns}\nRange: <style="highlight">{AbilityCastRange}</style>"
 
@@ -31,7 +27,7 @@
 "SKILL_necro_unstable_disease_DESCRIPTION_DATA" = "Damage: <style="damage">{RangedDmg} {icon#damageMagical}</style>\nPoison duration: <style="highlight">{poisonDuration} {icon#turns}</style>\nEPIC damage: <style="damage">{epicDamage} {icon#damageMagical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
 
 "SKILL_necro_lord_of_the_horde_NAME" = "Lord of the Horde"
-"SKILL_necro_lord_of_the_horde_DESCRIPTION" = "Summons the resurrected corpse of a seasoned warrior. Its combat prowess surpasses the limits of death itself. Its melee attacks restore 1 health and it reflects damage back to melee attackers."
+"SKILL_necro_lord_of_the_horde_DESCRIPTION" = "Summons the resurrected corpse of a seasoned warrior. Its combat prowess surpasses the limits of death itself. Its melee attacks restore 1 health."
 "SKILL_necro_lord_of_the_horde_DESCRIPTION_DATA" = "Summon duration: <style="highlight">{duration} {icon#turns}\nRange: <style="highlight">{AbilityCastRange}</style>"
 
 "SKILL_zombie_lifesteal_NAME" = "Life Steal"

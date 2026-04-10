@@ -85,7 +85,7 @@
 					"Target"               	"%TARGET"
 					"SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
 					"TargetPos"             "unitPosition(%TARGET, #Chest)"
-					"Model" 				"ArrowOfSorrowProjectile"
+					"Model" 				"EmptyProjectile"
 					"WillHit" 				"hitChanceCalc(%TARGET)"
 					"MissPosition" 			"unitPosition(%TARGET)"
 

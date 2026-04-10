@@ -897,7 +897,7 @@ do
 															children = {
 																{
 																	type = DialogType.Dialog,
-							                                    	text = || __D(96, "We gave them one of our potions and waited until them felt better.\n\n\"Thanks to you, I have not found my grave today. Allow me to repay you.\""),
+							                                    	text = || __D(96, "We gave them one of our potions and waited until they felt better.\n\n\"Thanks to you, I have not found my grave today. Allow me to repay you.\""),
 														    		who = || "mapCinematicId",
 														    		exit = true
 																}
@@ -913,7 +913,7 @@ do
 															children = {
 																{
 																	type = DialogType.Dialog,
-							                                    	text = || __D(98, "We gave them one of our potions and waited until them felt better.\n\n\"Thanks to you, I have not found my grave today. Allow me to repay you.\""),
+							                                    	text = || __D(98, "We gave them one of our potions and waited until they felt better.\n\n\"Thanks to you, I have not found my grave today. Allow me to repay you.\""),
 														    		who = || "mapCinematicId",
 														    		exit = true
 																}
@@ -929,7 +929,7 @@ do
 															children = {
 																{
 																	type = DialogType.Dialog,
-							                                    	text = || __D(100, "We gave them one of our bandages and waited until them felt better.\n\n\"Thanks to you, I have not found my grave today. Allow me to repay you.\""),
+							                                    	text = || __D(100, "We gave them one of our bandages and waited until they felt better.\n\n\"Thanks to you, I have not found my grave today. Allow me to repay you.\""),
 														    		who = || "mapCinematicId",
 														    		exit = true
 																}

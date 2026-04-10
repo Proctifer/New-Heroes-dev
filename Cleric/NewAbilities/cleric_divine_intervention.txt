@@ -1,6 +1,6 @@
 "cleric_divine_intervention"
 {
-    "AbilityBehavior"           "POINT_TARGET | AOE | POSITIVE_EFFECT | DOESNT_CONSUME_MOVE | FAKE_ACTION"
+    "AbilityBehavior"           "POINT_TARGET | AOE | POSITIVE_EFFECT"
     "AbilityAOETeamFilter"      "TEAM_FRIENDLY"
 
     "AnimationID"               "SpellCastB"
@@ -14,7 +14,7 @@
     "AbilityAOERange"           "%aoeRadius"
     "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
     "AbilityCooldown"           "3"
-    "AbilityAPCost"             "0"
+    "AbilityAPCost"             "1"
 
     "AbilitySpecial"
     {

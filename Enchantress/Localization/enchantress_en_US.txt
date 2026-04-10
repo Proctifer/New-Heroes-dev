@@ -4,7 +4,7 @@
 "SKILL_high_enchantress_sylvan_bolt_NAME" = "Sylvan Bolt"
 "SKILL_high_enchantress_sylvan_bolt_DESCRIPTION" = "Casts a simple magic bolt that damages its target."
 "SKILL_high_enchantress_sylvan_bolt_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Applies <style="concept">rooted</style> to <style="debuff">weakened</style> targets."
-"SKILL_high_enchantress_sylvan_bolt_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#iconDamageType}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_high_enchantress_sylvan_bolt_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#iconDamageType}</style>\nEPIC root duration: <style="highlight"> {rootDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
 
 "SKILL_high_enchantress_havoc_spirit_NAME" = "Havoc Spirit"
 "SKILL_high_enchantress_havoc_spirit_DESCRIPTION" = "Phases between up to {maxTargets} enemies of up to 1 hex away from each other, damaging units struck before returning to the starting hex."

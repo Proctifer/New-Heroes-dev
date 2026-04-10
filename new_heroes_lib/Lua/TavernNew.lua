@@ -580,7 +580,7 @@ do
 												    		children ={
 												    			{
 																	type = DialogType.Dialog,
-																	text = || __D(67, "\"Let us proceed. I will be your shadow.\" said the Assassin."),
+																	text = || __D(67, "\"Let us proceed. I will be your shadow,\" said the Assassin."),
 														    		who = || "mapCinematicId",
 														    		children = {
 														    			{

@@ -1,0 +1,44 @@
+﻿"UNIT_MUSKETEER_NAME_0001" = "Mosquetero"
+"UNIT_MUSKETEER_LORE" = "Tirador profesional que combinan su precisión incomparable con armas versátiles."
+
+"SKILL_musketeer_double_barrel_provider_trait_NAME" = "Arsenal de mithril"
+"SKILL_musketeer_double_barrel_provider_trait_DESCRIPTION" = "El Mosquetero puede usar su ataque básico dos veces en un turno, pero no puede usar su movimiento una vez que se dispara un tiro."
+
+"SKILL_musketeer_double_barrel_NAME" = "cañon cargado"
+"SKILL_musketeer_double_barrel_DESCRIPTION" = "Dispara una bala a un enemigo y le inflige daño fisico."
+"SKILL_musketeer_double_barrel_DESCRIPTION_DATA" = "Daño: <style="rangeofdamage">{MinRangedDmg} - {MaxRangedDmg} {icon#damagePhysical}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_musketeer_double_barrel_DESCRIPTION_EPIC" = "<style="epic">ÉPICO: </style>Se garantiza que el ataque básico causara el máximo daño si el Mosquetero tiene activa la bonificación Listo para disparar."
+
+"SKILL_musketeer_sniper_shot_NAME" = "Disparo de francotirador"
+"SKILL_musketeer_sniper_shot_DESCRIPTION" = "El disparo más certero que jamás haya atravesado el aire, infligiendo daño equivalente a un porcentaje de la salud máxima del objetivo."
+"SKILL_musketeer_sniper_shot_DESCRIPTION_DATA" = "Daño: <style="rangeofdamage">{minPercentage}% - {maxPercentage}% {icon#damagePhysical}</style>\nRango: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_musketeer_silver_bullet_NAME" = "Bala de plata"
+"SKILL_musketeer_silver_bullet_DESCRIPTION" = "El Mosquetero carga su siguiente disparo con una bala de plata, lo que le permite causar daño verdadero con todo tipo de ataques en este turno."
+"SKILL_musketeer_silver_bullet_DESCRIPTION_DATA" = "Duración: <style="highlight">{duration} {icon#turns}</style>"
+
+"SKILL_musketeer_hunters_mark_NAME" = "Marca del cazador"
+"SKILL_musketeer_hunters_mark_DESCRIPTION" = "Marca un objetivo con una bala que le inflige 1 daño físico y un efecto negativo que le hace recibir una cantidad fija de daño adicional de todas las fuentes."
+"SKILL_musketeer_hunters_mark_DESCRIPTION_DATA" = "Daño extra: <style="damage">+{extraDamagePerHit}</style> {icon#damagePhysical}\nDuración: <style="highlight">{duration}</style> {icon#turns}\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_musketeer_shrapnel_shot_NAME" = "Disparo de metralla"
+"SKILL_musketeer_shrapnel_shot_DESCRIPTION" = "recarga un bombardeo de fuego,que en un área seleccionada de 1 hexágono, lo que crea una explosión que daña a todos los enemigos atrapados en las explosiones."
+"SKILL_musketeer_shrapnel_shot_DESCRIPTION_DATA" = "Daño: <style="damage">{directDamage} {icon#damagePhysical}</style>\nNumero de explosivos: <style="highlight">2</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_musketeer_open_season_NAME" = "Disparo libre"
+"SKILL_musketeer_open_season_DESCRIPTION" = "El Mosquetero dispara una bala que inflige daño igual a la distancia entre el Mosquetero y el objetivo, más algo de daño base."
+"SKILL_musketeer_open_season_DESCRIPTION_DATA" = "Daño base : <style="damage">{baseDamage}</style> {icon#damagePhysical}\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_musketeer_open_season_DESCRIPTION_EPIC" = "<style="epic">Épico:</style> Si el Mosquetero mata a un objetivo con al menos 8 HP máximos, puede realizar otra acción este turno."
+
+"COMBAT_MODIFIER_steady_aim_modifier_TITLE" = "Steady Aim"
+"COMBAT_MODIFIER_steady_aim_modifier_DESCRIPTION" = "The Musketeer has +1 damage so long as he stays still for this turn."
+
+"COMBAT_MODIFIER_hunters_mark_modifier_TITLE" = "Marca de cazador"
+"COMBAT_MODIFIER_hunters_mark_modifier_DESCRIPTION" = "Esta unidad recibe +{extraDamagePerHit} daño físico adicional de todas las fuentes de daño."
+
+"COMBAT_MODIFIER_modifier_most_dangerous_game_TITLE" = "Most Dangerous Hunter"
+"COMBAT_MODIFIER_modifier_most_dangerous_game_DESCRIPTION" = "The Musketeer has bonus range for the rest of combat."
+
+
+
+

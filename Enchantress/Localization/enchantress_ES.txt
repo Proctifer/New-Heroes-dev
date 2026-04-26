@@ -1,0 +1,30 @@
+﻿"UNIT_HIGH_ENCHANTRESS_LORE" = "Atormentados por la magia oscura que su gente ha explotado, un pequeño grupo de encantadoras busca usar sus poderes para combatir el mal que ha consumido su hogar."
+
+
+"SKILL_high_enchantress_sylvan_bolt_NAME" = "Rayo silvano"
+"SKILL_high_enchantress_sylvan_bolt_DESCRIPTION" = "Lanza un simple rayo mágico que daña a su objetivo."
+"SKILL_high_enchantress_sylvan_bolt_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Aplica <style="concept">inmovilización</style> a objetivos <style="debuff">debilitados</style>."
+"SKILL_high_enchantress_sylvan_bolt_DESCRIPTION_DATA" = "Daño: <style="damage">{damage} {icon#iconDamageType}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_high_enchantress_havoc_spirit_NAME" = "Espíritu del caos"
+"SKILL_high_enchantress_havoc_spirit_DESCRIPTION" = "Fases entre hasta {maxTargets} enemigos a hasta 1 hexágono de distancia entre sí, dañando a las unidades golpeadas antes de regresar al hexágono inicial."
+"SKILL_high_enchantress_havoc_spirit_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Aplica <style="debuff">Sangrado</style> a objetivos <style="concept">inmovilizados</style>."
+"SKILL_high_enchantress_havoc_spirit_DESCRIPTION_DATA" = "Daño: <style="damage">{damage} {icon#iconDamageType}</style>\nDuración ÉPICA de sangrado: <style="highlight"> {bleedDuration} {icon#turns}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_high_enchantress_spore_shower_NAME" = "Lluvia de esporas"
+"SKILL_high_enchantress_spore_shower_DESCRIPTION" = "Llueve sobre un objetivo adyacente con esporas que corroen la armadura y que se le aplica <style="debuff">veneno</style> y <style="debuff">dormido</style>."
+"SKILL_high_enchantress_spore_shower_DESCRIPTION_DATA" = "Daño: <style="damage">{damage} {icon#iconDamageType}</style>.\nDuración de veneno: <style="highlight">{poisonDuration} {icon#turns}</style>\nDuración de dormido: <style="highlight">{sleepDuration} {icon#turns}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_high_enchantress_natures_blood_NAME" = "Sangre de la naturaleza"
+"SKILL_high_enchantress_natures_blood_DESCRIPTION" = " Exuda savia curativa para restaurar algo de salud y eliminar los estados <style="debuff">Quemado</style> y <style="debuff">veneno</style>."
+"SKILL_high_enchantress_natures_blood_DESCRIPTION_DATA" = "Curación: <style="buff"> {heal} {icon#statHP}</style>\nAlcance: <style="highlight">sí mismo</style>"
+
+"SKILL_high_enchantress_wild_omen_NAME" = "Presagio salvaje"
+"SKILL_high_enchantress_wild_omen_DESCRIPTION" = "Lanza una niebla mágica hasta {range} hex alcanzando sus objetivos, dañando y aplicando <style="debuff">dormido</style> a todas las unidades atrapadas por él."
+"SKILL_high_enchantress_wild_omen_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Si el objetivo es asesinado, activa la <style="highlight">Preparación</style>que,reduce su enfriamiento."
+"SKILL_high_enchantress_wild_omen_DESCRIPTION_DATA" = "Daño: <style="damage">{damage} {icon#iconDamageType}</style>\nDuración de dormido: <style="highlight">{duration} {icon#turns}</style>\nAlcance: <style="highlight">{range}</style>"
+
+"SKILL_high_enchantress_leeching_chain02_NAME" = "Cadena de sanguijuelas"
+"SKILL_high_enchantress_leeching_chain02_DESCRIPTION" = "Dispara una semilla mágica a un objetivo, que se encadena entre los enemigos adyacentes. La semilla inflige daño y aplica <style="debuff">Drenado</style> y inflige daño HP.\n<style="debuff">Drenado</style> las unidades pierden su HP por culpa de la Gran Encantadora al final de su turno."
+"SKILL_high_enchantress_leeching_chain02_DESCRIPTION_DATA" = "Daño: <style="damage">{damage} {icon#iconDamageType}</style>\nDaño del drenaje: <style="damage">{drainedDamage}{icon#damageTrue}</style>\nObjetivos Máx.: <style="highlight">{maxTargets}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_high_enchantress_leeching_chain02_DESCRIPTION_EXTRA" = "<style="debuff">Drenaje</style> Dura hasta que el objetivo o la Gran Hechicera caen.</style>"

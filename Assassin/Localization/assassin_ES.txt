@@ -1,0 +1,51 @@
+﻿"UNIT_MINION_ASSASSIN_NAME_0001" = "Asesino"
+"UNIT_MINION_ASSASSIN_LORE" = "Tras la caída de Hammerhold, estos sigilosos guerreros han cruzado las arenas para luchar contra otro gran mal. Los asesinos son propensos a vivir en las sombras y solo dan el golpe mortal cuando es el momento adecuado."
+
+
+"SKILL_assassin_lethal_strike_NAME" = "Golpe letal"
+"SKILL_assassin_lethal_strike_DESCRIPTION" = "Golpea a un enemigo con precisión letal y le inflige un gran daño."
+"SKILL_assassin_lethal_strike_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Inflige daño adicional si apuñala por la espalda."
+"SKILL_assassin_lethal_strike_DESCRIPTION_DATA" = "Daño: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nDaño ÉPICO: <style="damage">{epicDamage} {icon#damagePhysical}</style>\nAlcance: <style="highlight">cuerpo a cuerpo</style>"
+
+"SKILL_assassin_stealth_NAME" = "Invisibilidad"
+"SKILL_assassin_stealth_DESCRIPTION" = "El Asesino se vuelve invisible durante 2 turnos, lo que lo elimina de la priorización del enemigo."
+"SKILL_assassin_stealth_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style>"Entrar en sigilo mientras concentración agudo está activo otorgará una bonificación de daño adicional."
+"SKILL_assassin_stealth_DESCRIPTION_DATA" = "Duración: <style="highlight">{duration}</style> {icon#turns}\nAlcance: <style="highlight">sí mismo</style>"
+"SKILL_assassin_stealth_DESCRIPTION_EXTRA" = "<style="extra">Si Sed de sangre está activo, la duración se restablecerá.</style>"
+
+
+"SKILL_assassin_counterattack_NAME" = "Contraataque"
+"SKILL_assassin_counterattack_DESCRIPTION" = "Aumenta la probabilidad de esquivar cuerpo a cuerpo al 100 % contra el siguiente ataque cuerpo a cuerpo y responde con un contraataque."
+"SKILL_assassin_counterattack_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Entrar en Postura de contraataque mientras concentración agudo está activo aumentará la bonificación de daño en +1."
+"SKILL_assassin_counterattack_DESCRIPTION_DATA" = "Duración: <style="highlight">{duration}</style> {icon#turns}\nAlcance: <style="highlight">Sí mismo</style>"
+"SKILL_assassin_counterattack_DESCRIPTION_EXTRA" = "<style="extra">Si Sed de sangre está activo, la duración se restablecerá.</style>"
+
+"SKILL_assassin_dagger_NAME" = "Daga de bolsillo"
+"SKILL_assassin_dagger_DESCRIPTION" = "Lanza rápidamente una daga para golpear a un enemigo y causarle daño."
+"SKILL_assassin_dagger_DESCRIPTION_DATA" = "Daño: <style="damage">{RangedDmg} {icon#damagePhysical}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_assassin_dagger_DESCRIPTION_EXTRA" = "<style="extra">El Asesino puede usar otra habilidad y todo el movimiento restante después de esta.</style>"
+
+"SKILL_assassin_backstab_NAME" = "Puñalada por la espalda"
+"SKILL_assassin_backstab_DESCRIPTION" = "El Asesino se teletransporta al lado OPUESTO del enemigo objetivo y realiza <style="highlight">Golpe letal</style> en el."
+"SKILL_assassin_backstab_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Si el objetivo muere, el asesino obtiene una mayor probabilidad de esquivar."
+"SKILL_assassin_backstab_DESCRIPTION_DATA" = "Probabilidad de esquiva ÉPICA: <style="highlight">{dodgeChance}%</style>\nDuración ÉPICA : <style="highlight">{duration} {icon#turns}</style>\nrestablecerá : <style="highlight">GLOBAL</style>"
+
+"SKILL_assassin_sneak_attack_NAME" = "Ataque furtivo"
+"SKILL_assassin_sneak_attack_DESCRIPTION" = "El Asesino lanza un golpe que perfora la armadura de su objetivo."
+"SKILL_assassin_sneak_attack_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Si el asesino mata a su objetivo mientras está invisible, restablece la duración de la invisibilidad."
+"SKILL_assassin_sneak_attack_DESCRIPTION_DATA" = "Daño: <style="damage">{damage} {icon#damageTrue}</style>\nRango: <style="highlight">cuerpo a cuerpo</style>"
+
+"COMBAT_MODIFIER_assassin_counterattack_modifier_TITLE" = "Contraataque"
+"COMBAT_MODIFIER_assassin_counterattack_modifier_DESCRIPTION" = "El asesino esquivará el siguiente ataque cuerpo a cuerpo y luego realizará un contraataque."
+
+"COMBAT_MODIFIER_assassin_stealth_modifier_TITLE" = "Invisible"
+"COMBAT_MODIFIER_assassin_stealth_modifier_DESCRIPTION" = "Esta unidad es invisible para los enemigos y no puede ser objetivo."
+
+"COMBAT_MODIFIER_assassin_bloodlust_modifier_TITLE" = "Sed de sangre"
+"COMBAT_MODIFIER_assassin_bloodlust_modifier_DESCRIPTION" = "Esta unidad tiene +3 daño."
+
+"COMBAT_MODIFIER_assassin_dodge_increase_modifier_TITLE" = "Acción evasiva"
+"COMBAT_MODIFIER_assassin_dodge_increase_modifier_DESCRIPTION" = "Esta unidad tiene mayor probabilidad de esquivar."
+
+
+

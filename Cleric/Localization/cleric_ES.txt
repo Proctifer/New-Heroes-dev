@@ -1,0 +1,58 @@
+﻿
+"UNIT_MINION_CLERIC_NAME_0001" = "clérigo"
+"UNIT_MINION_CLERIC_LORE" = "Los clérigos ejercen su poder sagrado mediante el combate y el estudio devoto de la magia divina. Transmiten su mensaje con suavidad, pero por si acaso, portan un gran garrote."
+
+
+
+"SKILL_cleric_whack_NAME" = "Porrazo"
+"SKILL_cleric_whack_DESCRIPTION" = "Golpea al objetivo y le causa daño físico."
+"SKILL_cleric_whack_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Obtiene armadura adicional temporal por ejecutar el ataque sin moverse."
+"SKILL_cleric_whack_DESCRIPTION_DATA" = "Daño: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nArmadura Épica: <style="buff">+{extraArmor} {icon#statArmor}</style>\nRango: <style="highlight">cuerpo a cuerpo</style>"
+
+"SKILL_cleric_unshakable_NAME" = "Inquebrantable"
+"SKILL_cleric_unshakable_DESCRIPTION" = "El clérigo demuestra su fe inquebrantable permaneciendo quieto, obteniendo armadura adicional y volviéndose inmune a los retrocesos hasta su siguiente turno si no se mueve."
+"SKILL_cleric_unshakable_DESCRIPTION_DATA" = " Armadura extra: <style="buff">+{extraArmor} {icon#statArmor}</style>"
+
+"SKILL_cleric_communion_NAME" = "Comunión"
+"SKILL_cleric_communion_DESCRIPTION" = "Con una oración, el clérigo otorga a un aliado seleccionado y a él mismo un ataque aumentado."
+"SKILL_cleric_communion_DESCRIPTION_DATA" = "Bono de ataque a sí mismo: <style="buff">+{DamageSelf} {icon#damagePhysical}</style>\nBono de ataque a aliados: <style="buff">+{DamageAlly} {icon#damagePhysical}</style>\nDuration: <style="highlight">{duration}</style> {icon#turns}\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_cleric_communion_DESCRIPTION_EXTRA" = "<style="extra">El clérigo debe potenciar a un aliado para obtener el efecto.</style>"
+
+"SKILL_cleric_salvation_NAME" = "Salvación"
+"SKILL_cleric_salvation_DESCRIPTION" = "Reza por un milagro, reduciendo el daño de ataque de los enemigos en un área seleccionada a 1 durante 1 turno."
+"SKILL_cleric_salvation_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Duración aumentada si el clérigo tiene la <style="highlight">Comunión</style>."
+"SKILL_cleric_salvation_DESCRIPTION_DATA" = "Duración: <style="highlight">{duration}</style> {icon#turns}\nÉPICO Duración: <style="highlight">{extraDuration} {icon#turns}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_cleric_providence_NAME" = "Previsión"
+"SKILL_cleric_providence_DESCRIPTION" = "El clérigo se bendice a sí mismo y a los aliados circundantes con una bendición sagrada, recargando los tiempos de reutilización de sus habilidades."
+"SKILL_cleric_providence_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Si tiene la <style="highlight">Comunión</style> Mejora a los aliados que ya tienen la mejora, incluido él mismo."
+"SKILL_cleric_providence_DESCRIPTION_DATA" = "Reducción de enfriamiento: <style="highlight">{cooldownOffset}</style> {icon#turns}\nAlcance: <style="highlight">sí mismo</style>"
+
+"SKILL_cleric_divine_intervention_NAME" = "Intervención Divina"
+"SKILL_cleric_divine_intervention_DESCRIPTION" = "Invoca el poder sagrado para convocar un rayo de luz purificadora que cura y elimina todo los efectos <style="debuff">Debilitadores</style>."
+"SKILL_cleric_divine_intervention_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Otorga reducción de daño si el clérigo tiene el efecto <style="highlight">Comunión</style>."
+"SKILL_cleric_divine_intervention_DESCRIPTION_DATA" = "Reducción de Daño: <style="buff">{damageReduction} {icon#damageTrue}</style>\nDuración: <style="highlight">{duration}</style> {icon#turns}\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_cleric_smite_NAME" = "Aniquilación"
+"SKILL_cleric_smite_DESCRIPTION" = "Invoca la ira de los cielos centrada en un enemigo objetivo, golpeándolo dos veces y a muchos enemigos hasta a 3 hexágonos de distancia del objetivo una vez con un rayo divino."
+"SKILL_cleric_smite_DESCRIPTION_DATA" = "Daño: <style="damage">{damage} {icon#damageTrue}</style>\nNúmero de rayos: <style="highlight">{numberOfHits}</style>\nAOE size: <style="highlight">{aoeRadius}</style>"
+"SKILL_cleric_smite_DESCRIPTION_EXTRA" = "<style="extra">Esta habilidad no repetirá objetivos.</style>"
+
+
+"COMBAT_MODIFIER_cleric_unshakable_modifier_TITLE" = "Fe inquebrantable"
+"COMBAT_MODIFIER_cleric_unshakable_modifier_DESCRIPTION" = "Esta unidad está bendecida por <style="highlight">Inquebrantable</style>, aumenta la armadura mientras estás quieto y otorga inmunidad al retroceso."
+
+"COMBAT_MODIFIER_modifier_cleric_salvation_TITLE" = "Debilitado"
+"COMBAT_MODIFIER_modifier_cleric_salvation_DESCRIPTION" = "La estadística de daño de esta unidad se reduce a 1. La escala de daño fijo en las habilidades no se ve afectada."
+
+"COMBAT_MODIFIER_modifier_communion_TITLE" = "Comunión"
+"COMBAT_MODIFIER_modifier_communion_DESCRIPTION" = "Esta unidad está bendecida por <style="highlight">Comunión</style>, aumentando su daño."
+
+"COMBAT_MODIFIER_modifier_communion_self_TITLE" = "Comunión"
+"COMBAT_MODIFIER_modifier_communion_self_DESCRIPTION" = Esta unidad está bendecida por <style="highlight">Comunión</style>, aumentando su daño."
+
+"COMBAT_MODIFIER_cleric_divine_intervention_modifier_TITLE" = "Intervención Divina"
+"COMBAT_MODIFIER_cleric_divine_intervention_modifier_DESCRIPTION" = "Esta unidad está protegida, lo que reduce todo el daño entrante al 1."
+
+"COMBAT_MODIFIER_modifier_whack_epic_TITLE" = "Reforzado"
+"COMBAT_MODIFIER_modifier_whack_epic_DESCRIPTION" = "El clérigo ha obtenido armadura al matar a una unidad."

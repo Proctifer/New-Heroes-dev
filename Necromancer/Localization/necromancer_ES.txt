@@ -1,0 +1,42 @@
+﻿"UNIT_MINION_NECROMANCER_NAME_0001" = "nigromante"
+"UNIT_MINION_NECROMANCER_LORE" = "Dejando rastros de azufre y podredumbre a su paso, estos magos oscuros conocen bien la muerte. Aunque son rechazados por sus prácticas, han emergido para luchar hasta el último aliento contra las fuerzas de la oscuridad."
+
+"UNIT_SUMMON_SKELETON_NAME_" = "Invocación de esqueleto"
+
+"SKILL_necro_dead_rise_trait_NAME" = "Alzamiento de los muertos"
+"SKILL_necro_dead_rise_trait_DESCRIPTION" = "Los aliados que caigan en batalla se levantarán de nuevo como esqueletos invocados.
+
+"SKILL_necro_bolt_of_sickness_NAME" = "Rayo de enfermedad"
+"SKILL_necro_bolt_of_sickness_DESCRIPTION" = "Lanza un simple rayo mágico que daña a su objetivo."
+"SKILL_necro_bolt_of_sickness_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Si el objetivo muere, se genera un charco de ácido en su lugar."
+"SKILL_necro_bolt_of_sickness_DESCRIPTION_DATA" = "Daño: <style="rangeofdamage">{MinRangedDmg} - {MaxRangedDmg} {icon#damageMagical}</style>\nÉPICO duración del ácido: <style="highlight"> {AcidDuration} {icon#turns}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_necro_skeleton_summon_NAME" = "Caminante no muerto"
+"SKILL_necro_skeleton_summon_DESCRIPTION" = "Invoca un esqueleto prescindible y más débil para luchar."
+"SKILL_necro_skeleton_summon_DESCRIPTION_DATA" = "Duración de la invocación: <style="highlight">{duration} {icon#turns}\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_necro_pestilence_NAME" = "Pestilencia"
+"SKILL_necro_pestilence_DESCRIPTION" = "Lanza una ola de descomposición en hexágonos vacíos que inflige <style="debuff">veneno</style> sobre los enemigos que caminan sobre él."
+"SKILL_necro_pestilence_DESCRIPTION_DATA" = "Duración del charco de veneno: <style="highlight">{floorDuration} {icon#turns}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_necro_fresh_meat_NAME" = "Carne fresca"
+"SKILL_necro_fresh_meat_DESCRIPTION" = "Invoca el cadáver resucitado de un alma olvidada. Sus ataques cuerpo a cuerpo restauran 1 punto de salud."
+"SKILL_necro_fresh_meat_DESCRIPTION_DATA" = "Duración de la invocación: <style="highlight">{duration} {icon#turns}\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_necro_unstable_disease_NAME" = "Enfermedad inestable"
+"SKILL_necro_unstable_disease_DESCRIPTION" = "Desata un hechizo dracónico que causa daño mágico e inflige <style="debuff">veneno</style> a un solo enemigo."
+"SKILL_necro_unstable_disease_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Si el objetivo muere, explota y propaga la enfermedad a las unidades cercanas dentro {epicRadius}-hex un radio."
+"SKILL_necro_unstable_disease_DESCRIPTION_DATA" = "Daño: <style="damage">{RangedDmg} {icon#damageMagical}</style>\nDuración del veneno: <style="highlight">{poisonDuration} {icon#turns}</style>\nDaño ÉPICO: <style="damage">{epicDamage} {icon#damageMagical}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_necro_lord_of_the_horde_NAME" = "Señor de la Horda"
+"SKILL_necro_lord_of_the_horde_DESCRIPTION" = "Invoca el cadáver resucitado de un guerrero experimentado. Su destreza en combate supera los límites de la muerte misma. Sus ataques cuerpo a cuerpo restauran 1 de salud y devuelven el daño a los atacantes cuerpo a cuerpo."
+"SKILL_necro_lord_of_the_horde_DESCRIPTION_DATA" = "Duración de la invocación: <style="highlight">{duration} {icon#turns}\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_zombie_lifesteal_NAME" = "Robo de vida"
+"SKILL_zombie_lifesteal_DESCRIPTION" = "Ataca a un objetivo y se cura en el proceso."
+"SKILL_zombie_lifesteal_DESCRIPTION_DATA" = "Daño: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nÉpico curación: <style="buff">{heal} {icon#statHP}</style>\nRange: <style="highlight">cuerpo a cuerpo</style>"
+
+
+"SKILL_necro_dead_rise_trait_NAME" = "Alzamiento de los muertos"
+"SKILL_necro_dead_rise_trait_DESCRIPTION" = "Los aliados que caigan en batalla se levantarán de nuevo como esqueletos invocados."
+

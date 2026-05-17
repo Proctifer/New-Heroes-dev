@@ -3,6 +3,7 @@
     
     
     "AbilityBehavior"   			"UNIT_TARGET | HAS_CHANCE_TO_HIT"
+    "AbilityCustomTargetFilter"     "not(isOnState(%UNIT, #BOSS))"
     "AbilityTeamFilter" 			"TEAM_ENEMY"
     "AbilityCastRange" 				"stat(%CASTER, #rangedAttackRange)"
     "AbilityCastMinRange" 			"stat(%CASTER, #rangedAttackMinRange)"
@@ -31,7 +32,7 @@
         "03"
         {
             "var_type"              "FIELD_FLOAT"
-            "duration"              "3"
+            "duration"              "2"
         }
 
         "04"
@@ -51,12 +52,12 @@
 			{
 				"TrackingProjectile"
 				{
-					"Target"               "%TARGET"
+					"Target"               	"%TARGET"
 					"SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
 					"TargetPos"             "unitPosition(%TARGET, #Chest)"
-					"Model" "SleepingArrowProjectile"
-					"WillHit" "hitChanceCalc(%TARGET)"
-					"MissPosition" "unitPosition(%TARGET)"
+					"Model" 				"EmptyProjectile"
+					"WillHit" 				"hitChanceCalc(%TARGET)"
+					"MissPosition" 			"unitPosition(%TARGET)"
 
 					"Params" 
 					{
@@ -76,9 +77,9 @@
 
         "Hit"
         {
-            "Target" "%TARGET"
-            "EffectName" "OrcHunterSleepingArrowHitFXMega" 
-            "Tags" "stringList(#PROJECTILE, #TARGETED)"
+            "Target" 			"%TARGET"
+            "EffectName" 		"OrcHunterSleepingArrowHitFXMega" 
+            "Tags" 				"stringList(#PROJECTILE, #TARGETED)"
 
             "InitActions"
             {

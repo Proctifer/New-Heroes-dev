@@ -1,0 +1,69 @@
+"alric_flurry"
+{
+    "AbilityBehavior"       "MELEE"
+    "AbilityTeamFilter"     "TEAM_ENEMY"
+    "AbilityCastRange"      "stat(%CASTER, #meleeRange)"
+    "AbilityCooldown"       "4"
+    "AbilityAPCost"         "1"
+    "AnimationID"           "SpellCastA"
+    "Icon"                  "Flurry"
+    "CastFXId"              "BullRushCastFXMega"
+
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"  "FIELD_EXPRESSION"
+            "MinDamage" "stat(%CASTER, #attackDamage)-1"
+        }
+
+        "02"
+        {
+            "var_type"  "FIELD_EXPRESSION"        
+            "MaxDamage" "stat(%CASTER, #attackDamage)+1"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "Hit"
+        {
+            "Target"        "%TARGET"
+            "EffectName"    "OrcCleaverWhirlwindHitFXMega" 
+            "Tags"          "stringList(#MELEE, #TARGETED)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_PHYSICAL"
+                    "Damage"        "randomI(expr(%MinDamage), expr(%MaxDamage))"
+                }
+            }
+        }
+
+        "Delay"
+        {
+            "Time" "0.3"
+            "Actions"
+            {
+
+                "Hit"
+                {
+                    "Target"        "%TARGET"
+                    "EffectName"    "BullRushHitFXMega" 
+                    "Tags"          "stringList(#MELEE, #TARGETED)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL"
+                            "Damage"        "randomI(expr(%MinDamage), expr(%MaxDamage))"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

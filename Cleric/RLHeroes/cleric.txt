@@ -34,29 +34,29 @@
 	{
 		"11" 	"cleric_unshakable"
 		"100" 	"magic_endturn_trait"
-		}
+	}
 
-		"skillProgression"
-		{
+	"skillProgression"
+	{
 		"1" 
-			{
-				"1" "cleric_communion"
-			}
-
-			"2" 
-			{
-				"1" "cleric_salvation"
-				"2" "cleric_providence"
-			}
-
-			"3"
-			{
-				"1" "cleric_divine_intervention"
-				"2" "cleric_smite"
-			}
+		{
+			"1" "cleric_communion"
 		}
 
-		"defaultSkill" "cleric_whack"
+		"2" 
+		{
+			"1" "cleric_salvation"
+			"2" "cleric_providence"
+		}
+
+		"3"
+		{
+			"1" "cleric_divine_intervention"
+			"2" "cleric_smite"
+		}
+	}
+
+	"defaultSkill" "cleric_whack"
 
 		"soundConfig"
 	{

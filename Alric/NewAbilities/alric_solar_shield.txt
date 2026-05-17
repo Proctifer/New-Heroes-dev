@@ -1,0 +1,167 @@
+"alric_solar_shield"
+{
+    "AbilityBehavior"           "UNIT_TARGET | POSITIVE_EFFECT"
+    "AbilityTeamFilter"         "TEAM_FRIENDLY"
+    "AbilityCastRange"          "3"
+    "AbilityCastMinRange"       "1"
+    "AbilityCooldown"           "3"
+    "AbilityAPCost"             "1"
+    "AbilityCustomTargetFilter" "countFreeHexes(unitHex(%UNIT), 1) > 0"
+
+    "AnimationID"               "SpecialAttack"
+    "CastFXId"                  "OlochFireBarrierCastFXMega"
+    "Icon"                      "SolarShield" 
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "duration"      "2"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "extraArmor"    "4"
+        }
+
+        "03"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "range"         "3"
+        }
+    }
+
+    "OnAbilityAction"
+    { 
+        "TrackingProjectile"
+        {
+            "Target"            "%TARGET"
+            "SourcePos"         "unitPosition(%SOURCE, #Chest)"
+            "TargetPos"         "unitPosition(%TARGET, #Chest)"
+            "Model"             "FireballProjectile"
+
+            "Params" 
+            {
+                "firstProjectile" 
+                {
+                    "type"          "FIELD_FLOAT"
+                    "value"         "1"
+                }
+            }
+        }  
+
+        "ApplyModifier"
+        {
+            "ModifierName"      "disable_unit_modifier"
+            "Target"            "%SOURCE"
+        }
+
+        "MoveUnit"
+        {
+            "Target"            "%SOURCE"
+            "Position"          "newPoint(1000, 1000, 0)"
+        }
+    }
+
+    "OnProjectileDestinationReached"
+    {
+        "Conditional"
+        {
+            "Condition" "%firstProjectile"
+
+            "Actions" 
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "modifier_alric_solar_shield"
+                    "Target"            "%TARGET"
+                    "Duration"          "%duration"
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"      "modifier_alric_solar_shield"
+                    "Target"            "%CASTER"
+                    "Duration"          "%duration"
+                }
+
+                "SetToContext"
+                {
+                    "Context"           "currentContext()"
+                    "Key"               "#finalPosition"
+                    "Value"             "hexPosition(hexNeighbourOrNextFree(unitHex(%TARGET), unitHex(%CASTER), 6))"
+                    "Type"              "FIELD_OBJECT"
+                }
+
+                "TrackingProjectile"
+                {
+                    "SourcePos"             "unitPosition(%TARGET)"
+                    "TargetPos"             "%finalPosition"
+                    "Model"                 "FireballProjectile"
+
+                    "Params" 
+                    {
+                        "finalPosition" 
+                        {
+                            "type"          "FIELD_OBJECT" 
+                            "value"         "%finalPosition"
+                        }
+                    }
+                }  
+            }
+
+            "ElseActions"
+            {
+                "MoveUnit"
+                {
+                    "Target"          "%SOURCE"
+                    "Position"        "%finalPosition"
+                }
+
+                "RemoveModifier"
+                {
+                    "ModifierName"    "disable_unit_modifier"
+                    "Target"          "%SOURCE"
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_alric_solar_shield"
+        {
+            "Tags"                  "shield"
+            "EffectName"            "OlochFireBarrierStatusFXMega"
+            "Icon"                  "FireBarrier"
+            "IconPriority"          "50"
+
+            "PropertiesAdd"
+            {
+                "armor_max"         "%extraArmor"
+            }
+
+            "OnAdded"
+            {
+                "GiveArmor"
+                {
+                    "Target"            "%TARGET"
+                    "ArmorAmount"       "%extraArmor"
+                }
+            }
+
+            "OnRemoved"
+            {
+                "GiveArmor"
+                {
+                    "Target"            "%TARGET"
+                    "ArmorAmount"       "0"
+                }
+            }
+        }
+    }
+}
+
+  

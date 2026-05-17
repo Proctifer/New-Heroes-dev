@@ -1,0 +1,116 @@
+"RLHumanAlricLvl1"
+{
+	"UniqueId" 				"Alric"
+	"Model" 				"HumanWarriorRodrick"
+	"MetaExo" 				"ExoSkeletonHumanSylvanElf_MetaDataAsset"
+	"Name" 					"ALRIC"
+	"InheritsFrom" 			"Hero"
+	"cinematicTags" 		"Heroe|Legend|GoodLegend|Male|Alric|ct_legend|ct_might|ct_perception|ct_survival|UPGRADES_mighty"
+	"nextLevelArchetype" 	"RLHumanAlricLvl2"
+	"AttackType" 			"PHYSICAL"
+	"Icon" 					"Asst_Banner_Ranger"
+	"Background" 			"hero_roster_legend_bg_forest"
+	"UnitOnMap" 			"Asst_Party_SylvanElf"
+	"PortraitBackgroundColor" "d34a00"
+
+	"stats"
+	{
+		"level" 				"1"
+		"health_max" 			"5"
+		"armor_max" 			"3"
+		"armor_regen_per_turn" 	"2"
+		"baseDamage" 			"4"
+		"rangedAttackRange" 	"3"
+		"rangedAttackMinRange" 	"1"
+		"visualMoveSpeed" 		"2.5"
+		"visualRunSpeed" 		"2.5"
+		"walkSpeed" 			"2"
+		"armorOfThornsDamage"	"1"
+	}
+
+	"skills"
+	{
+		"100" "darkknight_armor_of_thorns_trait"
+		"200" "alric_toughness_trait"
+		"102" "mighty_endturn_trait"
+
+	}
+
+	"skillProgression"
+	{
+		"1"
+		{
+			"1" "alric_sand_warrior"
+		}
+
+		"2"
+		{
+			"1" "alric_solar_shield"
+			"2" "alric_riposte"
+			"3" "alric_flurry"
+		}
+
+		"3"
+		{
+			"1" "alric_adversary"
+			"2" "alric_sandstorm"
+			"3" "alric_quicksand"
+		}
+	}
+
+	"defaultSkill" "alric_slash"
+
+ 		"states"
+  		{
+  			"LEGEND" 			"1"
+			"adversary_buff"	"1"
+  		}
+
+	"soundConfig"
+	{
+		"assetId" "DynamicSoundGroupGeraldSounds"
+		"sounds"
+		{
+			"receiveDamage" "krl_sfx_combatGeneric_humanFemaleHit"
+			"receiveArmorDamage" "krl_sfx_combatGeneric_armorHit"
+			"death" "krl_sfx_combatGeneric_humanFemaleDeath"
+			"useSkill" "krl_va_combatGerald_action"
+			"startTurn" "krl_va_combatGerald_turnStart"
+			"promote" "krl_va_combatGerald_promote"
+			"selectHero" "krl_va_combatGerald_select"
+		}
+	}
+}
+
+"RLHumanAlricLvl2"
+{
+	"InheritsFrom" "RLHumanAlricLvl1"
+	"nextLevelArchetype" "RLHumanAlricLvl3"
+
+	"stats"
+	{
+		"level" 				"2"
+		"health_max" 			"7"
+		"armor_max" 			"4"
+		"armor_regen_per_turn" 	"2"
+		"baseDamage" 			"5"
+		"walkSpeed" 			"2"
+		"armorOfThornsDamage"	"1"
+	}
+}
+
+"RLHumanAlricLvl3"
+{
+	"InheritsFrom" "RLHumanAlricLvl1"
+
+	"stats"
+	{
+		"level" 				"3"
+		"health_max" 			"8"
+		"armor_max" 			"5"
+		"armor_regen_per_turn" 	"2"
+		"baseDamage" 			"7"
+		"walkSpeed" 			"2"
+		"armorOfThornsDamage"	"2"
+	}
+}

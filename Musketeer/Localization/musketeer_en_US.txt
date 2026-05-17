@@ -31,14 +31,11 @@
 "SKILL_musketeer_open_season_NAME" = "Open Season"
 "SKILL_musketeer_open_season_DESCRIPTION" = "The Musketeer fires a bullet that deals damage equal to the distance between the Musketeer and the target, plus some base damage."
 "SKILL_musketeer_open_season_DESCRIPTION_DATA" = "Base damage: <style="damage">{baseDamage}</style> {icon#damagePhysical}\nRange: <style="highlight">{AbilityCastRange}</style>"
-"SKILL_musketeer_open_season_DESCRIPTION_EPIC" = "<style="epic">Epic:</style> If the Musketeer kills a target with at least 8 max HP, he can perform another action this turn."
+"SKILL_musketeer_open_season_DESCRIPTION_EPIC" = "<style="epic">Epic:</style> If the bullet kills a target, he can perform another action this turn."
 
 "COMBAT_MODIFIER_steady_aim_modifier_TITLE" = "Steady Aim"
 "COMBAT_MODIFIER_steady_aim_modifier_DESCRIPTION" = "The Musketeer has +1 damage so long as he stays still for this turn."
 
 "COMBAT_MODIFIER_hunters_mark_modifier_TITLE" = "Hunter's Mark"
 "COMBAT_MODIFIER_hunters_mark_modifier_DESCRIPTION" = "This unit receives +{extraDamagePerHit} extra physical damage from all sources of damage."
-
-"COMBAT_MODIFIER_modifier_most_dangerous_game_TITLE" = "Most Dangerous Hunter"
-"COMBAT_MODIFIER_modifier_most_dangerous_game_DESCRIPTION" = "The Musketeer has bonus range for the rest of combat."
 

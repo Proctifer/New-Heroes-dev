@@ -4,7 +4,7 @@
     "AbilityTeamFilter" 		"TEAM_ENEMY"
     "AbilityCastRange" 			"stat(%CASTER, #rangedAttackRange)"
     "AbilityCastMinRange" 		"stat(%CASTER, #rangedAttackMinRange)"
-    "AbilityCooldown"   		"2"
+    "AbilityCooldown"   		"4"
     "AbilityAPCost"     		"2"
     "AnimationID"   			"SpecialAttack"
     "Icon" 						"MainTarget"
@@ -47,7 +47,7 @@
             "Target"               	"%TARGET"
             "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
             "TargetPos"             "unitPosition(%TARGET, #Chest)"
-            "Model"  				"SimpleArrowProjectile"
+            "Model"  				"EmptyProjectile"
             "WillHit" 				"hitChanceCalc(%TARGET)"
             "MissPosition" 			"unitPosition(%TARGET)"
 
@@ -101,7 +101,7 @@
             {
                 "Conditional"
                 {
-                    "Condition"     "stat(%TARGET, #health_max) > 7 && isOnState(%TARGET, #DEAD) && not(isOnState(%TARGET, #PROP))"
+                    "Condition"     "isOnState(%TARGET, #DEAD) && not(isOnState(%TARGET, #PROP))"
 
                     "Actions" 
                     {

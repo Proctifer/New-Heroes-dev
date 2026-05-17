@@ -17,12 +17,13 @@
 "SKILL_assassin_counterattack_NAME" = "Counterattack"
 "SKILL_assassin_counterattack_DESCRIPTION" = "Increases melee dodge chance to 100% against the next melee attack and responds with a counterattack."
 "SKILL_assassin_counterattack_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Entering Counter Stance while Keen Focus is active will increase the damage bonus by 1."
-"SKILL_assassin_counterattack_DESCRIPTION_DATA" = "Duration: <style="highlight">{duration}</style> {icon#turns}\nRange: <style="highlight">SELF</style>"
+"SKILL_assassin_counterattack_DESCRIPTION_DATA" = "Duration: {duration} {icon#turns}\nRange: <style="highlight">SELF</style>"
 "SKILL_assassin_counterattack_DESCRIPTION_EXTRA" = "<style="extra">If Bloodlusted is active, the duration will be refreshed.</style>"
 
 "SKILL_assassin_dagger_NAME" = "Pocket Dagger"
 "SKILL_assassin_dagger_DESCRIPTION" = "Quickly flings a dagger to hit an enemy, dealing damage."
 "SKILL_assassin_dagger_DESCRIPTION_DATA" = "Damage: <style="damage">{RangedDmg} {icon#damagePhysical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_assassin_dagger_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If <style="highlight">Bloodlusted</style> is active, the dagger applies <style="debuff">asleep</style>."
 "SKILL_assassin_dagger_DESCRIPTION_EXTRA" = "<style="extra">The Assassin can use another skill and all remaining movement after this one.</style>"
 
 "SKILL_assassin_backstab_NAME" = "Backstab"

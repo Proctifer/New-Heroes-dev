@@ -1,0 +1,56 @@
+"UNIT_ALRIC_NAME_0001" = "Alric"
+"UNIT_ALRIC_LORE" = "After failing to defend Hammerhold from Vez'nan, Alric ventured to the mainland of Linirea to fight other threats and redeem himself."
+
+"UNIT_SAND_WARRIOR_NAME_0001" = "Sand Warrior"
+
+"SKILL_alric_toughness_trait_NAME" = "Toughness"
+"SKILL_alric_toughness_trait_DESCRIPTION" = "While Alric’s health is full, he gains additonal armor regen."
+"SKILL_alric_toughness_trait_DESCRIPTION_DATA" = "Armor Regen: <style="buff"> +{armorRegen}"
+
+
+"SKILL_alric_slash_NAME" = "Slash"
+"SKILL_alric_slash_DESCRIPTION" = "Alric performs a sword slash on a target enemy."
+"SKILL_alric_slash_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Applies Bleeding to targets who are <style="debuff">immobilized</style>."
+"SKILL_alric_slash_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nEPIC Bleed Duration: <style="highlight">{bleedDuration}</style> {icon#turns}\nRange: <style="highlight">MELEE</style>"
+
+"SKILL_alric_sand_warrior_NAME" = "Sand Warrior"
+"SKILL_alric_sand_warrior_DESCRIPTION" = "Alric summons Sand Warriors at a selected location."
+"SKILL_alric_sand_warrior_DESCRIPTION_DATA" = "Summon duration: <style="highlight">{duration}</style> {icon#turns}\nSand Warriors: <style="highlight">{warriorAmount}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_alric_flurry_NAME" = "Flurry"
+"SKILL_alric_flurry_DESCRIPTION" = "Unleash 2 Slashes against a targeted enemy, each dealing the same damage as his basic attack."
+"SKILL_alric_flurry_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nRange: <style="highlight">MELEE</style>"
+
+"SKILL_alric_riposte_NAME" = "Riposte"
+"SKILL_alric_riposte_DESCRIPTION" = "Enter a stance to negate the next incoming melee attack and perform a counterattack on the next attack received."
+"SKILL_alric_riposte_DESCRIPTION_DATA" = "Duration: {duration} {icon#turns}\nRange: <style="highlight">SELF</style>"
+
+"SKILL_alric_solar_shield_NAME" = "Solar Shield"
+"SKILL_alric_solar_shield_DESCRIPTION" = "Dash to an ally in range, granting additional armor for them and Alric."
+"SKILL_alric_solar_shield_DESCRIPTION_DATA" = "Extra armor: <style="buff">+{extraArmor} {icon#statArmor}</style>\nDuration: <style="buff">{duration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_alric_quicksand_NAME" = "Quicksand" 
+"SKILL_alric_quicksand_DESCRIPTION" = "Alric creates a tremor in the ground, applying <style="concept">rooted</style> to all enemies in a {aoeRadius}-hex AOE."
+"SKILL_alric_quicksand_DESCRIPTION_DATA" = "Rooted duration: <style="highlight">{rootDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_alric_sandstorm_NAME" = "Sandstorm"
+"SKILL_alric_sandstorm_DESCRIPTION" = "Alric spins in a straight line toward a free hex, damaging and shoving all enemies in his wake."
+"SKILL_alric_sandstorm_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damagePhysical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_alric_adversary_NAME" = "Adversary"
+"SKILL_alric_adversary_DESCRIPTION" = "Alric chooses an enemy to challenge and gains bonus damage against them."
+"SKILL_alric_adversary_DESCRIPTION_DATA" = "Bonus Damage: <style="buff">+{extraDamage}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+
+
+"COMBAT_MODIFIER_alric_riposte_modifier_TITLE" = "Guard Stance"
+"COMBAT_MODIFIER_alric_riposte_modifier_DESCRIPTION" = "Alric dodges the next <style="highlight">PHYSICAL</style> melee attack then performs a counter strike."
+
+"COMBAT_MODIFIER_toughness_trait_extra_damage_TITLE" = "Toughness"
+"COMBAT_MODIFIER_toughness_trait_extra_damage_DESCRIPTION" = "Alric has bonus damage because he is full health."
+
+"COMBAT_MODIFIER_modifier_alric_solar_shield_TITLE" = "Solar Shield"
+"COMBAT_MODIFIER_modifier_alric_solar_shield_DESCRIPTION" = "This unit has improved armor."
+
+"COMBAT_MODIFIER_alric_adversary_modifier_TITLE" = "Challenged"
+"COMBAT_MODIFIER_alric_adversary_modifier_DESCRIPTION" = "Alric and his sand warriors gain bonus damage against this unit."

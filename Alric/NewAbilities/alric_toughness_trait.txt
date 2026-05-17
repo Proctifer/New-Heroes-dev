@@ -1,0 +1,149 @@
+"alric_toughness_trait"
+{
+    "AbilityBehavior"   "PASSIVE"
+    "Icon"              "Toughness"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "heal"              "2"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "extraDamage"       "1"
+        }
+
+        "03"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "threshold"         "stat(%CASTER, #health_max)"
+        }
+
+        "04"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "physicalReduction" "-1"
+        }
+
+        "05"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "armorRegen"        "ceil(stat(%CASTER, #level)/2)"
+        }
+    }
+
+    "Modifiers"
+    {
+        "alric_toughness_trait_provider"
+        {
+            "Passive" "1"
+
+            "OnStartFight"
+            {
+                "Conditional"
+                {
+                    "Condition" "not(stat(%TARGET,#health_missing) > 0)"
+
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "toughness_trait_resistance"
+                            "Target"            "%TARGET"
+                        }
+                    }
+                }
+            }
+            
+            "OnTurnStarted"
+            {
+                "Conditional"
+                {
+                    "Condition" "stat(%TARGET,#health_missing) > 0"
+
+                    "Actions"
+                    {
+                        "RemoveModifier"
+                        {
+                            "ModifierName"    "toughness_trait_resistance"
+                            "Target"          "%TARGET"
+                        }
+                    }
+
+                    "ElseActions"
+                    {
+                        "RemoveModifier"
+                        {
+                            "ModifierName"      "toughness_trait_resistance"
+                            "Target"            "%TARGET"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "toughness_trait_resistance"
+                            "Target"            "%TARGET"
+                        }
+                    }
+                }
+            }
+            
+            "OnHitPreResult"
+            {
+                "Conditional"
+                {
+                    "Condition" "stat(%TARGET,#health_missing) > 0"
+                    
+                    "Actions" 
+                    {
+                        "RemoveModifier"
+                        {
+                            "ModifierName"      "toughness_trait_resistance"
+                            "Target"            "%TARGET"
+                        }
+                    }
+                }
+           }
+        }
+
+        "toughness_trait_extra_damage"
+        {
+            "Icon"          "Martyr"
+            "IconPriority"  "50"
+
+            "PropertiesAdd"
+            {
+                "extraDamage" "1"
+            }
+        }
+        
+        "toughness_trait_resistance"
+        {
+            "OnHitPreProcessDamages"
+            {
+                "AddDamage"
+                {
+                    "Type"              "DAMAGE_PHYSICAL"
+                    "Damage"            "%physicalReduction"
+                }
+
+                "AttachEffect"
+                {
+                    "EffectName"        "MartyrsInspirationShieldFXMega"
+                    "Target"            "%ATTACKED"
+                }
+            }
+        }
+        
+        "toughness_trait_armor_regen"
+        {
+            "PropertiesAdd"
+            {
+                "armor_regen_per_turn" "expr(%armorRegen)"
+            }
+        }
+    }
+}

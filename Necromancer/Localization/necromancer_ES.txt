@@ -1,7 +1,7 @@
 ﻿"UNIT_MINION_NECROMANCER_NAME_0001" = "nigromante"
 "UNIT_MINION_NECROMANCER_LORE" = "Dejando rastros de azufre y podredumbre a su paso, estos magos oscuros conocen bien la muerte. Aunque son rechazados por sus prácticas, han emergido para luchar hasta el último aliento contra las fuerzas de la oscuridad."
 
-"UNIT_SUMMON_SKELETON_NAME_" = "Invocación de esqueleto"
+"UNIT_SUMMONED_SKELETON_NAME_0001" = "Invocación de esqueleto"
 
 "SKILL_necro_dead_rise_trait_NAME" = "Alzamiento de los muertos"
 "SKILL_necro_dead_rise_trait_DESCRIPTION" = "Los aliados que caigan en batalla se levantarán de nuevo como esqueletos invocados.

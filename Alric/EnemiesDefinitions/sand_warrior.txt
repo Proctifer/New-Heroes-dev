@@ -1,0 +1,36 @@
+	"SandWarrior"
+	{
+		"Model" "HumanFarmer"
+		"Name" "SAND_WARRIOR"
+		"InheritsFrom" "Base"
+
+		"stats"
+		{
+
+			"level" "1"
+				
+			"health_max" "3"
+			"armor_max" "0"		
+			
+			
+			"baseDamage"  "2"
+
+			"walkSpeed" "3"
+			"initiativeModifier" "100"
+			"rangedAttackRange" "0"
+		}
+
+		"skills"
+		{
+ 		}
+
+ 		"defaultSkill" "common_melee_attack"
+		
+		"states"
+ 		{
+ 			"CANT_BE_POISONED" 	"1"
+            "CANT_BE_BLED" 		"1"
+			"sand_warrior" 		"1"
+			"adversary_buff"	"1"
+ 		}
+	}

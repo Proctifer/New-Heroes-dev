@@ -1,0 +1,84 @@
+"alric_adversary"
+{
+    
+    
+    "AbilityBehavior"   			"UNIT_TARGET | HAS_CHANCE_TO_HIT"
+    "AbilityCustomTargetFilter"     "not(isOnState(%UNIT, #BOSS))"
+    "AbilityTeamFilter" 			"TEAM_ENEMY"
+    "AbilityCastRange" 				"stat(%CASTER, #rangedAttackRange) + 2"
+    "AbilityCastMinRange" 			"stat(%CASTER, #rangedAttackMinRange)"
+    "AbilityCooldown"   			"4"
+    "AbilityAPCost"     			"1"
+
+    "AnimationID"   				"SpecialAttack"
+    "CastFXId" 						"DemonicDuplicationCastFXMega"
+    "Icon" 							"Adversary"
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "duration"      "0"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "extraDamage"   "2"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+		
+        "Conditional"
+        {
+            "Condition" "not(hasModifier(%TARGET, #alric_adversary_modifier))"
+            "Actions" 
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"  "alric_adversary_modifier"
+                    "Target"        "%TARGET"
+                    "Duration"      "%duration"
+                    "Refresh"       "1"
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "alric_adversary_modifier"
+        {
+            "EffectName"                    "DarkKnightImperviousStatusFXMega"
+            "Icon"                          "UndyingRage"
+            "IconPriority"                  "60"
+
+            "OnHitPreProcessDamages"
+            {
+                "Conditional"
+                {
+                    "Condition" "equal(%TARGET, %ATTACKED) && isOnState(%ATTACKER, #adversary_buff)"
+                    "Actions" 
+                    {
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_PHYSICAL"
+                            "Damage"            "%extraDamage"
+                        }
+                        
+                        "AttachEffect"
+                        {
+                            "EffectName"      "FireballHitFXMega"
+                            "Target"          "%TARGET"
+                        }
+                    }
+                }
+			}
+        }
+    }
+}

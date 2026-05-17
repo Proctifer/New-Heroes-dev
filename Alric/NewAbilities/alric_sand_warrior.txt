@@ -1,0 +1,136 @@
+"alric_sand_warrior"
+{
+
+
+    "AbilityBehavior"           "POINT_TARGET | POSITIVE_EFFECT | NEEDS_CLEAR_TERRAIN"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"           "4"
+    "AbilityPrewarmCooldown"    "1"
+    "AbilityAPCost"             "2"
+
+
+    "AnimationID"               "SpellCastB"
+    "CastFXId"                  "DemonicDuplicationCastFXMega"
+    "Icon"                      "SandWarrior"
+
+     "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" 		    "FIELD_FLOAT"
+            "duration" 		    "2"
+        }
+
+        "02"
+        {
+            "var_type" 			"FIELD_FLOAT"
+            "characterLevel" 	"1"
+        }
+        
+        "03"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "warriorAmount"     "stat(%CASTER, #level)" 
+        }
+
+        
+
+    }
+
+
+     "OnAbilityAction"
+    { 
+        "SpawnUnit"
+        {
+            "UnitName"      "#SandWarrior"
+            "Position"      "%TARGET"
+            "UnitGroup"     "unitGroup(%CASTER)"
+            "IsAI"          "0"
+            "AddToInitiativeOrder" "0"
+            "OnSpawn"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"    "modifier_summon_sand_warrior"
+                    "Target"          "%UNIT"
+                    "Duration"        "%duration"
+                }
+            }
+        }
+        
+        "AttachEffect"
+        {
+            "EffectName"       "SummonCultistSmokeFXMega"
+            "Target"           "%TARGET"
+        } 
+
+        "ActOnHexas"
+        {
+            "Center"            "positionHex(%TARGET)"
+            "Range"             "1"
+            "RequireEmpty"      "1"
+            "Max"               "expr(%warriorAmount) - 1"
+            "Random"            "1"
+            "MinRange"          "1"
+            "IteratorName"      "#hexa"
+            
+            "Actions"    
+            {
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"            "hexPosition(%hexa)"
+                        "Radius"            "0"
+                        "Teams"             "TEAM_ALL"
+                        "Flags"             "INCLUDE_NON_TARGETABLE"
+                    }
+                }
+
+                "SpawnUnit"
+                {
+                    "UnitName"                  "#SandWarrior"
+                    "Position"                  "hexPosition(%hexa)"
+                    "UnitGroup"                 "unitGroup(%CASTER)"
+                    "IsAI"                      "0"
+
+                    "OnSpawn"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName"        "SummonCultistSmokeFXMega"
+                            "Target"            "%UNIT"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"     "modifier_summon_sand_warrior"
+                            "Target"           "%UNIT"
+                            "Duration"         "%duration"
+                        }
+                    }
+                }   
+            }
+        }
+    }
+
+
+    "Modifiers"
+    {
+        "modifier_summon_sand_warrior"
+        {
+            "Icon"                      "Summoned"
+            "IconPriority"              "60"
+            "LocalizationId"            "generic_modifier_summoned"
+
+            "OnRemoved"
+            {
+                "KillUnit"
+                {
+                    "Target"        "%TARGET"
+                }
+            }
+        }
+    }
+
+}

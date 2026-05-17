@@ -15,8 +15,14 @@
     {
         "01"
         {
-            "var_type" "FIELD_EXPRESSION"
-            "RangedDmg"  "floor(stat(%CASTER, #attackDamage)/3)"
+            "var_type"      "FIELD_EXPRESSION"
+            "RangedDmg"     "floor(stat(%CASTER, #attackDamage)/3)"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_FLOAT"        
+            "sleepDuration" "1"
         }
     }
 
@@ -58,6 +64,37 @@
                 {
                     "Type"          "DAMAGE_PHYSICAL"
                     "Damage"        "%damage"
+                }
+
+                "Conditional"
+                {
+                    "Condition" "hasModifier(%CASTER, #assassin_bloodlust_modifier)"
+
+                    "Actions" 
+                    {
+                        "MarkHitLegendary"
+                        {
+                        }
+                    }
+                }
+            }
+
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "hitIsLegendary(%HIT)"
+
+                    "Actions" 
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_asleep"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%sleepDuration"
+                            "Refresh"       "1"
+                        }
+                    }
                 }
             }
         }

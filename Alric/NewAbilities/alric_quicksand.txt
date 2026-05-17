@@ -1,0 +1,131 @@
+"alric_quicksand"
+{
+    "AbilityBehavior"               "POINT_TARGET | AOE | NEEDS_VALID_TERRAIN"
+    "AbilityAOETeamFilter"          "TEAM_ENEMY"
+    "AnimationID"                   "SpellCastB"
+    "CastFXId"                      "OlochSealOfImmolationCastFXMega"
+    "Icon"                          "Sandpit"
+    "AbilityAOEKind"                "RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster"      "0"
+    "AbilityAOEAffectsCaster"       "1"
+    "AbilityAOERange"               "%aoeRadius"
+    "AbilityCastRange"              "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"               "4"
+    "AbilityAPCost"                 "2"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "aoeRadius"           "2"
+        }
+
+        "02"
+        {
+            "var_type"            "FIELD_EXPRESSION"
+            "damage"              "ceil(stat(%CASTER,#attackDamage)/2)"
+        }
+        
+        "03" 
+        {
+            "var_type"            "FIELD_FLOAT"
+            "rootDuration"        "2"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "AttachEffect"
+        {
+            "EffectName"    "WoodBreakFXMega"
+            "Target"        "%TARGET"
+        }
+
+        "StartLogicTick"
+        {
+            "Time"          "1"
+            "TickType"      "ActiveUnit"
+            "Position"      "unitPosition(%SOURCE)"
+        }
+        
+        "PlaySound"
+        {
+            "Sound" "#krl_sfx_bravebarkCombat_seismicPound"
+        }
+
+        "Delay"
+        {
+            "Time" "0.4"
+            "Actions"
+            {
+                "ActOnHexas"
+                {
+                    "Center"                 "positionHex(%TARGET)"
+                    "Range"                  "%aoeRadius"
+                    "IteratorName"           "#hexa"
+                
+                    "Actions"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName"    "WoodBreakFXMega"
+                            "Target"        "hexPosition(%hexa)"
+                        }
+
+                        "Delay"
+                        {
+                            "Time" "0.3"
+                            "Actions"
+                            {
+                                "AttachEffect"
+                                {
+                                    "EffectName"    "WoodBreakFXMega"
+                                    "Target"        "hexPosition(%hexa)"
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"           "%TARGET"
+                        "Radius"           "%aoeRadius"
+                        "Teams"            "TEAM_ENEMY"
+                    }
+                            
+                    "AttachEffect"
+                    {
+                        "EffectName"    "WoodBreakFXMega"
+                        "Target"        "%TARGET"
+                    }
+
+                    "IteratorName"         "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "Hit"
+                        {
+                            "Target"        "%newTarget"
+                            "Tags"          "stringList(#MAGICAL, #AOE)"
+
+                            "Actions"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"      "modifier_rooted"
+                                    "Target"            "%newTarget"
+                                    "Duration"          "%rootDuration"
+                                    "Refresh"           "1"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -3,7 +3,6 @@
     
     
     "AbilityBehavior"   			"UNIT_TARGET | HAS_CHANCE_TO_HIT"
-    "AbilityCustomTargetFilter"     "not(isOnState(%UNIT, #BOSS))"
     "AbilityTeamFilter" 			"TEAM_ENEMY"
     "AbilityCastRange" 				"stat(%CASTER, #rangedAttackRange) + 2"
     "AbilityCastMinRange" 			"stat(%CASTER, #rangedAttackMinRange)"

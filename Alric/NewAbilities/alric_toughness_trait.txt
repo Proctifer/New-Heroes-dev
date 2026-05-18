@@ -52,7 +52,7 @@
                     {
                         "ApplyModifier"
                         {
-                            "ModifierName"      "toughness_trait_resistance"
+                            "ModifierName"      "toughness_trait_armor_regen"
                             "Target"            "%TARGET"
                         }
                     }
@@ -69,7 +69,7 @@
                     {
                         "RemoveModifier"
                         {
-                            "ModifierName"    "toughness_trait_resistance"
+                            "ModifierName"    "toughness_trait_armor_regen"
                             "Target"          "%TARGET"
                         }
                     }
@@ -78,13 +78,13 @@
                     {
                         "RemoveModifier"
                         {
-                            "ModifierName"      "toughness_trait_resistance"
+                            "ModifierName"      "toughness_trait_armor_regen"
                             "Target"            "%TARGET"
                         }
 
                         "ApplyModifier"
                         {
-                            "ModifierName"      "toughness_trait_resistance"
+                            "ModifierName"      "toughness_trait_armor_regen"
                             "Target"            "%TARGET"
                         }
                     }
@@ -101,7 +101,7 @@
                     {
                         "RemoveModifier"
                         {
-                            "ModifierName"      "toughness_trait_resistance"
+                            "ModifierName"      "toughness_trait_armor_regen"
                             "Target"            "%TARGET"
                         }
                     }

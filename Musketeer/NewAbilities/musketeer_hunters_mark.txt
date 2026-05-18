@@ -3,7 +3,6 @@
     
     
     "AbilityBehavior"   			"UNIT_TARGET | HAS_CHANCE_TO_HIT"
-    "AbilityCustomTargetFilter"     "not(isOnState(%UNIT, #BOSS))"
     "AbilityTeamFilter" 			"TEAM_ENEMY"
     "AbilityCastRange" 				"stat(%CASTER, #rangedAttackRange)"
     "AbilityCastMinRange" 			"stat(%CASTER, #rangedAttackMinRange)"
@@ -19,26 +18,32 @@
     {
         "01"
         {
-            "var_type" "FIELD_EXPRESSION"
-            "MinRangedDmg"  "stat(%CASTER, #attackDamage)*0"
+            "var_type"          "FIELD_EXPRESSION"
+            "MinRangedDmg"      "stat(%CASTER, #attackDamage)*0"
         }
 
         "02"
         {
-            "var_type" "FIELD_EXPRESSION"        
-            "MaxRangedDmg"  "stat(%CASTER, #attackDamage)*0"
+            "var_type"          "FIELD_EXPRESSION"        
+            "MaxRangedDmg"      "stat(%CASTER, #attackDamage)*0"
         }
 
         "03"
         {
-            "var_type"              "FIELD_FLOAT"
-            "duration"              "2"
+            "var_type"          "FIELD_FLOAT"
+            "duration"          "2"
         }
 
         "04"
         {
-            "var_type"              "FIELD_INTEGER"
-            "extraDamagePerHit"     "3"
+            "var_type"          "FIELD_INTEGER"
+            "extraDamagePerHit" "3"
+        }
+
+        "04"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "bossDamage"        "2"
         }
     }
 

@@ -19,7 +19,7 @@
 		"health_max" 			"5"
 		"armor_max" 			"3"
 		"armor_regen_per_turn" 	"2"
-		"baseDamage" 			"4"
+		"baseDamage" 			"5"
 		"rangedAttackRange" 	"3"
 		"rangedAttackMinRange" 	"1"
 		"visualMoveSpeed" 		"2.5"
@@ -93,7 +93,7 @@
 		"health_max" 			"7"
 		"armor_max" 			"4"
 		"armor_regen_per_turn" 	"2"
-		"baseDamage" 			"5"
+		"baseDamage" 			"6"
 		"walkSpeed" 			"2"
 		"armorOfThornsDamage"	"1"
 	}

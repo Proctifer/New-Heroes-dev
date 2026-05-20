@@ -1,0 +1,235 @@
+
+"grawl_unstoppable_force"
+{
+    "AbilityBehavior"   			"POINT_TARGET | AOE | NEEDS_CLEAR_TERRAIN | NEEDS_CLEAR_LINE_OF_SIGHT_EXCEPT_UNITS"
+
+    "AnimationID"   				"SpecialAttack"
+    "CastFXId" 						"TrollBreakerBatteringRamCastFXMega"
+    "Icon" 							"GrawlUnstoppableForce"
+
+    "AbilityAOETeamFilter" 			"TEAM_ALL"
+    "AbilityAOERange" 				"0"
+
+    "AbilityAOEKind" 				"RANGE_TUNNEL"
+    "AbilityAOEWidth" 				"expr(%width)"
+
+    "AbilityAOECenterOnCaster" 		"1"
+    "AbilityAOEAffectsCaster" 		"0"
+
+    "AbilityCastRange" 				"expr(%distanceToTravel)"
+    "AbilityCooldown"   			"4"
+    "AbilityAPCost"     			"1"
+
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type" "FIELD_EXPRESSION"
+            "damage"  "ceil(stat(%CASTER, #attackDamage)/2)"
+        }
+
+        "02"
+        {
+            "var_type" 			"FIELD_EXPRESSION"
+           
+            "distanceToTravel"  "stat(%CASTER, #rangedAttackRange)"
+        }
+
+        "03"
+        {
+            "var_type" 			"FIELD_EXPRESSION"
+            "width"  			"1"
+        }
+
+        "04"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "duration"          "3"
+        }
+    }
+
+    "OnAbilityAction" 
+    {
+        "CreateObjectList"
+        {
+            "Name" "#hitUnits"
+        }
+
+        "TrackingProjectile"
+        {
+            "MoveSpeed"             "%projectile_speed"
+            "Model"                 "TrollBreakerBatterinRamProjectile"
+            "TargetPos"             "%TARGET"
+            "SourcePos"             "unitPosition(%SOURCE)"
+
+            "TargetFilter"
+            {
+                "Radius"     		"0"
+                "Teams"     		"TEAM_ALL"
+                "ExcludedUnits" 	"objectList(%SOURCE)"
+                "Width" 			"expr(%width)"
+                "Kind" 				"RANGE_TUNNEL"
+            }
+
+            "Params" 
+            {
+                "damage" 
+                {
+                    "type" 			"FIELD_FLOAT" 
+                    "value" 		"expr(%damage)"
+                }
+            }
+
+            
+        }
+
+        "AttachEffect"
+        {
+            "EffectName" 			"TrollBreakerBatterinRamPuffFXMega"
+            "Target" 				"unitPosition(%SOURCE)"
+            "Flipped" 				"unitIsFlipped(%SOURCE)"
+        }
+
+        "ActOnHexas"
+        {
+            "Kind"              	"RANGE_TUNNEL"
+            "Origin"            	"unitHex(%SOURCE)"
+            "End"               	"positionHex(%TARGET)"
+            "MinRange"          	"1"
+            "Range"             	"hexDistance(unitHex(%SOURCE), positionHex(%TARGET))"
+            "Random"            	"0"
+            "IteratorName"      	"#hexa"
+            "IteratorIndexName" 	"#hexaIndex"
+
+            "Actions"
+            {
+                "Delay"
+                {
+                    "Time"          "0 + (%hexaIndex * 0.05)"
+
+                    "Actions"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName" "TrollBreakerBatterinRamPuffFXMega"
+                            "Target" "hexPosition(%hexa)"
+                            "Flipped" "unitIsFlipped(%SOURCE)"
+                        }
+                    }
+                }
+            }
+        }
+
+        "ApplyModifier"
+        {
+            "ModifierName"    "disable_unit_modifier"
+            "Target"         "%SOURCE"
+        }
+
+        "MoveUnit"
+        {
+            "Target"        "%SOURCE"
+            "Position"      "%TARGET"
+        }
+
+    }
+
+    "OnProjectileHitUnit" 
+    {
+
+        "Hit"
+        {
+            "Target" "%TARGET"
+            "Tags" "stringList(#MELEE, #AOE)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_PHYSICAL"
+                    "Damage"        "%damage"
+                }
+            }
+
+            "Actions"
+            {
+
+                "Conditional"
+                {
+                    "Condition" "not(isOnState(%TARGET, #FIXED_POSITION)) && not(isOnState(%HITTARGET, #DEAD))"
+
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"    "disable_unit_modifier"
+                            "Target"         "%TARGET"
+                        }
+
+                        "MoveUnit"
+                        {
+                            "Target"        "%TARGET"
+                            "Position"    "newPoint(1000, 1000, 0)"
+                        }
+
+                        "AddObjectToList" 
+                        {
+                            "List" "%hitUnits"
+                            "Value" "%TARGET"
+                        }
+                    }
+                }
+            }
+        }
+
+        "KeepProjectileGoing"
+        {
+
+        }
+    }
+
+    "OnProjectileDestinationReached" 
+    {
+        "RemoveModifier"
+        {
+            "ModifierName"    "disable_unit_modifier"
+            "Target"         "%SOURCE"
+        }
+
+        "EachInList"
+        {
+            "List" "%hitUnits"
+            "IteratorName" "#unit"
+            "IteratorIndexName" "#unitIndex"
+            "Actions"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"    "disable_unit_modifier"
+                    "Target"          "%unit"
+                }
+
+                "ActOnHexas"
+                {
+                    "Center" "positionHex(%TARGET)"
+                    "Range" "1"
+                    "IteratorName" "#hexa"
+                    "Max" "1"
+                    "Random" "1"
+                    "RequireEmpty" "1"
+                    
+                    "Actions"
+                    {
+                        "MoveUnit"
+                        {
+                            "Target"        "%unit"
+                            "Position"      "hexPosition(%hexa)"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

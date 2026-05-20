@@ -1,0 +1,52 @@
+"UNIT_ARCHMAGE_NAME_0001" = "Archmage"
+"UNIT_ARCHMAGE_LORE" = "An apprentice mage on an internship to practice magic on a real battlefield. She's as fragile and deadly as they come."
+
+"UNIT_SUMMONED_ARCANE_SENTRY_NAME_0001" = "Arcane Sentry"
+
+"SKILL_archmage_brilliance_NAME" = "Brilliance"
+"SKILL_archmage_brilliance_DESCRIPTION" = "Gain +1 magic bolt at the start of each turn, up to a maximum of 3. Bolts are used to cast spells."
+
+"SKILL_archmage_release_NAME" = "Critical Mass"
+"SKILL_archmage_release_DESCRIPTION" = "Fires all stored bolts at an enemy, dealing damage for every bolt and consuming all bolts."
+"SKILL_archmage_release_DESCRIPTION_DATA" = "Damage: <style="damage">{damage}</style> {icon#damageMagical}\nEpic area damage: <style="damage">{epicDamage}</style> {icon#damageMagical}\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_archmage_release_DESCRIPTION_EPIC" = "<style="epic">EPIC</style>: The attack deals area damage if the Archmage uses this skill without moving."
+
+"SKILL_archmage_alter_reality_NAME" = "Dissipate"
+"SKILL_archmage_alter_reality_DESCRIPTION" = "Phases an enemy in and out of reality itself, leaving them stunned."
+"SKILL_archmage_alter_reality_DESCRIPTION_DATA" = "Stun duration: <style="highlight">{stunDuration}</style> {icon#turns}\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_archmage_magical_railgun_NAME" = "Magnifying Beam"
+"SKILL_archmage_magical_railgun_DESCRIPTION" = "Fires a beam of magical energy that gains bonus range based on the number of bolts stored."
+"SKILL_archmage_magical_railgun_DESCRIPTION_DATA" = "Damage: <style="damage">{damage}</style> {icon#damageMagical}\nRange: <style="highlight">{distanceToTravel}</style>"
+"SKILL_archmage_magical_railgun_DESCRIPTION_EPIC" = "<style="epic">EPIC</style>: Deals additional damage to the target for each extra hex past the target."
+
+"SKILL_archmage_kaleidoscopic_beam_NAME" = "Kaleidoscopic Beam"
+"SKILL_archmage_kaleidoscopic_beam_DESCRIPTION" = "Blasts an enemy with a beam that chains to 1 additional enemy for each bolt that the Archmage has stored."
+"SKILL_archmage_kaleidoscopic_beam_DESCRIPTION_DATA" = "Damage: <style="damage">{damage}</style> {icon#damageMagical}\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_archmage_twister_NAME" = "Twister"
+"SKILL_archmage_twister_DESCRIPTION" = "Unleash a torrent of wind that deals physical damage to all units in a tunnel AOE and sends them flying back. Deals no damage to allies."
+"SKILL_archmage_twister_DESCRIPTION_DATA" = "Damage: <style="damage">{damage}</style> {icon#damagePhysical}\nStun duration: <style="highlight">{duration}</style {icon#turns}\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_archmage_summon_sentry_NAME" = "Summon Sentry"
+"SKILL_archmage_summon_sentry_DESCRIPTION" = "Supercharges bolts to act independently, turning into summoned Arcane Sentries that zap enemies with magic damage."
+"SKILL_archmage_summon_sentry_DESCRIPTION_DATA" = "Duration: <style="highlight">2</style> {icon#turns}\nRange: <style="highlight">{AbilityCastRange}</style>\nSentinel damage: <style="rangeofdamage">2 - 4</style> {icon#damageMagical}\nSentinel range: <style="highlight">3</style>\nSentinel speed: <style="highlight">2</style>"
+
+"SKILL_sentry_ranged_spell_attack_NAME" = "Seeker Shot"
+"SKILL_sentry_ranged_spell_attack_DESCRIPTION" = "Release a bolt of energy from the sentinel's body, dealing magic damage to a single target."
+"SKILL_sentry_ranged_spell_attack_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinRangedDmg} - {MaxRangedDmg} {icon#damageMagical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"COMBAT_MODIFIER_brilliance1_TITLE" = "Brilliance"
+"COMBAT_MODIFIER_brilliance1_DESCRIPTION" = "This unit has 1 magical bolt ready for use."
+
+"COMBAT_MODIFIER_brilliance2_TITLE" = "Brilliance"
+"COMBAT_MODIFIER_brilliance2_DESCRIPTION" = "This unit has 2 magical bolts ready for use."
+
+"COMBAT_MODIFIER_brilliance3_TITLE" = "Brilliance"
+"COMBAT_MODIFIER_brilliance3_DESCRIPTION" = "This unit has 3 magical bolts ready for use."
+
+"COMBAT_MODIFIER_archmage_bolt_tracker_TITLE" = "Stored Bolt"
+"COMBAT_MODIFIER_archmage_bolt_tracker_DESCRIPTION" = "This is one of the Apprentice's magical bolts ready for use."
+
+"COMBAT_MODIFIER_modifier_archmage_summon_sentry_TITLE" = "Summoned"
+"COMBAT_MODIFIER_modifier_archmage_summon_sentry_DESCRIPTION" = "This unit has been summoned and will expire once its duration ends."

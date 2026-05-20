@@ -121,16 +121,24 @@
         {
             "Icon"                      "Summoned"
             "IconPriority"              "60"
+            "EffectName"                "MartyrsInspirationStatusFXMega"
             "LocalizationId"            "generic_modifier_summoned"
 
             "OnRemoved"
             {
-                "KillUnit"
+                "Conditional"
                 {
-                    "Target"        "%TARGET"
+                    "Condition"     "not(hasModifier(%TARGET, #modifier_duration_extender))"
+                    
+                    "Actions"
+                    {
+                        "KillUnit"
+                        {
+                            "Target"        "%TARGET"
+                        }
+                    }
                 }
             }
         }
     }
-
 }

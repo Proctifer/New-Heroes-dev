@@ -1,0 +1,122 @@
+"RLGrawlLvl1" 
+{
+	"UniqueId" "Grawl"
+	"Model" "Golem"
+	"MetaExo" "ExoSkeletonHumanAsra_MetaDataAsset"
+	"Name" "GRAWL"
+	"InheritsFrom" "Hero"
+	"cinematicTags" "Heroe|Legend|GoodLegend|Grawl|Male|ct_legend|ct_melee|ct_might|ct_survival|ct_social|ct_perception|UPGRADES_mighty"
+	"Background" "hero_roster_legend_bg_forest"
+	"Icon" "Asst_Banner_Asra"
+	"AttackType" "PHYSICAL"
+	"UnitOnMap" "Asst_Party_Azra"
+	"PortraitBackgroundColor" "4d5380"
+	"nextLevelArchetype" "RLGrawlLvl2"
+
+	"stats"
+	{
+
+		"level" 				"1"
+		
+		"health_max" 			"7"
+		"armor_max" 			"7"
+		"armor_regen_per_turn" 	"1"
+		"baseDamage"  			"4"
+
+		"rangedAttackRange" 	"3"
+		"rangedAttackMinRange" 	"1"
+		
+		"walkSpeed" 			"1"
+	}
+
+	"skills"
+	{
+		"200" 	"skeleton_bloodless_trait"
+		"101"  	"grawl_bastion_trait"
+		"100"  	"mighty_endturn_trait"
+	}
+
+ 		"skillProgression"
+
+ 		{
+			"1" 
+ 			{
+ 				"1" "grawl_metamorphosis"
+ 			}
+
+ 			"2" 
+ 			{
+ 				"1" "grawl_clobber"
+ 				"2" "grawl_boulder_throw"
+ 				"3" "grawl_unstoppable_force"
+ 			}
+
+ 			"3"
+ 			{
+ 				"1" "grawl_stomp"
+ 				"2" "grawl_shard_punch"
+ 				"3" "grawl_crystallize"
+ 			}
+ 		}
+
+ 		"defaultSkill" "grawl_punch"
+
+ 	"states"
+  	{
+  		"LEGEND" "1"
+ 		"CANT_BE_BLED" "1"
+		"CANT_BE_POISONED" "1"
+  	}
+
+
+  	"soundConfig"
+	{
+		"assetId" "DynamicSoundGroupAsraSounds"
+		"sounds"
+		{
+			"receiveArmorDamage" "krl_sfx_combatGeneric_armorHit"
+			"useSkill" "krl_va_combatAsra_action"
+		}
+	}
+}
+
+"RLGrawlLvl2"
+{
+	"InheritsFrom" "RLGrawlLvl1"
+	"nextLevelArchetype" "RLGrawlLvl3"
+
+	"stats"
+	{
+		"level" "2"
+			
+		"health_max" 			"9"
+		"armor_max" 			"9"
+		"armor_regen_per_turn" 	"2"
+		"baseDamage"  			"5"
+		"rangedAttackRange" 	"4"
+		"rangedAttackMinRange" 	"1"
+			
+		"walkSpeed" "1"
+	}
+}
+
+"RLGrawlLvl3"
+{
+	"InheritsFrom" "RLGrawlLvl2"
+
+	"stats"
+	{
+		"level" 				"3"
+			
+		"health_max" 			"10"
+		"armor_max" 			"10"
+		"armor_regen_per_turn" 	"2"
+		"baseDamage"  			"6"
+
+		"rangedAttackRange" 	"5"
+		"rangedAttackMinRange" 	"1"
+		
+		"walkSpeed" 			"1"
+	}
+}
+

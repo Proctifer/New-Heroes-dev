@@ -87,6 +87,26 @@
                     "Duration"          "%duration"
                 }
 
+                "Conditional"
+                {
+                    "Condition"   "isOnState(%TARGET, #sand_warrior)"
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "modifier_duration_extender"
+                            "Target"            "%TARGET"
+                            "Duration"          "%duration"
+                        }
+                        
+                        "RemoveModifier"
+                        {
+                            "ModifierName"      "modifier_summon_sand_warrior"
+                            "Target"            "%TARGET"
+                        }
+                    }
+                }
+
                 "SetToContext"
                 {
                     "Context"           "currentContext()"
@@ -158,6 +178,22 @@
                 {
                     "Target"            "%TARGET"
                     "ArmorAmount"       "0"
+                }
+            }
+        }
+
+        "modifier_duration_extender"
+        {
+            "Icon"                      "Summoned"
+            "IconPriority"              "60"
+            "EffectName"                "MartyrsInspirationStatusFXMega"
+            "LocalizationId"            "generic_modifier_summoned"
+
+            "OnRemoved"
+            {
+                "KillUnit"
+                {
+                    "Target"        "%TARGET"
                 }
             }
         }

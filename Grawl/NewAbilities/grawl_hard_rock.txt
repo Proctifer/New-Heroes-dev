@@ -1,0 +1,167 @@
+"grawl_hard_rock"
+
+{
+
+    "AbilityBehavior"                   "UNIT_TARGET | FAKE_ACTION | POSITIVE_EFFECT | DOESNT_CONSUME_MOVE"
+
+    "AbilityTeamFilter"                 "TEAM_FRIENDLY"
+
+    "AnimationID"                       "SpellCastB"
+
+    "CastFXId"                          "SpikeReforgeCastFXMega"
+
+    "Icon"                              "SylvanAwareness"
+
+    "AbilityCastRange"                  "0"
+
+    "AbilityCooldown"                   "0"
+
+    "AbilityAPCost"                     "1"
+
+    "AbilitySpecial"
+
+    {
+        "01"
+        {
+            "var_type" 					"FIELD_FLOAT"
+            "damageReduction" 			"-1"
+        }
+
+        "02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"extraDamage"				"1"
+		}
+		
+		"03"
+        {
+            "var_type" 					"FIELD_FLOAT"
+            "damageReductionMagical" 	"-1"
+        }
+		
+		"04"
+        {
+            "var_type" 					"FIELD_FLOAT"
+            "heal" 						"1"
+        }
+	}
+
+    "OnAbilityAction"
+
+    {
+        "Conditional"
+		{
+		
+			"Condition"					"hasModifier(%TARGET, #grawl_outer_modifier)"
+		
+			"Actions"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"      "grawl_inner_modifier"
+					"Target"            "%TARGET"
+				}
+			
+				"RemoveModifier"
+				{
+					"ModifierName"		"grawl_outer_modifier"
+					"Target"			"%TARGET"
+				}
+				
+				"RemoveModifier"
+				{
+					"ModifierName"		"grawl_outer_damage_modifier"
+					"Target"			"%TARGET"
+				}
+			}
+		
+			"ElseActions"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"		"grawl_outer_modifier"
+					"Target"			"%TARGET"
+				}
+				
+				"ApplyModifier"
+				{
+					"ModifierName"		"grawl_outer_damage_modifier"
+					"Target"			"%TARGET"
+				}
+			
+				"RemoveModifier"
+				{
+					"ModifierName"		"grawl_inner_modifier"
+					"Target"			"%TARGET"
+				}
+			}
+		}
+    }
+
+    "Modifiers"
+    {
+       
+	   "grawl_outer_modifier"
+        {
+            "EffectName"				"SpikeReforgeStatusFXMega"
+			"Icon"          			"SpikeReforge"
+            "IconPriority"  			"50"
+			
+			"OnHitPreProcessDamages"
+            {
+                "AddDamage"
+                {
+                    "Type"              "DAMAGE_PHYSICAL"
+                    "Damage"            "%damageReduction"
+                }
+				
+				"AddDamage"
+                {
+                    "Type"              "DAMAGE_ARMOR"
+                    "Damage"            "%damageReduction"
+                }
+				
+				"AttachEffect"
+                {
+                    "EffectName"      	"MartyrsInspirationShieldFXMega" 
+                    "Target"          	"%TARGET"
+                }
+			}
+        }
+		
+		"grawl_outer_damage_modifier"
+		{
+			"EffectName"				"SpikeReforgeStatusFXMega"
+			"Icon"          			"SpikeReforge"
+            "IconPriority"  			"50"
+			
+			"PropertiesAdd"
+            {
+                "Target"				"%TARGET"
+				"extraDamage"       	"%extraDamage"
+            }
+		}
+		
+		"grawl_inner_modifier"
+		{
+			"EffectName" 				"TrollEnrageStatusFXMega"
+		    "Icon"          			"Drained"
+            "IconPriority"  			"25"
+			
+			"OnHitPreProcessDamages"
+            {
+                "AddDamage"
+                {
+                    "Type"              "DAMAGE_MAGICAL"
+                    "Damage"            "%damageReductionMagical"
+                }
+				
+				"AttachEffect"
+                {
+                    "EffectName"      	"RegsonEldritchSyphonActivateFXMega" 
+                    "Target"          	"%TARGET"
+                }
+			}
+		}
+    }
+}

@@ -1,0 +1,246 @@
+"archmage_release"
+{
+    "AbilityBehavior"   		"UNIT_TARGET"
+    "AbilityTeamFilter" 		"TEAM_ENEMY"
+    "AbilityCastRange" 			"stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange" 		"2" 
+    "AbilityCooldown"   		"0"
+    "AbilityAPCost"     		"1"
+    "AnimationID"   			"SpellCastA"
+    "CastFXId" 					"EnchantressSylvanBoltCastFXMega"
+    "Icon" 						"BoltRelease"
+   
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" 			"FIELD_EXPRESSION"
+            "damage"  			"floor(stat(%CASTER, #attackDamage)/2)"
+        }
+		
+		"02"
+		{
+			"var_type"			"FIELD_EXPRESSION"
+			"epicDamage"		"stat(%CASTER, #currentBolts) > 0 ? stat(%CASTER, #currentBolts) : 1"
+		}
+		
+		"03"
+		{
+			"var_type"          "FIELD_FLOAT"
+            "epicRadius"        "1"
+		}
+		
+		"04"
+		{
+			"var_type"          "FIELD_FLOAT"
+            "explodeDelay"      "0.01"
+		}
+    }
+
+    "OnAbilityAction"
+    {
+		"ApplyModifier"
+        {
+            "ModifierName"          "archmage_bolt_controller"
+            "Target"                "%SOURCE"
+        }
+        
+        "TrackingProjectile"
+        {
+            "Target"                "%TARGET"
+            "SourcePos"             "unitPosition(%SOURCE, #Head)"
+            "TargetPos"             "unitPosition(%TARGET, #Chest)"
+            "Model"                 "ArcaneSentryProjectile"
+
+            "Params" 
+            {
+                "damage" 
+                {
+                    "type"          "FIELD_FLOAT"
+                    "value"         "expr(%damage)"
+                }
+
+                "firstProjectile"
+                {
+                    "type"          "FIELD_FLOAT"
+                    "value"         "1"
+                }
+            }
+        }
+        
+        "Times"
+        {
+            "Times"                     "stat(%SOURCE, #currentBolts) - 1"
+            "IteratorName"              "#index"
+            "Actions"
+            {
+                "TrackingProjectile"
+                {
+                    "Target"                "%TARGET"
+                    "SourcePos"             "unitPosition(%SOURCE, #Head)"
+                    "TargetPos"             "unitPosition(%TARGET, #Chest)"
+                    "Model"                 "ArcaneSentryProjectile"
+
+                    "Params" 
+                    {
+                        "damage" 
+                        {
+                            "type"          "FIELD_FLOAT"
+                            "value"         "expr(%damage)"
+                        }
+                    }
+                }
+            }
+        }
+
+        "RemoveModifier"
+        {
+            "ModifierTag"			"bolt_tracker"
+            "Target"				"%SOURCE"
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {   
+        "Hit"
+        {
+            "Target" 			"%TARGET"
+            "Tags" 				"stringList(#RAY, #MAGICAL)"
+            "EffectName" 		"EnchantressSylvanBoltHitFXMega" 
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_MAGICAL"
+                    "Damage"        "%damage"
+                }
+                
+                "Conditional"
+                {
+                    "Condition" "%firstProjectile && hasModifier(%CASTER, #archmage_unmoved_modifier)"
+
+                    "Actions" 
+                    {
+                        "MarkHitLegendary"
+                        {
+                        }
+                    }
+                }
+            }
+
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "hitIsLegendary(%HIT)"
+
+                    "Actions" 
+                    {
+                        "SetToContext"
+                        {
+                            "Context"       "currentContext()"
+                            "Key"           "#explodeDelay"
+                            "Value"         "randomBetween(1,1)"
+                            "Type"          "FIELD_FLOAT"
+                        }
+
+                        "StartLogicTick"
+                        {
+                            "Time"          "%explodeDelay"
+                            "TickType"      "FX"
+                            "Position"      "unitPosition(%SOURCE)"
+                        }
+
+                        "Delay"
+                        {
+                            "Time"          "%explodeDelay"
+                            "Actions"
+                            {
+								"ActOnTargets"
+                                {
+                                    "Target"
+                                    {
+                                        "Center"        "unitPosition(%TARGET)"
+                                        "Radius"        "%epicRadius"
+                                        "Teams"         "TEAM_ENEMY"
+                                    }
+									
+									"AttachEffect"
+									{
+										"EffectName"    "TeslaLightningBallExplosionFXMega"
+										"Target"        "unitPosition(%TARGET, #Chest)"
+									}
+
+                                    "IteratorName"      "#newTarget"
+                                
+                                    "Actions"    
+                                    {
+                                        "Hit"
+                                        {
+                                            "Target"        "%newTarget"
+											"EffectName"    "EnchantressSylvanBoltHitFXMega"
+                                            "Tags"          "stringList(#ENVIRONMENTAL, #AOE)"
+
+                                            "InitActions"
+                                            {
+                                                "AddDamage"
+                                                {
+                                                    "Type"        "DAMAGE_MAGICAL"
+                                                    "Damage"      "expr(%epicDamage)"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+						}
+                    }
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "archmage_bolt_controller"
+        {
+            "OnTurnFinished"
+            {
+                "SetStat"
+                {
+                    "Target" 	    "%SOURCE"
+                    "Stat" 		    "#currentBolts"
+                    "Value" 	    "0"
+                }
+
+                "RemoveModifier"
+                {
+                    "ModifierName"			"archmage_bolt_controller"
+                    "Target"				"%TARGET"
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "2.3"
+            "Considerations"
+            {
+
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "expr(%AbilityCastRange)"  
+                    }
+                }
+            }
+        }
+    }
+}

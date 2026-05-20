@@ -1,0 +1,90 @@
+"archmage_alter_reality"
+{
+	"AbilityBehavior"   		"UNIT_TARGET"
+    "AbilityTeamFilter" 		"TEAM_ENEMY"
+    "AbilityCastRange" 			"stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange" 		"0"
+    "AbilityCooldown"   		"3"
+    "AbilityAPCost"     		"1"
+    "AnimationID"   			"SpellCastA"
+    "Icon" 						"Timelapse"
+    "CastFXId" 					"ArcaneMageTeleportCastFXMega"
+   
+    "AbilitySpecial"
+	{
+		"01"
+        {
+            "var_type"              "FIELD_EXPRESSION"
+            "stunDuration"          "1"
+        }
+    }
+	
+	"OnAbilityAction"
+    {
+        "SetToContext"
+        {
+            "Context"		"currentContext()"
+            "Key"			"#targetPosition"
+            "Value"			"unitPosition(%TARGET)"
+            "Type"			"FIELD_OBJECT"
+        }
+		
+		"AttachEffect"
+        {
+            "EffectName"	"ArcaneMageTeleportOutFXMega"
+            "Target"		"%targetPosition"
+        }
+
+        "MoveUnit"
+        {
+            "Target"		"%TARGET"
+            "Position"		"newPoint(1000, 1000, 0)"
+        }
+		
+		"Conditional"
+		{
+			"Condition" "matchesTeam(unitGroup(%SOURCE), unitGroup(%TARGET), @TeamFilter(TEAM_ENEMY))"
+
+			"Actions" 
+			{
+				"Hit"
+				{
+					"Target" "%TARGET"
+					"EffectName" "GenericSpellHitFXMega" 
+					"Tags" "stringList(#MAGICAL, #TARGETED)"
+
+					"InitActions"
+					{
+						"ApplyModifier"
+						{
+							"ModifierName"      "modifier_stunned"
+							"Target"            "%TARGET"
+							"Duration"          "expr(%stunDuration)
+							"Refresh"           "1"
+						}
+					}
+				}
+			}
+		}
+		
+		"Delay"
+        {
+            "Time" "1"
+            "Actions"
+            {
+                "MoveUnit"
+				{
+					"Target"        "%TARGET"
+					"Position"    	"%targetPosition"
+				} 
+
+                "AttachEffect"
+                {
+                    "EffectName"        "ArcaneMageTeleportInFXMega"
+                    "Target"            "%targetPosition"
+                }
+
+			}
+		}
+    }
+}

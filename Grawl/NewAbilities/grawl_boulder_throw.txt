@@ -1,0 +1,97 @@
+"grawl_boulder_throw"
+{    
+    "AbilityBehavior"       	"POINT_TARGET | AOE | NEEDS_VALID_TERRAIN"
+    "AbilityAOETeamFilter" 		"TEAM_ENEMY"
+    "AnimationID"   			"SpellCastB"
+    "CastFXId" 					"FireballCastFXMega"
+    "Icon" 						"GrawlBoulder"
+
+    "AbilityAOEKind" 			"RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster"  "0"
+    "AbilityAOEAffectsCaster"   "0"
+    "AbilityAOERange" 		    "%aoeRadius"
+    "AbilityCastRange" 			"stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"   		"4"
+    "AbilityAPCost"     		"1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "aoeRadius"            "1"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "damage"            "stat(%CASTER,#attackDamage) - 1"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "TrackingProjectile"
+        {
+
+            "SourcePos"             "unitPosition(%SOURCE, #Head)"
+
+            "TargetPos"             "%TARGET"
+
+            "Model" 				"SorceressTrebuchetProjectile"
+
+            "Params" 
+            {
+                "damage" 
+                {
+                    "type" "FIELD_FLOAT"
+                    "value" "expr(%damage)"
+                }
+            }
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {
+
+        "ActOnTargets"
+        {
+
+            "Target"
+            {
+                "Center"      "%TARGET"
+                "Radius"     "%aoeRadius"
+                "Teams"     "TEAM_ENEMY"
+            }
+
+            "IteratorName" "#newTarget"
+        
+            "Actions"    
+            {
+                "Hit"
+                {
+                    "Target" "%newTarget"
+
+                    "EffectName" "FireballHitFXMega" 
+
+                    "Tags" "stringList(#MAGICAL, #AOE)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"            "DAMAGE_PHYSICAL"
+                            "Damage"        	"%damage"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+
+}
+

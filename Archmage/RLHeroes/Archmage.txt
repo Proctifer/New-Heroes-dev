@@ -1,0 +1,130 @@
+"Archmage" 
+	{
+		"UniqueId" "Archmage"
+		"Model" "HumanMage"
+		"MetaExo" "ExoSkeletonHumanArcaneMage_MetaDataAsset"
+		"Name" "ARCHMAGE"
+		"InheritsFrom" "Hero"
+		"cinematicTags" "Heroe|Minion|Male|Archmage|ct_minion|ct_ranged|ct_magic|ct_perception|ct_knowledge|UPGRADES_magic"
+		"nextLevelArchetype" "ArchmageLvl2"
+		"AttackType" "MAGIC"
+		"Icon" "Asst_Banner_Arcane"
+		"Background" "hero_roster_legend_bg_forest"
+		"PortraitBackgroundColor" "cca13d"
+		"UnitOnMap" "Asst_Party_Mage"
+
+		"stats"
+		{
+
+			"level"					"1"
+			"health_max"			"3"
+			"armor_max"				"0"
+			"armor_regen_per_turn" 	"0"
+			"armor_gain_passTurn"	"0"
+			"baseDamage"			"4"
+
+			"rangedAttackRange"		"3" 
+			"rangedAttackMinRange"	"2"
+			"currentBolts"			"0"
+			"maxBolt"				"3"
+			
+			"walkSpeed"				"2"
+		}
+
+		"skills"
+		{
+			"11" 	"archmage_brilliance"
+			"100" 	"magic_endturn_trait"
+  		}
+
+		"skillProgression"
+ 		{
+ 			"1" 
+ 			{
+ 				"1" "archmage_alter_reality"
+ 			}
+
+ 			"2" 
+ 			{
+ 				"1" "archmage_magical_railgun"
+				"2"	"archmage_kaleidoscopic_beam"
+ 			}
+
+ 			"3"
+ 			{
+ 				"1" "archmage_twister"
+				"2"	"archmage_summon_sentry"
+ 			}
+ 		}
+
+ 		"defaultSkill" "archmage_release"
+
+ 		"soundConfig"
+		{
+			"assetId" "DynamicSoundGroupArcaneMageSounds"
+			"sounds"
+			{
+				"receiveDamage" "krl_va_combatArcaneMage_hit"
+				"receiveArmorDamage" "krl_sfx_combatGeneric_armorHit"
+				"death" "krl_va_combatArcaneMage_death"
+				"useSkill" "krl_va_combatArcaneMage_action"
+				"startTurn" "krl_va_combatArcaneMage_turnStart"
+				"promote" "krl_va_combatArcaneMage_promote"
+				"selectHero" "krl_va_combatArcaneMage_select"
+				"walk" ""
+			}
+		}
+
+	}
+
+
+
+	"ArchmageLvl2" 
+	{
+		"InheritsFrom" "Archmage"
+		"nextLevelArchetype" "ArchmageLvl3"
+
+		"stats"
+		{
+
+			"level"					"2"
+			"health_max"			"4"
+			"armor_max"				"0"
+			"armor_regen_per_turn"	"0"
+			"armor_gain_passTurn"	"0"
+			"baseDamage"			"6"
+
+			"rangedAttackRange"		"3" 
+			"rangedAttackMinRange"	"2"
+			
+			"currentBolts"			"0"
+			"maxBolt"				"3"
+			
+			"walkSpeed"				"2"
+		}
+	}
+
+
+	"ArchmageLvl3" 
+	{
+		"InheritsFrom" "Archmage"
+
+		"stats"
+		{
+
+			"level"					"3"
+			"health_max"			"5"
+			"armor_max"				"0"
+			"armor_regen_per_turn"	"0"
+			"armor_gain_passTurn"	"0"
+			"baseDamage"			"8"
+
+			"rangedAttackRange"		"4" 
+			"rangedAttackMinRange"	"2"
+			
+			"currentBolts"			"0"
+			"maxBolt"				"3"
+			
+			"walkSpeed"				"2"
+		}
+	}

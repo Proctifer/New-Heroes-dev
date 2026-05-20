@@ -1,0 +1,83 @@
+"grawl_bastion_trait"
+{
+    "AbilityBehavior"       "PASSIVE"
+    "Icon"                  "GrawlBastion"
+
+     "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              	"FIELD_FLOAT"
+            "extraDamage1"       		"2"
+        }
+		
+		"02"
+		{
+			"var_type"					"FIELD_EXPRESSION"
+			"duration"					"1"
+		}
+    }
+
+    "Modifiers"
+    {
+        "grawl_bastion_monitor_provider"
+        {
+            "Passive"       "1"
+
+            "OnTurnStarted"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "grawl_bastion_monitor"
+                    "Target"            "%TARGET"
+                }
+            }
+        }
+
+        "grawl_bastion_monitor"
+        {
+            "OnUnitLeavingNode"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"      "grawl_bastion_monitor"
+                    "Target"            "%TARGET"
+                }
+				
+				"RemoveModifier"
+                {
+                    "ModifierName"      "grawl_bastion_modifier1"
+                    "Target"            "%TARGET"
+                }
+            }
+            
+            "OnTurnFinished"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "grawl_bastion_modifier1"
+                    "Target"            "%TARGET"
+                    "Duration"          "expr(%duration)"
+                }
+
+                "RemoveModifier"
+                {
+                    "ModifierName"      "grawl_bastion_monitor"
+                    "Target"            "%TARGET"
+                }
+            }
+        }
+        
+        "grawl_bastion_modifier1"
+        {
+            "EffectName"                "GeraldRallyStatusFXMega"
+            "Icon"          			"KeenFocus"
+            "IconPriority"  			"50"
+            
+            "PropertiesAdd"
+            {
+                "baseDamage"       	"%extraDamage1"
+            }
+        }
+    }
+}

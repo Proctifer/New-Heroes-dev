@@ -1,6 +1,6 @@
 	"SandWarrior"
 	{
-		"Model" "HumanFarmer"
+		"Model" "HumanFarmerB"
 		"Name" "SAND_WARRIOR"
 		"InheritsFrom" "Base"
 

@@ -1,0 +1,170 @@
+"archmage_summon_sentry"
+{
+    "AbilityBehavior"           "POINT_TARGET | NEEDS_CLEAR_TERRAIN"
+    "AbilityTeamFilter"         "TEAM_ALL"
+    
+    "AnimationID"               "SpellCastA"
+    "CastFXId"                  "GenericHolyCastFXMega"
+    "Icon"                      "Sentry" 
+
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"           "4"
+    "AbilityAPCost"             "2"
+
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "duration"          "2"
+        }
+		
+        "02"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "extraSentries"     "stat(%CASTER, #currentBolts)-1" 
+        }
+    }
+
+    "OnAbilityAction" 
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%TARGET"
+                "Radius"            "0"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+            }
+        }
+
+        "SpawnUnit"
+        {
+            "UnitName"                  "#ArcaneSentry"
+            "Position"                  "%TARGET"
+            "UnitGroup"                 "unitGroup(%CASTER)"
+            "IsAI"                      "1"
+
+            "OnSpawn"
+            {
+                "#PlayActivityAnimation"
+                {
+                    "Target"            "%UNIT"
+                    "Animation"         "Spawn"
+                }
+
+                "AttachEffect"
+                {
+                    "EffectName"        "TeslaThunderStrikeHitFXMega"
+                    "Target"            "%UNIT"
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"     "modifier_archmage_summon_sentry"
+                    "Target"           "%UNIT"
+                    "Duration"         "%duration"
+                }
+            }
+        } 
+
+        "ActOnHexas"
+        {
+            "Center"            "positionHex(%TARGET)"
+            "Range"             "1"
+            "RequireEmpty"      "1"
+            "Max"               "expr(%extraSentries)"
+            "Random"            "1"
+            "MinRange"          "1"
+            "IteratorName"      "#hexa"
+            
+            "Actions"    
+            {
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"            "hexPosition(%hexa)"
+                        "Radius"            "0"
+                        "Teams"             "TEAM_ALL"
+                        "Flags"             "INCLUDE_NON_TARGETABLE"
+                    }
+                }
+
+                "SpawnUnit"
+                {
+                    "UnitName"                  "#ArcaneSentry"
+                    "Position"                  "hexPosition(%hexa)"
+                    "UnitGroup"                 "unitGroup(%CASTER)"
+                    "IsAI"                      "1"
+
+                    "OnSpawn"
+                    {
+                        "#PlayActivityAnimation"
+                        {
+                            "Target"            "%UNIT"
+                            "Animation"         "Spawn"
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName"        "TeslaThunderStrikeHitFXMega"
+                            "Target"            "%UNIT"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"     "modifier_archmage_summon_sentry"
+                            "Target"           "%UNIT"
+                            "Duration"         "%duration"
+                        }
+                    }
+                }   
+            }
+        }
+		
+		"RemoveModifier"
+		{
+			"ModifierTag"			"archmage_bolt"
+			"Target"				"%CASTER"
+		}
+    }
+
+    "Modifiers"
+    {
+        "modifier_archmage_summon_sentry"
+        {
+            "Icon"				"Summoned"
+			"IconPriority"		"50"
+			
+			"OnRemoved"
+            {
+                "KillUnit"
+                {
+                    "Target"        "%TARGET"
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "2.5"
+            "Considerations"
+            {
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "expr(%AbilityCastRange)"  
+                    }
+                }
+            }
+        }
+    }
+}

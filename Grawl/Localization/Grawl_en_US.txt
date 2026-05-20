@@ -1,0 +1,63 @@
+"UNIT_GRAWL_NAME_0001" = "Grawl"
+"UNIT_GRAWL_LORE" = "What happens when an immovable object is also an unstoppable force? Grawl towers above his foes and crushes them into the ground."
+
+"UNIT_SUMMONED_HUMAN_GOLEM_NAME_0001" = "Summoned Golem"
+
+"SKILL_grawl_bastion_trait_NAME" = "Bastion"
+"SKILL_grawl_bastion_trait_DESCRIPTION" = "Grawl gains +2 damage on the next turn if he ends his current turn without moving."
+"SKILL_grawl_bastion_trait_DESCRIPTION_DATA" = "Bonus Damage: <style="buff">+{extraDamage1}</style>"
+
+"SKILL_grawl_punch_NAME" = "Knockout"
+"SKILL_grawl_punch_DESCRIPTION" = "Punches the target with a fist of solid rock."
+"SKILL_grawl_punch_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Inflicts extra damage to <style="debuff">immobilized</style> targets while in Sedimentary State, or to <style="debuff">weakened</style> targets while in Igneous State."
+"SKILL_grawl_punch_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nEPIC damage: <style="damage">{epicDamage} {icon#damagePhysical}</style>\nRange: <style="highlight">MELEE</style>"
+
+"SKILL_grawl_metamorphosis_NAME" = "Metamorphosis"
+"SKILL_grawl_metamorphosis_DESCRIPTION" = "Grawl can freely shift between a sedimentary state that grants him physical damage reduction and immunity to knockback or an igneous state that grants him magic damage reduction and immunity to burning."
+"SKILL_grawl_metamorphosis_DESCRIPTION_DATA" = "Physical negation: <style="buff">{damageReduction} {icon#damagePhysical} </style>\nMagic negation: <style="buff">{damageReductionMagical} {icon#damageMagical}</style>\nRange: <style="highlight">SELF</style>"
+"SKILL_grawl_metamorphosis_DESCRIPTION_EXTRA" = "This skill can be used at any time during the turn without consuming movement or other skills."
+
+"SKILL_grawl_clobber_NAME" = "Clobber"
+"SKILL_grawl_clobber_DESCRIPTION" = "Crushes enemies in an arc, damaging them and inflicting stun for 1 turn. Deals more damage in sedimentary state and deals true damage while in Igneous state."
+"SKILL_grawl_clobber_DESCRIPTION_DATA" = "Sedimentary damage: <style="damage">{epicDamage}</style> {icon#damagePhysical}\nIgneous damage: <style="damage">{damage}</style> {icon#damageTrue}\nStun duration: <style="highlight">{stunnedDuration}</style> {icon#turns}\nRange: <style="highlight">MELEE</style>"
+
+"SKILL_grawl_boulder_throw_NAME" = "Boulder Throw"
+"SKILL_grawl_boulder_throw_DESCRIPTION" = "Throws a huge boulder, damaging all enemies in the 1-hex area of effect."
+"SKILL_grawl_boulder_throw_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damagePhysical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_grawl_unstoppable_force_NAME" = "Unstoppable Force"
+"SKILL_grawl_unstoppable_force_DESCRIPTION" = "Grawl charges forward, shoving units aside and dealing damage before he arrives at the selected hex. Maintains Bastion if used without moving first."
+"SKILL_grawl_unstoppable_force_DESCRIPTION_DATA" = "Damage: <style="damage">{damage}</style> {icon#damagePhysical}\nRange: <style="highlight">{distanceToTravel}</style>"
+
+"SKILL_grawl_shard_punch_NAME" = "Shard Punch"
+"SKILL_grawl_shard_punch_DESCRIPTION" = "Strikes the enemy with razor-sharp shards, applying <style="debuff">bleeding</style>."
+"SKILL_grawl_shard_punch_DESCRIPTION_DATA" = "Damage: <style="damage">{damage}</style> {icon#damageTrue}\nbleeding duration: <style="highlight">{bleedingDuration}</style> {icon#turns}\nRange: <style="highlight">MELEE</style>"
+
+"SKILL_grawl_stomp_NAME" = "Stomp"
+"SKILL_grawl_stomp_DESCRIPTION" = "Stomps the ground, damaging and stunning surrounded enemies. Stun lasts for double duration while in Sedimentary State. Deals increased damage while in Igneous State."
+"SKILL_grawl_stomp_DESCRIPTION_DATA" = "Sedimentary Damage: <style="damage">{damage}</style> {icon#damagePhysical}\nIgneous damage: <style="damage">{epicDamage}</style> {icon#damagePhysical}\nSedimentary stun duration: <style="highlight">{epicStunnedDuration}</style> {icon#turns}\nIgneous stun duration: <style="highlight">{stunnedDuration}</style> {icon#turns}\nRange: <style="highlight">SELF</style>"
+
+"SKILL_grawl_hard_rock_NAME" = "Crystallize"
+"SKILL_grawl_hard_rock_DESCRIPTION" = "Grawl shifts between a form where he takes -1 physical damage and deals +1 damage, and a form where he takes -1 magic damage and heals +1 HP at the end of each turn."
+"SKILL_grawl_hard_rock_DESCRIPTION_DATA" = "Damage negation: <style="buff">{damageReduction} {icon#damagePhysical}</style>}</style>\nMagic reduction:<style="buff"> {damageReductionMagical} {icon#damageMagical}</style>\nHealing:<style="buff"> {heal}</style>\nRange: <style="highlight">SELF</style>"
+
+"SKILL_grawl_crystallize_NAME" = "Earthquake"
+"SKILL_grawl_crystallize_DESCRIPTION" = "Grawl decimates the earth, damaging every enemy in a massive area."
+"SKILL_grawl_crystallize_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damagePhysical}</style>}\nRange: <style="highlight">{aoeRadius}</style>"
+
+"COMBAT_MODIFIER_grawl_bastion_modifier1_TITLE" = "Bastion"
+"COMBAT_MODIFIER_grawl_bastion_modifier1_DESCRIPTION" = "This unit has +2 damage for this turn."
+
+"COMBAT_MODIFIER_grawl_metamorphic_physical_TITLE" = "Sedimentary State"
+"COMBAT_MODIFIER_grawl_metamorphic_physical_DESCRIPTION" = "Grawl is immune to Knockback and takes 1 less physical damage from all attacks."
+
+"COMBAT_MODIFIER_grawl_metamorphic_magical_TITLE" = "Igneous State"
+"COMBAT_MODIFIER_grawl_metamorphic_magical_DESCRIPTION" = "Grawl is immune to Burning and takes less magical damage from all attacks."
+
+"COMBAT_MODIFIER_grawl_outer_modifier_TITLE" = "Outer Crystallization"
+"COMBAT_MODIFIER_grawl_outer_modifier_DESCRIPTION" = "Grawl takes -1 physical damage and deals +1 damage."
+"COMBAT_MODIFIER_grawl_outer_modifier_DESCRIPTION_DATA" = "Damage reduction:<style="buff"> {damageReduction} {icon#damagePhysical}</style>\nExtra Damage:<style="buff"> {extraDamage}</style>"
+
+"COMBAT_MODIFIER_grawl_inner_modifier_TITLE" = "Inner Crystallization"
+"COMBAT_MODIFIER_grawl_inner_modifier_DESCRIPTION" = "Grawl takes -1 physical damage and deals +1 damage."
+"COMBAT_MODIFIER_grawl_inner_modifier_DESCRIPTION_DATA" = "Magic reduction:<style="buff"> {damageReductionMagical} {icon#damageMagical}</style>\nHealing:<style="buff"> {heal}</style>"

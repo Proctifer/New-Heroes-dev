@@ -1,0 +1,79 @@
+"archmage_brilliance"
+{
+    "AbilityBehavior"       "PASSIVE"
+    "Icon"                  "Brilliance"
+
+     "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "maxBolts"       		"3"
+        }
+    }
+
+    "Modifiers"
+    {
+        "archmage_brilliance_provider"
+        {
+            "Passive"       "1"
+
+            "OnTurnStarted"
+            {
+                "Conditional"
+				{
+					"Condition"			"stat(%TARGET, #currentBolts) < %maxBolts"
+					
+					"Actions"
+					{
+						"SetStat"
+						{
+							"Target" 	"%TARGET"
+							"Stat" 		"#currentBolts"
+							"Value" 	"stat(%TARGET, #currentBolts) + 1"
+						}
+        
+						"ApplyModifier"
+						{
+							"ModifierName"          "archmage_bolt_tracker"
+							"Target"                "%SOURCE"
+						}
+					}
+				}
+				
+				"ApplyModifier"
+				{
+					"ModifierName"			"archmage_unmoved_modifier"
+					"Target"				"%TARGET"
+				}
+            }
+        }
+		
+		"archmage_bolt_tracker"
+		{
+			"Icon"					"EtherealLink"
+			"IconPriority"			"25"
+			"Tags"					"bolt_tracker"
+		}
+        
+        "archmage_unmoved_modifier"
+		{
+			"OnUnitLeavingNode"
+			{
+				"Conditional"
+                {
+                    "Condition" "equal(%TARGET, %UNIT)"
+
+                    "Actions"
+                    {
+                        "RemoveModifier"
+                        {
+                            "ModifierName"   "archmage_unmoved_modifier"
+                            "Target"         "%TARGET"
+                        }
+                    }
+                }
+			}
+		}
+    }
+}

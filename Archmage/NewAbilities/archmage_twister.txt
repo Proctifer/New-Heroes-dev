@@ -1,0 +1,284 @@
+"archmage_twister"
+{  
+	"AbilityBehavior"		"POINT_TARGET | AOE"
+
+    "AnimationID"				"SpellCastB"
+    "CastFXId"					"GenericNaturaCastSummonFXMega"
+    "Icon"						"Twister" 
+
+    "AbilityAOETeamFilter" 		"TEAM_ENEMY"
+    "AbilityAOERange"			"0"
+
+    "AbilityAOEKind"			"RANGE_TUNNEL"
+    "AbilityAOEWidth"			"expr(%width)"
+
+    "AbilityAOECenterOnCaster"	"1"
+    "AbilityAOEAffectsCaster"	"0"
+
+    "AbilityCastRange"			"expr(%distanceToTravel)"
+    "AbilityCooldown"			"4"
+    "AbilityAPCost"				"2"
+
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"			"FIELD_EXPRESSION"
+            "damage"			"stat(%CASTER, #attackDamage)"
+        }
+
+        "02"
+        {
+            "var_type"			"FIELD_EXPRESSION"
+            "distanceToTravel"	"stat(%CASTER, #rangedAttackRange)+1"
+        }
+
+        "03"
+        {
+            "var_type"			"FIELD_EXPRESSION"
+            "width"				"1"
+        }
+
+        "04"
+        {
+            "var_type"           "FIELD_INTEGER"
+            "duration"           "1"
+        }
+		
+		"05"
+		{
+			"var_type"			"FIELD_EXPRESSION"
+			"heroDamage"		"0"
+		}
+		
+		"06"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"heroStun"			"0"
+		}
+    }
+
+    "OnAbilityAction" 
+    {
+        "CreateObjectList"
+        {
+            "Name" "#hitUnits"
+        }
+
+        "TrackingProjectile"
+        {
+            "MoveSpeed"             "%projectile_speed"
+            "Model"                 "KebabShotProjectile"
+            "TargetPos"             "%TARGET"
+            "SourcePos"             "unitPosition(%SOURCE)"
+
+            "TargetFilter"
+            {
+                "Radius"			"0"
+                "Teams"				"TEAM_ALL"
+                "ExcludedUnits"		"objectList(%SOURCE)"
+                "Width"				"expr(%width)"
+                "Kind"				"RANGE_TUNNEL"
+            }
+
+            "Params" 
+            {
+                "damage" 
+                {
+                    "type"			"FIELD_FLOAT" 
+                    "value"			"expr(%damage)"
+                }
+				
+				"heroDamage"
+				{
+					"type"			"FIELD_FLOAT"
+					"value"			"expr(%heroDamage)"
+				}
+            }
+        }
+
+        "AttachEffect"
+        {
+            "EffectName"			"StunHitFXMega"
+            "Target"				"unitPosition(%SOURCE)"
+            "Flipped"				"unitIsFlipped(%SOURCE)"
+        }
+
+        "ActOnHexas"
+        {
+            "Kind"              	"RANGE_TUNNEL"
+            "Origin"            	"unitHex(%SOURCE)"
+            "End"               	"positionHex(%TARGET)"
+            "MinRange"          	"1"
+            "Range"             	"hexDistance(unitHex(%SOURCE), positionHex(%TARGET))"
+            "Random"            	"0"
+            "IteratorName"      	"#hexa"
+            "IteratorIndexName" 	"#hexaIndex"
+
+            "Actions"
+            {
+                "Delay"
+                {
+                    "Time"          "0 + (%hexaIndex * 0.5)"
+
+                    "Actions"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName" "StunHitFXMega"
+                            "Target" "hexPosition(%hexa)"
+                            "Flipped" "unitIsFlipped(%SOURCE)"
+                        }
+                    }
+                }
+            }
+        }
+
+        "ApplyModifier"
+        {
+            "ModifierName"    "disable_unit_modifier"
+            "Target"         "%SOURCE"
+        }
+
+    }
+
+    "OnProjectileHitUnit" 
+    {
+
+        "Hit"
+        {
+            "Target" "%TARGET"
+            "Tags" "stringList(#MELEE, #AOE)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"  		        "DAMAGE_PHYSICAL"
+					"Damage"				"matchesTeam(unitGroup(%HITSOURCE), unitGroup(%HITTARGET), @TeamFilter(TEAM_ENEMY)) ? %damage : %heroDamage"
+                }
+            }
+
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "not(isOnState(%HITTARGET, #DEAD))"
+
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"		"disable_unit_modifier"
+                            "Target"			"%TARGET"
+                        }
+
+                        "MoveUnit"
+                        {
+                            "Target"			"%TARGET"
+                            "Position"			"newPoint(1000, 1000, 0)"
+                        }
+
+                        "AddObjectToList" 
+                        {
+                            "List"				"%hitUnits"
+                            "Value"				"%TARGET"
+                        }
+                    }
+                }
+            }
+        }
+
+        "KeepProjectileGoing"
+        {
+
+        }
+    }
+
+    "OnProjectileDestinationReached" 
+    {
+        "RemoveModifier"
+        {
+            "ModifierName"    "disable_unit_modifier"
+            "Target"         "%SOURCE"
+        }
+
+        "EachInList"
+        {
+            "List" "%hitUnits"
+            "IteratorName" "#unit"
+            "IteratorIndexName" "#unitIndex"
+            "Actions"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"    "disable_unit_modifier"
+                    "Target"          "%unit"
+                }
+
+                "ActOnHexas"
+                {
+                    "Center" "positionHex(%TARGET)"
+                    "Range" "1"
+                    "IteratorName" "#hexa"
+                    "Max" "1"
+                    "Random" "1"
+                    "RequireEmpty" "1"
+                    
+                    "Actions"
+                    {
+                        "MoveUnit"
+                        {
+                            "Target"        "%unit"
+                            "Position"      "hexPosition(%hexa)"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "5"
+            "Considerations"
+            {
+                "affects several units"
+                {
+                    "Curve" "Logistic|500|5|-4|0.05"
+                    "Consideration" "UnitsAffected"
+                    "Params"
+                    {
+                        "Max" "5"  
+                        "TeamFilter" "TEAM_ENEMY"
+                    }
+                }
+
+                "there are enought free hexes arround the end point to move the affected units"
+                {
+                    "Curve" "Linear|1|1|0|0"
+                    "Consideration" "NumberOfFreeHexesAroundHex"
+                    "Params"
+                    {
+                        "Max" "numberOfUnitsAffected(%SOURCE, #TEAM_ENEMY)"
+                    }
+                }
+
+                "Is not rooted"
+                {
+                    "Curve" "Linear|-1|1000|1|0"
+                    "Consideration" "UnitStateOn"
+                    "Params"
+                    {
+                        "State" "#IMMOBILIZED"
+                        "Owner" "1"
+                    }
+                }
+            }
+        }
+    }
+}

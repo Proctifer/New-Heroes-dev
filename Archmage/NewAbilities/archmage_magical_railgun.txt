@@ -1,0 +1,113 @@
+"archmage_magical_railgun"
+{
+	"AbilityBehavior"               "UNIT_TARGET"
+    "AnimationID"                   "SpellCastA"
+    "CastFXId"                      "ArcaneMageDesintegrateCastFXMega"
+    "Icon"                          "MagnifyingBeam" 
+
+    "AbilityTeamFilter"          	"TEAM_ENEMY"
+    "AbilityCastRange"              "expr(%distanceToTravel)"
+    "AbilityCooldown"               "3"
+    "AbilityPreWarm"                "1"
+    "AbilityAPCost"                 "1"
+
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"              "FIELD_EXPRESSION"
+            "damage"             	"ceil(stat(%CASTER, #attackDamage)/2)"
+        }
+
+        "02"
+        {
+            "var_type"              "FIELD_EXPRESSION"
+            "distanceToTravel"     	"stat(%CASTER, #rangedAttackRange) + stat(%CASTER, #currentBolts)"
+        }
+		
+    }
+
+
+    "OnAbilityAction"
+    {
+        "PlaySound"
+        {
+            "Sound" "#krl_sfx_combatArcaneMage_arcaneRay_loop"
+        }
+
+        "TrackingProjectile"
+        {
+            "Target"               	"%TARGET"
+            "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+            "TargetPos"             "unitPosition(%TARGET, #Chest)"
+            "Model"					"ArcaneMageRayProjectile"
+
+            "Params" 
+            {
+                "damage" 
+                { 
+                    "type" "FIELD_FLOAT"
+                    "value" "expr(%damage)"
+                }
+				
+				"distanceToTravel"
+				{
+					"type"	"FIELD_FLOAT"
+					"value"	"expr(%distanceToTravel)"
+				}
+            }
+        }
+
+        "RemoveModifier"
+		{
+			"ModifierTag"    "archmage_bolt"
+			"Target"         "%SOURCE"
+		}
+    }
+
+    "OnProjectileHitUnit" 
+    {
+        "StopSound"
+        {
+            "Sound" "#krl_sfx_combatArcaneMage_arcaneRay_loop"
+        }
+		
+		"Hit"
+        {
+            "Target"                "%TARGET"
+            "Tags"                  "stringList(#PROJECTILE, #TARGETED)"
+
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_MAGICAL" 
+                    "Damage"        "%damage"
+                }
+			
+				"Conditional"
+				{
+					"Condition"              "(hexDistance(unitHex(%SOURCE), unitHex(%TARGET)) < %distanceToTravel)"
+
+					"Actions" 
+					{
+						"MarkHitLegendary"
+						{
+						}
+						
+						"AddDamage"
+						{
+							"Type"			"DAMAGE_MAGICAL"
+							"Damage"		"%distanceToTravel - hexDistance(unitHex(%SOURCE), unitHex(%TARGET))"
+						}
+					}
+				}
+			}
+        }
+
+        
+    }
+}

@@ -21,13 +21,13 @@
 
         "02"
         {
-            "var_type"  "FIELD_EXPRESSION"        
+            "var_type"      "FIELD_EXPRESSION"        
             "MaxDamage"     "stat(%CASTER, #attackDamage)+1"
         }
 
         "03" 
         {
-            "var_type"      "FIELD_EXPRESSION"
+            "var_type"      "FIELD_FLOAT"
             "bleedDuration" "2"
         }
     }
@@ -74,7 +74,7 @@
                             "ModifierName"  "modifier_new_bleeding"
                             "Target"        "%HITTARGET"
                             "Duration"      "%bleedDuration"
-                            "Refresh"   "1"
+                            "Refresh"       "1"
                         }
                     }
                 }

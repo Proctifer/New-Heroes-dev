@@ -102,16 +102,29 @@
 
             "OnHitPreProcessDamages"
             {
-                "AddDamage"
+                "Conditional"
                 {
-                    "Type"              "DAMAGE_PHYSICAL"
-                    "Damage"            "%damageReduction"
-                }
+                    "Condition" "hasTags(hitTags(%HIT), #MELEE, #TARGETED)"
+                    "Actions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_PHYSICAL"
+                            "Damage"            "%damageReduction"
+                        }
 
-                "AttachEffect"
-                {
-                    "EffectName"        "MartyrsInspirationShieldFXMega"
-                    "Target"            "%ATTACKED"
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_ARMOR"
+                            "Damage"            "%damageReduction"
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName"        "MartyrsInspirationShieldFXMega"
+                            "Target"            "%ATTACKED"
+                        }
+                    }
                 }
             }
             

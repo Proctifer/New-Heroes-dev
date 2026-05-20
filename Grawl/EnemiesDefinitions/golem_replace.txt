@@ -1,0 +1,52 @@
+
+	"ScrawnyGolem" 
+	{
+		"Model" "HumanGolem"
+		"Name" "SUMMONED_HUMAN_GOLEM"
+		"InheritsFrom" "Base"
+
+		"stats"
+		{
+			"level" "1"
+				
+			"health_max" "4"
+			"armor_max" "8"
+			"armor_regen_per_turn" "2"
+
+			"armor_gain_passTurn" "2"
+			"rangedAttackRange" "0"
+
+			"visualMoveSpeed" "1" 
+			"visualRunSpeed" "1"
+			
+			"baseDamage"  "3"
+
+			"walkSpeed" "1"
+			
+		}
+
+
+		"skills"
+		{
+			"1" "stunning_blow"
+			"2" "solidify"
+			"300" 	"custom_step_sound_trait"
+ 		}
+
+
+ 		"defaultSkill" "common_melee_attack"
+
+ 		"soundConfig"
+		{
+			"assetId" "DynamicSoundGroupGolemSounds"
+			"sounds"
+			{
+				"receiveDamage" "krl_va_combatGolem_hit"
+				"receiveArmorDamage" "krl_sfx_combatGeneric_hitOnRock"
+				"death" "krl_va_combatGolem_death"
+				"walk" ""
+				"step" "krl_sfx_combatGeneric_heavyFootsteps"
+			}
+		}
+	}
+

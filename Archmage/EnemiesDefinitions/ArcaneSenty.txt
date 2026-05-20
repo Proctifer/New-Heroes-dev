@@ -1,0 +1,39 @@
+
+
+	"ArcaneSentry" 
+	{
+		"Model" "Sentry"
+		"Name" "SUMMONED_ARCANE_SENTRY"
+		"InheritsFrom" "Base"
+
+		"stats"
+		{
+			"level" "1"
+
+			"health_max" "1"
+
+			"rangedAttackRange" "3"
+			
+			"baseDamage" "3"
+
+			"walkSpeed" "2"
+			
+			"evasion"		"0"
+			
+			"visualMoveSpeed"		"5"
+			"visualRunSpeed"		"5"
+		}
+		
+		"skills"
+		{
+		
+		}
+
+ 		"defaultSkill" "sentry_ranged_spell_attack"
+		
+		"states"
+ 		{
+ 			"CANT_BE_POISONED" "1"
+            "CANT_BE_BLED" "1"
+ 		}
+	}

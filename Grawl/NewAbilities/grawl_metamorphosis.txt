@@ -1,0 +1,134 @@
+"grawl_metamorphosis"
+
+{
+
+    "AbilityBehavior"                   "UNIT_TARGET | FAKE_ACTION | POSITIVE_EFFECT | DOESNT_CONSUME_MOVE"
+    "AbilityTeamFilter"                 "TEAM_FRIENDLY"
+    "AnimationID"                       "SpellCastA"
+    "CastFXId"                          "SpikeReforgeCastFXMega"
+    "Icon"                              "GrawlMetamorphosis"
+    "AbilityCastRange"                  "0"
+    "AbilityCooldown"                   "0"
+    "AbilityAPCost"                     "1"
+
+     "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" 					"FIELD_FLOAT"
+            "damageReduction" 			"-1"
+        }
+
+        "02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"damageReductionMagical"	"-1"
+		}
+    }
+
+    "OnAbilityAction"
+
+    {
+        "Conditional"
+		{
+		
+			"Condition"					"hasModifier(%TARGET, #grawl_metamorphic_physical)"
+		
+			"Actions"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"      "grawl_metamorphic_magical"
+					"Target"            "%TARGET"
+				}
+			
+				"RemoveModifier"
+				{
+					"ModifierName"		"grawl_metamorphic_physical"
+					"Target"			"%TARGET"
+				}
+			}
+		
+			"ElseActions"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"		"grawl_metamorphic_physical"
+					"Target"			"%TARGET"
+				}
+			
+				"RemoveModifier"
+				{
+					"ModifierName"		"grawl_metamorphic_magical"
+					"Target"			"%TARGET"
+				}
+			}
+		}
+    }
+
+    "Modifiers"
+    {
+       
+	   "grawl_metamorphic_physical"
+        {
+           "EffectName" 				"CleaverParryStanceStatusFXMega"
+		   "Icon"          				"ShieldOfRetribution"
+           "IconPriority"  				"25"
+
+            "OnHitPreProcessDamages"
+            {
+                "AddDamage"
+                {
+                    "Type"              "DAMAGE_PHYSICAL"
+                    "Damage"            "%damageReduction"
+                }
+				
+				"AddDamage"
+                {
+                    "Type"              "DAMAGE_ARMOR"
+                    "Damage"            "%damageReduction"
+                }
+				
+				"AttachEffect"
+                {
+                    "EffectName"      "MartyrsInspirationShieldFXMega" 
+                    "Target"          "%TARGET"
+                }
+			}
+
+			"States"
+            {
+                "CANT_BE_KNOCKED_BACK" 	"1"
+            }
+
+        }
+		
+		"grawl_metamorphic_magical"
+		{
+			"EffectName"				"RegsonEldritchStateStatusFXMega"
+			"Icon"          			"ShieldOfShadows"
+            "IconPriority"  			"50"
+			
+			"OnHitPreProcessDamages"
+            {
+                "AddDamage"
+                {
+                    "Type"              "DAMAGE_MAGICAL"
+                    "Damage"            "%damageReductionMagical"
+                }
+				
+				"AttachEffect"
+                {
+                    "EffectName"      "RegsonEldritchSyphonActivateFXMega" 
+                    "Target"          "%TARGET"
+                }
+			}
+
+            "States"
+            {
+                "CANT_BE_BURNT" 		"1"
+            }
+		}
+
+    }
+}

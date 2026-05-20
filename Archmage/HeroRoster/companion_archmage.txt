@@ -1,0 +1,5 @@
+{
+			"id" : "Archmage",
+			"unlockAchievement" : "gerald_adventure_win",
+			"locked" : false
+		}

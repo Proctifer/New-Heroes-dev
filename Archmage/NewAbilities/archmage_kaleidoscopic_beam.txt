@@ -1,0 +1,163 @@
+"archmage_kaleidoscopic_beam"
+{
+    "AbilityBehavior"               "UNIT_TARGET"
+    "AbilityTeamFilter"             "TEAM_ENEMY"
+    "AbilityCastRange"              "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange"           "stat(%CASTER, #rangedAttackMinRange)" 
+    "AbilityCooldown"               "3"
+    "AbilityAPCost"                 "1"
+    
+    "AnimationID"                   "SpellCastA"
+    "Icon"                          "KaleidoscopicBeam"
+    "CastFXId"                      "ArcaneMagicMissileCastFXMega"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_EXPRESSION"
+            "damage"                "ceil(stat(%CASTER, #attackDamage)/2)"
+        }
+
+       "02"
+        {
+            "var_type"              "FIELD_EXPRESSION"
+            "maxTargets"            "stat(%CASTER, #currentBolts) + 1"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "PlaySound"
+        {
+            "Sound" "#krl_sfx_teslaCombat_chainLightningProjectile"
+        }
+        
+        "CreateObjectList"
+        {
+            "Name"              "#hitUnits"
+        }
+		
+		"TrackingProjectile"
+		{
+			"Target"                "%TARGET"
+			"SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+			"TargetPos"             "unitPosition(%TARGET, #Chest)"
+			"Model"                 "ArcaneDesintegrateRayProjectile"
+
+			"Params" 
+			{
+				"damage" 
+				{ 
+					"type"          "FIELD_FLOAT"
+					"value"         "expr(%damage)"
+				}
+
+				"maxTargets" 
+				{
+					"type"          "FIELD_FLOAT"
+					"value"         "expr(%maxTargets)"
+				}
+
+				"firstHit" 
+				{
+					"type"          "FIELD_FLOAT"
+					"value"         "1"
+				}
+			}
+		}
+
+        "AddObjectToList" 
+        {
+            "List"                      "%hitUnits"
+            "Value"                     "%TARGET"
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {
+        "Hit"
+        {
+            "Target"                "%TARGET"
+            "Tags"                  "stringList(#RAY, #MAGICAL)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_MAGICAL"
+                    "Damage"        "%damage"
+                }
+                
+            }
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"                "%TARGET"
+                "Radius"                "3"
+                "Teams"                 "TEAM_ENEMY"
+                "ExcludedUnits"         "%hitUnits"
+                "MaxTargets"            "%maxTargets"
+            }
+
+            "IteratorName"              "#newTarget"
+            "IteratorIndexName"         "#index"
+        
+            "Actions"    
+            {
+                "Delay"
+                {
+                    "Time" "0.1 * %index"
+                    "Actions"
+                    {
+                        "Conditional"
+                        {
+                            "Condition"                     "listCount(%hitUnits) < %maxTargets"
+
+                            "Actions" 
+                            {
+                                "TrackingProjectile"
+                                {
+                                    "Target"                "%newTarget"
+                                    "SourcePos"             "unitPosition(%TARGET, #Chest)"
+                                    "TargetPos"             "unitPosition(%newTarget, #Chest)"
+                                    "Model"                 "ArcaneMageRayProjectile"
+
+                                    "Params" 
+                                    {
+                                        "damage" 
+                                        { 
+                                            "type"          "FIELD_FLOAT"
+                                            "value"         "%damage"
+                                        }
+
+                                        "maxTargets" 
+                                        {
+                                            "type"          "FIELD_FLOAT"
+                                            "value"         "%maxTargets"
+                                        }
+                                    }
+                                }
+
+                                "AddObjectToList" 
+                                {
+                                    "List"                      "%hitUnits"
+                                    "Value"                     "%newTarget"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+		
+		"RemoveModifier"
+		{
+			"ModifierTag"			"archmage_bolt"
+			"Target"				"%CASTER"
+		}
+    }
+}

@@ -1,0 +1,109 @@
+"grawl_shard_punch"
+
+{
+    "AbilityBehavior"   "MELEE | HAS_CHANCE_TO_HIT"
+    "AbilityTeamFilter" "TEAM_ENEMY"
+    "AbilityCastRange" "stat(%CASTER, #meleeRange)"
+    "AbilityCooldown"   "3"
+    "AbilityAPCost"     "1"
+
+
+
+    "AnimationID"   "SpecialAttack"
+
+    "CastFXId" "StunCastFXMega"
+
+    "Icon" "GrawlShardPunch"
+
+
+
+    "AbilitySpecial"
+
+    {
+        "01" 
+        {
+            "var_type" 			"FIELD_EXPRESSION"
+            "damage" 			"floor(stat(%CASTER, #attackDamage)*1.5)"
+        }
+
+        "02" 
+        {
+            "var_type" 			"FIELD_EXPRESSION"
+            "bleedingDuration" 	"1"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "Hit"
+        {
+            "Target" "%TARGET"
+            "EffectName" "BarbarianBrutalStrikeExplosionFXMega" 
+            "Tags" "stringList(#MELEE, #TARGETED)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_TRUE"
+                    "Damage"        "expr(%damage)" 
+                }
+            }
+
+            "Actions"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_new_bleeding"
+                    "Target"        "%HITTARGET"
+                    "Duration"      "%bleedingDuration"
+                    "Refresh"   	"1"
+                }
+            }
+        }
+    }
+
+
+
+    "AIConfigB"
+
+    {
+
+        "Selection" 
+
+        {
+
+            "Weight" "4"
+
+            "Considerations"
+
+            {
+
+
+
+                "Priorizacion Por Distance mas cercano"
+
+                {
+
+                    "Curve" "Linear|-0.1|1|1|0"
+
+                    "Consideration" "DistanceToTarget"
+
+                    "Params"
+
+                    {
+
+                        "MaxRange" "10"  
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+

@@ -31,8 +31,8 @@
 
         "05"
         {
-            "var_type"          "FIELD_EXPRESSION"
-            "armorRegen"        "ceil(stat(%CASTER, #level)/2)"
+            "var_type"          "FIELD_FLOAT"
+            "armorRegen"        "1"
         }
     }
 
@@ -52,7 +52,7 @@
                     {
                         "ApplyModifier"
                         {
-                            "ModifierName"      "toughness_trait_armor_regen"
+                            "ModifierName"      "toughness_trait_resistance"
                             "Target"            "%TARGET"
                         }
                     }
@@ -69,7 +69,7 @@
                     {
                         "RemoveModifier"
                         {
-                            "ModifierName"    "toughness_trait_armor_regen"
+                            "ModifierName"    "toughness_trait_resistance"
                             "Target"          "%TARGET"
                         }
                     }
@@ -78,13 +78,13 @@
                     {
                         "RemoveModifier"
                         {
-                            "ModifierName"      "toughness_trait_armor_regen"
+                            "ModifierName"      "toughness_trait_resistance"
                             "Target"            "%TARGET"
                         }
 
                         "ApplyModifier"
                         {
-                            "ModifierName"      "toughness_trait_armor_regen"
+                            "ModifierName"      "toughness_trait_resistance"
                             "Target"            "%TARGET"
                         }
                     }
@@ -101,7 +101,7 @@
                     {
                         "RemoveModifier"
                         {
-                            "ModifierName"      "toughness_trait_armor_regen"
+                            "ModifierName"      "toughness_trait_resistance"
                             "Target"            "%TARGET"
                         }
                     }
@@ -124,16 +124,29 @@
         {
             "OnHitPreProcessDamages"
             {
-                "AddDamage"
+                "Conditional"
                 {
-                    "Type"              "DAMAGE_PHYSICAL"
-                    "Damage"            "%physicalReduction"
-                }
+                    "Condition" "hitConnected(%HIT) && (hitDamageOfType(%HIT, @DamageType(DAMAGE_PHYSICAL)) > 0 || hitDamageOfType(%HIT, @DamageType(DAMAGE_ARMOR)) > 0)"
+                    "Actions"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName"        "MartyrsInspirationShieldFXMega"
+                            "Target"            "%ATTACKED"
+                        }
 
-                "AttachEffect"
-                {
-                    "EffectName"        "MartyrsInspirationShieldFXMega"
-                    "Target"            "%ATTACKED"
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_PHYSICAL"
+                            "Damage"            "%physicalReduction"
+                        }
+
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_ARMOR"
+                            "Damage"            "%physicalReduction"
+                        }
+                    }
                 }
             }
         }
@@ -142,7 +155,7 @@
         {
             "PropertiesAdd"
             {
-                "armor_regen_per_turn" "expr(%armorRegen)"
+                "armor_regen_per_turn" "%armorRegen"
             }
         }
     }

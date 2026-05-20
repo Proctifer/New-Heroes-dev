@@ -36,7 +36,7 @@
         {
             "var_type"          "FIELD_EXPRESSION"
            
-            "distanceToTravel"  "stat(%CASTER, #rangedAttackRange)"
+            "distanceToTravel"  "stat(%CASTER, #rangedAttackRange) + 1"
         }
 
         "03"

@@ -17,14 +17,14 @@
     {
         "01"
         {
-            "var_type" "FIELD_EXPRESSION"
-            "duration" "ceil(stat(%CASTER, #attackDamage))"
+            "var_type"          "FIELD_EXPRESSION"
+            "duration"          "4"
         }
 
         "02"
         {
-            "var_type" "FIELD_FLOAT"
-            "characterLevel" "1"
+            "var_type"          "FIELD_FLOAT"
+            "characterLevel"    "1"
         }
 
     }

@@ -17,8 +17,8 @@
     {
         "01"
         {
-            "var_type" 		"FIELD_EXPRESSION"
-            "duration" 		"stat(%CASTER, #attackDamage)"
+            "var_type" 		    "FIELD_EXPRESSION"
+            "duration" 		    "4"
         }
 
         "02"

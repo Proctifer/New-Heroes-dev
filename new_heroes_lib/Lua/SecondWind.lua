@@ -74,6 +74,9 @@ do
 												if( cinematicMapHelper.HeroByTag("Musketeer") == nil ) then
 		                                    		table.insert(heroesAvailable, "musketeer")
 		                                    	end
+												if( cinematicMapHelper.HeroByTag("Archmage") == nil ) then
+		                                    		table.insert(heroesAvailable, "Archmage")
+		                                    	end
 
 		                                    	local heroToRecruit = cinematicMapHelper.RandomItem(heroesAvailable)
 
@@ -1125,6 +1128,67 @@ do
 											            	jumpTo = "keepGoing"
 										            	}
 										    		}
+										        },
+												{
+										            type = DialogType.Dialog,
+										            condition = |d| d.data.recruit == "Archmage",
+										            text = || __D(119, "As we got closer, we found an Archmage with grievous (although not mortal) wounds.\n\n\"I tried a spell that was too much for me...\""),
+										    		who = || "mapCinematicId",
+										            children = {
+										    			{
+															type = DialogType.Custom,
+															subtype = "item",
+						                  					item = || "healthPotion",
+															text = || __R(120, "Heal her."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitArchmage"),
+															children = {
+																{
+																	type = DialogType.Dialog,
+							                                    	text = || __D(121, "We gave her one of our potions and waited until she felt better.\n\n\"Lesson learned! Let me make it up to you!\""),
+														    		who = || "mapCinematicId",
+														    		exit = true
+																}
+													        }
+														},
+
+														{
+															type = DialogType.Custom,
+															subtype = "item",
+						                  					item = || "elixirOfLife",
+															text = || __R(122, "Heal her."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitArchmage"),
+															children = {
+																{
+																	type = DialogType.Dialog,
+							                                    	text = || __D(123, "We gave her one of our potions and waited until she felt better.\n\n\"Lesson learned! Let me make it up to you!\""),
+														    		who = || "mapCinematicId",
+														    		exit = true
+																}
+													        }
+														},
+
+														{
+															type = DialogType.Custom,
+															subtype = "item",
+						                  					item = || "bandage",
+															text = || __R(124, "Heal her."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitMusketeer"),
+															children = {
+																{
+																	type = DialogType.Dialog,
+							                                    	text = || __D(125, "We gave her one of our bandages and waited until she felt better.\n\n\"Lesson learned! Let me make it up to you!\""),
+														    		who = || "mapCinematicId",
+														    		exit = true
+																}
+													        }
+														},
+
+														{
+											            	type = DialogType.Response,
+											            	text = || __R(117, "Keep going."),
+											            	jumpTo = "keepGoing"
+										            	}
+										    		}
 										        }
 										    }
 										},
@@ -1270,7 +1334,14 @@ do
 																				{"MinionMusketeerLvl2"}
 																				)
 																				}
-																			))	
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitArchmage", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"ArchmageLvl2"}
+																				)
+																				}
+																			))									
 								}))
 	helper.AddQuest(quest)
 	quest.revealDistance = 0

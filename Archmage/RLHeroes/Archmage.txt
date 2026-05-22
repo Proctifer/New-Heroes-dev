@@ -113,7 +113,7 @@
 		{
 
 			"level"					"3"
-			"health_max"			"5"
+			"health_max"			"4"
 			"armor_max"				"0"
 			"armor_regen_per_turn"	"0"
 			"armor_gain_passTurn"	"0"

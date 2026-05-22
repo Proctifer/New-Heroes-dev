@@ -145,6 +145,9 @@ do
 																				if( cinematicMapHelper.HeroByTag("Assassin") == nil) then
 																					table.insert(heroesAvailable, "Assassin")
 																				end
+																				if( cinematicMapHelper.HeroByTag("Archmage") == nil) then
+																					table.insert(heroesAvailable, "Archmage")
+																				end
 
 										                                    	d.data.options = cinematicMapHelper.RandomItemN(heroesAvailable, 3)	-- randomly picks three heroes from the list for selection
 										                                    end,
@@ -513,7 +516,7 @@ do
 																				    		children ={
 																				    			{
 																									type = DialogType.Dialog,
-																									text = || __D(72, "\"I'm here to right my people's wrongs. Let me help you,\"\n\nthe enchantress grinned wide, displaying her long fangs."),
+																									text = || __D(72, "\"I want to right the wrongs of my people. Let me help you,\"\n\nthe enchantress grinned wide, displaying her long fangs."),
 																						    		who = || "mapCinematicId",
 																						    		children = {
 																						    			{
@@ -542,7 +545,7 @@ do
 																				    		children ={
 																				    			{
 																									type = DialogType.Dialog,
-																									text = || __D(76, "\"Don't be afraid,\"\n\nthe Necromancer said.\n\n\"My army marches alongside you this day.\""),
+																									text = || __D(76, "\"Don't be afraid. My army marches alongside you this day,\"\n\nthe Necromancer said."),
 																						    		who = || "mapCinematicId",
 																						    		children = {
 																						    			{
@@ -571,7 +574,7 @@ do
 																				    		children ={
 																				    			{
 																									type = DialogType.Dialog,
-																									text = || __D(80, "\"Looking for an ally, friends?\"\n\nThe Cleric patted us firmly on our backs with a grin."),
+																									text = || __D(80, "\"Looking for an ally, friends?\"\n\nThe Cleric patted us firmly on our backs and flashed a grin."),
 																						    		who = || "mapCinematicId",
 																						    		children = {
 																						    			{
@@ -644,6 +647,35 @@ do
 																										{
 																											type = DialogType.Response,
 																											text = || __R(90, "Look for other recruits."),
+																											jumpTo = "recruits"
+																										}
+																						    		}
+																								}
+																				    		}
+																						},
+																						{
+																							type = DialogType.Response,
+																							text = || __R(91, "Talk to the Archmage."),
+																							condition = |d| cinematicMapHelper.InList(d.data.options, "Archmage"),
+																				    		who = || "mapCinematicId",
+																				    		children ={
+																				    			{
+																									type = DialogType.Dialog,
+																									text = || __D(92, "\"I want to be a hero too!\"\n\nthe Archmage said, looking at us with bright eyes."),
+																						    		who = || "mapCinematicId",
+																						    		children = {
+																						    			{
+																											type = DialogType.Response,
+																											text = || __R(93, "Recruit her."),
+																											
+																											onChoose = function(d,n)
+																								            	cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitArchmage")
+																								            end,
+																											exit = true
+																										},
+																										{
+																											type = DialogType.Response,
+																											text = || __R(94, "Look for other recruits."),
 																											jumpTo = "recruits"
 																										}
 																						    		}
@@ -991,15 +1023,29 @@ do
 																				)
 																				}
 																			)),	
-										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitMustekeer", 
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitMusketeer", 
 																			cinematicMapHelper.Sequence({
 																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
 																				{"MinionMusketeerLvl2"}, checkRecruited
 																				)
 																				}
-																			)) 
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitAssassin", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"MinionAssassinLvl2"}, checkRecruited
+																				)
+																				}
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitArchmage", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"ArchmageLvl2"}, checkRecruited
+																				)
+																				}
+																			)) 																			
 																			
-									})
+										})
 									),
 									cinematicMapHelper.Instant(|| cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", nil))
 								}))

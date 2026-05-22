@@ -74,7 +74,9 @@ do
 												if( cinematicMapHelper.HeroByTag("Musketeer") == nil ) then
 		                                    		table.insert(heroesAvailable, "musketeer")
 		                                    	end
-
+												if( cinematicMapHelper.HeroByTag("Archmage") == nil ) then
+		                                    		table.insert(heroesAvailable, "Archmage")
+		                                    	end
 
 		                                    	local heroToRecruit = cinematicMapHelper.RandomItem(heroesAvailable)
 
@@ -432,7 +434,7 @@ do
 															children = {
 																{
 																	type = DialogType.Dialog,
-							                                    	text = || __D(58, "The necromancer grabbed their staff and chuckled.\n\n\"Defeating a greater evil will favor the greater good! You have my army!\""),
+							                                    	text = || __D(58, "The necromancer grabbed their staff and chuckled.\n\n\"Defeating a greater evil will favor the greater good. You have my army!\""),
 														    		who = || "mapCinematicId",
 														    		exit = true
 																}
@@ -511,6 +513,32 @@ do
 																{
 																	type = DialogType.Dialog,
 							                                    	text = || __D(68, "The Musketeer cocked his gun and stood up,\n\n\"You have my boomstick!\""),
+														    		who = || "mapCinematicId",
+														    		exit = true
+																}
+													        }
+														}
+														
+														
+														
+														
+														
+										    		}
+										        },
+												{
+										            type = DialogType.Dialog,
+										            condition = |d| d.data.recruit == "Archmage",
+										            text = || __D(69, "The figure was a young Archmage gazing into a mystic ball.\n\n\"Are you adventurers? I've always wanted to be a hero like you guys! Let me join you!\""),
+										    		who = || "mapCinematicId",
+										            children = {
+										    			{
+															type = DialogType.Response,
+															text = || __R(70, "Ask him to join you."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitArchmage"),
+															children = {
+																{
+																	type = DialogType.Dialog,
+							                                    	text = || __D(71, "The Archmage eagerly teleported right next to us,\n\n\"You have my staff!\""),
 														    		who = || "mapCinematicId",
 														    		exit = true
 																}
@@ -667,7 +695,14 @@ do
 																				{"MinionMusketeer"}
 																				)
 																				}
-																			))												
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitArchmage", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"Archmage"}
+																				)
+																				}
+																			))	
 								}))
 	helper.AddQuest(quest)
 	quest.revealDistance = 0

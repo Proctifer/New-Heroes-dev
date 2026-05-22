@@ -606,6 +606,35 @@ do
 														},
 														{
 															type = DialogType.Response,
+															text = || __R(89, "Talk to the Archmage."),
+															condition = |d| cinematicMapHelper.InList(d.data.options, "Archmage"),
+												    		who = || "mapCinematicId",
+												    		children ={
+												    			{
+																	type = DialogType.Dialog,
+																	text = || __D(90, "\"You're probably wondering if I'm a little old to be an Archmage,\" the Archmage said, propping her hand on her hip.\n\n\"Yes. Yes I am.\""),
+														    		who = || "mapCinematicId",
+														    		children = {
+														    			{
+																			type = DialogType.Response,
+																			text = || __R(91, "Recruit her."),
+																			
+																			onChoose = function(d,n)
+																            	cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitArchmage")
+																            end,
+																			exit = true
+																		},
+																		{
+																			type = DialogType.Response,
+																			text = || __R(92, "Look for other recruits."),
+																			jumpTo = "recruits"
+																		}
+														    		}
+																}
+												    		}
+														},
+														{
+															type = DialogType.Response,
 															text = || __R(74, "Not right now."),
 												    		jumpTo = "return"
 														}
@@ -1020,6 +1049,13 @@ do
 																			cinematicMapHelper.Sequence({
 																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
 																				{"MinionMusketeer"}, checkRecruited
+																				)
+																				}
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitArchmage", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"Archmage"}, checkRecruited
 																				)
 																				}
 																			))

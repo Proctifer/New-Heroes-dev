@@ -74,6 +74,9 @@ do
 												if( cinematicMapHelper.HeroByTag("Musketeer") == nil ) then
 		                                    		table.insert(heroesAvailable, "musketeer")
 		                                    	end
+												if( cinematicMapHelper.HeroByTag("Archmage") == nil ) then
+		                                    		table.insert(heroesAvailable, "Archmage")
+		                                    	end
 
 		                                    	local heroToRecruit = cinematicMapHelper.RandomItem(heroesAvailable)
 
@@ -237,12 +240,12 @@ do
 										        {
 										            type = DialogType.Dialog,
 										            condition = |d| d.data.recruit == "sylvanElf",
-										            text = || __D(24, "A few minutes after blowing the horn, a sylvan elf approached us."),
+										            text = || __D(26, "A few minutes after blowing the horn, a sylvan elf approached us."),
 										    		who = || "mapCinematicId",
 										            children = {
 										    			{
 															type = DialogType.Response,
-															text = || __R(25, "Talk to the elf."),
+															text = || __R(27, "Talk to the elf."),
 															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitSylvanElf"),
 															exit = true
 														}
@@ -251,12 +254,12 @@ do
 										        {
 										            type = DialogType.Dialog,
 										            condition = |d| d.data.recruit == "enchantress",
-										            text = || __D(24, "A few minutes after blowing the horn, an ashervan enchantress approached us."),
+										            text = || __D(28, "A few minutes after blowing the horn, an ashervan enchantress approached us."),
 										    		who = || "mapCinematicId",
 										            children = {
 										    			{
 															type = DialogType.Response,
-															text = || __R(25, "Talk to the High Enchantress."),
+															text = || __R(29, "Talk to the High Enchantress."),
 															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitEnchantress"),
 															exit = true
 														}
@@ -265,12 +268,12 @@ do
 										        {
 										            type = DialogType.Dialog,
 										            condition = |d| d.data.recruit == "necromancer",
-										            text = || __D(24, "A few minutes after blowing the horn, a necromancer approached us."),
+										            text = || __D(30, "A few minutes after blowing the horn, a necromancer approached us."),
 										    		who = || "mapCinematicId",
 										            children = {
 										    			{
 															type = DialogType.Response,
-															text = || __R(25, "Talk to the necromancer."),
+															text = || __R(31, "Talk to the necromancer."),
 															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitNecromancer"),
 															exit = true
 														}
@@ -279,12 +282,12 @@ do
 										        {
 										            type = DialogType.Dialog,
 										            condition = |d| d.data.recruit == "cleric",
-										            text = || __D(24, "A few minutes after blowing the horn, a cleric approached us."),
+										            text = || __D(32, "A few minutes after blowing the horn, a cleric approached us."),
 										    		who = || "mapCinematicId",
 										            children = {
 										    			{
 															type = DialogType.Response,
-															text = || __R(25, "Talk to the cleric."),
+															text = || __R(33, "Talk to the cleric."),
 															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitCleric"),
 															exit = true
 														}
@@ -293,12 +296,12 @@ do
 										        {
 										            type = DialogType.Dialog,
 										            condition = |d| d.data.recruit == "assassin",
-										            text = || __D(26, "A few minutes after blowing the horn, we felt someone tap our shoulder. We turned around to find an Assassin."),
+										            text = || __D(34, "A few minutes after blowing the horn, we felt someone tap our shoulder. We turned around to find an Assassin."),
 										    		who = || "mapCinematicId",
 										            children = {
 										    			{
 															type = DialogType.Response,
-															text = || __R(27, "Talk to the assassin."),
+															text = || __R(35, "Talk to the assassin."),
 															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitAssassin"),
 															exit = true
 														}
@@ -307,13 +310,27 @@ do
 										        {
 										            type = DialogType.Dialog,
 										            condition = |d| d.data.recruit == "Musketeer",
-										            text = || __D(28, "A few minutes after blowing the horn, a musketeer approached us."),
+										            text = || __D(36, "A few minutes after blowing the horn, a musketeer approached us."),
 										    		who = || "mapCinematicId",
 										            children = {
 										    			{
 															type = DialogType.Response,
-															text = || __R(29, "Talk to the musketeer."),
+															text = || __R(37, "Talk to the musketeer."),
 															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitMusketeer"),
+															exit = true
+														}
+													}
+										        },
+												{
+										            type = DialogType.Dialog,
+										            condition = |d| d.data.recruit == "Archmage",
+										            text = || __D(38, "A few minutes after blowing the horn, a young Archmage approached us."),
+										    		who = || "mapCinematicId",
+										            children = {
+										    			{
+															type = DialogType.Response,
+															text = || __R(39, "Talk to the Archmage."),
+															onChoose = || cinematicMapHelper.CurrentQuestStatus().context.SetObject("option", "recruitArchmage"),
 															exit = true
 														}
 													}
@@ -452,7 +469,14 @@ do
 																				{"MinionMusketeer"}
 																				)
 																				}
-																			))																																	
+																			)),
+										cinematicMapHelper.ConditionalIf(|| cinematicMapHelper.CurrentQuestStatus().context.GetObject("option") == "recruitArchmage", 
+																			cinematicMapHelper.Sequence({
+																					cinematicMapHelper.ShowTeamManage(||"Team Manage",|| 
+																				{"Archmage"}
+																				)
+																				}
+																			))									
 								}))
 
 	quest.results = {

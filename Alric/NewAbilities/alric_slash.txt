@@ -43,10 +43,33 @@
 
             "InitActions"
             {
-                "AddDamage"
+                "Conditional"
                 {
-                    "Type"          "DAMAGE_PHYSICAL"
-                    "Damage"        "randomI(expr(%MinDamage), expr(%MaxDamage))"
+                    "Condition" "hasModifier(%SOURCE, #riposte_true_damage_trigger)"
+                    
+                    "Actions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_TRUE"
+                            "Damage"        "randomI(expr(%MinDamage), expr(%MaxDamage))"
+                        }
+                        
+                        "RemoveModifier"
+                        {
+                            "ModifierName"      "riposte_true_damage_trigger"
+                            "Target"            "%TARGET"
+                        }
+                    }
+
+                    "ElseActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL"
+                            "Damage"        "randomI(expr(%MinDamage), expr(%MaxDamage))"
+                        }
+                    }
                 }
 
                 "Conditional"

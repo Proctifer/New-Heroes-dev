@@ -49,46 +49,6 @@
 			"Duration"          "%duration"
 			"Refresh"           "1"
 		}
-		
-		"Conditional"
-		{
-			"Condition" "hasModifier(%TARGET, #assassin_bloodlust_modifier)"
-			
-			"Actions"
-			{
-				"HitLegendaryTriggered"
-                {
-                    "Unit"              "%TARGET"
-                }
-			}
-		}
-		
-		"Conditional"
-		{
-			"Condition" "hasModifier(%TARGET, #athletics_endturn_trait_modifier_active)"
-			
-			"Actions"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"      "assassin_bloodlust_modifier"
-					"Target"            "%TARGET"
-					"Duration"          "%duration"
-					"Refresh"           "1"
-				}
-			
-				"RemoveModifier"
-				{
-					"ModifierName"		"athletics_endturn_trait_modifier_active"
-					"Target"			"%TARGET"
-				}
-
-                "HitLegendaryTriggered"
-				{
-					"Unit"              "%TARGET"
-				}
-			}
-		}
     }
 
     "Modifiers"
@@ -119,6 +79,18 @@
                             "Damage"            "%damageReduction"
                         }
 
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_TRUE"
+                            "Damage"            "%damageReduction"
+                        }
+
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_MAGICAL"
+                            "Damage"            "%damageReduction"
+                        }
+
                         "AttachEffect"
                         {
                             "EffectName"        "MartyrsInspirationShieldFXMega"
@@ -135,6 +107,14 @@
                     "Condition" "hasTags(hitTags(%HIT), #MELEE, #TARGETED)"
                     "Actions"
                     {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "riposte_true_damage_trigger"
+                            "Target"            "%TARGET"
+                            "Duration"          "%duration"
+                            "Refresh"           "1"
+                        }
+                        
                         "QueueAttackUnit"
                         {
                             "Target"                "%TARGET"
@@ -149,6 +129,10 @@
                     }
                 }
             }
+        }
+
+        "riposte_true_damage_trigger"
+        {
         }
     }
 }

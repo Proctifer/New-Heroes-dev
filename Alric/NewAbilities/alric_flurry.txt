@@ -4,7 +4,7 @@
     "AbilityTeamFilter"     "TEAM_ENEMY"
     "AbilityCastRange"      "stat(%CASTER, #meleeRange)"
     "AbilityCooldown"       "4"
-    "AbilityAPCost"         "1"
+    "AbilityAPCost"         "2"
     "AnimationID"           "SpellCastA"
     "Icon"                  "Flurry"
     "CastFXId"              "BullRushCastFXMega"

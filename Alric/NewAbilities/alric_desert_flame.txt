@@ -1,0 +1,101 @@
+"alric_desert_flame"
+{
+    "AbilityBehavior"           "MELEE"
+    "AbilityTeamFilter"         "TEAM_ENEMY"
+    "AbilityCastRange"          "stat(%CASTER, #meleeRange)"
+    "AbilityCooldown"           "0"
+    "AbilityAPCost"             "1"
+    "AnimationID"               "SpecialAttack"
+    "Icon"                      "Thrust"
+    "CastFXId"                  "OlochSealOfImmolationCastFXMega"
+
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "damage"            "stat(%CASTER, #attackDamage)+1"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "floorDuration"     "2"
+        }
+
+        "20"
+        {
+            "var_type"          "FIELD_STRING"
+            "iconDamageType"    "damagePhysical"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "SpawnUnit"
+        {
+            "UnitName"              "#DummyUnit"
+            "Position"              "unitPosition(%TARGET)"
+            "UnitGroup"             "unitGroup(%CASTER)"
+            "IsAI"                  "0"
+            "Nick"                  "#FireballFloor"
+            "InheritsInitiative"    "1"
+
+            "OnSpawn"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "fire_floor_tile_modifier"
+                    "Target"            "%UNIT"
+                    "Duration"          "%floorDuration"
+                }
+            }
+        }
+
+        "SpawnUnit"
+        {
+            "UnitName"              "#DummyUnit"
+            "Position"              "hexPosition(hexNeighbour(unitHex(%TARGET), unitHex(%SOURCE), 3))"
+            "UnitGroup"             "unitGroup(%CASTER)"
+            "IsAI"                  "0"
+            "Nick"                  "#FireballFloor"
+            "InheritsInitiative"    "1"
+
+            "OnSpawn"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "fire_floor_tile_modifier"
+                    "Target"            "%UNIT"
+                    "Duration"          "%floorDuration"
+                }
+            }
+        }
+        
+        "Hit"
+        {
+            "Target"                "%TARGET"
+            "EffectName"            "SylvanElfThrustHitFXMega" 
+            "Tags"                  "stringList(#MELEE, #TARGETED)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_PHYSICAL"
+                    "Damage"        "expr(%damage)"
+                }
+            }
+
+            "Actions"
+            {
+                "Knockback" 
+                {
+                    "Target" "%HITTARGET"
+                    "Center" "unitPosition(%HITSOURCE)"
+                    "Strength" "2"
+                }
+            }
+        }
+    }
+}

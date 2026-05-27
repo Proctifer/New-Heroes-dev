@@ -79,7 +79,7 @@
                 "Hit"
                 {
                     "Target" 			"%newTarget"
-                    "EffectName" 		"FireballHitFXMega" 
+                    "EffectName" 		"GenericHitFXMega" 
                     "Tags" 				"stringList(#AOE)"
 
                     "InitActions"
@@ -111,7 +111,7 @@
 
                 "Delay"
                 {
-                    "Time"          "0.7"
+                    "Time"          "0.6"
                                 
                     "Actions"
                     {

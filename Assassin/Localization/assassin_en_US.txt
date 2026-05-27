@@ -17,7 +17,7 @@
 "SKILL_assassin_counterattack_NAME" = "Counterattack"
 "SKILL_assassin_counterattack_DESCRIPTION" = "Increases melee dodge chance to 100% against the next melee attack and responds with a counterattack."
 "SKILL_assassin_counterattack_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Entering Counter Stance while Keen Focus is active will increase the damage bonus by 1."
-"SKILL_assassin_counterattack_DESCRIPTION_DATA" = "Duration: {duration} {icon#turns}\nRange: <style="highlight">SELF</style>"
+"SKILL_assassin_counterattack_DESCRIPTION_DATA" = "Duration: <style="highlight">{duration}</style> {icon#turns}\nRange: <style="highlight">SELF</style>"
 "SKILL_assassin_counterattack_DESCRIPTION_EXTRA" = "<style="extra">If Bloodlusted is active, the duration will be refreshed.</style>"
 
 "SKILL_assassin_dagger_NAME" = "Pocket Dagger"

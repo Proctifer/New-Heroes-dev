@@ -22,7 +22,7 @@
 "SKILL_alric_flurry_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nRange: <style="highlight">MELEE</style>"
 
 "SKILL_alric_riposte_NAME" = "Riposte"
-"SKILL_alric_riposte_DESCRIPTION" = "Enter a stance to negate damage from the next melee attack and perform a counterattack."
+"SKILL_alric_riposte_DESCRIPTION" = "Enter a stance to negate damage from the next melee attack and perform a true-damage counterattack."
 "SKILL_alric_riposte_DESCRIPTION_DATA" = "Duration: {duration} {icon#turns}\nRange: <style="highlight">SELF</style>"
 
 "SKILL_alric_solar_shield_NAME" = "Solar Shield"
@@ -31,7 +31,7 @@
 "SKILL_alric_solar_shield_DESCRIPTION_EXTRA" = "<style="extra">If the ally is a sand warrior, its duration is extended.</style>"
 
 "SKILL_alric_quicksand_NAME" = "Quicksand" 
-"SKILL_alric_quicksand_DESCRIPTION" = "Alric creates a tremor in the ground, applying <style="concept">rooted</style> to all enemies in a {aoeRadius}-hex AOE."
+"SKILL_alric_quicksand_DESCRIPTION" = "Alric creates a tremor in the ground then teleports to that location. \nEnemies in a {aoeRadius}-hex AOE are dealt <style="concept">knockback</style> and <style="concept">rooted</style>."
 "SKILL_alric_quicksand_DESCRIPTION_DATA" = "Rooted duration: <style="highlight">{rootDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
 
 "SKILL_alric_sandstorm_NAME" = "Sandstorm"

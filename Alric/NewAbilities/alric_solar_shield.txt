@@ -23,7 +23,7 @@
         "02"
         {
             "var_type"      "FIELD_FLOAT"
-            "extraArmor"    "4"
+            "extraArmor"    "5"
         }
 
         "03"

@@ -93,7 +93,7 @@
 		"health_max" 			"7"
 		"armor_max" 			"4"
 		"armor_regen_per_turn" 	"2"
-		"baseDamage" 			"6"
+		"baseDamage" 			"7"
 		"walkSpeed" 			"2"
 		"armorOfThornsDamage"	"1"
 	}
@@ -109,7 +109,7 @@
 		"health_max" 			"8"
 		"armor_max" 			"5"
 		"armor_regen_per_turn" 	"2"
-		"baseDamage" 			"7"
+		"baseDamage" 			"9"
 		"walkSpeed" 			"2"
 		"armorOfThornsDamage"	"2"
 	}

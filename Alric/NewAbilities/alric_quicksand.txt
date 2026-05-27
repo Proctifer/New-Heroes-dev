@@ -1,8 +1,8 @@
 "alric_quicksand"
 {
-    "AbilityBehavior"               "POINT_TARGET | AOE | NEEDS_VALID_TERRAIN"
+    "AbilityBehavior"               "POINT_TARGET | AOE | NEEDS_CLEAR_TERRAIN"
     "AbilityAOETeamFilter"          "TEAM_ENEMY"
-    "AnimationID"                   "SpellCastB"
+    "AnimationID"                   "SpecialAttack"
     "CastFXId"                      "OlochSealOfImmolationCastFXMega"
     "Icon"                          "Sandpit"
     "AbilityAOEKind"                "RANGE_CIRCLE"
@@ -36,12 +36,35 @@
 
     "OnAbilityAction"
     {
-        "AttachEffect"
+        "ActOnHexas"
         {
-            "EffectName"    "WoodBreakFXMega"
-            "Target"        "%TARGET"
-        }
+            "Center"                 "positionHex(%TARGET)"
+            "Range"                  "%aoeRadius"
+            "IteratorName"           "#hexa"
+        
+            "Actions"
+            {
+                "AttachEffect"
+                {
+                    "EffectName"    "WoodBreakFXMega"
+                    "Target"        "hexPosition(%hexa)"
+                }
 
+                "Delay"
+                {
+                    "Time" "0.3"
+                    "Actions"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName"    "WoodBreakFXMega"
+                            "Target"        "hexPosition(%hexa)"
+                        }
+                    }
+                }
+            }
+        }
+        
         "StartLogicTick"
         {
             "Time"          "1"
@@ -54,36 +77,55 @@
             "Sound" "#krl_sfx_bravebarkCombat_seismicPound"
         }
 
+        "SetToContext"
+        {
+            "Context"           "unitContext(%CASTER)"
+            "Key"               "#sourcePosition"
+            "Value"             "unitPosition(%SOURCE)"
+            "Type"              "FIELD_OBJECT"
+        }
+
+        "SetToContext"
+        {
+            "Context"           "unitContext(%CASTER)"
+            "Key"               "#targetPosition"
+            "Value"             "%TARGET"
+            "Type"              "FIELD_OBJECT"
+        }
+
+        "AttachEffect"
+        {
+            "EffectName"        "OlochBurningClawHitFXMega"
+            "Target"            "wrapContext(unitContext(%CASTER), %sourcePosition)"
+        }
+
         "Delay"
         {
             "Time" "0.4"
             "Actions"
             {
-                "ActOnHexas"
+                "StartLogicTick"
                 {
-                    "Center"                 "positionHex(%TARGET)"
-                    "Range"                  "%aoeRadius"
-                    "IteratorName"           "#hexa"
-                
+                    "Time"              "1"
+                    "TickType"          "PriorityCenter"
+                    "Position"          "wrapContext(unitContext(%CASTER), %targetPosition)"
+                }
+
+                "MoveUnit"
+                {
+                    "Target"            %SOURCE"
+                    "Position"          "newPoint(1000, 1000, 0)"
+                }
+
+                "Delay"
+                {
+                    "Time" "0.5"
                     "Actions"
                     {
-                        "AttachEffect"
+                        "MoveUnit"
                         {
-                            "EffectName"    "WoodBreakFXMega"
-                            "Target"        "hexPosition(%hexa)"
-                        }
-
-                        "Delay"
-                        {
-                            "Time" "0.3"
-                            "Actions"
-                            {
-                                "AttachEffect"
-                                {
-                                    "EffectName"    "WoodBreakFXMega"
-                                    "Target"        "hexPosition(%hexa)"
-                                }
-                            }
+                            "Target"            "%SOURCE"
+                            "Position"          "wrapContext(unitContext(%CASTER), %targetPosition)"
                         }
                     }
                 }
@@ -96,13 +138,7 @@
                         "Radius"           "%aoeRadius"
                         "Teams"            "TEAM_ENEMY"
                     }
-                            
-                    "AttachEffect"
-                    {
-                        "EffectName"    "WoodBreakFXMega"
-                        "Target"        "%TARGET"
-                    }
-
+                    
                     "IteratorName"         "#newTarget"
                 
                     "Actions"    
@@ -114,6 +150,13 @@
 
                             "Actions"
                             {
+                                "Knockback" 
+                                {
+                                    "Target"    "%HITTARGET"
+                                    "Center"    "wrapContext(unitContext(%CASTER), %targetPosition)"
+                                    "Strength"  "1"
+                                }
+
                                 "ApplyModifier"
                                 {
                                     "ModifierName"      "modifier_rooted"

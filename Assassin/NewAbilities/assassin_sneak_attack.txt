@@ -4,7 +4,7 @@
 	"AbilityTeamFilter" "TEAM_ENEMY"
     "AbilityCastRange" 	"stat(%CASTER, #meleeRange)"
     "AbilityCooldown"   "2"
-    "AbilityAPCost"     "2"
+    "AbilityAPCost"     "1"
     "AnimationID"   	"Attack"
     "Icon" 				"Rupture"
     "CastFXId" 			"RuptureCastFXMega"

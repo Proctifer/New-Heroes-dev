@@ -612,7 +612,7 @@ do
 												    		children ={
 												    			{
 																	type = DialogType.Dialog,
-																	text = || __D(90, "\"You're probably wondering if I'm a little old to be an Archmage,\" the Archmage said, propping her hand on her hip.\n\n\"Yes. Yes I am.\""),
+																	text = || __D(90, "\"You're probably wondering if I'm a little young to be an Archmage,\" she said, propping her hand on her hip.\n\n\"Yes. Yes I am.\""),
 														    		who = || "mapCinematicId",
 														    		children = {
 														    			{

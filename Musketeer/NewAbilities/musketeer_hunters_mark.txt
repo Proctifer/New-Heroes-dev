@@ -157,10 +157,25 @@
 
             "OnHitPreProcessDamages"
             {
-                "AddDamage"
+                "Conditional"
                 {
-                    "Type"              "DAMAGE_PHYSICAL"
-                    "Damage"            "%extraDamagePerHit"
+                    "Condition" "isOnState(%TARGET, #BOSS)"
+                    "Actions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_PHYSICAL"
+                            "Damage"            "%bossDamage"
+                        }
+                    }
+                    "ElseActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_PHYSICAL"
+                            "Damage"            "%extraDamagePerHit"
+                        }
+                    }
                 }
 				
 				"AttachEffect"

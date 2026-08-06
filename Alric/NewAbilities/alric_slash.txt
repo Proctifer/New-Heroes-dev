@@ -58,7 +58,7 @@
                         "RemoveModifier"
                         {
                             "ModifierName"      "riposte_true_damage_trigger"
-                            "Target"            "%TARGET"
+                            "Target"            "%SOURCE"
                         }
                     }
 

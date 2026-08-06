@@ -35,7 +35,6 @@
         "02"
         {
             "var_type"          "FIELD_EXPRESSION"
-           
             "distanceToTravel"  "stat(%CASTER, #rangedAttackRange) + 1"
         }
 
@@ -43,6 +42,12 @@
         {
             "var_type"          "FIELD_FLOAT"
             "width"             "1"
+        }
+
+        "04"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "stunDuration"      "1"
         }
     }
 
@@ -102,15 +107,40 @@
                     "Type"          "DAMAGE_PHYSICAL" 
                     "Damage"        "%damage"
                 }
+                
+                "Conditional"
+                {
+                    "Condition" "isOnState(%HITTARGET, #WEAKENED)"
+                    "Actions"
+                    {
+                        "MarkHitLegendary"
+                        {
+                        }
+                    }
+                }
             }
 
             "Actions"
             {
+                "Conditional"
+                {
+                    "Condition" "hitIsLegendary(%HIT)"
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "modifier_stunned"
+                            "Target"            "%HITTARGET"
+                            "Duration"          "%stunDuration"
+                        }
+                    }
+                }
+                
                 "Knockback"  
                 {
-                    "Target" "%HITTARGET"
-                    "Center" "%projectileOrigin"
-                    "Strength" "0"
+                    "Target"    "%HITTARGET"
+                    "Center"    "%projectileOrigin"
+                    "Strength"  "1"
                 }
 
             }

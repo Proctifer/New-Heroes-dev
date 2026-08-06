@@ -5,7 +5,7 @@
 "SKILL_assassin_lethal_strike_NAME" = "Golpe letal"
 "SKILL_assassin_lethal_strike_DESCRIPTION" = "Golpea a un enemigo con precisión letal y le inflige un gran daño."
 "SKILL_assassin_lethal_strike_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Inflige daño adicional si apuñala por la espalda."
-"SKILL_assassin_lethal_strike_DESCRIPTION_DATA" = "Daño: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nDaño ÉPICO: <style="damage">{epicDamage} {icon#damagePhysical}</style>\nAlcance: <style="highlight">cuerpo a cuerpo</style>"
+"SKILL_assassin_lethal_strike_DESCRIPTION_DATA" = "Daño: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nDaño ÉPICO: <style="damage">+{epicDamage} {icon#damagePhysical}</style>\nAlcance: <style="highlight">cuerpo a cuerpo</style>"
 
 "SKILL_assassin_stealth_NAME" = "Invisibilidad"
 "SKILL_assassin_stealth_DESCRIPTION" = "El Asesino se vuelve invisible durante 2 turnos, lo que lo elimina de la priorización del enemigo."

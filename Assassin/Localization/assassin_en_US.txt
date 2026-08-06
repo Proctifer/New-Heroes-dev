@@ -5,7 +5,7 @@
 "SKILL_assassin_lethal_strike_NAME" = "Lethal Strike"
 "SKILL_assassin_lethal_strike_DESCRIPTION" = "Strikes an enemy with deadly precision, dealing high damage."
 "SKILL_assassin_lethal_strike_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Deals extra damage if backstabbing."
-"SKILL_assassin_lethal_strike_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nEPIC Damage: <style="damage">{epicDamage} {icon#damagePhysical}</style>\nRange: <style="highlight">MELEE</style>"
+"SKILL_assassin_lethal_strike_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nEPIC Damage: <style="damage">+{epicDamage} {icon#damagePhysical}</style>\nRange: <style="highlight">MELEE</style>"
 
 "SKILL_assassin_stealth_NAME" = "Invisibility"
 "SKILL_assassin_stealth_DESCRIPTION" = "The Assassin becomes invisible for 2 turns, removing him from enemy prioritization."

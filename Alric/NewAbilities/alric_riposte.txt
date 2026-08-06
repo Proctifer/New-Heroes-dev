@@ -37,6 +37,12 @@
             "var_type"          "FIELD_FLOAT"
             "damageReduction"   "-99"
         }
+        
+        "05"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "thornsIncrease"    "2"
+        }
     }
 
 
@@ -49,6 +55,26 @@
 			"Duration"          "%duration"
 			"Refresh"           "1"
 		}
+
+        "Conditional"
+        {
+            "Condition" "isOnState(%TARGET, #IMMOBILIZED)"
+            "Actions"
+            {
+                "HitLegendaryTriggered"
+                {
+                    "Unit"              "%TARGET"
+                }
+                
+                "ApplyModifier"
+                {
+                    "ModifierName"      "alric_riposte_increased_thorns_modifier"
+                    "Target"            "%TARGET"
+                    "Duration"          "%duration"
+                    "Refresh"           "1"
+                } 
+            }
+        }
     }
 
     "Modifiers"
@@ -133,6 +159,17 @@
 
         "riposte_true_damage_trigger"
         {
+        }
+
+        "alric_riposte_increased_thorns_modifier"
+        {
+            "Icon"                       "SpikeReforge"
+            "IconPriority"               "24"
+
+            "PropertiesAdd"
+            {
+                "armorOfThornsDamage"             "%thornsIncrease"
+            }
         }
     }
 }

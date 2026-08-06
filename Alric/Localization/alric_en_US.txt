@@ -1,5 +1,5 @@
 "UNIT_ALRIC_NAME_0001" = "Alric"
-"UNIT_ALRIC_LORE" = "After failing to defend Hammerhold from Vez'nan, Alric ventured to the mainland of Linirea to fight other threats and redeem himself."
+"UNIT_ALRIC_LORE" = "Hammerhold was defeated, but the Great Desert Spirit is not done with Alric. He has ventured to Linirea's mainland in pursuit of reclaiming the desert's glory and bringing evil to heel."
 
 "UNIT_SAND_WARRIOR_NAME_0001" = "Sand Warrior"
 
@@ -10,7 +10,7 @@
 
 "SKILL_alric_slash_NAME" = "Slash"
 "SKILL_alric_slash_DESCRIPTION" = "Alric performs a sword slash on a target enemy."
-"SKILL_alric_slash_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Applies Bleeding to targets who are <style="debuff">immobilized</style>."
+"SKILL_alric_slash_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Applies Bleeding to targets who are <style="concept">immobilized</style>."
 "SKILL_alric_slash_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nEPIC Bleed Duration: <style="highlight">{bleedDuration}</style> {icon#turns}\nRange: <style="highlight">MELEE</style>"
 
 "SKILL_alric_sand_warrior_NAME" = "Sand Warrior"
@@ -23,11 +23,13 @@
 
 "SKILL_alric_riposte_NAME" = "Riposte"
 "SKILL_alric_riposte_DESCRIPTION" = "Enter a stance to negate damage from the next melee attack and perform a true-damage counterattack."
-"SKILL_alric_riposte_DESCRIPTION_DATA" = "Duration: {duration} {icon#turns}\nRange: <style="highlight">SELF</style>"
+"SKILL_alric_riposte_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If Alric is <style="concept">immobilized</style>, he gains extra thorns damage."
+"SKILL_alric_riposte_DESCRIPTION_DATA" = "Duration: {duration} {icon#turns}\nEPIC extra thorns: <style="damage">+{thornsIncrease}</style>\nRange: <style="highlight">SELF</style>"
 
 "SKILL_alric_solar_shield_NAME" = "Solar Shield"
 "SKILL_alric_solar_shield_DESCRIPTION" = "Dash to an ally in range, granting additional armor for them and Alric."
-"SKILL_alric_solar_shield_DESCRIPTION_DATA" = "Extra armor: <style="buff">+{extraArmor} {icon#statArmor}</style>\nDuration: <style="buff">{duration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_alric_solar_shield_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If either unit is <style="debuff">weakened</style>, an explosion is triggered. \nEffects are cleansed."
+"SKILL_alric_solar_shield_DESCRIPTION_DATA" = "Extra armor: <style="buff">+{extraArmor} {icon#statArmor}</style>\nDuration: <style="highlight">{duration} {icon#turns}</style>\nEPIC damage: <style="highlight">{fireDamage} {icon#damagePhysical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
 "SKILL_alric_solar_shield_DESCRIPTION_EXTRA" = "<style="extra">If the ally is a sand warrior, its duration is extended.</style>"
 
 "SKILL_alric_quicksand_NAME" = "Quicksand" 
@@ -36,11 +38,12 @@
 
 "SKILL_alric_sandstorm_NAME" = "Sandstorm"
 "SKILL_alric_sandstorm_DESCRIPTION" = "Alric spins in a straight line toward a free hex, damaging and shoving all enemies in his wake."
-"SKILL_alric_sandstorm_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damagePhysical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_alric_sandstorm_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Applies <style="concept">stunned</style> to <style="debuff">weakened</style> enemies."
+"SKILL_alric_sandstorm_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damagePhysical}</style>\nEPIC stunned duration: <style="highlight">{stunDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
 
 "SKILL_alric_adversary_NAME" = "Adversary"
 "SKILL_alric_adversary_DESCRIPTION" = "Alric chooses an enemy to challenge and gains bonus damage against them."
-"SKILL_alric_adversary_DESCRIPTION_DATA" = "Bonus Damage: <style="buff">+{extraDamage}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_alric_adversary_DESCRIPTION_DATA" = "Bonus Damage: <style="damage">+{extraDamage}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
 "SKILL_alric_adversary_DESCRIPTION_EXTRA" = "<style="extra">Alric's sand warrioirs benefit as well.</style>"
 
 
@@ -48,11 +51,14 @@
 "COMBAT_MODIFIER_alric_riposte_modifier_TITLE" = "Guard Stance"
 "COMBAT_MODIFIER_alric_riposte_modifier_DESCRIPTION" = "Alric dodges the next <style="highlight">PHYSICAL</style> melee attack then performs a counter strike."
 
-"COMBAT_MODIFIER_toughness_trait_extra_damage_TITLE" = "Toughness"
-"COMBAT_MODIFIER_toughness_trait_extra_damage_DESCRIPTION" = "Alric has bonus damage because he is full health."
-
 "COMBAT_MODIFIER_modifier_alric_solar_shield_TITLE" = "Solar Shield"
 "COMBAT_MODIFIER_modifier_alric_solar_shield_DESCRIPTION" = "This unit has improved armor."
 
+"COMBAT_MODIFIER_alric_riposte_increased_thorns_modifier_TITLE" = "Improved Thorns"
+"COMBAT_MODIFIER_alric_riposte_increased_thorns_modifier_DESCRIPTION" = "Armor of Thorns damage is enhanced."
+
 "COMBAT_MODIFIER_alric_adversary_modifier_TITLE" = "Challenged"
 "COMBAT_MODIFIER_alric_adversary_modifier_DESCRIPTION" = "Alric and his sand warriors gain bonus damage against this unit."
+
+"COMBAT_MODIFIER_toughness_trait_extra_damage_TITLE" = "Toughness"
+"COMBAT_MODIFIER_toughness_trait_extra_damage_DESCRIPTION" = "Alric has bonus damage because he is full health."

@@ -1,0 +1,63 @@
+"UNIT_GRAWL_NAME_0001" = "Grawl"
+"UNIT_GRAWL_LORE" = "¿Qué sucede cuando un objeto inamovible es también una fuerza imparable? Grawl se alza imponente sobre sus enemigos y los aplasta contra el suelo."
+
+"UNIT_SUMMONED_HUMAN_GOLEM_NAME_0001" = "Gólem invocado"
+
+"SKILL_grawl_bastion_trait_NAME" = "Bastión"
+"SKILL_grawl_bastion_trait_DESCRIPTION" = "Grawl obtiene +2 de daño en el siguiente turno si termina su turno actual sin moverse."
+"SKILL_grawl_bastion_trait_DESCRIPTION_DATA" = "Daño adicional: <style="buff">+{extraDamage1}</style>"
+
+"SKILL_grawl_punch_NAME" = "Nocaut"
+"SKILL_grawl_punch_DESCRIPTION" = "Golpea al objetivo con un puño de roca sólida."
+"SKILL_grawl_punch_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Inflige <style="debuff">aturdido</style> a objetivos <style="debuff">inmovilizados</style> mientras se encuentran en estado sedimentario, o <style="debuff">debilitado</style> a objetivos <style="debuff">debilitados</style> mientras se encuentran en estado ígneo."
+"SKILL_grawl_punch_DESCRIPTION_DATA" = "Daño: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nDuración del aturdimiento: <style="highlight">1 {icon#turns}</style>\nAlcance: <style="highlight">CUERPO A CUERPO</style>"
+
+"SKILL_grawl_metamorphosis_NAME" = "Metamorfosis"
+"SKILL_grawl_metamorphosis_DESCRIPTION" = "Grawl puede alternar libremente entre un estado sedimentario que le otorga reducción de daño físico e inmunidad al retroceso, o un estado ígneo que le otorga reducción de daño mágico e inmunidad a las quemaduras."
+"SKILL_grawl_metamorphosis_DESCRIPTION_DATA" = "Negación física: <style="buff">{damageReduction} {icon#damagePhysical} </style>\nNegación mágica: <style="buff">{damageReductionMagical} {icon#damageMagical}</style>\nAlcance: <style="highlight">SÍ MISMO</style>"
+"SKILL_grawl_metamorphosis_DESCRIPTION_EXTRA" = "Esta habilidad se puede usar en cualquier momento del turno sin consumir movimiento ni otras habilidades."
+
+"SKILL_grawl_clobber_NAME" = "Aplastamiento"
+"SKILL_grawl_clobber_DESCRIPTION" = "Aplasta a los enemigos en un arco, dañándolos y aturdiéndolos durante 1 turno. Inflige más daño en estado sedimentario e inflige daño verdadero en estado ígneo."
+"SKILL_grawl_clobber_DESCRIPTION_DATA" = "Daño sedimentario: <style="damage">{epicDamage}</style> {icon#damagePhysical}\nDaño ígneo: <style="damage">{damage}</style> {icon#damageTrue}\nDuración del aturdimiento: <style="highlight">{stunnedDuration}</style> {icon#turns}\nAlcance: <style="highlight">CUERPO A CUERPO</style>"
+
+"SKILL_grawl_boulder_throw_NAME" = "Lanzamiento de roca"
+"SKILL_grawl_boulder_throw_DESCRIPTION" = "Lanza una enorme roca que daña a todos los enemigos en un área de efecto de 1 hexágono."
+"SKILL_grawl_boulder_throw_DESCRIPTION_DATA" = "Daño: <style="damage">{damage} {icon#damagePhysical}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_grawl_unstoppable_force_NAME" = "Fuerza Imparable"
+"SKILL_grawl_unstoppable_force_DESCRIPTION" = "Grawl carga hacia adelante, apartando unidades y causando daño antes de llegar a la casilla seleccionada. Mantiene Bastión si se usa sin moverse primero."
+"SKILL_grawl_unstoppable_force_DESCRIPTION_DATA" = "Daño: <style="damage">{damage}</style> {icon#damagePhysical}\nAlcance: <style="highlight">{distanceToTravel}</style>"
+
+"SKILL_grawl_shard_punch_NAME" = "Puño de diamante"
+"SKILL_grawl_shard_punch_DESCRIPTION" = "Golpea al enemigo con fragmentos afilados como navajas, infligiéndole <style="debuff">sangrado</style>."
+"SKILL_grawl_shard_punch_DESCRIPTION_DATA" = "Daño: <style="damage">{damage}</style> {icon#damageTrue}\nDuración del sangrado: <style="highlight">{bleedingDuration}</style> {icon#turns}\nAlcance: <style="highlight">CUERPO A CUERPO</style>"
+
+"SKILL_grawl_stomp_NAME" = "Pisotón"
+"SKILL_grawl_stomp_DESCRIPTION" = "Pisotea el suelo, dañando y aturdiendo a los enemigos cercanos. El aturdimiento dura el doble de tiempo en estado sedimentario. Inflige daño aumentado en estado ígneo."
+"SKILL_grawl_stomp_DESCRIPTION_DATA" = "Daño: <style="damage">{damage}</style> {icon#damagePhysical}\nDaño épico: <style="damage">{epicDamage}</style> {icon#damagePhysical}\nDuración del aturdimiento: <style="highlight">{stunnedDuration}</style> {icon#turns}\nAlcance: <style="highlight">SÍ MISMO</style>"
+
+"SKILL_grawl_hard_rock_NAME" = "Cristalizar"
+"SKILL_grawl_hard_rock_DESCRIPTION" = "Grawl alterna entre una forma en la que recibe -1 de daño físico y causa +1 de daño, y una forma en la que recibe -1 de daño mágico y recupera +1 PV al final de cada turno."
+"SKILL_grawl_hard_rock_DESCRIPTION_DATA" = "Negación de daño: <style="buff">{damageReduction} {icon#damagePhysical}</style>\nReducción de daño mágico: <style="buff"> {damageReductionMagical} {icon#damageMagical}</style>\nCuración: <style="buff"> {heal}</style>\nAlcance: <style="highlight">SÍ MISMO</style>"
+
+"SKILL_grawl_crystallize_NAME" = "Terremoto"
+"SKILL_grawl_crystallize_DESCRIPTION" = "Grawl arrasa la tierra, dañando a todos los enemigos en una vasta área."
+"SKILL_grawl_crystallize_DESCRIPTION_DATA" = "Daño: <style="damage">{damage} {icon#damagePhysical}</style>}\nAlcance: <style="highlight">{aoeRadius}</style>"
+
+"COMBAT_MODIFIER_grawl_bastion_modifier1_TITLE" = "Bastión"
+"COMBAT_MODIFIER_grawl_bastion_modifier1_DESCRIPTION" = "Esta unidad tiene +2 de daño durante este turno."
+
+"COMBAT_MODIFIER_grawl_metamorphic_physical_TITLE" = "Estado sedimentario"
+"COMBAT_MODIFIER_grawl_metamorphic_physical_DESCRIPTION" = "Grawl es inmune al retroceso y recibe 1 punto menos de daño físico de todos los ataques."
+
+"COMBAT_MODIFIER_grawl_metamorphic_magical_TITLE" = "Estado ígneo"
+"COMBAT_MODIFIER_grawl_metamorphic_magical_DESCRIPTION" = "Grawl es inmune a las quemaduras y recibe menos daño mágico de todos los ataques."
+
+"COMBAT_MODIFIER_grawl_outer_modifier_TITLE" = "Cristalización externa"
+"COMBAT_MODIFIER_grawl_outer_modifier_DESCRIPTION" = "Grawl recibe -1 de daño físico e inflige +1 de daño."
+"COMBAT_MODIFIER_grawl_outer_modifier_DESCRIPTION_DATA" = "Reducción de daño: <style="buff"> {damageReduction} {icon#damagePhysical}</style>\nDaño adicional: <style="buff"> {extraDamage}</style>"
+
+"COMBAT_MODIFIER_grawl_inner_modifier_TITLE" = "Cristalización interna"
+"COMBAT_MODIFIER_grawl_inner_modifier_DESCRIPTION" = "Grawl recibe -1 de daño físico e inflige +1 de daño."
+"COMBAT_MODIFIER_grawl_inner_modifier_DESCRIPTION_DATA" = "Reducción mágica:<style="buff"> {damageReductionMagical} {icon#damageMagical}</style>\nCuración:<style="buff"> {heal}</style>"

@@ -31,6 +31,18 @@
             "var_type"      "FIELD_FLOAT"
             "range"         "3"
         }
+
+        "02"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "fireDamage"    "2"
+        }
+
+        "03"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "epicDuration"  "3"
+        }
     }
 
     "OnAbilityAction"
@@ -103,6 +115,69 @@
                         {
                             "ModifierName"      "modifier_summon_sand_warrior"
                             "Target"            "%TARGET"
+                        }
+                    }
+                }
+                
+                "Conditional"
+                {
+                    "Condition" "isOnState(%TARGET, #WEAKENED) || isOnState(%SOURCE, #WEAKENED)"
+
+                    "Actions" 
+                    {
+                        "HitLegendaryTriggered"
+                        {
+                            "Unit"              "%TARGET"
+                        }
+                        
+                        "AttachEffect"
+                        {
+                            "EffectName"    "FireballExplosionFXMega"
+                            "Target"        "%TARGET"
+                        }
+
+                        "RemoveModifier"
+                        {
+                            "ModifierTag"               "dot"
+                            "Target"                    "%TARGET"
+                        }
+
+                        "RemoveModifier"
+                        {
+                            "ModifierTag"               "dot"
+                            "Target"                    "%SOURCE"
+                        }
+
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"        "%TARGET"
+                                "Radius"        "1"
+                                "Teams"         "TEAM_ENEMY"
+                                "ExcludedUnits" "objectList(%TARGET, %SOURCE)"
+                            }
+
+                            "IteratorName" "#newTarget"
+                        
+                            "Actions"    
+                            {
+                                "Hit"
+                                {
+                                    "Target"        "%newTarget"
+                                    "EffectName"    "GenericHitFXMega"
+                                    "Tags"          "stringList(#PROJECTILE, #AOE)"
+
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"              "DAMAGE_PHYSICAL"
+                                            "Damage"            "%fireDamage"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

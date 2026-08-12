@@ -1,17 +1,17 @@
 "RLHumanAlricLvl1"
 {
-	"UniqueId" 				"Alric"
-	"Model" 				"HumanWarriorRodrick"
-	"MetaExo" 				"ExoSkeletonHumanSylvanElf_MetaDataAsset"
-	"Name" 					"ALRIC"
-	"InheritsFrom" 			"Hero"
-	"cinematicTags" 		"Heroe|Legend|GoodLegend|Male|Alric|ct_legend|ct_might|ct_perception|ct_survival|UPGRADES_mighty"
-	"nextLevelArchetype" 	"RLHumanAlricLvl2"
-	"AttackType" 			"PHYSICAL"
-	"Icon" 					"Asst_Banner_Ranger"
-	"Background" 			"hero_roster_legend_bg_forest"
-	"UnitOnMap" 			"Asst_Party_SylvanElf"
-	"PortraitBackgroundColor" "d34a00"
+	"UniqueId" 					"Alric"
+	"Model" 					"HumanWarriorRodrick"
+	"MetaExo" 					"ExoSkeletonHumanSylvanElf_MetaDataAsset"
+	"Name" 						"ALRIC"
+	"InheritsFrom" 				"Hero"
+	"cinematicTags" 			"Heroe|Legend|GoodLegend|Male|Alric|ct_legend|ct_might|ct_perception|ct_survival|UPGRADES_mighty"
+	"nextLevelArchetype" 		"RLHumanAlricLvl2"
+	"AttackType" 				"PHYSICAL"
+	"Icon" 						"Asst_Banner_Ranger"
+	"Background" 				"hero_roster_legend_bg_forest"
+	"UnitOnMap" 				"Asst_Party_SylvanElf"
+	"PortraitBackgroundColor" 	"d34a00"
 
 	"stats"
 	{
@@ -71,13 +71,8 @@
 		"assetId" "DynamicSoundGroupGeraldSounds"
 		"sounds"
 		{
-			"receiveDamage" "krl_sfx_combatGeneric_humanFemaleHit"
 			"receiveArmorDamage" "krl_sfx_combatGeneric_armorHit"
-			"death" "krl_sfx_combatGeneric_humanFemaleDeath"
-			"useSkill" "krl_va_combatGerald_action"
-			"startTurn" "krl_va_combatGerald_turnStart"
-			"promote" "krl_va_combatGerald_promote"
-			"selectHero" "krl_va_combatGerald_select"
+			"victory" "krl_va_Alric_victory"
 		}
 	}
 }

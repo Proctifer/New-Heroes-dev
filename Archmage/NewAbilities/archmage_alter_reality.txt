@@ -7,7 +7,7 @@
     "AbilityCooldown"   		"3"
     "AbilityAPCost"     		"1"
     "AnimationID"   			"SpellCastA"
-    "Icon" 						"Timelapse"
+    "Icon" 						"Dissipate"
     "CastFXId" 					"ArcaneMageTeleportCastFXMega"
    
     "AbilitySpecial"

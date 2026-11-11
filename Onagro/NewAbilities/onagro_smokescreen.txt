@@ -1,0 +1,222 @@
+"onagro_smokescreen"
+{
+    "AbilityBehavior"               "POINT_TARGET | AOE"
+    "AnimationID"                   "NapalmShowerFire"
+    "CastFXId"                      "DwarfzookaCastFXMega"
+    "Icon"                          "NapalmShower" 
+
+    "AbilityAOETeamFilter"          "TEAM_ALL"
+    "AbilityAOERange"               "%distanceToTravel"
+    "AbilityAOEKind"                "RANGE_TUNNEL"
+    "AbilityAOEWidth"               "1"
+    "AbilityAOECenterOnCaster"      "1"
+    "AbilityAOEAffectsCaster"       "0"
+    "AbilityCastRange"              "%distanceToTravel"
+    "AbilityCooldown"               "3"
+    "AbilityPreWarm"                "2"
+    "AbilityAPCost"                 "1"
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"              "FIELD_EXPRESSION"
+            "damage"                "ceil(stat(%CASTER, #attackDamage)/2)"
+        }
+
+        "03"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "distanceToTravel"      "5"
+        }
+
+        "04"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "fireDuration"          "2"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "TrackingProjectile"
+        {
+            "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+            "TargetPos"             "pointAdd(unitPosition(%SOURCE), newPoint(0, 0, 8))"
+            "Model"                 "NapalmShowerRainProjectile"
+
+            "Params" 
+            {
+                "firstProjectile" 
+                { 
+                    "type"              "FIELD_FLOAT"
+                    "value"             "1"
+                }
+            }
+        }
+
+        "StartLogicTick"
+        {
+            "Time"          "0.8"
+            "TickType"      "ActiveUnit"
+            "Position"      "unitPosition(%SOURCE)"
+        }
+
+        "Delay"
+        {
+            "Time"          "0.8"
+
+            "Actions"
+            {
+                "ActOnHexas"
+                {
+                    "Kind"              "RANGE_TUNNEL"
+                    "Origin"            "unitHex(%SOURCE)"
+                    "End"               "positionHex(%TARGET)"
+                    "Range"             "%distanceToTravel"
+                    "MinRange"          "1"
+                    "Random"            "0"
+                    "IteratorName"      "#hexa"
+                    "IteratorIndexName" "#hexaIndex"
+
+                    "Actions"
+                    {
+                        "Delay"
+                        {
+                            "Time"          "(%hexaIndex + 1) * 1/6"
+
+                            "Actions"
+                            {
+                                "StartLogicTick"
+                                {
+                                    "Time"          "(%hexaIndex + 1) * 1/5"
+                                    "TickType"      "FX"
+                                    "Position"      "hexPosition(%hexa)"
+                                }
+
+                                "PlaySound"
+                                {
+                                    "Sound"         "#krl_sfx_combatBombardier_napalmProjectileFalling"
+                                }
+
+                                "TrackingProjectile"
+                                {
+                                    "SourcePos"             "pointAdd(hexPosition(%hexa), newPoint(0, 0, 8))"
+                                    "TargetPos"             "hexPosition(%hexa)"
+                                    "Model"                 "NapalmShowerRainProjectile"
+
+                                    "Params" 
+                                    {
+                                        "damage" 
+                                        { 
+                                            "type"              "FIELD_FLOAT"
+                                            "value"             "expr(%damage)"
+                                        }
+
+                                        "fireDuration" 
+                                        { 
+                                            "type"              "FIELD_FLOAT"
+                                            "value"             "%fireDuration"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "OnProjectileDestinationReached" 
+    {
+        "Conditional"
+        {
+            "Condition" "%firstProjectile"
+            "Actions"
+            {
+            }
+
+            "ElseActions" 
+            {
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"    "%TARGET"
+                        "Radius"    "0"
+                        "Teams"     "TEAM_ALL"
+                    }
+
+                    "IteratorName" "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "Hit"
+                        {
+                            "Target" "%newTarget"
+                            "Tags" "stringList(#PROJECTILE, #TARGETED, #CANTBEBLOCKED)"
+
+                            "InitActions"
+                            {
+                                "AddDamage"
+                                {
+                                    "Type"          "DAMAGE_PHYSICAL"
+                                    "Damage"        "%damage"
+                                }
+                            }
+                        }
+                    }
+                }
+
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"    "%TARGET"
+                        "Radius"    "0"
+                        "Teams"     "TEAM_ALL"
+                        "Flags"     "INCLUDE_NON_TARGETABLE"
+                    }
+
+                    "IteratorName" "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "RemoveModifier"
+                        {
+                            "ModifierTag"    "floor_effect"
+                            "Target"         "%newTarget"
+                        }
+                    }
+                }
+
+                "SpawnUnit"
+                {
+                    "UnitName"              "#DummyUnit"
+                    "Position"              "%TARGET"
+                    "UnitGroup"             "unitGroup(%CASTER)"
+                    "IsAI"                  "0"
+                    "Nick"                  "#FireballFloor"
+                    "InheritsInitiative"    "1"
+
+                    "OnSpawn"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName"        "BombardierNapalmShowerExplotionFXMega"
+                            "Target"            "%UNIT"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "fire_floor_tile_modifier"
+                            "Target"            "%UNIT"
+                            "Duration"          "%fireDuration"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

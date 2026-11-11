@@ -1,0 +1,199 @@
+"elven_mage_gravity_bind"
+{
+    "AbilityBehavior"                   "UNIT_TARGET"
+    "AbilityTeamFilter"                 "TEAM_FRIENDLY"
+    "AnimationID"                       "SpellCastA"
+    "Icon"                              "Timelapse"
+    "CastFXId"                          "SaplingWildRootsCastFXMega"
+
+    "AbilityCastRange"                  "0"
+    "AbilityCooldown"                   "2"
+    "AbilityAPCost"                     "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "rootDuration"              "1"
+        }
+
+        "02"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "area"                      "1"
+        }
+
+        "03"
+        {
+            "var_type"                  "FIELD_EXPRESSION"
+            "damage"                    "stat(%CASTER, #attackDamage)-1"
+        }
+    }
+
+    "OnCustomTargeting"
+    {
+        "CreateObjectList"
+        {
+            "Name" "#hexCandidates"
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%CASTER"
+                "ExcludedUnits"     "objectList(%CASTER)"
+                "Radius"            "20"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel) || isOnState(%theUnit, #second_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "ActOnHexas"
+                {
+                    "Center"                 "unitHex(%sentinel)"
+                    "Range"                  "1"
+                    "IteratorName"           "#hexa"
+                
+                    "Actions"    
+                    {
+                        "AddObjectToList" 
+                        {
+                            "List" "%hexCandidates"
+                            "Value" "%hexa"
+                        }
+                    }
+                }
+            }
+        }
+        
+        "EachInList"
+        {
+            "List" "%hexCandidates"
+            "IteratorName" "#hexa"
+            "IteratorIndexName" "#hexaIndex"
+            "Actions"
+            {
+                "AddAsAffected"
+                {
+                    "Hexa" "%hexa"
+                }
+
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"      "hexPosition(%hexa)"
+                        "Radius"      "0"
+                        "Teams"       "TEAM_ENEMY"
+                    }
+
+                    "IteratorName" "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "AddAsAffected"
+                        {
+                            "Unit" "%newTarget"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%TARGET"
+                "ExcludedUnits"     "objectList(%TARGET)"
+                "Radius"            "20"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel) || isOnState(%theUnit, #second_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "AttachEffect"
+                {
+                    "EffectName"                "TeslaLightningBallExplosionFXMega"
+                    "Target"                    "%sentinel"
+                }
+                
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"                "%sentinel"
+                        "Radius"                "1"
+                        "Teams"                 "TEAM_ENEMY"
+                    }
+
+                    "IteratorName" "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "Hit"
+                        {
+                            "Target"        "%newTarget"
+                            "EffectName"    "ArcaneSentryHitFXMega" 
+                            "Tags"          "stringList(#MAGICAL, #AOE)"
+
+                            "InitActions"
+                            {
+                                "AddDamage"
+                                {
+                                    "Type"          "DAMAGE_MAGICAL" 
+                                    "Damage"        "expr(%damage)"
+                                }
+                            }
+
+                            "Actions"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"      "modifier_rooted"
+                                    "Target"            "%newTarget"
+                                    "Duration"          "%rootDuration"
+                                    "Refresh"           "1"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "4"
+            "Considerations"
+            {
+                "surrounded by several units"
+                {
+                    "Curve"             "Logistic|500|5|-4|0.05"
+                    "Consideration"     "UnitsAffected"
+                    "Params"
+                    {
+                        "Max"           "5"  
+                        "TeamFilter"    "TEAM_ENEMY"
+                    }
+                }
+            }
+        }
+    }
+}

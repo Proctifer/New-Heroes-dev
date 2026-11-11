@@ -1,0 +1,145 @@
+"ignus_combustion"
+{
+    "AbilityBehavior"           "UNIT_TARGET | NEGATIVE_EFFECT | AOE"
+    "AbilityTeamFilter"         "TEAM_FRIENDLY"
+
+    "AnimationID"               "Attack"
+    "CastFXId"                  "DemonsInfernalSacrificeCastFXMega"
+    "Icon"                      "Combustion"
+
+   
+    "AbilityAOETeamFilter"      "TEAM_ENEMY"
+    "AbilityAOERange"           "%aoeRadius"
+    "AbilityAOEKind"            "RANGE_CIRCLE"
+
+    "AbilityAOECenterOnCaster"  "0"
+    "AbilityAOEAffectsCaster"   "1"
+
+    "AbilityCastRange"          "0"
+    "AbilityCooldown"           "4"
+    "AbilityAPCost"             "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"  "FIELD_EXPRESSION"
+            "damage"    "stat(%CASTER, #health)-1"
+        }
+
+        "02"
+        {
+            "var_type"  "FIELD_FLOAT"
+            "aoeRadius" "1"
+        }
+
+        "03" 
+        {
+           "var_type"       "FIELD_EXPRESSION"
+            "stunDuration"  "2"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+        "AttachEffect"
+        {
+            "EffectName"    "FireballExplosionFXMega" 
+            "Target"        "unitPosition(%TARGET)"
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"    "%TARGET"
+                "Radius"    "%aoeRadius"
+                "Teams"     "TEAM_ENEMY"
+            }
+
+            "IteratorName" "#newTarget"
+        
+            "Actions"    
+            {
+                "Hit"
+                {
+                    "Target"        "%newTarget"
+                    "EffectName"    "OlochBurningClawHitFXMega" 
+                    "Tags"          "stringList(#MAGICAL, #AOE)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_TRUE"
+                            "Damage"        "expr(%damage)"
+                        }
+                    }
+                }
+            }
+        }
+                        
+        "Conditional"
+        {
+            "Condition" "hasModifier(%SOURCE, #ignus_burnout_modifier)"
+
+            "Actions" 
+            {
+                "HitLegendaryTriggered"
+                {
+                    "Unit"              "%TARGET"
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_stunned"
+                    "Target"        "%SOURCE"
+                    "Duration"      "expr(%stunDuration)"
+                    "Refresh"       "1"
+                }
+            }
+
+            "ElseActions"
+            {
+                "Hit"
+                {
+                    "Target"        "%SOURCE"
+                    "EffectName"    "FireballHitFXMega" 
+                    "Tags"          "stringList(#MELEE)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_TRUE"
+                            "Damage"        "expr(%damage)"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "4"
+            "Considerations"
+            {
+
+                "surrounded by several units"
+                {
+                    "Curve" "Logistic|500|5|-4|0.05"
+                    "Consideration" "UnitsAffected"
+                    "Params"
+                    {
+                        "Max" "5"  
+                        "TeamFilter" "TEAM_ENEMY"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,116 @@
+"RLIgnusLvl1"
+{
+	"UniqueId" 					"Ignus"
+	"Model" 					"TrollChampion"
+	"MetaExo" 					"ExoSkeletonDemonOloch_MetaDataAsset"
+	"Name" 						"IGNUS"
+	"InheritsFrom" 				"Hero"
+	"cinematicTags" 			"Heroe|Legend|GoodLegend|Ignus|Male|ct_legend|ct_perception|ct_knowledge|ct_might|UPGRADES_mighty"
+	"Background" 				"hero_roster_legend_bg_forest"
+	"Icon" 						"Asst_Banner_Asra"
+	"AttackType" 				"TRUE"
+	"UnitOnMap" 				"Asst_Party_Oloch"
+	"PortraitBackgroundColor" 	"663300"
+	"nextLevelArchetype" 		"RLIgnusLvl2"
+
+	"stats"
+	{
+		"level" 				"1"
+		"health_max" 			"7"
+		"armor_max" 			"0"
+		"burnout_armor" 		"4"
+		"armor_regen_per_turn" 	"2"
+		"baseDamage"  			"4"
+
+		"rangedAttackRange" 	"3"
+		
+		"walkSpeed" 			"2"
+	}
+
+	"skills"
+	{	
+		"100" 		"ignus_hotheaded_trait"
+		"200" 		"ignus_hearth_trait"
+		"300" 		"mighty_endturn_trait"
+		
+	}
+
+	"skillProgression"
+	{
+		"1" 
+		{
+			"1" "ignus_burnout"
+		}
+
+		"2" 
+		{
+			"1" "ignus_surge_of_flames"
+			"2" "ignus_mad_dash"
+			"3" "ignus_scorched_earth"
+		}
+
+		"3"
+		{
+			"1" "ignus_combustion"
+			"2" "ignus_cataclysm"
+			"3" "ignus_prominence_burn"
+		}
+	}
+
+	"defaultSkill"	"ignus_molten_fist"
+
+	"states"
+	{
+		"LEGEND" 				"1"
+	}
+
+	"soundConfig"
+	{	
+		"assetId" "DynamicSoundGroupOlochSounds"
+		"sounds"
+		{
+			"receiveArmorDamage" "krl_sfx_combatGeneric_armorHit"
+			
+			"victory" "krl_va_combatOloch_victory"
+		}
+	}
+}
+
+"RLIgnusLvl2"
+{
+	"InheritsFrom" 		 "RLIgnusLvl1"
+	"nextLevelArchetype" "RLIgnusLvl3"
+
+	"stats"
+	{
+		"level" 				"2"
+		"health_max" 			"9"
+		"armor_max" 			"0"
+		"burnout_armor" 		"6"
+		"armor_regen_per_turn" 	"2"
+		"baseDamage"  			"6"
+
+		"rangedAttackRange" 	"3"
+		
+		"walkSpeed" 			"2"
+	}
+}
+
+"RLIgnusLvl3"
+{
+	"InheritsFrom" 		 "RLIgnusLvl1"
+
+	"stats"
+	{
+		"level" 				"3"
+		"health_max" 			"12"
+		"armor_max" 			"0"
+		"burnout_armor" 		"8"
+		"armor_regen_per_turn" 	"2"
+		"baseDamage"  			"8"
+
+		"rangedAttackRange" 	"3"
+		
+		"walkSpeed" 			"3"
+	}
+}

@@ -1,0 +1,58 @@
+"UNIT_IGNUS_NAME_0001" = "Ignus"
+"UNIT_IGNUS_LORE" = "Burn the Kingdom's enemies with the blaze of a thousand stars! Forge victory in his raging flames, and consume evil in fire and brimstone!"
+
+
+"SKILL_ignus_hearth_trait_NAME" = "Hearth"
+"SKILL_ignus_hearth_trait_DESCRIPTION" = "Ignus heals {heal}{icon#statHP} when he would be burned and does not take damage from fire tiles."
+"SKILL_ignus_hearth_trait_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Gain +{heal}{icon#statArmor} armor for {overhealDuration}{icon#turns} if Ignus is full health."
+
+"SKILL_ignus_hotheaded_trait_NAME" = "Hotheaded"
+"SKILL_ignus_hotheaded_trait_DESCRIPTION" = "Enemies who hit Ignus with melee attacks are inflicted with <style="debuff">burning</style>."
+"SKILL_ignus_hotheaded_trait_DESCRIPTION_DATA" = "Burn duration: <style="highlight">{burnDuration} {icon#turns}</style>"
+
+
+"SKILL_ignus_molten_fist_NAME" = "Molten Fist"
+"SKILL_ignus_molten_fist_DESCRIPTION" = "Strikes the target enemy with a heated thrust."
+"SKILL_ignus_molten_fist_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Restores HP if the target is <style="debuff">burning</style>."
+"SKILL_ignus_molten_fist_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damageTrue}</style>.\nEpic healing: <style="buff">{heal} {icon#statHP}</style>\nRange: <style="highlight">MELEE</style>"
+
+"SKILL_ignus_burnout_NAME" = "Burnout"
+"SKILL_ignus_burnout_DESCRIPTION" = "Ignus enters a superheated state, losing HP at the end of each turn in exchange for armor, range, and immunity to <style="debuff">frozen</style>."
+"SKILL_ignus_burnout_DESCRIPTION_DATA" = "Bonus armor: <style="buff">+{armorBonus} {icon#statArmor}</style>\nExtra range: <style="buff">+{extraRange}</style>\nBurnout damage: <style="damage">{burnoutDamage}{icon#damageTrue}</style>\nRange: <style="highlight">SELF</style>"
+"SKILL_ignus_burnout_DESCRIPTION_EXTRA" = "<style="extra">Activate again to end.</style>"
+
+"SKILL_ignus_mad_dash_NAME" = "Mad Dash"
+"SKILL_ignus_mad_dash_DESCRIPTION" = "Charges through enemies, dealing true damage and applying <style="debuff">burning</style> to all of them."
+"SKILL_ignus_mad_dash_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> While in <style="highlight">Burnout</style>, Ignus heals for each enemy damaged."
+"SKILL_ignus_mad_dash_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nBurn duration: <style="highlight">{burnDuration} {icon#turns}</style>\nEPIC healing: <style="buff">{epicHeal} {icon#statHP}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_ignus_surge_of_flames_NAME" = "Surge of Flames"
+"SKILL_ignus_surge_of_flames_DESCRIPTION" = "Release a wave of fire, damaging all enemies adjacent to Ignus."
+"SKILL_ignus_surge_of_flames_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> In <style="highlight">Burnout</style>, heal for each enemy damaged."
+"SKILL_ignus_surge_of_flames_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nEPIC healing: <style="buff">{epicHeal} {icon#statHP}</style>\nRange: <style="highlight">SELF</style>"
+
+"SKILL_ignus_scorched_earth_NAME" = "Scorched Earth"
+"SKILL_ignus_scorched_earth_DESCRIPTION" = "Ignus strikes the ground, causing a channel of lava to erupt from the earth."
+"SKILL_ignus_scorched_earth_DESCRIPTION_DATA" = "Burning floor duration: <style="highlight">{floorDuration} {icon#turns}</style>\nRange: <style="highlight">{distanceToTravel}</style>"
+
+"SKILL_ignus_cataclysm_NAME" = "Cataclysm"
+"SKILL_ignus_cataclysm_DESCRIPTION" = "Ignus releases a ball of fire from his body that explodes at a target enemy and deals damage in a {aoeRadius}-hex AOE and applies <style="debuff">burning</style>."
+"SKILL_ignus_cataclysm_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> While in <style="highlight">Burnout</style>, this skill creates puddles of fire on damaged hexes."
+"SKILL_ignus_cataclysm_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nBurn duration: <style="highlight">{burnDuration} {icon#turns}</style>\nEPIC floor duration: <style="highlight">{floorDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_ignus_combustion_NAME" = "Combustion"
+"SKILL_ignus_combustion_DESCRIPTION" = "Ignus explodes, dealing current damage to himself and all enemies in a {aoeRadius}-hex AOE around him."
+"SKILL_ignus_combustion_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Ignus takes no damage from this attack in <style="highlight">Burnout</style>, but is <style="concept">stunned</style> instead."
+"SKILL_ignus_combustion_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nSelf damage: <style="damage">{damage} {icon#damageTrue}</style>\nRange: <style="highlight">SELF</style>"
+
+"SKILL_ignus_prominence_burn_NAME" = "Prominence Burn"
+"SKILL_ignus_prominence_burn_DESCRIPTION" = "Ignus unleashes 3 lines of fire in different directions, damaging and applying <style="debuff">burning</style> to all enemies struck by the attack."
+"SKILL_ignus_prominence_burn_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Unleashes 6 lines of fire while in <style="highlight">Burnout</style> at the cost of 2 HP."
+"SKILL_ignus_prominence_burn_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nRange: <style="highlight">{range}</style>"
+
+
+"COMBAT_MODIFIER_ignus_burnout_modifier_TITLE" = "Burnout"
+"COMBAT_MODIFIER_ignus_burnout_modifier_DESCRIPTION" = "Ignus takes damage at the end of his turn but gains armor, range, and immunity to <style="debuff">frozen</style>."
+
+"COMBAT_MODIFIER_hearth_overheal_modifier_TITLE" = "Overheal Armor"
+"COMBAT_MODIFIER_hearth_overheal_modifier_DESCRIPTION" = "Ignus has extra armor as a result of overhealing."

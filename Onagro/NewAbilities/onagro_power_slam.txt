@@ -1,0 +1,138 @@
+"onagro_power_slam"
+{
+    
+    
+    "AbilityBehavior"       "UNIT_TARGET | NEGATIVE_EFFECT | AOE"
+    "AbilityTeamFilter"     "TEAM_FRIENDLY"
+
+    "AnimationID"           "SpellCastB"
+    "CastFXId"              "BravebarkRootspikeCastFXMega"
+    "Icon"                  "PowerSlam"
+
+   
+    "AbilityAOETeamFilter"  "TEAM_ENEMY"
+    "AbilityAOERange"       "%aoeRadius"
+    "AbilityAOEKind"        "RANGE_CIRCLE"
+
+    "AbilityAOECenterOnCaster"  "0"
+    "AbilityAOEAffectsCaster"   "0"
+
+    "AbilityCastRange"      "0"
+    "AbilityCooldown"       "3"
+    "AbilityAPCost"         "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_EXPRESSION"
+            "damage"        "stat(%CASTER, #attackDamage)"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "aoeRadius"     "1"
+        }
+        
+        "03" 
+        {
+            "var_type"      "FIELD_FLOAT"
+            "stunDuration"  "1"
+        }
+        
+        "04" 
+        {
+            "var_type"      "FIELD_FLOAT"
+            "burnDuration"  "1"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+        "AttachEffect"
+        {
+            "EffectName"    "SorceressTrebuchetExplosionFXMega" 
+            "Target"        "unitPosition(%SOURCE)"
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"      "%TARGET"
+                "Radius"     "%aoeRadius"
+                "Teams"     "TEAM_ENEMY"
+            }
+
+            "IteratorName" "#newTarget"
+        
+            "Actions"    
+            {
+                "Hit"
+                {
+                    "Target" "%newTarget"
+                    "EffectName" "BarbarianWhirlwindHitFXMega" 
+                    "Tags" "stringList(#AOE)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL"
+                            "Damage"        "expr(%damage)"
+                        }
+
+                        "Conditional"
+                        {
+                            "Condition" "isOnState(%HITTARGET, #IMMOBILIZED)"
+
+                            "Actions" 
+                            {
+                                "MarkHitLegendary"
+                                {
+                                }
+                            }
+                        }
+                    }
+
+                    "Actions"
+                    {
+                        "Knockback" 
+                        {
+                            "Target" "%HITTARGET"
+                            "Center" "unitPosition(%HITSOURCE)"
+                            "Strength" "1"
+                        }
+                        
+                        "Conditional"
+                        {
+                            "Condition" "hitIsLegendary(%HIT)"
+
+                            "Actions" 
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"  "modifier_burning"
+                                    "Target"        "%HITTARGET"
+                                    "Duration"      "%burnDuration"
+                                    "Refresh"       "1"
+                                }
+                            }
+
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_stunned"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%stunDuration"
+                            "Refresh"       "1"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

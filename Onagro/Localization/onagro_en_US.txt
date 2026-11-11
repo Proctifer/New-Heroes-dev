@@ -1,0 +1,51 @@
+"UNIT_ONAGRO_NAME_0001" = "Onagro"
+"UNIT_ONAGRO_LORE" = "Big battle bois mecha madness machine."
+
+"SKILL_onagro_missile_NAME" = "Missile Launcher"
+"SKILL_onagro_missile_DESCRIPTION" = "Fires a missile at an enemy, dealing physical damage."
+"SKILL_onagro_missile_DESCRIPTION_DATA" = "Damage: <style="damage">{MinDamage} {icon#damagePhysical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_onagro_missile_DESCRIPTION_EPIC" = "<style="epic">EPIC: </style>Deals <style="concept">knockback</style> to <style="debuff">weakened</style> enemies."
+
+"SKILL_onagro_mine_games_NAME" = "Mine Games"
+"SKILL_onagro_mine_games_DESCRIPTION" = "Drops a mine onto the battlefield, which deals splash damage and <style="concept">knockback</style> to enemies in a radius."
+"SKILL_onagro_mine_games_DESCRIPTION_DATA" = "Main damage: <style="damage">{mainDamage} {icon#damagePhysical}</style>\nSplash damage: <style="damage">{splashDamage} {icon#damagePhysical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_onagro_power_slam_NAME" = "Power Slam"
+"SKILL_onagro_power_slam_DESCRIPTION" = "Stomps with the mech, creating a {aoeRadius}-hex AOE shockwave around Onagro that applies <style="concept">stunned</style> and <style="concept">knockback</style>."
+"SKILL_onagro_power_slam_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damagePhysical}</style>\nStun duration <style="highlight">{stunDuration} {icon#turns}</style>\nEPIC burn duration <style="highlight">{stunDuration} {icon#turns}</style>\nRange: <style="highlight">SELF</style>"
+"SKILL_onagro_power_slam_DESCRIPTION_EPIC" = "<style="epic">EPIC: </style>Applies <style="debuff">burning</style> to <style="concept">immobilized</style> enemies."
+
+"SKILL_onagro_sticky_bomb_NAME" = "Sticky Bomb"
+"SKILL_onagro_sticky_bomb_DESCRIPTION" = "Attaches an explosive to an enemy, which detonates after {bomb_timer} turns or when the target is <style="debuff">burning</style>, damaging adjacent enemies as well."
+"SKILL_onagro_sticky_bomb_DESCRIPTION_DATA" = "Explosion damage: <style="damage">{explodeDamage} {icon#damagePhysical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_onagro_sulfur_bomb_NAME" = "Sulfur Bomb"
+"SKILL_onagro_sulfur_bomb_DESCRIPTION" = "Places a barrel onto a target hex. Upon destruction, it applies <style="debuff">poisoned</style> and <style="concept">stunned</style> to surrounding enemies."
+"SKILL_onagro_sulfur_bomb_DESCRIPTION_DATA" = "Poison duration:  <style="highlight">{poisonDuration} {icon#turns}</style>\nStun duration <style="highlight">{stunDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_onagro_death_from_above_NAME" = "Death From Above"
+"SKILL_onagro_death_from_above_DESCRIPTION" = "Mark an area to bombard with randomly dropped explosives, each dealing physical damage to enemies in a {aoeRadius}-hex AOE."
+"SKILL_onagro_death_from_above_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damagePhysical}</style>\nBombs: <style="highlight">{numberOfBombs}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_onagro_tar_bomb_NAME" = "Tar Bomb"
+"SKILL_onagro_tar_bomb_DESCRIPTION" = "Drops a tar bomb on a selected {aoeRadius}-hex area, causing all units inside to have reduced movement speed."
+"SKILL_onagro_tar_bomb_DESCRIPTION_DATA" = "Speed Reduction: <style="highlight">{speedReduction}</style>\nDuration: <style="highlight">{slowDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_onagro_fireworks_display_NAME" = "Fireworks Display"
+"SKILL_onagro_fireworks_display_DESCRIPTION" = "Launches a fiery projectile that explodes on impact and scatters up to 3 projectiles at enemies in a {bounceTargetRange}-hex radius."
+"SKILL_onagro_fireworks_display_DESCRIPTION_DATA" = "Main damage: <style="damage">{mainDamage} {icon#damagePhysical}</style>.\nScatter damage: <style="rangeofdamage">{minDamage} - {maxDamage} {icon#damagePhysical}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+
+"SKILL_onagro_refuel_trait_NAME" = "Refuel"
+"SKILL_onagro_refuel_trait_DESCRIPTION" = "Ending Onagro's turn without moving reduces all of his active cooldowns."
+"SKILL_onagro_refuel_trait_DESCRIPTION_DATA" = "Cooldown reduction: <style="highlight">{cooldownOffset} {icon#turns}</style>"
+
+
+"COMBAT_MODIFIER_onagro_tar_slow_modifier_TITLE" = "Slowed"
+"COMBAT_MODIFIER_onagro_tar_slow_modifier_DESCRIPTION" = "This unit has {speedReduction} speed."
+
+"COMBAT_MODIFIER_sticky_bomb_timer_modifier_TITLE" = "Sticky Bomb"
+"COMBAT_MODIFIER_sticky_bomb_timer_modifier_DESCRIPTION" = "This unit has a sticky bomb attached to them."
+
+"COMBAT_MODIFIER_sticky_bomb_alert_modifier_TITLE" = "ALERT"
+"COMBAT_MODIFIER_sticky_bomb_alert_modifier_DESCRIPTION" = "Onagro's sticky bomb will detonate next turn."

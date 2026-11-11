@@ -1,0 +1,38 @@
+"UNIT_ELVENMAGE_NAME_0001" = "High Elven Mage"
+"UNIT_ELVENMAGE_LORE" = "A mage from the southern continent who has studied relentlessly in the arcane arts. They have have gained such inner focus that they summon magical constructs to fight in their stead."
+
+"UNIT_SUMMONED_ARCANE_SENTINEL_NAME_0001" = "Arcane Sentinel"
+
+"SKILL_elven_mage_shocking_presence_trait_NAME" = "Arcane Pulse"
+"SKILL_elven_mage_shocking_presence_trait_DESCRIPTION" = "At the end of the turn, all enemies next to a sentinel will be shocked."
+"SKILL_elven_mage_shocking_presence_trait_DESCRIPTION_DATA" = "Damage: <style="damage">{description_damage} {icon#damageMagical}</style>"
+
+
+"SKILL_elven_mage_triple_bolt_NAME" = "Tel'Quesir Bolt"
+"SKILL_elven_mage_triple_bolt_DESCRIPTION" = "Ejects 3 bolts of magic. The main bolt deals increased damage to the target enemy, while the auxiliary bolts deal less damage with a chance of scattering to adjacent enemies."
+"SKILL_elven_mage_triple_bolt_DESCRIPTION_DATA" = "Main damage: <style="damage">{mainDamage}</style> {icon#damageMagical}\nAuxiliary damage: <style="damage">{auxDamage}</style> {icon#damageMagical}\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_elven_mage_arcane_sentinel_NAME" = "Arcane Sentinel"
+"SKILL_elven_mage_arcane_sentinel_DESCRIPTION" = "Summons a ball of magical energy that can be moved around within the mage's range, dealing damage to enemies it passes through.\n\n<style="highlight">Recast:</style> Moves the sentinel to the target location."
+"SKILL_elven_mage_arcane_sentinel_DESCRIPTION_DATA" = "Damage: <style="damage">{damage}</style> {icon#damageMagical}\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_elven_mage_gravity_bind_NAME" = "Gravity Binding"
+"SKILL_elven_mage_gravity_bind_DESCRIPTION" = "Enemies adjacent to a sentinel are damaged and <style="concept">rooted</style>."
+"SKILL_elven_mage_gravity_bind_DESCRIPTION_DATA" = "Damage: <style="damage">{damage}</style> {icon#damageMagical}\nRooted duration: <style="highlight">{rootDuration} {icon#turns}</style>"
+
+"SKILL_elven_mage_celestial_pull_NAME" = "Celestial Pull"
+"SKILL_elven_mage_celestial_pull_DESCRIPTION" = "Causes any sentinel to release a burst of magic that damages and <style="concept">pulls in</style> enemies within a {aoeRadius}-hex radius."
+"SKILL_elven_mage_celestial_pull_DESCRIPTION_DATA" = "Damage: <style="damage">{damage}</style> {icon#damageMagical}"
+
+"SKILL_elven_mage_second_sentinel_NAME" = "Second Sentinel"
+"SKILL_elven_mage_second_sentinel_DESCRIPTION" = "Summons a second ball of magical energy that can be moved around within the mage's range, dealing damage to enemies it passes through.\n\n<style="highlight">Recast:</style> Moves the sentinel to the target location."
+"SKILL_elven_mage_second_sentinel_DESCRIPTION_DATA" = "Damage: <style="damage">{damage}</style> {icon#damageMagical}\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_elven_mage_time_dilation_NAME" = "Time Dilation"
+"SKILL_elven_mage_time_dilation_DESCRIPTION" = "The High Elven Mage bends time to give himself an additional skill use on this turn."
+"SKILL_elven_mage_time_dilation_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If the mage is standing next to a sentinel, all of his cooldowns will be refreshed."
+"SKILL_elven_mage_time_dilation_DESCRIPTION_DATA" = "EPIC cooldown reduction: <style="highlight">{cooldownOffset} {icon#turns}</style>\nRange: <style="highlight">SELF</style>"
+
+"SKILL_elven_mage_time_warp_NAME" = "Time Warp"
+"SKILL_elven_mage_time_warp_DESCRIPTION" = "The sentinel swaps places with another unit.\n\nIf the unit is an enemy, it will be <style="concept">stunned</style>.\n\nIf the unit is an ally, they will be healed and have all <style="debuff">debuffs</style> removed."
+"SKILL_elven_mage_time_warp_DESCRIPTION_DATA" = "Enemy stun duration: <style="highlight">{stunDuration}</style {icon#turns}\nAlly healing: <style="buff">{healing} {icon#statHP}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"

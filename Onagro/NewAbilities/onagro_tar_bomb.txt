@@ -1,0 +1,126 @@
+"onagro_tar_bomb"
+{
+    
+    
+    "AbilityBehavior"           "POINT_TARGET | AOE | NEEDS_VALID_TERRAIN"
+
+    "AnimationID"               "Attack"
+    "CastFXId"                  "SasquatchMudballCastFXMega"
+    "Icon"                      "TarBomb"
+   
+   
+    "AbilityAOEKind"            "RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster"  "0"
+    "AbilityAOEAffectsCaster"   "1"
+    "AbilityAOETeamFilter"      "TEAM_ENEMY"
+
+    "AbilityAOERange"           "%aoeRadius"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"           "3"
+    "AbilityAPCost"             "2"
+
+
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "aoeRadius"           "2"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "splashDamage"      "stat(%CASTER,#attackDamage)"
+        }
+
+        "03"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "slowDuration"      "2"
+        }
+
+        "04"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "speedReduction"    "-1"
+        }
+    }
+
+
+
+
+    "OnAbilityAction"
+    {
+        "TrackingProjectile"
+        {
+            "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+            "TargetPos"             "%TARGET"
+            "Model"                 "BombardierGrenade"
+
+            "Params" 
+            {
+                "splashDamage" 
+                {
+                    "type" "FIELD_FLOAT"
+                    "value" "expr(%splashDamage)"
+                }
+            }
+        }
+    }
+    
+
+    "OnProjectileHitUnit"
+    {
+        "AttachEffect"
+        {
+            "EffectName"    "MudballThrowExplosionFXMega"
+            "Target"        "%TARGET"
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%TARGET"
+                "Radius"            "%aoeRadius"
+                "Teams"             "TEAM_ENEMY"
+            }
+
+            "IteratorName" "#newTarget"
+        
+            "Actions"    
+            {
+                "AttachEffect"
+                {
+                    "EffectName"    "StunHitFXMega"
+                    "Target"        "%newTarget"
+                }
+                
+                "ApplyModifier"
+                {
+                    "ModifierName"  "onagro_tar_slow_modifier"
+                    "Target"        "%newTarget"
+                    "Duration"      "%slowDuration"
+                    "Refresh"       "1"
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "onagro_tar_slow_modifier"
+        {
+            "EffectName"                "AjaxsBlessingAuraFXMega"
+            "Icon"                      "Rally"
+            "IconPriority"              "50"
+
+            "PropertiesAdd"
+            {
+                "walkSpeed"       "%speedReduction"
+            }
+        }
+    }
+}

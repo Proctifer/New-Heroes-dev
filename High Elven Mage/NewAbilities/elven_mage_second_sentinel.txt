@@ -1,0 +1,351 @@
+"elven_mage_second_sentinel"
+{
+    "AbilityBehavior"           "POINT_TARGET | AOE  | NEEDS_CLEAR_TERRAIN"
+    "AbilityTeamFilter"         "TEAM_ALL"
+
+    "AbilityAOERange"           "0"
+    "AbilityAOEKind"            "RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster"  "0"
+    "AbilityAOEAffectsCaster"   "0"
+    
+    "AnimationID"               "SpellCastA"
+    "CastFXId"                  "TeslaSpellChargeFXMega"
+    "Icon"                      "Sentry" 
+
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"           "2"
+    "AbilityAPCost"             "1"
+
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"		"FIELD_EXPRESSION"
+            "damage"		"ceil(stat(%CASTER, #attackDamage)*0.75)"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_EXPRESSION"
+            "width"         "1"
+        }
+    }
+
+    "OnCustomTargeting"
+    {
+        "CreateObjectList"
+        {
+            "Name" "#hexCandidates"
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%CASTER"
+                "ExcludedUnits"     "objectList(%CASTER)"
+                "Radius"            "20"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #second_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "ActOnHexas"
+                {
+                    "Kind"          "RANGE_TUNNEL"
+                    "Origin"        "unitHex(%sentinel)"
+                    "End"           "positionHex(%TARGET)"
+                    "Range"         "hexDistance(unitHex(%sentinel), positionHex(%TARGET))"
+                    "IteratorName"  "#hexa"
+                
+                    "Actions"    
+                    {
+                        "AddObjectToList" 
+                        {
+                            "List" "%hexCandidates"
+                            "Value" "%hexa"
+                        }
+                    }
+                }
+            }
+                
+            "ActionsIfNotFound"    
+            {
+                "ActOnHexas"
+                {
+                    "Kind"          "RANGE_TUNNEL"
+                    "Origin"        "unitHex(%SOURCE)"
+                    "End"           "positionHex(%TARGET)"
+                    "Range"         "hexDistance(unitHex(%SOURCE), positionHex(%TARGET))"
+                    "IteratorName"  "#hexa"
+                
+                    "Actions"    
+                    {
+                        "AddObjectToList" 
+                        {
+                            "List" "%hexCandidates"
+                            "Value" "%hexa"
+                        }
+                    }
+                }
+            }
+        }
+        
+        "EachInList"
+        {
+            "List" "%hexCandidates"
+            "IteratorName" "#hexa"
+            "IteratorIndexName" "#hexaIndex"
+            "Actions"
+            {
+                "AddAsAffected"
+                {
+                    "Hexa" "%hexa"
+                }
+
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"      "hexPosition(%hexa)"
+                        "Radius"      "0"
+                        "Teams"       "TEAM_ENEMY"
+                    }
+
+                    "IteratorName" "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "AddAsAffected"
+                        {
+                            "Unit" "%newTarget"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "OnAbilityAction" 
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%TARGET"
+                "ExcludedUnits"     "objectList(%TARGET)"
+                "Radius"            "20"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #second_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "TrackingProjectile"
+                {
+                    "SourcePos"             "unitPosition(%sentinel, #Chest)"
+                    "TargetPos"             "%TARGET"
+                    "Model"					"ArcaneSentryProjectile"
+                    "TargetFilter"
+                    {
+                        "Radius"        "0"
+                        "Teams"         "TEAM_ENEMY"
+                        "ExcludedUnits" "objectList(%sentinel)"
+                        "Width"         "expr(%width)"
+                        "Kind"          "RANGE_TUNNEL"
+                    }
+                    "Params" 
+                    {
+                        "damage" 
+                        { 
+                            "type"  "FIELD_FLOAT"
+                            "value" "expr(%damage)"
+                        }
+
+                        "moving_sentinel" 
+                        { 
+                            "type"              "FIELD_FLOAT"
+                            "value"             "1"
+                        }
+                    }
+                }
+            }
+                
+            "ActionsIfNotFound"    
+            {
+                "TrackingProjectile"
+                {
+                    "SourcePos"             "unitPosition(%SOURCE, #Chest)"
+                    "TargetPos"             "%TARGET"
+                    "Model"					"ArcaneSentryProjectile"
+                    "TargetFilter"
+                    {
+                        "Radius"        "0"
+                        "Teams"         "TEAM_ENEMY"
+                        "ExcludedUnits" "objectList(%SOURCE)"
+                        "Width"         "expr(%width)"
+                        "Kind"          "RANGE_TUNNEL"
+                    }
+                    "Params" 
+                    {
+                        "damage" 
+                        { 
+                            "type"  "FIELD_FLOAT"
+                            "value" "expr(%damage)"
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+
+    "OnProjectileHitUnit" 
+    {
+        "Hit"
+        {
+            "Target"        "%TARGET"
+            "EffectName"    "ArcaneSentryHitFXMega" 
+            "Tags"          "stringList(#MAGICAL, #AOE)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_MAGICAL" 
+                    "Damage"        "%damage"
+                }
+            }
+
+            "Actions"
+            {
+            }
+        }
+
+        "KeepProjectileGoing"
+        {
+        }
+    }
+
+    "OnProjectileDestinationReached" 
+    {
+        "Conditional"
+        {
+            "Condition" "%moving_sentinel"
+            "Actions"
+            {
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"            "%TARGET"
+                        "ExcludedUnits"     "objectList(%TARGET)"
+                        "Radius"            "20"
+                        "Teams"             "TEAM_ALL"
+                        "Flags"             "INCLUDE_NON_TARGETABLE"
+                        "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #second_sentinel))"
+                    }
+
+                    "IteratorName" "#sentinel"
+        
+                    "Actions"    
+                    {
+                        "MoveUnit"
+                        {
+                            "Target"            "%sentinel"
+                            "Position"          "%TARGET"
+                        }
+
+                        "#PlayActivityAnimation"
+                        {
+                            "Target"            "%sentinel"
+                            "Animation"         "Spawn"
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName"        "TeslaThunderStrikeHitFXMega"
+                            "Target"            "%sentinel"
+                        }
+                    }
+                }
+            }
+
+            "ElseActions"
+            {
+                "SpawnUnit"
+                {
+                    "UnitName"                  "#SecondSentinel"
+                    "Position"                  "%TARGET"
+                    "UnitGroup"                 "unitGroup(%CASTER)"
+                    "IsAI"                      "0"
+
+                    "OnSpawn"
+                    {
+                        "#PlayActivityAnimation"
+                        {
+                            "Target"            "%UNIT"
+                            "Animation"         "Spawn"
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName"        "TeslaThunderStrikeHitFXMega"
+                            "Target"            "%UNIT"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"     "modifier_elven_mage_sentinel"
+                            "Target"           "%UNIT"
+                        }
+                    }
+                } 
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_elven_mage_sentinel"
+        {
+            "Icon"				"Summoned"
+			"IconPriority"		"50"
+			
+			"OnRemoved"
+            {
+                "KillUnit"
+                {
+                    "Target"        "%TARGET"
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "2.5"
+            "Considerations"
+            {
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "expr(%AbilityCastRange)"  
+                    }
+                }
+            }
+        }
+    }
+}

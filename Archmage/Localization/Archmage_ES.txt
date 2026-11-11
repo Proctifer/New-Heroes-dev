@@ -1,0 +1,51 @@
+﻿"UNIT_ARCHMAGE_NAME_0001" = "Archimaga"
+"UNIT_ARCHMAGE_LORE" = "Por lo general, se necesitan años para completar los estudios en la Academia Lozagon y convertirse en Mago Arcano, y más tarde en Archimago. Sin embargo, a veces puede haber excepciones entre los jóvenes adeptos. Estos hechiceros son tan frágiles como letales."
+
+"SKILL_archmage_brilliance_NAME" = "Brillantez"
+"SKILL_archmage_brilliance_DESCRIPTION" = "Obtienes +1 orbe de energía al comienzo de cada turno, hasta un máximo de 3. Los orbes de energía se utilizan para lanzar hechizos."
+
+"SKILL_archmage_release_NAME" = "Masa crítica"
+"SKILL_archmage_release_DESCRIPTION" = "Dispara todos los orbes de energía almacenados a un enemigo, infligiendo daño por cada orbe de energía y consumiendo todos los orbes de energía."
+"SKILL_archmage_release_DESCRIPTION_DATA" = "Daño: <style="damage">{damage}</style> {icon#damageMagical}\nDaño de área épico: <style="damage">{epicDamage}</style> {icon#damageMagical}\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_archmage_release_DESCRIPTION_EPIC" = "<style="epic">ÉPICO</style>: Cada bola de energía <style="damage">{epicDamage}</style> {icon#damageMagical} inflige daño de área si el Archimago usa esta habilidad sin moverse primero."
+
+"SKILL_archmage_alter_reality_NAME" = "Lapso de tiempo"
+"SKILL_archmage_alter_reality_DESCRIPTION" = "Hace que un enemigo entre y salga del tiempo, dejándolo aturdido y eliminando todos los efectos de daño en el tiempo. Puede usarse en aliados sin aturdirlos."
+"SKILL_archmage_alter_reality_DESCRIPTION_DATA" = "Duración del aturdimiento: <style="highlight">{stunDuration}</style> {icon#turns}\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_archmage_magical_railgun_NAME" = "Rayo aumentador"
+"SKILL_archmage_magical_railgun_DESCRIPTION" = "Dispara un rayo de energía mágica que obtiene alcance adicional según la cantidad de orbes de energía almacenados."
+"SKILL_archmage_magical_railgun_DESCRIPTION_DATA" = "Daño: <style="damage">{damage}</style> {icon#damageMagical}\nAlcance: <style="highlight">{distanceToTravel}</style>"
+"SKILL_archmage_magical_railgun_DESCRIPTION_EPIC" = "<style="epic">ÉPICO</style>: Inflige daño adicional al objetivo por cada hexágono extra más allá del objetivo."
+
+"SKILL_archmage_kaleidoscopic_beam_NAME" = "Rayo caleidoscópico"
+"SKILL_archmage_kaleidoscopic_beam_DESCRIPTION" = "Lanza a un enemigo un rayo que se encadena a 1 enemigo adicional por cada orbe que el Archimaga tenga almacenado."
+"SKILL_archmage_kaleidoscopic_beam_DESCRIPTION_DATA" = "Daño: <style="damage">{damage}</style> {icon#damageMagical}\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_archmage_twister_NAME" = "Tornado"
+"SKILL_archmage_twister_DESCRIPTION" = "Desata un tornado de viento que inflige daño físico a todas las unidades en un área de efecto del túnel y las envía volando de regreso."
+"SKILL_archmage_twister_DESCRIPTION_DATA" = "Daño: <style="damage">{damage}</style> {icon#damagePhysical}\nDuración del aturdimiento: <style="highlight">{duration}</style {icon#turns}\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_archmage_twister_DESCRIPTION_EPIC" = "<style="epic">ÉPICO</style>: Inflige <style="debuff">Aturdimiento</style> a objetivos con <style="debuff">Inmovilización</style>."
+
+"SKILL_archmage_summon_sentry_NAME" = "Centinela Arcano"
+"SKILL_archmage_summon_sentry_DESCRIPTION" = "Invoca tantos Centinelas Arcanos como orbes tenga el Archimaga, que atacan a los enemigos con daño mágico de forma independiente."
+"SKILL_archmage_summon_sentry_DESCRIPTION_DATA" = "Duración: <style="highlight">2</style> {icon#turns}\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_summoned_sentry_ranged_spell_attack_NAME" = "Tiro buscador"
+"SKILL_summoned_sentry_ranged_spell_attack_DESCRIPTION" = "Libera un rayo de energía del cuerpo del centinela, lo que inflige daño mágico a un solo objetivo."
+"SKILL_summoned_sentry_ranged_spell_attack_DESCRIPTION_DATA" = "Daño: <style="rangeofdamage">{MinRangedDmg} - {MaxRangedDmg} {icon#damageMagical}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"COMBAT_MODIFIER_brilliance1_TITLE" = "Brillantez"
+"COMBAT_MODIFIER_brilliance1_DESCRIPTION" = "Esta unidad tiene 1 orbe mágico listo para usar."
+
+"COMBAT_MODIFIER_brilliance2_TITLE" = "Brillantez"
+"COMBAT_MODIFIER_brilliance2_DESCRIPTION" = "Esta unidad tiene 2 orbe mágico listo para usar."
+
+"COMBAT_MODIFIER_brilliance3_TITLE" = "Brillantez"
+"COMBAT_MODIFIER_brilliance3_DESCRIPTION" = "Esta unidad tiene 3 orbe mágico listo para usar."
+
+"COMBAT_MODIFIER_archmage_bolts_TITLE" = "Rayo almacenado"
+"COMBAT_MODIFIER_archmage_bolts_DESCRIPTION" = "TÉste es uno de los rayos mágicos del Aprendiz, listo para usar."
+
+"COMBAT_MODIFIER_modifier_archmage_summon_sentry_TITLE" = "Invocación"
+"COMBAT_MODIFIER_modifier_archmage_summon_sentry_DESCRIPTION" = "Esta unidad ha sido invocada y expirará una vez que finalice su duración."

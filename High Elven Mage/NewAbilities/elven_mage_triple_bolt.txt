@@ -1,0 +1,189 @@
+"elven_mage_triple_bolt"
+{
+    
+    
+    "AbilityBehavior"   "UNIT_TARGET"
+    "AbilityTeamFilter" "TEAM_ENEMY"
+    
+    "AnimationID"       "SpecialAttack"
+    "CastFXId"          "ArcaneMagicMissileCastFXMega"
+    "Icon"              "TripleBolt"
+
+    "AbilityCastRange"  "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange" "stat(%CASTER, #rangedAttackMinRange)"   
+    "AbilityCooldown"   "0"
+    "AbilityAPCost"     "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_EXPRESSION"
+            "cantMagicMissile"      "2" 
+        }
+
+        "02" 
+        {
+            "var_type"              "FIELD_EXPRESSION"
+            "mainDamage"            "ceil(stat(%CASTER, #attackDamage)/2)"
+        }
+
+        "03"
+        {
+           "var_type"               "FIELD_EXPRESSION"
+            "auxDamage"             "1"
+        }
+
+        "04"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "otherUnitsCheckRange"   "1"
+        }
+
+        "05"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "maxTimeDelayProjectile"   "0.1"
+        }
+
+        "06" 
+        {
+            "var_type"          "FIELD_FLOAT"
+            "guaranteedMainTargetHits"   "1"
+        }
+    }
+
+
+
+
+    "OnAbilityAction"
+    {
+        "TrackingProjectile"
+        {
+            "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+            "Target"                "%TARGET"
+            "TargetPos"             "unitPosition(%TARGET, #Chest)"
+            "Model"                 "WitchDoctorWildBlastProjectile"
+
+            "Params" 
+            {
+                "damage" 
+                {
+                    "type"  "FIELD_FLOAT"
+                    "value" "expr(%mainDamage)"
+                }
+
+                "main_bolt"
+                {
+                    "type"  "FIELD_FLOAT"
+                    "value" "1"
+                }
+            }
+        }
+
+        "EachInList"
+        {
+            "List" "pointsInCircunferenceP(newPoint(0, 0, 0), 20, expr(%cantMagicMissile), 90, 90)"
+            "IteratorName" "#POINT"
+            "IteratorIndexName" "#missileIndex"
+
+            "Actions"
+            {
+                "Delay"
+                {
+                    "Time" "randomBetween(0.0, %maxTimeDelayProjectile)"
+                    "Actions"
+                    {
+                        "Conditional" 
+                        {
+                            "Condition" "%missileIndex < ((%guaranteedMainTargetHits - 1) + 0.1)"
+                            "Actions"
+                            {
+                               "TrackingProjectile"
+                                {
+                                    "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+                                    "Target"               "%TARGET"
+                                    "TargetPos"             "unitPosition(%TARGET, #Chest)"
+                                    "InitialVelocity"       "pointMult(pointNormalize(pointAdd(pointMultElements(%POINT, unitFacing(%SOURCE)), newPoint(0, 0, 5))), randomBetween(6, 10))"
+                                    "Model" "ArcaneMagicMissileProjectile"
+
+                                    "Params" 
+                                    {
+                                        "damage" 
+                                        {
+                                            "type" "FIELD_FLOAT"
+                                            "value" "expr(%auxDamage)"
+                                        }
+                                    }
+                                }
+                            }
+
+                            "ElseActions"
+                            {
+                                "ActOnTargets"
+                                {
+                                    "Target"
+                                    {
+                                        "Center"      "unitPosition(%TARGET)"
+                                        "Radius"     "%otherUnitsCheckRange"
+                                        "Teams"     "TEAM_ENEMY"
+                                        "MaxTargets" "1"
+                                        "ReferenceTeam" "unitGroup(%SOURCE)"
+                                        "Random" "1"
+                                    }
+
+                                    "IteratorName" "#newTarget"
+                                
+                                    "Actions"    
+                                    {
+                                        "TrackingProjectile"
+                                        {
+                                            "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+                                            "Target"               "%newTarget"
+                                            "TargetPos"             "unitPosition(%newTarget, #Chest)"
+                                            "InitialVelocity"       "pointMult(pointNormalize(pointAdd(pointMultElements(%POINT, unitFacing(%SOURCE)), newPoint(0, 0, 5))), randomBetween(6, 10))"
+                                            "Model" "ArcaneMagicMissileProjectile"
+
+                                            "Params" 
+                                            {
+                                                "damage" 
+                                                {
+                                                    "type" "FIELD_FLOAT"
+                                                    "value" "expr(%auxDamage)"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+    }
+    
+
+    "OnProjectileHitUnit"
+    {
+        "Hit"
+        {
+            "Target" "%TARGET"
+            "EffectName" "ArcaneMagicMissileHitFXMega" 
+            "Tags" "stringList(#PROJECTILE, #MAGICAL)"
+
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_MAGICAL"
+                    "Damage"        "%damage"
+                }
+            }
+        }
+    }
+}

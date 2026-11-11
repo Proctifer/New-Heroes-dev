@@ -1,0 +1,107 @@
+
+
+	"ArcaneSentinel" 
+	{
+		"Model" 		"Sentry"
+		"Name" 			"ARCANE_SENTINEL"
+		"InheritsFrom" 	"Base"
+
+		"stats"
+		{
+			"level" "1"
+
+			"health_max" "1"
+
+			"rangedAttackRange" "3"
+			
+			"baseDamage" "3"
+
+			"walkSpeed" "2"
+			
+			"evasion"		"0"
+			
+			"visualMoveSpeed"		"5"
+			"visualRunSpeed"		"5"
+		}
+		
+		"skills"
+		{
+		
+		}
+
+ 		"defaultSkill" "sentry_ranged_spell_attack"
+		
+		"states"
+ 		{
+ 			"arcane_sentinel" "1"
+			
+			"NOT_IN_INITIATIVE_BAR" "1"
+  			"NO_FLIP_ON_HIT" "1"
+  			"HIDE_DAMAGE" "1"
+			"CANT_BE_KNOCKED_BACK" "1"
+			"CANT_BE_POISONED" "1"
+			"CANT_BE_BURNT" "1"
+			"CANT_BE_BLED" "1"
+			"CANT_BE_STUNNED" "1"
+			"CANT_BE_ROOTED" "1"
+			"CANT_BE_ASLEPT" "1"
+			"CANT_BE_FROZEN" "1"
+			"NO_SKULL" "1"
+			
+  			"NO_LIFEBAR" "1"
+			"NON_TARGETABLE" "1"
+ 		}
+	}
+
+	"SecondSentinel" 
+	{
+		"Model" 		"Sentry"
+		"Name" 			"SECOND_SENTINEL"
+		"InheritsFrom" 	"Base"
+
+		"stats"
+		{
+			"level" "1"
+
+			"health_max" "1"
+
+			"rangedAttackRange" "3"
+			
+			"baseDamage" "3"
+
+			"walkSpeed" "2"
+			
+			"evasion"		"0"
+			
+			"visualMoveSpeed"		"5"
+			"visualRunSpeed"		"5"
+		}
+		
+		"skills"
+		{
+		
+		}
+
+ 		"defaultSkill" "sentry_ranged_spell_attack"
+		
+		"states"
+ 		{
+ 			"second_sentinel" "1"
+			
+			"NOT_IN_INITIATIVE_BAR" "1"
+  			"NO_FLIP_ON_HIT" "1"
+  			"HIDE_DAMAGE" "1"
+			"CANT_BE_KNOCKED_BACK" "1"
+			"CANT_BE_POISONED" "1"
+			"CANT_BE_BURNT" "1"
+			"CANT_BE_BLED" "1"
+			"CANT_BE_STUNNED" "1"
+			"CANT_BE_ROOTED" "1"
+			"CANT_BE_ASLEPT" "1"
+			"CANT_BE_FROZEN" "1"
+			"NO_SKULL" "1"
+			
+  			"NO_LIFEBAR" "1"
+			"NON_TARGETABLE" "1"
+ 		}
+	}

@@ -1,0 +1,65 @@
+"onagro_refuel_trait"
+{
+    "AbilityBehavior"       "PASSIVE"
+    "Icon"                  "Refuel"
+
+     "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "cooldownOffset"    "1"
+        }
+    }
+
+    "Modifiers"
+    {
+        "onagro_refuel_modifier"
+        {
+            "Passive"       "1"
+
+            "OnTurnStarted"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "onagro_movement_monitor"
+                    "Target"        "%TARGET"
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"  "onagro_movement_monitor"
+                    "Target"        "%TARGET"
+                }
+            }
+                
+            "OnTurnFinished"
+            {
+                "Conditional"
+                {
+                    "Condition" "hasModifier(%TARGET, #onagro_movement_monitor)"
+                    "Actions"
+                    {
+                        "OffsetCooldown"
+                        {
+                            "Target" "%TARGET"
+                            "Offset" "0-%cooldownOffset"
+                        }
+                    }
+                }
+            }
+        }
+
+        "onagro_movement_monitor"
+        {
+            "OnUnitLeavingNode"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"      "onagro_movement_monitor"
+                    "Target"            "%TARGET"
+                }
+            }
+        }
+    }
+}

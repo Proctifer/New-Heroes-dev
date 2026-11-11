@@ -1,0 +1,67 @@
+	"OnagroMine" 
+	{
+		"Name" 			"ONAGRO_MINE"
+		"InheritsFrom" 	"Base"
+		"Model" 		"BombardierMine"
+
+		"stats"
+		{
+			"health_max" 	"100000"
+			"initiative" 	"-99"
+			"baseDamage" 	"0"
+		}
+
+		"skills"
+		{
+			"1"	"onagro_mine_monitor_skill"
+  		}
+
+  		"states"
+  		{
+  			"NOT_IN_INITIATIVE_BAR"	"1"
+  			"HIDE_DAMAGE" 			"1"
+  			"NON_TARGETABLE" 		"1"
+  			"NO_COLLISION" 			"1"
+  			"NO_LIFEBAR" 			"1"
+  			"NO_SKULL" 				"1"
+			"onagro_mine"			"1"
+  		}
+
+  		"defaultSkill" "common_melee_attack"
+	}
+
+	"SulfurBomb" 
+	{
+		"Name" "SULFUR_BOMB"
+		"InheritsFrom" "Base"
+		"Model" "FireBarrel"
+
+		"stats"
+		{
+			"health_max" "100000"
+			"skipsInitiative" "1"
+			"initiative" "-99"
+			"explodeRadius" "1"
+			"explodeDamage" "1"
+			"baseDamage" "0"
+
+			"beHitChanceModifier" "0.3"
+		}
+
+		"skills"
+		{ 
+  		}
+
+  		"states"
+  		{
+  			"NOT_IN_INITIATIVE_BAR" "1"
+  			"HIDE_DAMAGE" "1"
+  			"NO_LIFEBAR" "1"
+  			"NO_SKULLS" "1"
+  			"PROP" "1"
+  		}
+
+  		"defaultSkill" "common_melee_attack"
+	}
+
+	

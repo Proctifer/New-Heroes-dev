@@ -1,0 +1,434 @@
+"ignus_prominence_burn"
+{
+    "AbilityBehavior"           "UNIT_TARGET"
+    "AbilityTeamFilter"         "TEAM_FRIENDLY"
+    "AbilityCastRange"          "0"
+    "AbilityCooldown"           "5"
+    "AbilityAPCost"             "1"
+    "AnimationID"               "DoubleStrike"
+    "CastFXId"                  "FireballCastFXMega"
+    "Icon"                      "ProminenceBurn"
+
+
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"      "FIELD_EXPRESSION"
+            "damage"        "stat(%CASTER, #attackDamage)"
+        }
+        
+        "02"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "burnDuration"  "2"
+        }
+
+        "03"
+        {
+            "var_type"      "FIELD_EXPRESSION"
+            "range"         "stat(%CASTER, #rangedAttackRange)-1"
+        }
+
+        "04"
+        {
+            "var_type"      "FIELD_EXPRESSION"
+            "selfDamage"    "2"
+        }
+    }
+
+    "OnCustomTargeting"
+    {
+        "CreateObjectList"
+        {
+            "Name" "#hexCandidates"
+        }
+
+        "ActOnHexas"
+        {
+            "Kind"          "RANGE_TUNNEL"
+            "Origin"        "unitHex(%SOURCE)"
+            "End"           "hexNeighbour(unitHex(%CASTER), unitHexSide(%CASTER), 0)"
+            "MinRange"      "1"
+            "Range"         "expr(%range)"
+            "IteratorName"  "#hexa"
+        
+            "Actions"    
+            {
+                "AddObjectToList" 
+                {
+                    "List" "%hexCandidates"
+                    "Value" "%hexa"
+                }
+            }
+        }
+
+        "ActOnHexas"
+        {
+            "Kind"          "RANGE_TUNNEL"
+            "Origin"        "unitHex(%SOURCE)"
+            "End"           "hexNeighbour(unitHex(%CASTER), unitHexSide(%CASTER), 2)"
+            "MinRange"      "1"
+            "Range"         "expr(%range)"
+            "IteratorName"  "#hexa"
+        
+            "Actions"    
+            {
+                "AddObjectToList" 
+                {
+                    "List" "%hexCandidates"
+                    "Value" "%hexa"
+                }
+            }
+        }
+
+        "ActOnHexas"
+        {
+            "Kind"              "RANGE_TUNNEL"
+            "Origin"            "unitHex(%SOURCE)"
+            "End"               "hexNeighbour(unitHex(%CASTER), unitHexSide(%CASTER), -2)"
+            "MinRange"          "1"
+            "Range"             "expr(%range)"
+            "IteratorName"      "#hexa"
+        
+            "Actions"    
+            {
+                "AddObjectToList" 
+                {
+                    "List" "%hexCandidates"
+                    "Value" "%hexa"
+                }
+            }
+        }
+
+        "Conditional"
+        {
+            "Condition" "hasModifier(%SOURCE, #ignus_burnout_modifier)"
+            "Actions"
+            {
+                "ActOnHexas"
+                {
+                    "Kind"          "RANGE_TUNNEL"
+                    "Origin"        "unitHex(%SOURCE)"
+                    "End"           "hexNeighbour(unitHex(%CASTER), unitHexSide(%CASTER), 3)"
+                    "MinRange"      "1"
+                    "Range"         "expr(%range)"
+                    "IteratorName"  "#hexa"
+                
+                    "Actions"    
+                    {
+                        "AddObjectToList" 
+                        {
+                            "List" "%hexCandidates"
+                            "Value" "%hexa"
+                        }
+                    }
+                }
+
+                "ActOnHexas"
+                {
+                    "Kind"          "RANGE_TUNNEL"
+                    "Origin"        "unitHex(%SOURCE)"
+                    "End"           "hexNeighbour(unitHex(%CASTER), unitHexSide(%CASTER), 1)"
+                    "MinRange"      "1"
+                    "Range"         "expr(%range)"
+                    "IteratorName"  "#hexa"
+                
+                    "Actions"    
+                    {
+                        "AddObjectToList" 
+                        {
+                            "List" "%hexCandidates"
+                            "Value" "%hexa"
+                        }
+                    }
+                }
+
+                "ActOnHexas"
+                {
+                    "Kind"              "RANGE_TUNNEL"
+                    "Origin"            "unitHex(%SOURCE)"
+                    "End"               "hexNeighbour(unitHex(%CASTER), unitHexSide(%CASTER), -1)"
+                    "MinRange"          "1"
+                    "Range"             "expr(%range)"
+                    "IteratorName"      "#hexa"
+                
+                    "Actions"    
+                    {
+                        "AddObjectToList" 
+                        {
+                            "List" "%hexCandidates"
+                            "Value" "%hexa"
+                        }
+                    }
+                }
+            }
+        }
+
+        "EachInList"
+        {
+            "List" "%hexCandidates"
+            "IteratorName" "#hexa"
+            "IteratorIndexName" "#hexaIndex"
+            "Actions"
+            {
+                "AddAsAffected"
+                {
+                    "Hexa" "%hexa"
+                }
+
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"      "hexPosition(%hexa)"
+                        "Radius"      "0"
+                        "Teams"       "TEAM_ENEMY"
+                    }
+
+                    "IteratorName" "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "AddAsAffected"
+                        {
+                            "Unit" "%newTarget"
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    "OnAbilityAction"
+    {
+        "CreateObjectList"
+        {
+            "Name" "#hexCandidates"
+        }
+        
+        "AttachEffect"
+        {
+            "EffectName"    "OlochBurningClawHitFXMega"
+            "Target"        "%TARGET"
+        }
+
+        "ActOnHexas"
+        {
+            "Kind"              "RANGE_TUNNEL"
+            "Origin"            "unitHex(%SOURCE)"
+            "End"               "hexNeighbour(unitHex(%CASTER), unitHexSide(%CASTER), 0)"
+            "MinRange"          "1"
+            "Range"             "expr(%range)"
+            "IteratorName"      "#hexa"
+        
+            "Actions"    
+            {
+                "AddObjectToList" 
+                {
+                    "List"  "%hexCandidates"
+                    "Value" "%hexa"
+                }
+            }
+        }
+
+        "ActOnHexas"
+        {
+            "Kind"          "RANGE_TUNNEL"
+            "Origin"        "unitHex(%SOURCE)"
+            "End"           "hexNeighbour(unitHex(%CASTER), unitHexSide(%CASTER), 2)"
+            "MinRange"      "1"
+            "Range"         "expr(%range)"
+            "IteratorName"  "#hexa"
+        
+            "Actions"    
+            {
+                "AddObjectToList" 
+                {
+                    "List" "%hexCandidates"
+                    "Value" "%hexa"
+                }
+            }
+        }
+
+        "ActOnHexas"
+        {
+            "Kind"          "RANGE_TUNNEL"
+            "Origin"        "unitHex(%SOURCE)"
+            "End"           "hexNeighbour(unitHex(%CASTER), unitHexSide(%CASTER), -2)"
+            "MinRange"      "1"
+            "Range"         "expr(%range)"
+            "IteratorName"  "#hexa"
+        
+            "Actions"    
+            {
+                "AddObjectToList" 
+                {
+                    "List" "%hexCandidates"
+                    "Value" "%hexa"
+                }
+            }
+        }
+
+        "Conditional"
+        {
+            "Condition" "hasModifier(%SOURCE, #ignus_burnout_modifier)"
+            "Actions"
+            {
+                "HitLegendaryTriggered"
+                {
+                    "Unit"              "%CASTER"
+                }
+
+                "Hit"
+                {
+                    "Target"        "%CASTER"
+                    "EffectName"    "FireballHitFXMega" 
+                    "Tags"          "stringList(#MELEE)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_TRUE"
+                            "Damage"        "expr(%selfDamage)"
+                        }
+                    }
+                }
+                
+                "ActOnHexas"
+                {
+                    "Kind"          "RANGE_TUNNEL"
+                    "Origin"        "unitHex(%SOURCE)"
+                    "End"           "hexNeighbour(unitHex(%CASTER), unitHexSide(%CASTER), 3)"
+                    "MinRange"      "1"
+                    "Range"         "expr(%range)"
+                    "IteratorName"  "#hexa"
+                
+                    "Actions"    
+                    {
+                        "AddObjectToList" 
+                        {
+                            "List" "%hexCandidates"
+                            "Value" "%hexa"
+                        }
+                    }
+                }
+
+                "ActOnHexas"
+                {
+                    "Kind"          "RANGE_TUNNEL"
+                    "Origin"        "unitHex(%SOURCE)"
+                    "End"           "hexNeighbour(unitHex(%CASTER), unitHexSide(%CASTER), 1)"
+                    "MinRange"      "1"
+                    "Range"         "expr(%range)"
+                    "IteratorName"  "#hexa"
+                
+                    "Actions"    
+                    {
+                        "AddObjectToList" 
+                        {
+                            "List" "%hexCandidates"
+                            "Value" "%hexa"
+                        }
+                    }
+                }
+
+                "ActOnHexas"
+                {
+                    "Kind"              "RANGE_TUNNEL"
+                    "Origin"            "unitHex(%SOURCE)"
+                    "End"               "hexNeighbour(unitHex(%CASTER), unitHexSide(%CASTER), -1)"
+                    "MinRange"          "1"
+                    "Range"             "expr(%range)"
+                    "IteratorName"      "#hexa"
+                
+                    "Actions"    
+                    {
+                        "AddObjectToList" 
+                        {
+                            "List" "%hexCandidates"
+                            "Value" "%hexa"
+                        }
+                    }
+                }
+            }
+        }
+
+        "EachInList"
+        {
+            "List"              "%hexCandidates"
+            "IteratorName"      "#hexa"
+            "IteratorIndexName" "#hexaIndex"
+            "Actions"
+            {
+                "AttachEffect"
+                {
+                    "EffectName"    "OlochBurningClawHitFXMega"
+                    "Target"        "hexPosition(%hexa)"
+                }
+
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"      "hexPosition(%hexa)"
+                        "Radius"      "0"
+                        "Teams"       "TEAM_ENEMY"
+                    }
+
+                    "IteratorName" "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "Hit"
+                        {
+                            "Target" "%newTarget"
+                            "Tags" "stringList(#AOE)"
+
+                            "InitActions"
+                            {
+                                "AddDamage"
+                                {
+                                    "Type"          "DAMAGE_TRUE"
+                                    "Damage"        "expr(%damage)"
+                                }
+                            }
+
+                            "Actions"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"  "modifier_burning"
+                                    "Target"        "%HITTARGET"
+                                    "Duration"      "%burnDuration"
+                                    "Refresh"       "1"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "2.3"
+            "Considerations"
+            {
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "10"  
+                    }
+                }
+            }
+        }
+    }
+}

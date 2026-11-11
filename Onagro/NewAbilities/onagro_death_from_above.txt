@@ -1,0 +1,152 @@
+"onagro_death_from_above"
+{
+    "AbilityBehavior"           "POINT_TARGET | AOE | NEEDS_VALID_TERRAIN"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"           "5"
+    "AbilityAPCost"             "2"
+    "AnimationID"               "SpecialAttack"
+    "Icon"                      "DeathFromAbove"
+    "CastFXId"                  "FireballCastFXMega"
+
+    "AbilityAOETeamFilter"      "TEAM_ENEMY"
+    "AbilityAOERange"           "%aoeRadius"
+    "AbilityAOEKind"            "RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster"  "0"
+    "AbilityAOEAffectsCaster"   "1"
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "aoeRadius"         "1"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_EXPRESSION"        
+            "damage"            "floor(stat(%CASTER, #attackDamage)/2)"
+        }
+
+        "03"
+        {
+            "var_type"          "FIELD_FLOAT"        
+            "numberOfBombs"     "3"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+
+        "StartLogicTick"
+        {
+            "Time"          "0.1"
+            "TickType"      "PriorityCenter"
+            "Position"      "%TARGET"
+        }
+
+        "Times"
+        {
+            "Times"             "%numberOfBombs"
+            "IteratorName"      "#index"
+            "Actions"
+            {
+                "Delay"
+                {
+                    "Time"          "%index * 0.4"
+                    "Actions"
+                    {
+                        "ActOnHexas"
+                        {
+                            "Center"                "positionHex(%TARGET)"
+                            "Range"                 "%aoeRadius"
+                            "IteratorName"          "#hexa"
+                            "RequireEmpty"          "0"
+                            "Max"                   "1"
+                            "Random"                "1"
+                            "Actions"    
+                            {
+                                "TrackingProjectile"
+                                {
+                                    "SourcePos"             "pointAdd(hexPosition(%hexa), newPoint(0, 5, 0))"
+                                    "TargetPos"             "hexPosition(%hexa)"
+                                    "Model"                 "BombardierGrenade"
+                                    "Params"
+                                    {
+                                        "damage" 
+                                        {
+                                            "type"      "FIELD_FLOAT"
+                                            "value"     "expr(%damage)"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "OnProjectileDestinationReached" 
+    {
+        "Conditional"
+        {
+            "Condition" "%firstProjectile"
+            "Actions"
+            {
+            }
+
+            "ElseActions" 
+            {
+
+                "AttachEffect"
+                {
+                    "EffectName"        "FireballExplosionFXMega"
+                    "Target"            "%TARGET"
+                }
+
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"    "%TARGET"
+                        "Radius"    "%aoeRadius"
+                        "Teams"     "TEAM_ENEMY"
+                    }
+
+                    "IteratorName" "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "Hit"
+                        {
+                            "Target"        "%newTarget"
+                            "Tags"          "stringList(#PROJECTILE, #TARGETED, #AOE)"
+                            "EffectName"    "FireballHitFXMega" 
+
+                            "InitActions"
+                            {
+                                "AddDamage"
+                                {
+                                    "Type"          "DAMAGE_PHYSICAL"
+                                    "Damage"        "%damage"
+                                }
+                            }
+                        }
+                    }
+
+                    "ActionsIfNotFound"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName"        "FireballHitFXMega"
+                            "Target"            "%TARGET"
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,123 @@
+"onagro_missile"
+{
+    
+    
+    "AbilityBehavior"           "UNIT_TARGET"
+    "AbilityTeamFilter"         "TEAM_ENEMY"
+
+    "AnimationID"               "SpecialAttack"
+    "Icon"                      "WaspMissile"
+    "CastFXId"                  "DwarfzookaCastFXMega"
+
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"           "0"
+    "AbilityAPCost"             "1"
+
+
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "MaxDamage"         "stat(%CASTER,#attackDamage)"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "MinDamage"         "stat(%CASTER,#attackDamage) - 1 "
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "PlaySound"
+        {
+            "Sound" "#krl_sfx_combatBombardier_dwarfzookaProjectile"
+        }
+
+        "TrackingProjectile"
+        {
+            "Target"            "%TARGET"
+            "SourcePos"         "unitPosition(%SOURCE, #Head)"
+            "TargetPos"         "unitPosition(%TARGET, #Chest)"
+            "Model"             "BombardierDwarfZookaProjectile"
+
+            "Params" 
+            {
+                "directDamage" 
+                {
+                    "type" "FIELD_FLOAT"
+                    "value" "expr(%MinDamage)"
+                }
+
+                "startPosition"
+                {
+                    "type" "FIELD_OBJECT"
+                    "value" "unitPosition(%SOURCE)"
+                }
+            }
+        }
+    }
+    
+
+   "OnProjectileHitUnit"
+    {
+        "StopSound"
+        {
+            "Sound"         "#krl_sfx_combatBombardier_dwarfzookaProjectile"
+        }
+        
+        "AttachEffect"
+        {
+            "EffectName"    "DwarfzookaExplosionFXMega"
+            "Target"        "unitPosition(%TARGET, #Base)"
+        }
+
+        "Hit"
+        {
+            "Target"    "%TARGET"
+            "Tags"      "stringList(#PROJECTILE, #TARGETED)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_PHYSICAL"
+                    "Damage"        "%directDamage"
+                }
+                
+                "Conditional"
+                {
+                    "Condition" "isOnState(%HITTARGET, #WEAKENED)"
+
+                    "Actions" 
+                    {
+                        "MarkHitLegendary"
+                        {
+                        }
+                    }
+                }
+            }
+
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "hitIsLegendary(%HIT)"
+
+                    "Actions" 
+                    {
+                        "Knockback" 
+                        {
+                            "Target"    "%HITTARGET"
+                            "Center"    "%startPosition"
+                            "Strength"  "1"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

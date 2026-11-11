@@ -1,0 +1,191 @@
+"ignus_burnout"
+{
+    "AbilityBehavior"       "UNIT_TARGET | POSITIVE_EFFECT | DOESNT_CONSUME_MOVE | FAKE_ACTION"
+    "AbilityTeamFilter"     "TEAM_FRIENDLY"
+    "AnimationID"           "SpecialAttack"
+    "CastFXId"              "OlochFireBarrierCastFXMega"
+    "Icon"                  "Burnout"
+    "AbilityCastRange"      "0"
+    "AbilityCooldown"       "1"
+    "AbilityAPCost"         "0"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "burnoutDamage"     "1"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "extraRange"        "2"
+        }
+
+        "03"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "extraDamage"       "2"
+        }
+
+        "04"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "armorBonus"        "stat(%CASTER, #burnout_armor)"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "Conditional" 
+        {
+            "Condition" "hasModifier(%TARGET, #ignus_burnout_modifier)"
+
+            "Actions"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"      "ignus_burnout_modifier"
+                    "Target"            "%TARGET"
+                }
+
+                "RemoveModifier"
+                {
+                    "ModifierName"      "burnout_range_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
+
+            "ElseActions"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "ignus_burnout_modifier"
+                    "Target"            "%TARGET"
+
+                    "Params" 
+                    {
+                        "extraArmor" 
+                        {
+                            "type" "FIELD_FLOAT"
+                            "value" "expr(%armorBonus)"
+                        }
+                    }
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"      "burnout_range_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
+        }        
+    }
+
+    "Modifiers"
+    {
+        "burnout_range_modifier"
+        {
+            "PropertiesAdd"
+            {
+                "rangedAttackRange" "%extraRange"
+            }
+        }
+
+        "ignus_burnout_modifier"
+        {
+            "Icon"                  "FireBarrier"
+            "IconPriority"          "25"
+            "EffectName"            "BurningStatusFXMega"
+
+            "States"
+            {
+                "CANT_BE_FROZEN" "1"
+            }
+
+            "PropertiesAdd"
+            {
+                "armor_max"             "%extraArmor"
+            }
+
+            "OnAdded"
+            {
+                "GiveArmor"
+                {
+                    "Target"            "%TARGET"
+                    "ArmorAmount"       "%extraArmor"
+                }
+            }
+
+            "OnRemoved"
+            {
+                "GiveArmor"
+                {
+                    "Target"        "%TARGET"
+                    "ArmorAmount"   "0"
+                }
+            }
+
+            "OnTurnFinished"
+            {
+                "Hit"
+                {
+                    "Target"                    "%TARGET"
+                    "EffectName"                "FireballHitFXMega" 
+                    "Tags"                      "stringList(#MODIFIER, #INTERNAL)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_TRUE"
+                            "Damage"            "%burnoutDamage"
+                        }
+                    }
+                }
+            }
+        }
+        
+        "ignus_burnout_damage_modifier"
+        {
+            "Icon"                  "Burn"
+            "IconPriority"          "25"
+            "EffectName"            "BurningStatusFXMega"
+
+            "States"
+            {
+                "CANT_BE_FROZEN" "1"
+            }
+
+            "PropertiesAdd"
+            {
+                "extraDamage" "%extraDamage"
+            }
+
+            "PropertiesAdd"
+            {
+                "rangedAttackRange" "%extraRange"
+            }
+
+            "OnTurnFinished"
+            {
+                "Hit"
+                {
+                    "Target"                    "%TARGET"
+                    "EffectName"                "FireballHitFXMega" 
+                    "Tags"                      "stringList(#MODIFIER, #INTERNAL)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_TRUE"
+                            "Damage"            "%burnoutDamage"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

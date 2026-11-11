@@ -1,0 +1,109 @@
+"ignus_molten_fist"
+{
+    "AbilityBehavior"   "MELEE"
+    "AbilityTeamFilter" "TEAM_ENEMY"
+    "AbilityCastRange"  "stat(%CASTER, #meleeRange)"
+    "AbilityCooldown"   "0"
+    "AbilityAPCost"     "1"
+
+    "AnimationID"       "Attack"
+    "Icon"              "MoltenFist"
+    "CastFXId"          "CommonSlashSoundFXMega"
+
+    "AbilitySpecial"
+    {
+        
+        "01"
+        {
+            "var_type"      "FIELD_EXPRESSION"
+            "MinDamage"     "stat(%CASTER, #attackDamage)-1"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_EXPRESSION"        
+            "MaxDamage"     "stat(%CASTER, #attackDamage)+1"
+        }
+
+        "03" 
+        {
+           "var_type"       "FIELD_EXPRESSION"
+            "heal"          "2"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+        "Hit"
+        {
+            "Target" "%TARGET"
+            "EffectName" "GenericHitFXMega" 
+            "Tags" "stringList(#MELEE, #TARGETED)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_TRUE"
+                    "Damage"        "randomI(expr(%MinDamage), expr(%MaxDamage))"
+                }
+
+                "Conditional"
+                {
+                    "Condition" "isOnState(%HITTARGET, #BURNING)"
+                    "Actions" 
+                    {
+                        "MarkHitLegendary"
+                        {
+                        }
+                    }
+                }
+            }
+
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "hitIsLegendary(%HIT)"
+
+                    "Actions" 
+                    {
+                        "Heal"
+                        {
+                            "Target"        "%HITSOURCE"
+                            "HealAmount"    "expr(%heal)"
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName" "HealingFXMega"
+                            "Target" "%HITSOURCE"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "4"
+            "Considerations"
+            {
+
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "10"  
+                    }
+                }
+            }
+        }
+    }
+}

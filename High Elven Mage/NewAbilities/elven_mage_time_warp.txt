@@ -1,0 +1,151 @@
+"elven_mage_time_warp"
+{
+    "AbilityBehavior"           "UNIT_TARGET | FAKE_ACTION | DOESNT_CONSUME_MOVE" 
+    "AbilityTeamFilter"         "TEAM_ALL"
+
+    "AbilityAOETeamFilter"      "TEAM_ALL"
+
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)+1"
+    "AbilityCooldown"           "3"
+    "AbilityAPCost"             "0"
+    "AnimationID"               "SpellCastA"
+    "CastFXId"                  "ArcaneMageTeleportCastFXMega"
+    "Icon"                      "Teleport"
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "stunDuration"      "2"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "healing"           "ceil(stat(%CASTER, #attackDamage)/2)"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%TARGET"
+                "ExcludedUnits"     "objectList(%TARGET)"
+                "Radius"            "20"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "SetToContext"
+                {
+                    "Context"           "currentContext()"
+                    "Key"               "#sourcePosition"
+                    "Value"             "unitPosition(%sentinel)"
+                    "Type"              "FIELD_OBJECT"
+                }
+
+                "SetToContext"
+                {
+                    "Context"           "currentContext()"
+                    "Key"               "#targetPosition"
+                    "Value"             "unitPosition(%TARGET)"
+                    "Type"              "FIELD_OBJECT"
+                }
+
+                "StartLogicTick"
+                {
+                    "Time"              "0.5"
+                    "TickType"          "PriorityCenter"
+                    "Position"          "%targetPosition"
+                }
+
+                "MoveUnit"
+                {
+                    "Target"            "%sentinel"
+                    "Position"          "newPoint(1000, 1000, 0)"
+                }
+
+                "AttachEffect"
+                {
+                    "EffectName"        "TeslaThunderStrikeHitFXMega"
+                    "Target"            "%sourcePosition"
+                }
+
+                "MoveUnit"
+                {
+                    "Target"        "%TARGET"
+                    "Position"    "%sourcePosition"
+                }
+
+                "Conditional"
+                {
+                    "Condition" "matchesTeam(unitGroup(%SOURCE), unitGroup(%TARGET), @TeamFilter(TEAM_ENEMY))"
+
+                    "Actions" 
+                    {
+                        "Hit"
+                        {
+                            "Target"        "%TARGET"
+                            "EffectName"    "GenericSpellHitFXMega" 
+                            "Tags"          "stringList(#MAGICAL, #TARGETED)"
+
+                            "InitActions"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"      "modifier_stunned"
+                                    "Target"            "%TARGET"
+                                    "Duration"          "%stunDuration
+                                    "Refresh"           "1"
+                                }
+                            }
+                        }
+                    }
+
+                    "ElseActions"
+                    {
+                        "RemoveModifier"
+                        {
+                            "ModifierTag"    "dot"
+                            "Target"         "%TARGET"
+                        }
+
+                        "RemoveModifier"
+                        {
+                            "ModifierTag"    "status_effect"
+                            "Target"         "%TARGET"
+                        }
+
+                        "Heal"
+                        {
+                            "Target"            "%TARGET"
+                            "HealAmount"        "expr(%healing)"
+                        }
+                    }
+                }
+
+                "MoveUnit"
+                {
+                    "Target"            "%sentinel"
+                    "Position"          "%targetPosition"
+                }
+
+                "AttachEffect"
+                {
+                    "EffectName"        "TeslaThunderStrikeHitFXMega"
+                    "Target"            "%targetPosition"
+                }
+            }
+        }
+    }
+}

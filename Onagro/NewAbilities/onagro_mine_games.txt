@@ -1,0 +1,167 @@
+"onagro_mine_games"
+{ 
+    "AbilityBehavior"       "POINT_TARGET | NEGATIVE_EFFECT | NEEDS_CLEAR_TERRAIN | DOESNT_CONSUME_MOVE | FAKE_ACTION"
+    "AbilityCastRange"      "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"       "2"
+    "AbilityAPCost"         "0"
+
+
+    "AnimationID"           "SpellCastB"
+    "CastFXId"              "BigBadaboomCastFXMega"
+    "Icon"                  "MineDrop"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "mainDamage"    "3"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "splashDamage"  "1"
+        }
+    }
+
+    "OnAbilityAction"
+    { 
+        "TrackingProjectile"
+        {
+            "SourcePos"         "unitPosition(%SOURCE, #CastPoint)"
+            "TargetPos"         "%TARGET"
+            "Model"             "BombardierBadaboomProjectile"
+        }
+    }
+
+    "OnProjectileDestinationReached"
+    {
+        "RemoveModifier"
+        {
+            "ModifierTag"       "floor_effect"
+            "Target"            "positionHex(%TARGET)"
+        }
+
+        "AttachEffect"
+        {
+            "EffectName" "WoodBreakFXMega"
+            "Target" "%TARGET"
+        }
+
+        "SpawnUnit"
+        {
+           "UnitName"   "#OnagroMine"
+           "Position"   "%TARGET"
+           "UnitGroup"  "unitGroup(%CASTER)"
+           "IsAI"       "1"
+           "InheritsInitiative" "1"
+           "OnSpawn"
+            {
+                "PlayActivityAnimation"
+                {
+                    "Target"    "%UNIT"
+                    "Animation" "Spawn"
+                }
+           }
+        }
+    }
+
+    "Modifiers"
+    {
+        "mine_monitor_modifier"
+        {
+            "Tags" "floor_effect"
+            
+            "OnUnitEnteredNode"
+            {
+               "AreaControl"
+                {
+                    "Center"    "unitHex(%TARGET)"
+                    "Range"     "0"
+                    "From"      "%from"
+                    "To"        "%to"
+
+                    "EnterActions"
+                    {
+                        "InterruptUnit"
+                        {
+                            "Target" "%UNIT"
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName"    "FireballExplosionFXMega"
+                            "Target"        "unitPosition(%TARGET)"
+                        }
+
+                        "QueueHit"
+                        {
+                            "Target"        "%UNIT"
+                            "Source"        "%deploySource"
+                            "EffectName"    "FireballHitFXMega" 
+                            "Tags"          "stringList(#ENVIRONMENTAL, #REFLECTED)"
+
+                            "InitActions"
+                            {
+                                "AddDamage"
+                                {
+                                    "Type"          "DAMAGE_PHYSICAL"
+                                    "Damage"        "%mainDamage"
+                                }
+                            }
+                        }
+
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"        "unitPosition(%TARGET)"
+                                "Radius"        "1"
+                                "Teams"         "TEAM_ENEMY"
+                                "ExcludedUnits" "objectList(%UNIT)"
+                            }
+
+                            "IteratorName" "#newTarget"
+                        
+                            "Actions"    
+                            {
+
+                                "Hit"
+                                {
+                                    "Target"        "%newTarget"
+                                    "EffectName"    "FireballHitFXMega" 
+                                    "Tags"          "stringList(#AOE)"
+
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"            "DAMAGE_PHYSICAL"
+                                            "Damage"        "%splashDamage"
+                                        }
+                                    }
+
+                                    "Actions"
+                                    {
+                                        "Knockback" 
+                                        {
+                                            "Target" "%HITTARGET"
+                                            "Center" "unitPosition(%TARGET)"
+                                            "Strength" "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        "KillUnit"
+                        {
+                            "Target"        "%TARGET" 
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,186 @@
+"elven_mage_celestial_pull"
+{
+    "AbilityBehavior"           "UNIT_TARGET"
+    "AbilityTeamFilter"         "TEAM_FRIENDLY"
+    "AbilityCastRange"          "0" 
+    "AbilityCooldown"           "3"
+    "AbilityAPCost"             "2"
+
+    "AnimationID"               "SpellCastA"
+    "Icon"                      "CelestialPull" 
+    "CastFXId"                  "TeslaRaiseCoilCastFXMega"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "aoeRadius"         "2"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "damage"            "floor(stat(%CASTER, #attackDamage)/2)"
+        }
+    }
+
+    "OnCustomTargeting"
+    {
+        "CreateObjectList"
+        {
+            "Name" "#hexCandidates"
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%CASTER"
+                "ExcludedUnits"     "objectList(%CASTER)"
+                "Radius"            "20"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel) || isOnState(%theUnit, #second_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "ActOnHexas"
+                {
+                    "Center"                 "unitHex(%sentinel)"
+                    "Range"                  "2"
+                    "IteratorName"           "#hexa"
+                
+                    "Actions"    
+                    {
+                        "AddObjectToList" 
+                        {
+                            "List" "%hexCandidates"
+                            "Value" "%hexa"
+                        }
+                    }
+                }
+            }
+        }
+        
+        "EachInList"
+        {
+            "List" "%hexCandidates"
+            "IteratorName" "#hexa"
+            "IteratorIndexName" "#hexaIndex"
+            "Actions"
+            {
+                "AddAsAffected"
+                {
+                    "Hexa" "%hexa"
+                }
+
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"      "hexPosition(%hexa)"
+                        "Radius"      "0"
+                        "Teams"       "TEAM_ENEMY"
+                    }
+
+                    "IteratorName" "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "AddAsAffected"
+                        {
+                            "Unit" "%newTarget"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%TARGET"
+                "ExcludedUnits"     "objectList(%TARGET)"
+                "Radius"            "20"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel) || isOnState(%theUnit, #second_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "AttachEffect"
+                {
+                    "EffectName"            "MagneticTrapHitFXMega"
+                    "Target"                "%sentinel"
+                }
+
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"            "%sentinel"
+                        "Radius"            "%aoeRadius"
+                        "Teams"             "TEAM_ENEMY"
+                    }
+
+                    "IteratorName"          "#newTarget"
+                    "IteratorIndexName"     "#targetIndex"
+                
+                    "Actions"
+                    {
+                        "Delay"
+                        {
+                            "Time"          "%targetIndex * 0.2"
+
+                            "Actions"
+                            {
+                                "Hit"
+                                {
+                                    "Target"                "%newTarget"
+                                    "Tags"                  "stringList(#AOE)"
+
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"          "DAMAGE_MAGICAL"
+                                            "Damage"        "expr(%damage)"
+                                        }
+                                    }
+
+                                    "Actions"
+                                    {
+                                        "Conditional"
+                                        {
+                                            "Condition"     "not(safeEquals(hexDistance(unitHex(%newTarget), unitHex(%sentinel)), 1))"
+                                            "Actions" 
+                                            {
+                                                "Knockback" 
+                                                {
+                                                    "Target"        "%newTarget"
+                                                    "Center"        "hexPosition(hexNeighbour(unitHex(%newTarget), unitHex(%sentinel), 3))"
+                                                    "Strength"      "1"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

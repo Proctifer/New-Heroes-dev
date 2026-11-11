@@ -121,7 +121,6 @@
         {
             "Icon"                      "Summoned"
             "IconPriority"              "60"
-            "EffectName"                "MartyrsInspirationStatusFXMega"
             "LocalizationId"            "generic_modifier_summoned"
 
             "OnRemoved"

@@ -1,0 +1,61 @@
+"ignus_hotheaded_trait"
+{
+    "AbilityBehavior"               "POSITIVE_EFFECT | PASSIVE"
+    
+    "Icon"                          "Hotheaded"
+
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "burnDuration"      "2"
+        }
+    }
+
+    "Modifiers"
+    {
+        "ignus_hotheaded_trait_modifier"
+        {
+            "Passive"       "1"
+            "StayOnDeath"   "1"
+
+            "OnPostHit"
+            {
+                "Conditional"
+                {
+                    "Condition" "hitConnected(%HIT) && hasTags(hitTags(%HIT), #MELEE) && not(hasTags(hitTags(%HIT), #REFLECTED))"
+                    "Actions" 
+                    {
+                        "QueueHit"
+                        {
+                            "Target" "%ATTACKER"
+                            "Source" "%TARGET"
+                            "Tags" "stringList(#MAGICAL, #REFLECTED)"
+
+                            "Actions"
+                            {
+                                "Conditional"
+                                {
+                                    "Condition" "not(equal(%HITTARGET, %TARGET))"
+
+                                    "Actions"
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "modifier_burning"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "2"
+                                            "Refresh"       "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+           
+        }
+    }
+}

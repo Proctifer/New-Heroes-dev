@@ -5,7 +5,7 @@
 
 "SKILL_alric_toughness_trait_NAME" = "Toughness"
 "SKILL_alric_toughness_trait_DESCRIPTION" = "While Alric’s health is full, he gains resistance to <style="highlight">physical</style> damage."
-"SKILL_alric_toughness_trait_DESCRIPTION_DATA" = "Damage Reduction: <style="buff"> {physicalReduction} {icon#damagePhysical}"
+"SKILL_alric_toughness_trait_DESCRIPTION_DATA" = "Damage reduction: <style="buff"> {physicalReduction} {icon#damagePhysical}"
 
 
 "SKILL_alric_slash_NAME" = "Slash"

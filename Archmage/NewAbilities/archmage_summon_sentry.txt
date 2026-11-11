@@ -126,7 +126,7 @@
 		
 		"RemoveModifier"
 		{
-			"ModifierTag"			"archmage_bolt"
+			"ModifierTag"			"bolt_tracker"
 			"Target"				"%CASTER"
 		}
     }

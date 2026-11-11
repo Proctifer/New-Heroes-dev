@@ -1,0 +1,136 @@
+"ignus_surge_of_flames"
+{
+    "AbilityBehavior"           "UNIT_TARGET | NEGATIVE_EFFECT | AOE"
+    "AbilityTeamFilter"         "TEAM_FRIENDLY"
+
+    "AnimationID"               "Attack"
+    "CastFXId"                  "DemonsInfernalSacrificeCastFXMega"
+    "Icon"                      "SurgeOfFlames"
+
+   
+    "AbilityAOETeamFilter"      "TEAM_ENEMY"
+    "AbilityAOERange"           "%aoeRadius"
+    "AbilityAOEKind"            "RANGE_CIRCLE"
+
+    "AbilityAOECenterOnCaster"  "0"
+    "AbilityAOEAffectsCaster"   "1"
+
+    "AbilityCastRange"          "0"
+    "AbilityCooldown"           "3"
+    "AbilityAPCost"             "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"  "FIELD_EXPRESSION"
+            "damage"    "stat(%CASTER, #attackDamage)-2"
+        }
+
+        "02"
+        {
+            "var_type"  "FIELD_FLOAT"
+            "aoeRadius" "1"
+        }
+
+        "03" 
+        {
+            "var_type"      "FIELD_FLOAT"
+            "epicHeal"      "2"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+        "AttachEffect"
+        {
+            "EffectName"    "OlochBurningClawHitFXMega" 
+            "Target"        "unitPosition(%TARGET)"
+        }
+
+        "AttachEffect"
+        {
+            "EffectName"    "FireballExplosionFXMega" 
+            "Target"        "unitPosition(%TARGET)"
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"    "%TARGET"
+                "Radius"    "%aoeRadius"
+                "Teams"     "TEAM_ENEMY"
+            }
+
+            "IteratorName" "#newTarget"
+        
+            "Actions"    
+            {
+                "Hit"
+                {
+                    "Target"        "%newTarget"
+                    "EffectName"    "FireballHitFXMega" 
+                    "Tags"          "stringList(#MAGICAL, #AOE)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_TRUE"
+                            "Damage"        "expr(%damage)"
+                        }
+                    }
+                }
+                        
+                "Conditional"
+                {
+                    "Condition" "hasModifier(%SOURCE, #ignus_burnout_modifier)"
+
+                    "Actions" 
+                    {
+                        "HitLegendaryTriggered"
+                        {
+                            "Unit"          "%newTarget"
+                        }
+
+                        "Heal"
+                        {
+                            "Target"        "%CASTER"
+                            "HealAmount"    "%epicHeal"
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName"    "HealingFXMega"
+                            "Target"        "%CASTER"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "4"
+            "Considerations"
+            {
+
+                "surrounded by several units"
+                {
+                    "Curve" "Logistic|500|5|-4|0.05"
+                    "Consideration" "UnitsAffected"
+                    "Params"
+                    {
+                        "Max" "5"  
+                        "TeamFilter" "TEAM_ENEMY"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,211 @@
+"onagro_sulfur_bomb"
+{
+    "AbilityBehavior"   "POINT_TARGET | NEGATIVE_EFFECT | NEEDS_CLEAR_TERRAIN"
+    "AbilityCastRange"  "stat(%CASTER, #rangedAttackRange) - 1"
+    "AbilityCooldown"   "4"
+    "AbilityAPCost"     "2"
+    
+    "AnimationID"       "SpecialAttack"
+    "CastFXId"          "ShortFuseCastFXMega"
+    "Icon"              "SulfurBomb"
+    
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "duration"          "1"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "aoeRadius"         "1"
+        }
+
+        "03"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "stunDuration"      "1"
+        }
+
+        "04"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "poisonDuration"    "2"
+        }
+    }
+
+
+    "OnAbilityAction" 
+    {
+        "SpawnUnit"
+        {
+            "UnitName"  "#SulfurBomb"
+            "Position"  "%TARGET"
+            "UnitGroup" "@UnitGroup(OwnSide)"
+
+            "IsAI"      "1"
+            "Nick"      "#OnagroSulfurBomb"
+            "AddToInitiativeOrder" "1"
+            "OnSpawn"
+            {
+                "#PlayActivityAnimation"
+                {
+                    "Target"    "%UNIT"
+                    "Animation" "Spawn"
+                }
+                
+                "ApplyModifier"
+                {
+                    "ModifierName"  "damage_on_remove_modifier"
+                    "Target"        "%UNIT"
+                    "Duration"      "1"
+                    "Params"
+                    {
+
+                        "damage" 
+                        {
+                            "type" "FIELD_FLOAT"
+                            "value" "1"
+                        }
+                    }
+                }
+                
+                "ApplyModifier"
+                {
+                    "ModifierName"  "sulfuric_explosion_monitor"
+                    "Target"        "%UNIT"
+                    "Duration"      "1"
+                }
+
+                "AttachEffect"
+                {
+                    "EffectName" "GenericReviveFXMega"
+                    "Target" "%UNIT"
+                }
+            }
+        }   
+    }
+
+    "Modifiers"
+    {
+        "sulfuric_explosion_monitor"
+        {
+
+            "OnHitEnd"
+            {
+                "AttachEffect"
+                {
+                    "EffectName" "PoisonStatusFXMega"
+                    "Target" "%TARGET"
+                }
+                
+                "SetToContext"
+                {
+                    "Context"   "currentContext()"
+                    "Key"       "#explodeDelay"
+                    "Value"     "1"
+                    "Type"      "FIELD_FLOAT"
+                }
+
+                "StartLogicTick"
+                {
+                    "Time"      "%explodeDelay"
+                    "TickType"  "FX "
+                    "Position"  "unitPosition(%SOURCE)"
+                }
+
+                "Delay"
+                {
+                    "Time" "%explodeDelay"
+                    "Actions"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName" "SulfuricBlastSmokeFXMega"
+                            "Target" "unitPosition(%TARGET)"
+                        }
+
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"        "%TARGET"
+                                "Radius"        "%aoeRadius"
+                                "Teams"         "TEAM_ALL"
+                                "ExcludedUnits" "objectList(%TARGET)"
+                            }
+
+                            "IteratorName" "#newTarget"
+                        
+                            "Actions"
+                            {
+                                "Hit"
+                                {
+                                    "Target"        "%newTarget"
+                                    "Tags"          "stringList(#ENVIRONMENTAL, #AOE)"
+
+                                    "InitActions"
+                                    {
+                                    }
+
+                                    "Actions"
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "modifier_stunned"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "equal(%HITTARGET, %ATTACKER) ? %stunDuration + 1 : %stunDuration"
+                                            "Refresh"       "1"
+                                        }
+                                        
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "modifier_new_poison"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%poisonDuration"
+                                            "Refresh"       "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        "KillUnit"
+                        {
+                            "Target"        "%TARGET"
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "2.5"
+            "Considerations"
+            {
+
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "expr(%AbilityCastRange)"  
+                    }
+                }
+            }
+        }
+    }
+
+
+}

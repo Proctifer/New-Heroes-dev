@@ -1,0 +1,177 @@
+"ignus_mad_dash"
+{
+    
+    
+    "AbilityBehavior"   "POINT_TARGET | AOE | NEEDS_CLEAR_TERRAIN | DOESNT_CONSUME_MOVE | FAKE_ACTION"
+
+    "AnimationID"           "Attack"
+    "CastFXId"              "BullRushCastFXMega"
+    "Icon"                  "MadDash" 
+
+    "AbilityAOETeamFilter"  "TEAM_ENEMY"
+    "AbilityAOERange"       "0"
+
+    "AbilityAOEKind"        "RANGE_TUNNEL"
+    "AbilityAOEWidth"       "expr(%width)"
+
+    "AbilityAOECenterOnCaster"  "1"
+    "AbilityAOEAffectsCaster"   "0"
+
+    "AbilityCastRange"      "expr(%distanceToTravel)"
+    "AbilityCooldown"       "3"
+    "AbilityAPCost"         "0"
+
+
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "damage"            "stat(%CASTER, #attackDamage)-2"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "distanceToTravel"  "stat(%CASTER, #rangedAttackRange)"
+        }
+
+        "03"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "width"             "1"
+        }
+
+        "04"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "burnDuration"          "2"
+        }
+
+        "05"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "epicHeal"              "1"
+        }
+    }
+
+
+    "OnAbilityAction" 
+    {
+        "TrackingProjectile"
+        {
+            "Model"                 "FireballProjectile"
+            "SourcePos"             "unitPosition(%SOURCE, #Chest)"
+            "TargetPos"             "%TARGET"
+
+
+
+
+            "TargetFilter"
+            {
+                "Radius"     "0"
+                "Teams"     "TEAM_ENEMY"
+                "ExcludedUnits" "objectList(%SOURCE)"
+                "Width" "expr(%width)"
+                "Kind" "RANGE_TUNNEL"
+           }
+
+            "Params" 
+            {
+                "damage" 
+                {
+                    "type" "FIELD_FLOAT" 
+                    "value" "expr(%damage)"
+                }
+            }
+        }
+
+        "ApplyModifier"
+        {
+            "ModifierName"      "disable_unit_modifier"
+            "Target"            "%SOURCE"
+        }
+
+        "MoveUnit"
+        {
+            "Target"        "%SOURCE"
+            "Position"    "newPoint(1000, 1000, 0)"
+        }
+
+    }
+
+    "OnProjectileHitUnit" 
+    {
+
+        "Hit"
+        {
+            "Target" "%TARGET"
+            "EffectName" "BullRushHitFXMega" 
+            "Tags" "stringList(#MELEE, #AOE)"
+
+            "InitActions"
+            {
+                "AddDamage"
+                {
+                    "Type"          "DAMAGE_TRUE" 
+                    "Damage"        "%damage"
+                }
+            }
+
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "hasModifier(%HITSOURCE, #ignus_burnout_modifier)"
+                    "Actions"
+                    {
+                        "MarkHitLegendary"
+                        {
+                        }
+
+                        "Heal"
+                        {
+                            "Target"        "%HITSOURCE"
+                            "HealAmount"    "%epicHeal"
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName"    "HealingFXMega"
+                            "Target"        "%HITSOURCE"
+                        }
+                    }
+                }
+                
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_burning"
+                    "Target"        "%HITTARGET"
+                    "burnDuration"      "%burnDuration"
+                    "Refresh"       "1"
+                }
+
+            }
+        }
+
+        "KeepProjectileGoing"
+        {
+        }
+    }
+
+    "OnProjectileDestinationReached" 
+    {
+        "MoveUnit"
+        {
+            "Target"        "%SOURCE"
+            "Position"    "%TARGET"
+        }
+
+        "RemoveModifier"
+        {
+            "ModifierName"    "disable_unit_modifier"
+            "Target"          "%SOURCE"
+        }
+    }
+}

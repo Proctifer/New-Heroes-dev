@@ -1,0 +1,132 @@
+"elven_mage_shocking_presence_trait"
+{
+    "AbilityBehavior"       "PASSIVE"
+    "Icon" "ShockingPresence"
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "aoeRadius"             "1"
+        }
+
+        "02"
+        {
+            "var_type"              "FIELD_EXPRESSION"
+            "damage"                "ceil(stat(%TARGET, #level)/2)"
+        }
+
+        "03"
+        {
+            "var_type"              "FIELD_EXPRESSION"
+            "description_damage"    "ceil(stat(%CASTER, #level)/2)"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_sentinel_shocking_presence"
+        {
+            "Passive" "1"
+
+            "OnUnitDiedGlobal"
+            {
+                "Conditional"
+                {
+                    "Condition" "equal(%DEAD, %TARGET)"
+                    "Actions" 
+                    {
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"            "%TARGET"
+                                "Radius"            "20"
+                                "Teams"             "TEAM_ALL"
+                                "Flags"             "INCLUDE_NON_TARGETABLE"
+                                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel) || isOnState(%theUnit, #second_sentinel))"
+                            }
+
+                            "IteratorName" "#sentinel"
+                        
+                            "Actions"    
+                            {
+                                "KillUnit"
+                                {
+                                    "Target"        "%sentinel"
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                
+            }
+            
+            "OnTurnFinished"
+            {
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"            "%TARGET"
+                        "ExcludedUnits"     "objectList(%TARGET)"
+                        "Radius"            "20"
+                        "Teams"             "TEAM_ALL"
+                        "Flags"             "INCLUDE_NON_TARGETABLE"
+                        "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel) || isOnState(%theUnit, #second_sentinel))"
+                    }
+
+                    "IteratorName" "#sentinel"
+                
+                    "Actions"    
+                    {
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"                "%sentinel"
+                                "Radius"                "%aoeRadius"
+                                "Teams"                 "TEAM_ENEMY"
+                            }
+
+                            "IteratorName"          "#newTarget"
+                        
+                            "Actions"    
+                            {
+                                "Hit"
+                                {
+                                    "Target"            "%newTarget"
+                                    "EffectName"        "ShockingPresenceShockFXMega" 
+                                    "Tags"              "stringList(#AOE)"
+
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"          "DAMAGE_MAGICAL"
+                                            "Damage"        "expr(%damage)"
+                                        }
+                                    }
+                                }
+
+                                "#PlayActivityAnimation"
+                                {
+                                    "Target"            "%sentinel"
+                                    "Animation"         "Attack"
+                                }
+
+                                "AttachEffect"
+                                {
+                                    "EffectName"            "ShockingPresenceTeslaFXMega"
+                                    "Target"                "%sentinel"
+                                } 
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

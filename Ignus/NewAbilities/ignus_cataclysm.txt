@@ -1,0 +1,242 @@
+"ignus_cataclysm"
+{
+    "AbilityBehavior"       "UNIT_TARGET | AOE"
+    "AbilityTeamFilter"     "TEAM_ENEMY"
+
+    "AnimationID"           "Attack"
+    "CastFXId"              "FireballCastFXMega"
+    "Icon"                  "Cataclysm"
+   
+    "AbilityAOEKind"            "RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster"  "0"
+    "AbilityAOEAffectsCaster"   "1"
+    "AbilityAOETeamFilter"      "TEAM_ENEMY"
+
+    "AbilityAOERange"           "%aoeRadius"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"           "4"
+    "AbilityAPCost"             "2"
+
+
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "aoeRadius"     "1"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_EXPRESSION"
+            "damage"        "stat(%CASTER,#attackDamage)-2"
+        }
+
+        "03"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "burnDuration"  "2"
+        }
+
+        "04"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "floorDuration" "2"
+        }
+    }
+
+
+
+
+    "OnAbilityAction"
+    {
+        "TrackingProjectile"
+        {
+            "Target"            "%TARGET"
+            "SourcePos"         "unitPosition(%SOURCE, #Chest)"
+            "TargetPos"         "unitPosition(%TARGET)"
+            "Model"             "FireballProjectile"
+
+            "Params" 
+            {
+                "damage" 
+                {
+                    "type" "FIELD_FLOAT"
+                    "value" "expr(%damage)"
+                }
+
+                "floorDuration" 
+                {
+                    "type" "FIELD_FLOAT"
+                    "value" "%floorDuration"
+                }
+            }
+        }
+    }
+    
+
+    "OnProjectileHitUnit"
+    {
+        "AttachEffect"
+        {
+            "EffectName" "FireballExplosionFXMega"
+            "Target" "%TARGET"
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"      "%TARGET"
+                "Radius"     "%aoeRadius"
+                "Teams"     "TEAM_ENEMY"
+            }
+
+            "IteratorName" "#newTarget"
+        
+            "Actions"    
+            {
+                "Hit"
+                {
+                    "Target" "%newTarget"
+                    "EffectName" "FireballHitFXMega" 
+                    "Tags" "stringList(#MAGICAL, #AOE)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"            "DAMAGE_TRUE"
+                            "Damage"        "%damage"
+                        }
+                    }
+
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_burning"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%burnDuration"
+                            "Refresh"       "1"
+                        }
+                    }
+                }
+            }
+        }
+
+        "Conditional"
+        {
+            "Condition" "hasModifier(%CASTER, #ignus_burnout_modifier)"
+            "Actions"
+            {
+                "HitLegendaryTriggered"
+                {
+                    "Unit"              "%TARGET"
+                }
+
+                "SpawnUnit"
+                {
+                    "UnitName"  "#DummyUnit"
+                    "Position"  "unitPosition(%TARGET)"
+                    "UnitGroup" "unitGroup(%CASTER)"
+                    "IsAI"      "0"
+                    "Nick"      "#FireballFloorController"
+                    "InheritsInitiative" "1"
+                    "OnSpawn"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "remove_another_unit_modifier"
+                            "Target"            "%UNIT"
+                            "Duration"          "%floorDuration"
+                            "Params"
+                            {
+                                "UNIT" {
+                                    "type" "FIELD_OBJECT"
+                                    "value" "%UNIT"
+                                }
+                            }
+                        }
+
+                        "SetToContext"
+                        {
+                            "Context"   "projectileContext(%projectile)"
+                            "Key"       "#controllerUnit"
+                            "Value"     "%UNIT"
+                            "Type"      "FIELD_OBJECT"
+                        }
+                    }
+                }
+
+                "ActOnHexas"
+                {
+                    "Center"        "positionHex(unitPosition(%TARGET))"
+                    "Range"         "%aoeRadius"
+                    "IteratorName"  "#hexa"
+                
+                    "Actions"    
+                    {
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"    "hexPosition(%hexa)"
+                                "Radius"    "0"
+                                "Teams"     "TEAM_ENEMY"
+                                "Flags"     "INCLUDE_NON_TARGETABLE"
+                            }
+
+                            "IteratorName" "#newTarget"
+                        
+                            "Actions"    
+                            {
+                                "RemoveModifier"
+                                {
+                                    "ModifierTag"    "floor_effect"
+                                    "Target"         "%newTarget"
+                                }
+                            }
+                        }
+
+                        "SpawnUnit"
+                        {
+                            "UnitName"  "#DummyUnit"
+                            "Position"  "hexPosition(%hexa)"
+                            "UnitGroup" "unitGroup(%CASTER)"
+                            "IsAI"      "0"
+                            "Nick"      "#FireballFloor"
+                            "InheritsInitiative" "1"
+                            "OnSpawn"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"  "fire_floor_tile_modifier"
+                                    "Target"        "%UNIT"
+                                }
+
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"      "remove_another_unit_modifier"
+                                    "Target"            "wrapContext(projectileContext(%projectile), %controllerUnit)"
+                                    "Params"
+                                    {
+
+                                        "UNIT" {
+                                            "type"      "FIELD_OBJECT"
+                                            "value"     "%UNIT"
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+}

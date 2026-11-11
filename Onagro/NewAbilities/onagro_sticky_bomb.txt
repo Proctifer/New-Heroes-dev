@@ -1,0 +1,385 @@
+"onagro_sticky_bomb"
+{
+    "AbilityBehavior"           "UNIT_TARGET"
+    "AbilityTeamFilter"         "TEAM_ENEMY"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+
+    "AbilityCooldown"           "3"
+    "AbilityAPCost"             "1"
+    "AnimationID"               "SpellCastB"
+    "CastFXId"                  "BigBadaboomCastFXMega"
+    "Icon"                      "StickyBomb"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "bomb_timer"        "2"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "bombRadius"        "1"
+        }
+
+        "03"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "explodeDamage"        "stat(%CASTER,#attackDamage) + 1"
+        }
+    }
+
+
+    "OnAbilityAction"
+    { 
+        "PlaySound"
+        {
+            "Sound" "#krl_sfx_combatBombardier_badaboomProjectile"
+        }
+
+        "TrackingProjectile"
+        {
+            "Target"        "%TARGET"
+            "SourcePos"     "unitPosition(%SOURCE, #CastPoint)"
+            "TargetPos"     "unitPosition(%TARGET, #Chest)"
+            "Model"         "BombardierBadaboomProjectile"
+            "Params"
+            {
+                "explodeDamage"
+                { 
+                    "type"      "FIELD_FLOAT"
+                    "value"     "expr(%explodeDamage)"
+                }
+            }
+        }   
+    }
+
+    "OnProjectileHitUnit"
+    {   
+        "StopSound"
+        {
+            "Sound"         "#krl_sfx_combatBombardier_badaboomProjectile"
+        }
+
+        "AttachEffect"
+        {
+            "EffectName"            "BigBadaboomLandFXMega"
+            "Target"                "%TARGET"
+        }
+
+        "SetToContext"
+        {
+            "Context"               "currentContext()"
+            "Key"                   "#final_bomb_timer"
+            "Value"                 "%bomb_timer"
+            "Type"                  "FIELD_FLOAT"
+        }
+        
+        "ApplyModifier"
+        {
+            "ModifierName"    "sticky_bomb_burning_trigger_modifier"
+            "Target"          "%TARGET"
+            "Duration"        "%final_bomb_timer"
+            "Params"
+            {
+                "deploySource"
+                { 
+                    "type"      "FIELD_OBJECT"
+                    "value"     "%SOURCE"
+                }
+
+                "explodeDamage"
+                { 
+                    "type"      "FIELD_FLOAT"
+                    "value"     "%explodeDamage"
+                }
+            }
+        }
+        
+        "ApplyModifier"
+        {
+            "ModifierName"    "sticky_bomb_timer_modifier"
+            "Target"          "%TARGET"
+            "Duration"        "%final_bomb_timer"
+            "Params"
+            {
+                "explodeDamage"
+                { 
+                    "type"      "FIELD_FLOAT"
+                    "value"     "%explodeDamage"
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "sticky_bomb_timer_modifier"
+        {
+            "Icon"          "LockNLoad"
+            "IconPriority"  "10"
+
+            "OnTurnFinished"
+            {
+                "Conditional"
+                {
+                    "Condition" "isOnState(%TARGET, #BURNING)"
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "sticky_bomb_damager_modifier"
+                            "Target"        "%TARGET"
+                            "Duration"      "1"
+                            "Params"
+                            {
+                                "explodeDamage"
+                                { 
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "%explodeDamage"
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                "Conditional"
+                {
+                    "Condition" "safeEquals(modifierTurnsRemaining(%MODIFIERINSTANCE), 2) && not(hasModifier(%TARGET, #sticky_bomb_damager_modifier))"
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "sticky_bomb_alert_modifier"
+                            "Target"        "%TARGET"
+                            "Duration"      "1"
+                            "Params"
+                            {
+                                "explodeDamage"
+                                { 
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "%explodeDamage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "sticky_bomb_alert_modifier"
+        {
+            "EffectName"    "BarbarianBerserkStatusFXMega"
+            "Icon"          "More"
+            "IconPriority"  "10"
+
+            "OnRemoved"
+            {
+                "Conditional"
+                {
+                    "Condition" "not(hasModifier(%TARGET, #sticky_bomb_damager_modifier))"
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "sticky_bomb_damager_modifier"
+                            "Target"        "%TARGET"
+                            "Duration"      "1"
+                            "Params"
+                            {
+                                "explodeDamage"
+                                { 
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "%explodeDamage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "sticky_bomb_burning_trigger_modifier"
+        {
+            "OnHitEnd"
+            {
+                "Conditional"
+                {
+                    "Condition" "isOnState(%TARGET, #BURNING)"
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "sticky_bomb_damager_modifier"
+                            "Target"        "%TARGET"
+                            "Duration"      "1"
+                            "Params"
+                            {
+                                "explodeDamage"
+                                { 
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "%explodeDamage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            "OnTurnStarted"
+            {
+                "Conditional"
+                {
+                    "Condition" "isOnState(%TARGET, #BURNING)"
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "sticky_bomb_damager_modifier"
+                            "Target"        "%TARGET"
+                            "Duration"      "1"
+                            "Params"
+                            {
+                                "explodeDamage"
+                                { 
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "%explodeDamage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "sticky_bomb_fuse"
+        {
+            "EffectName"    "FireStatusFXMega"
+        }
+                
+        "sticky_bomb_damager_modifier"
+        {
+            "OnAdded"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"  "sticky_bomb_fuse"
+                    "Target"        "%TARGET"
+                    "Duration"      "1"
+                }
+                
+                "RemoveModifier"
+                {
+                    "ModifierName"  "sticky_bomb_burning_trigger_modifier"
+                    "Target"        "%TARGET"
+                }
+                "RemoveModifier"
+                {
+                    "ModifierName"  "sticky_bomb_timer_modifier"
+                    "Target"        "%TARGET"
+                }
+                "RemoveModifier"
+                {
+                    "ModifierName"  "sticky_bomb_alert_modifier"
+                    "Target"        "%TARGET"
+                }
+
+                "SetToContext"
+                {
+                    "Context"   "currentContext()"
+                    "Key"       "#explodeDelay"
+                    "Value"     "0.5"
+                    "Type"      "FIELD_FLOAT"
+                }
+                "StartLogicTick"
+                {
+                    "Time"      "%explodeDelay"
+                    "TickType"  "FX"
+                    "Position"  "unitPosition(%TARGET)"
+                }
+
+                "Delay"
+                {
+                    "Time"  "%explodeDelay"
+                    "Actions"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName"    "DwarfzookaExplosionFXMega"
+                            "Target"        "unitPosition(%TARGET)"
+                        }
+                
+                        "RemoveModifier"
+                        {
+                            "ModifierName"  "sticky_bomb_fuse"
+                            "Target"        "%TARGET"
+                        }
+
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"        "unitPosition(%TARGET)"
+                                "Radius"        "1"
+                                "Teams"         "TEAM_ENEMY"
+                            }
+
+                            "IteratorName" "#newTarget"
+                        
+                            "Actions"    
+                            {
+                                "Hit"
+                                {
+                                    "Target" "%newTarget"
+                                    "EffectName" "FireballHitFXMega" 
+                                    "Tags" "stringList(#ENVIRONMENTAL, #AOE)"
+
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"      "DAMAGE_PHYSICAL"
+                                            "Damage"    "%explodeDamage"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "sticky_bomb_explode_on_hit"
+        {
+            "Tags"          "Bomb"
+            
+            "OnHitEnd"
+            {
+                "Conditional"
+                {
+                    "Condition" "not(hasTags(hitTags(%HIT), #INTERNAL)) && hasModifier(%TARGET, #sticky_bomb_alert_modifier)"
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "sticky_bomb_damager_modifier"
+                            "Target"        "%TARGET"
+                            "Duration"      "1"
+                            "Params"
+                            {
+                                "explodeDamage"
+                                { 
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "%explodeDamage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

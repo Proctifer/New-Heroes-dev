@@ -1,0 +1,119 @@
+"RLMechaOnagroLvl1" 
+{
+	"UniqueId" 					"Onagro"
+	"Model" 					"ObeliskLvl4"
+	"MetaExo" 					"ExoSkeletonHumanDwarfFemale_MetaDataAsset"
+	"Name" 						"ONAGRO"
+	"InheritsFrom" 				"Hero"
+	"cinematicTags" 			"Heroe|Legend|Onagro|Male|ct_legend|ct_ranged|ct_craft|ct_perception|ct_survival|UPGRADES_crafty"
+	"Background" 				"hero_roster_legend_bg_forest"
+	"Icon" 						"Asst_Banner_Asra"
+	"AttackType" 				"RANGED"
+	"UnitOnMap" 				"Asst_Party_Azra"
+	"PortraitBackgroundColor" 	"917A75"
+	"nextLevelArchetype" 		"RLMechaOnagroLvl2"
+
+	"stats"
+	{
+
+		"level" "1"
+			
+		"health_max" "4"
+		"armor_max" "4"
+		"armor_regen_per_turn" "2"
+		"baseDamage"  "3"
+
+		"rangedAttackRange" "3" 
+		"rangedAttackMinRange" "2"
+		
+		"walkSpeed" "1"
+	}
+
+	"skills"
+	{
+		"11"	"onagro_refuel_trait"
+		"100" 	"crafty_endturn_trait"
+		"200" 	"custom_step_sound_trait"
+	}
+
+	"skillProgression"
+	{
+		"1" 
+		{
+			"1" "onagro_mine_games"
+		}
+
+		"2" 
+		{
+			"1" "onagro_power_slam"
+			"2" "onagro_sticky_bomb"
+			"3" "onagro_sulfur_bomb"
+		}
+
+		"3"
+		{
+			"1" "onagro_tar_bomb"
+			"2" "onagro_fireworks_display"
+			"3" "onagro_death_from_above"
+		}
+	}
+
+	"defaultSkill" "onagro_missile"
+
+	"states"
+	{
+		"LEGEND" "1"
+	}
+
+	"soundConfig"
+	{
+		"assetId" "DynamicSoundGroupGenericSkillSounds"
+
+		"sounds"
+		{
+			"receiveDamage" 		"krl_va_combatGoblin_hit"
+			"receiveArmorDamage" 	"krl_sfx_combatGeneric_armorHit"
+		}
+	}
+}
+
+"RLMechaOnagroLvl2" 
+{
+	"InheritsFrom" "RLMechaOnagroLvl1"
+	"nextLevelArchetype" "RLMechaOnagroLvl3"
+
+	"stats"
+	{
+		"level" "2"
+			
+		"health_max" "5"
+		"armor_max" "6"
+		"armor_regen_per_turn" "2"
+		"baseDamage"  "4"
+
+		"rangedAttackRange" "4" 
+		"rangedAttackMinRange" "2"
+		
+		"walkSpeed" "2"
+	}
+}
+
+"RLMechaOnagroLvl3" 
+{
+	"InheritsFrom" "RLMechaOnagroLvl1"
+
+	"stats"
+	{
+		"level" "3"
+			
+		"health_max" "6"
+		"armor_max" "8"
+		"armor_regen_per_turn" "3"
+		"baseDamage"  "5"
+
+		"rangedAttackRange" "5" 
+		"rangedAttackMinRange" "2"
+		
+		"walkSpeed" "2"
+	}
+}

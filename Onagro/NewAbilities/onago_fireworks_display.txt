@@ -1,0 +1,222 @@
+"onagro_fireworks_display"
+{
+    "AbilityBehavior"           "UNIT_TARGET"
+    "AbilityTeamFilter"         "TEAM_ENEMY"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange"       "stat(%CASTER, #rangedAttackMinRange)"  
+    "AbilityCooldown"           "5"
+    "AbilityAPCost"             "2"
+    "AnimationID"               "SpecialAttack"
+    "CastFXId"                  "DwarfzookaCastFXMega"
+    "Icon"                      "FireworksDisplay"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "mainDamage"        "stat(%CASTER, #attackDamage)"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_EXPRESSION"
+            "minDamage"         "stat(%CASTER, #attackDamage)-2"
+        }
+
+        "03"
+        {
+            "var_type"          "FIELD_EXPRESSION"        
+            "maxDamage"         "stat(%CASTER, #attackDamage)-1"
+        }
+
+        "04"
+        {
+            "var_type"          "FIELD_FLOAT"        
+            "bounceTargetRange" "2"
+        }
+
+        "05"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "maxTargets"        "3"
+        }
+
+    }
+
+    "OnAbilityAction"
+    {
+
+        "CreateObjectList"
+        {
+            "Name"              "#hitUnits"
+        }
+
+        "TrackingProjectile"
+        {
+            "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+            "TargetPos"             "pointAdd(unitPosition(%SOURCE), newPoint(0, 0, 8))"
+            "Model"                 "NapalmShowerRainProjectile"
+        }
+
+        "TrackingProjectile"
+        {
+            "Target"                "%TARGET"
+            "SourcePos"             "pointAdd(unitPosition(%TARGET), newPoint(0, 0, 8))"
+            "TargetPos"             "unitPosition(%TARGET, #Chest)"
+            "Model"                 "NapalmShowerRainProjectile" 
+
+            "Params" 
+            {
+                "mainDamage" 
+                {
+                    "type"          "FIELD_FLOAT"
+                    "value"         "expr(%mainDamage)"
+                }
+
+                "minRangeDamage" 
+                {
+                    "type"          "FIELD_FLOAT"
+                    "value"         "expr(%minDamage)"
+                }
+
+                "maxRangeDamage" 
+                {
+                    "type"          "FIELD_FLOAT"
+                    "value"         "expr(%maxDamage)"
+                }
+
+                "maxTargets" 
+                {
+                    "type"          "FIELD_FLOAT"
+                    "value"         "%maxTargets"
+                }
+
+                "firstHit" 
+                {
+                    "type"          "FIELD_FLOAT"
+                    "value"         "1"
+                }
+            }
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {   
+        "Conditional"
+        {
+            "Condition" "%firstHit"
+            "Actions"
+            {
+                "Hit"
+                {
+                    "Target" "%TARGET"
+                    "EffectName" "FireballExplosionFXMega" 
+                    "Tags" "stringList(#PROJECTILE)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL"
+                            "Damage"        "%mainDamage"
+                        }
+                    }
+                }
+            }
+
+            "ElseActions"
+            {
+                "Hit"
+                {
+                    "Target"        "%TARGET"
+                    "EffectName"    "FireballExplosionFXMega" 
+                    "Tags"          "stringList(#PROJECTILE)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL"
+                            "Damage"        "randomI(%minRangeDamage, %maxRangeDamage)"
+                        }
+                    }
+                }
+            }
+        }
+
+        "AddObjectToList"
+        {
+            "List"                      "%hitUnits"
+            "Value"                     "%TARGET"
+        }
+
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"                "%TARGET"
+                "Radius"                "%bounceTargetRange"
+                "Teams"                 "TEAM_ENEMY"
+                "ExcludedUnits"         "%hitUnits"
+                "MaxTargets"            "1"
+            }
+
+            "IteratorName"              "#newTarget"
+        
+            "Actions"    
+            {
+                "Conditional"
+                {
+                    "Condition"         "listCount(%hitUnits) < 3"
+
+                    "Actions" 
+                    {
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"        "unitPosition(%TARGET)"
+                                "Radius"        "%bounceTargetRange"
+                                "Teams"         "TEAM_ENEMY"
+                                "MaxTargets"    "%maxTargets"
+                                "ReferenceTeam" "unitGroup(%SOURCE)"
+                                "ExcludedUnits" "objectList(%TARGET)"
+                                "Random"        "1"
+                            }
+
+                            "IteratorName" "#newTarget"
+                        
+                            "Actions"    
+                            {
+                                "TrackingProjectile"
+                                {
+                                    "SourcePos"         "unitPosition(%TARGET, #Chest)"
+                                    "Target"            "%newTarget"
+                                    "TargetPos"         "unitPosition(%newTarget, #Chest)"
+                                    "Model"             "MagmaElementalEruptionProjectile"
+
+                                    "Params" 
+                                    {
+                                        "minRangeDamage" 
+                                        {
+                                            "type"         "FIELD_FLOAT"
+                                            "value"        "%minRangeDamage"
+                                        }
+
+                                        "maxRangeDamage" 
+                                        {
+                                            "type"         "FIELD_FLOAT"
+                                            "value"        "%maxRangeDamage"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    
+    }
+}

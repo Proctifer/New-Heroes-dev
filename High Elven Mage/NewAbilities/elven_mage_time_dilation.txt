@@ -1,0 +1,97 @@
+"elven_mage_time_dilation"
+{
+    "AbilityBehavior"           "UNIT_TARGET | POSITIVE_EFFECT | FAKE_ACTION | DOESNT_CONSUME_MOVE"
+    "AbilityTeamFilter"         "TEAM_FRIENDLY"
+    "AbilityCastRange"          "0"
+    "AbilityCooldown"           "4"
+    "AbilityAPCost"             "0"
+
+    "AnimationID"               "SpellCastB"
+    "CastFXId"                  "KnightHoldTheLineCastFXMega"
+    "Icon"                      "TimeDilation"
+
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "cooldownOffset"    "1"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "duration"          "2"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%TARGET"
+                "ExcludedUnits"     "objectList(%TARGET)"
+                "Radius"            "1"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel) || isOnState(%theUnit, #second_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "OffsetCooldown"
+                {
+                    "Target"        "%SOURCE"
+                    "Offset"        "0-%cooldownOffset"
+                }
+                
+                "UnitRaiseMessage"
+                {
+                    "Unit"      "%SOURCE"
+                    "#Text"     "REPLENISHED!!"
+                    "Icon"      "Preparation"
+                }
+                
+                "HitLegendaryTriggered"
+                {
+                    "Unit"      "%SOURCE"
+                }
+            }
+        }
+
+        "SetStat"
+        {
+            "Target" "%SOURCE"
+            "Stat" "#actionsAvailable"
+            "Value" "stat(%SOURCE, #actionsAvailable) + 1"
+        }
+    }
+
+
+    "AIConfigB"
+    {
+        "Selection" 
+        {
+            "Weight" "4"
+            "Considerations"
+            {
+
+                "Priorizacion Por Distance mas cercano"
+                {
+                    "Curve" "Linear|-0.1|1|1|0"
+                    "Consideration" "DistanceToTarget"
+                    "Params"
+                    {
+                        "MaxRange" "10"  
+                    }
+                }
+            }
+        }
+    }
+}

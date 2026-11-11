@@ -72,6 +72,12 @@
             "List"                      "%hitUnits"
             "Value"                     "%TARGET"
         }
+		
+		"RemoveModifier"
+		{
+			"ModifierTag"			"bolt_tracker"
+			"Target"				"%CASTER"
+		}
     }
 
     "OnProjectileHitUnit"
@@ -153,11 +159,5 @@
                 }
             }
         }
-		
-		"RemoveModifier"
-		{
-			"ModifierTag"			"archmage_bolt"
-			"Target"				"%CASTER"
-		}
     }
 }

@@ -1,0 +1,5 @@
+{
+			"id" : "ElvenMage",
+			"unlockAchievement" : "gerald_adventure_win",
+			"locked" : false
+		}

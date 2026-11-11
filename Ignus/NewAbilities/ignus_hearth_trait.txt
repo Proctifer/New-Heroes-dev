@@ -1,0 +1,138 @@
+"ignus_hearth_trait"
+{
+    "AbilityBehavior"       "PASSIVE"
+    "Icon"                  "Hearth"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "heal"                "1"
+        }
+
+        "02"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "burnReduction"       "-1"
+        }
+
+        "03"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "overhealDuration"    "2"
+        }
+    }
+
+    "Modifiers"
+    {
+        "ignus_hearth_trait_modifier"
+        {
+            "Passive" "1"
+
+            "OnHitPreProcessDamages"
+            {
+                "Conditional"
+                {
+                    "Condition" "isOnState(%TARGET, #BURNING) && hasTags(hitTags(%HIT), #BURNDAMAGE)"
+
+                    "Actions" 
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_TRUE"
+                            "Damage"        "%burnReduction"
+                        }
+                        
+                        "Conditional"
+                        {
+                            "Condition" "stat(%TARGET, #health) == stat(%TARGET, #health_max)"
+
+                            "Actions"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"  "hearth_overheal_modifier"
+                                    "Target"        "%TARGET"
+                                    "Duration"      "%overhealDuration"
+                                    "Params"
+                                    {
+                                        "heal" {
+                                            "type"  "FIELD_FLOAT"
+                                            "value" "%heal"
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            "ElseActions" 
+                            {
+                                "Heal"
+                                {
+                                    "Target"        "%TARGET"
+                                    "HealAmount"    "%heal"
+                                }
+
+                                "AttachEffect"
+                                {
+                                    "EffectName"    "HealingFXMega"
+                                    "Target"        "%TARGET"
+                                }
+                            }
+                        }
+                    }
+                }
+
+                "Conditional"
+                {
+                    "Condition" "hasTags(hitTags(%HIT), #ENVIRONMENTAL) && hasModifier(%ATTACKER, #fire_floor_tile_modifier)"
+
+                    "Actions" 
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_TRUE"
+                            "Damage"        "%burnReduction"
+                        }
+                    }
+                }
+            }
+        }
+
+        "hearth_overheal_modifier"
+        {
+            "OnAdded"
+            {
+                "GiveArmor"
+                {
+                    "Target"        "%TARGET"
+                    "ArmorAmount"   "%heal" 
+                }
+            }
+
+            "OnRemoved"
+            {
+                "GiveArmor"
+                {
+                    "Target" "%TARGET"
+                    "ArmorAmount" "0"
+                }
+            }
+
+            "OnTurnStarted"
+            {
+               "RemoveModifier"
+                {
+                    "ModifierName"  "hearth_overheal_modifier"
+                    "Target"        "%TARGET"
+                }
+            }
+           
+
+            "PropertiesAdd"
+            {
+                "armor_max" "%heal" 
+            }
+        }
+    }
+}

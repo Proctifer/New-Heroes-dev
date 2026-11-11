@@ -1,0 +1,65 @@
+"UNIT_ALRIC_NAME_0001" = "Alric"
+"UNIT_ALRIC_LORE" = "Hammerhold fue derrotado, pero el Gran Espíritu del Desierto aún no ha terminado con Alric. Se ha aventurado al continente de Linirea en busca de recuperar la gloria del desierto y someter al mal."
+
+"UNIT_SAND_WARRIOR_NAME_0001" = "Guerrero de Arena"
+
+"SKILL_alric_toughness_trait_NAME" = "Tenacidad"
+"SKILL_alric_toughness_trait_DESCRIPTION" = "Mientras la salud de Alric esté al máximo, obtiene resistencia al daño físico."
+"SKILL_alric_toughness_trait_DESCRIPTION_DATA" = "Reducción de daño: <style="buff"> {physicalReduction} {icon#damagePhysical}"
+
+"SKILL_alric_slash_NAME" = "Cuchillada"
+"SKILL_alric_slash_DESCRIPTION" = "Alric realiza un corte de espada a un enemigo objetivo."
+"SKILL_alric_slash_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Aplica sangrado a los objetivos que estén <style="concept">inmovilizados</style>."
+"SKILL_alric_slash_DESCRIPTION_DATA" = "Daño: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nDuración de sangrado ÉPICO: <style="highlight">{bleedDuration}</style> {icon#turns}\nAlcance: <style="highlight">CUERPO A CUERPO</style>"
+
+"SKILL_alric_sand_warrior_NAME" = "Guerrero de Arena"
+"SKILL_alric_sand_warrior_DESCRIPTION" = "Alric invoca Guerreros de Arena en una ubicación seleccionada."
+"SKILL_alric_sand_warrior_DESCRIPTION_DATA" = "Duración de invocación: <style="highlight">{duration}</style> {icon#turns}\nGuerreros de arena: <style="highlight">{warriorAmount}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_alric_flurry_NAME" = "Ráfaga de cortes"
+"SKILL_alric_flurry_DESCRIPTION" = "Desata 2 tajos contra un enemigo objetivo, cada uno infligiendo el mismo daño que su ataque básico."
+"SKILL_alric_flurry_DESCRIPTION_DATA" = "Daño: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damagePhysical}</style>\nAlcance: <style="highlight">CUERPO A CUERPO</style>"
+
+"SKILL_alric_riposte_NAME" = "Postura Khalfeyya"
+"SKILL_alric_riposte_DESCRIPTION" = "Adopta una postura para anular el daño del siguiente ataque cuerpo a cuerpo y realizar un contraataque de daño verdadero."
+"SKILL_alric_riposte_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Si Alric está <style="concept">inmovilizado</style>, obtiene daño adicional por espinas."
+"SKILL_alric_riposte_DESCRIPTION_DATA" = "Duración: {duration} {icon#turns}\nÉPICO: espinas adicionales: <style="damage">+{thornsIncrease}</style>\nAlcance: <style="highlight">SÍ MISMO</style>"
+
+"SKILL_alric_solar_shield_NAME" = "Escudo Solar"
+"SKILL_alric_solar_shield_DESCRIPTION" = "Desplazarse rápidamente hacia un aliado dentro del alcance, otorgándole armadura adicional a él y a Alric."
+"SKILL_alric_solar_shield_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Si alguna de las unidades está <style="debuff">debilitada</style>, se activa una explosión. \nLos efectos se disipan."
+"SKILL_alric_solar_shield_DESCRIPTION_DATA" = "Armadura adicional: <style="buff">+{extraArmor} {icon#statArmor}</style>\nDuración: <style="highlight">{duration} {icon#turns}</style>\nDaño ÉPICO: <style="highlight">{fireDamage} {icon#damagePhysical}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_alric_solar_shield_DESCRIPTION_EXTRA" = "<style="extra">Si el aliado es un guerrero de arena, su duración se extiende.</style>"
+
+"SKILL_alric_quicksand_NAME" = "Arenas movedizas"
+"SKILL_alric_quicksand_DESCRIPTION" = "Alric crea un temblor en el suelo y luego se teletransporta a esa ubicación. \nLos enemigos en un Las áreas de efecto {aoeRadius}-hex infligen <style="concept">retroceso</style> y <style="concept">enraizamiento</style>."
+"SKILL_alric_quicksand_DESCRIPTION_DATA" = "Duración del enraizamiento: <style="highlight">{rootDuration} {icon#turns}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_alric_sandstorm_NAME" = "Tempestad de arena"
+"SKILL_alric_sandstorm_DESCRIPTION" = "Alric gira en línea recta hacia una casilla libre, dañando y empujando a todos los enemigos a su paso."
+"SKILL_alric_sandstorm_DESCRIPTION_EPIC" = "<style="epic">ÉPICO:</style> Aplica <style="concept">aturdimiento</style> a los enemigos <style="debuff">debilitados</style>."
+"SKILL_alric_sandstorm_DESCRIPTION_DATA" = "Daño: <style="damage">{damage} {icon#damagePhysical}</style>\nDuración del aturdimiento ÉPICO: <style="highlight">{stunDuration} {icon#turns}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_alric_adversary_NAME" = "Adversario"
+"SKILL_alric_adversary_DESCRIPTION" = "Alric elige un enemigo para desafiar y obtiene daño adicional contra él."
+"SKILL_alric_adversary_DESCRIPTION_DATA" = "Daño adicional: <style="damage">+{extraDamage}</style>\nAlcance: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_alric_adversary_DESCRIPTION_EXTRA" = "<style="extra">Los guerreros de arena de Alric también se benefician.</style>"
+
+"COMBAT_MODIFIER_alric_riposte_modifier_TITLE" = "Postura de guardia"
+"COMBAT_MODIFIER_alric_riposte_modifier_DESCRIPTION" = "Alric esquiva el siguiente ataque cuerpo a cuerpo <style="highlight">FÍSICO</style> y luego realiza un contraataque."
+
+"COMBAT_MODIFIER_modifier_alric_solar_shield_TITLE" = "Escudo solar"
+"COMBAT_MODIFIER_modifier_alric_solar_shield_DESCRIPTION" = "Esta unidad tiene armadura mejorada."
+
+"COMBAT_MODIFIER_alric_riposte_increased_thorns_modifier_TITLE" = "Espinas mejoradas"
+"COMBAT_MODIFIER_alric_riposte_increased_thorns_modifier_DESCRIPTION" = "El daño de la armadura de espinas se ve potenciado."
+
+"COMBAT_MODIFIER_alric_adversary_modifier_TITLE" = "Desafiado"
+"COMBAT_MODIFIER_alric_adversary_modifier_DESCRIPTION" = "Alric y sus guerreros de arena obtienen daño adicional contra esta unidad."
+
+"COMBAT_MODIFIER_toughness_trait_extra_damage_TITLE" = "Toughness"
+"COMBAT_MODIFIER_toughness_trait_extra_damage_DESCRIPTION" = "Alric has bonus damage because he is full health."
+
+"COMBAT_MODIFIER_toughness_trait_extra_damage_TITLE" = "Resistencia"
+"COMBAT_MODIFIER_toughness_trait_extra_damage_DESCRIPTION" = "Alric tiene daño adicional porque tiene la salud al máximo."
+

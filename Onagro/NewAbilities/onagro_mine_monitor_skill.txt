@@ -1,0 +1,117 @@
+"onagro_mine_monitor_skill"
+{
+    "AbilityBehavior"       "PASSIVE"
+   
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "mainDamage"    "3"
+        }
+
+        "02"
+        {
+            "var_type"      "FIELD_FLOAT"
+            "splashDamage"  "1"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_mine_monitor"
+        {
+            "Passive" "1"
+
+            "OnUnitEnteredNode"
+            {
+               "AreaControl"
+                {
+                    "Center"    "unitHex(%TARGET)"
+                    "Range"     "0"
+                    "From"      "%from"
+                    "To"        "%to"
+
+                    "EnterActions"
+                    {
+                        "InterruptUnit"
+                        {
+                            "Target" "%UNIT"
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName"    "FireballExplosionFXMega"
+                            "Target"        "unitPosition(%TARGET)"
+                        }
+
+                        "QueueHit"
+                        {
+                            "Target"        "%UNIT"
+                            "Source"        "%TARGET"
+                            "EffectName"    "FireballHitFXMega" 
+                            "Tags"          "stringList(#ENVIRONMENTAL, #REFLECTED)"
+
+                            "InitActions"
+                            {
+                                "AddDamage"
+                                {
+                                    "Type"          "DAMAGE_PHYSICAL"
+                                    "Damage"        "%mainDamage"
+                                }
+                            }
+                        }
+
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"        "unitPosition(%TARGET)"
+                                "Radius"        "1"
+                                "Teams"         "TEAM_ENEMY"
+                                "ExcludedUnits" "objectList(%UNIT)"
+                            }
+
+                            "IteratorName" "#newTarget"
+                        
+                            "Actions"    
+                            {
+
+                                "Hit"
+                                {
+                                    "Target"        "%newTarget"
+                                    "EffectName"    "FireballHitFXMega" 
+                                    "Tags"          "stringList(#AOE)"
+
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"            "DAMAGE_PHYSICAL"
+                                            "Damage"        "%splashDamage"
+                                        }
+                                    }
+
+                                    "Actions"
+                                    {
+                                        "Knockback" 
+                                        {
+                                            "Target" "%HITTARGET"
+                                            "Center" "unitPosition(%TARGET)"
+                                            "Strength" "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        "KillUnit"
+                        {
+                            "Target"        "%TARGET" 
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

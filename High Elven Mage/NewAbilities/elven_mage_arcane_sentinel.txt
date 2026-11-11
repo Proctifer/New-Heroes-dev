@@ -8,7 +8,7 @@
     "AbilityAOECenterOnCaster"  "0"
     "AbilityAOEAffectsCaster"   "0"
 
-    "AnimationID"               "SpellCastA"
+    "AnimationID"               "SpecialAttack"
     "CastFXId"                  "TeslaSpellChargeFXMega"
     "Icon"                      "Sentry" 
 
@@ -158,7 +158,7 @@
                 {
                     "SourcePos"             "unitPosition(%sentinel, #Chest)"
                     "TargetPos"             "%TARGET"
-                    "Model"					"ArcaneSentryProjectile"
+                    "Model"					"ChainLightningProjectile"
                     "TargetFilter"
                     {
                         "Radius"        "0"
@@ -190,7 +190,7 @@
                 {
                     "SourcePos"             "unitPosition(%SOURCE, #Chest)"
                     "TargetPos"             "%TARGET"
-                    "Model"					"ArcaneSentryProjectile"
+                    "Model"					"ChainLightningProjectile"
                     "TargetFilter"
                     {
                         "Radius"        "0"

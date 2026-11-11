@@ -1,7 +1,7 @@
 "ElvenMage" 
 	{
 		"UniqueId" "ElvenMage"
-		"Model" "HumanArcaneMage"
+		"Model" "StormcloudHighSorcerer"
 		"MetaExo" "ExoSkeletonHumanArcaneMage_MetaDataAsset"
 		"Name" "ELVENMAGE"
 		"InheritsFrom" "Hero"

@@ -33,11 +33,6 @@
 
     "OnCustomTargeting"
     {
-        "CreateObjectList"
-        {
-            "Name" "#hexCandidates"
-        }
-
         "ActOnTargets"
         {
             "Target"
@@ -57,49 +52,34 @@
                 "ActOnHexas"
                 {
                     "Center"                 "unitHex(%sentinel)"
-                    "Range"                  "1"
+                    "Range"                  "%area"
                     "IteratorName"           "#hexa"
-                
-                    "Actions"    
-                    {
-                        "AddObjectToList" 
-                        {
-                            "List" "%hexCandidates"
-                            "Value" "%hexa"
-                        }
-                    }
-                }
-            }
-        }
-        
-        "EachInList"
-        {
-            "List" "%hexCandidates"
-            "IteratorName" "#hexa"
-            "IteratorIndexName" "#hexaIndex"
-            "Actions"
-            {
-                "AddAsAffected"
-                {
-                    "Hexa" "%hexa"
-                }
-
-                "ActOnTargets"
-                {
-                    "Target"
-                    {
-                        "Center"      "hexPosition(%hexa)"
-                        "Radius"      "0"
-                        "Teams"       "TEAM_ENEMY"
-                    }
-
-                    "IteratorName" "#newTarget"
                 
                     "Actions"    
                     {
                         "AddAsAffected"
                         {
-                            "Unit" "%newTarget"
+                            "Hexa" "%hexa"
+                        }
+
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"      "hexPosition(%hexa)"
+                                "Radius"      "0"
+                                "Teams"       "TEAM_ENEMY"
+                            }
+
+                            "IteratorName" "#newTarget"
+                        
+                            "Actions"    
+                            {
+                                "AddAsAffected"
+                                {
+                                    "Unit" "%newTarget"
+                                }
+                            }
                         }
                     }
                 }

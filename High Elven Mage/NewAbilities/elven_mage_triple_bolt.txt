@@ -6,7 +6,7 @@
     "AbilityTeamFilter" "TEAM_ENEMY"
     
     "AnimationID"       "SpecialAttack"
-    "CastFXId"          "ArcaneMagicMissileCastFXMega"
+    "CastFXId"          "WitchDoctorWildBlastCastFXMega"
     "Icon"              "TripleBolt"
 
     "AbilityCastRange"  "stat(%CASTER, #rangedAttackRange)"

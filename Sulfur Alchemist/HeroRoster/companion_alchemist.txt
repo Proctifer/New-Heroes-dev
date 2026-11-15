@@ -1,0 +1,5 @@
+{
+			"id" : "Alchemist",
+			"unlockAchievement" : "no_respawn_undead_win",
+			"locked" : false
+		}

@@ -1,7 +1,7 @@
 "ElvenMage" 
 	{
 		"UniqueId" "ElvenMage"
-		"Model" "HumanArcaneMage"
+		"Model" "DemonOloch"
 		"MetaExo" "ExoSkeletonHumanArcaneMage_MetaDataAsset"
 		"Name" "ELVENMAGE"
 		"InheritsFrom" "Hero"
@@ -44,14 +44,14 @@
 
  			"2" 
  			{
- 				"1" "elven_mage_gravity_bind"
+ 				"1" "elven_mage_timelapse"
 				"2"	"elven_mage_time_dilation"
  			}
 
  			"3"
  			{
  				"1" "elven_mage_celestial_pull"
-				"2"	"elven_mage_second_sentinel"
+				"2"	"elven_mage_sacrifice"
  			}
  		}
 

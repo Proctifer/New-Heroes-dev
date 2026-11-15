@@ -1,0 +1,115 @@
+"MinionAlchemist" 
+	{
+		"UniqueId" "Alchemist"
+		"Model" "HumanTesla"
+		"MetaExo" "ExoSkeletonHumanTesla_MetaDataAsset"
+		"Name" "ALCHEMIST"
+		"InheritsFrom" "Hero"
+		"cinematicTags" "Heroe|Minion|Male|Alchemist|ct_minion|ct_ranged|ct_craft|ct_perception|ct_social|UPGRADES_crafty"
+		"nextLevelArchetype" "MinionAlchemistLvl2"
+		"AttackType" "ARTILLERY"
+		"Icon" "Asst_Banner_Ranger"
+		"Background" "hero_roster_legend_bg_forest"
+		"UnitOnMap" "Asst_Party_Ranger"
+		"PortraitBackgroundColor" "99635E"
+
+		"stats"
+		{
+			"level" "1"
+
+			"health_max" 				"3"
+			"armor_max" 				"0"
+			"armor_regen_per_turn" 		"0"
+
+			"baseDamage"  				"2"
+
+			"rangedAttackRange" 		"4" 
+			"rangedAttackMinRange" 		"2"
+			
+			
+			"walkSpeed" 				"2"
+		}
+
+		"skills"
+		{
+			"11" 		"musketeer_double_barrel_provider_trait"
+			"100" 		"crafty_endturn_trait"
+ 		}
+
+		"skillProgression"
+ 		{
+ 			"1" 
+ 			{
+ 				"1" "alchemist_sulfur_dust"
+ 			}
+
+ 			"2" 
+ 			{
+ 				"1" "alchemist_sisters_spirits"
+ 				"2" "alchemist_shred_of_darkness"
+ 			}
+
+ 			"3"
+ 			{
+ 				"1" "musketeer_shrapnel_shot"
+ 				"2" "musketeer_open_season"
+ 			}
+ 		}
+
+ 		"defaultSkill" "alchemist_flask"
+
+ 		"soundConfig"
+		{
+			"assetId" "DynamicSoundGroupBombardierSounds"
+			"sounds"
+			{
+				"receiveArmorDamage" "krl_sfx_combatGeneric_armorHit"
+				"useSkill" "krl_va_combatRanger_action"
+			}
+		}
+	}
+
+
+	"MinionAlchemistLvl2" 
+	{
+		"InheritsFrom" "MinionAlchemist"
+		"nextLevelArchetype" "MinionAlchemistLvl3"
+
+		"stats"
+		{
+			"level" "2"
+
+			"health_max" 				"4"
+			"armor_max" 				"0"
+			"armor_regen_per_turn" 		"0"
+
+			"baseDamage"  				"3"
+
+			"rangedAttackRange" 		"4"
+			"rangedAttackMinRange" 		"2"
+			
+			"walkSpeed" 				"2"
+		}
+	}
+
+	"MinionAlchemistLvl3" 
+	{
+		"InheritsFrom" "MinionAlchemist"
+
+		"stats"
+		{
+			"level" "3"
+
+			"health_max" 				"5"
+			"armor_max" 				"0"
+			"armor_regen_per_turn" 		"0"
+
+			"baseDamage"  				"4"
+
+			"rangedAttackRange" 		"7"
+			"rangedAttackMinRange" 		"2"
+			
+			"walkSpeed" 				"2"
+		}
+	}
+

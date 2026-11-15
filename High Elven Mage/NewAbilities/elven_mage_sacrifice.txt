@@ -1,0 +1,415 @@
+"elven_mage_sacrifice"
+{
+    "AbilityBehavior"           "UNIT_TARGET | AOE"
+    "AbilityTeamFilter"         "TEAM_ALL"
+    "AbilityCastRange"          "0"
+    "AbilityCooldown"           "4"
+    "AbilityAPCost"             "2"
+    "AnimationID"               "SpellCastA"
+    "CastFXId"                  "SylvanElfSkirmishCastFXMega"
+    "Icon"                      "SentinelSacrifice"
+
+    "AbilityAOETeamFilter"      "TEAM_ENEMY"
+    "AbilityAOERange"           "0"
+    "AbilityAOEKind"            "RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster"  "0"
+    "AbilityAOEAffectsCaster"   "0"
+   
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "aoeRadius"         "3"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_EXPRESSION"        
+            "damage"            "ceil(stat(%CASTER, #attackDamage)/2)"
+        }
+
+        "03"
+        {
+            "var_type"          "FIELD_FLOAT"        
+            "numberOfBolts"      "4"
+        }
+
+        "04"
+        {
+            "var_type"          "FIELD_FLOAT"        
+            "timeBetweenHits"   "0.2"
+        }
+        "20"
+        {
+            "var_type"          "FIELD_STRING"
+            "iconDamageType"    "damageMagical"
+        }
+    }
+
+    "OnCustomTargeting"
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%CASTER"
+                "ExcludedUnits"     "objectList(%CASTER)"
+                "Radius"            "20"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "ActOnHexas"
+                {
+                    "Center"                 "unitHex(%sentinel)"
+                    "Range"                  "%aoeRadius"
+                    "IteratorName"           "#hexa"
+                
+                    "Actions"    
+                    {
+                        "AddAsAffected"
+                        {
+                            "Hexa" "%hexa"
+                        }
+
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"      "hexPosition(%hexa)"
+                                "Radius"      "0"
+                                "Teams"       "TEAM_ENEMY"
+                            }
+
+                            "IteratorName" "#newTarget"
+                        
+                            "Actions"    
+                            {
+                                "AddAsAffected"
+                                {
+                                    "Unit" "%newTarget"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "OnAbilityStart"
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%CASTER"
+                "ExcludedUnits"     "objectList(%CASTER)"
+                "Radius"            "20"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "StartLogicTick"
+                {
+                    "Time"          "2"
+                    "TickType"      "PriorityCenter"
+                    "Position"      "pointAdd(unitPosition(%sentinel), newPoint(0, 1, 0))"
+                }
+            }
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%CASTER"
+                "ExcludedUnits"     "objectList(%CASTER)"
+                "Radius"            "20"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "KillUnit"
+                {
+                    "Target"      "%sentinel"
+                }
+                
+                "Delay"
+                {
+                    "Time"          "0.6"
+
+                    "Actions"
+                    {
+                        "SetToContext"
+                        {
+                            "Context"       "currentContext()"
+                            "Type"          "FIELD_INTEGER"
+                            "Key"           "#numberOfHitsDone"
+                            "Value"         "0" 
+                        }
+
+                        "CreateObjectList"
+                        {
+                            "Name"          "#hitUnits"
+                        }
+
+                        "Times"
+                        {
+                            "Times"             "%numberOfBolts"
+                            "IteratorName"      "#index"
+                            "Actions"
+                            {
+                                "ActOnTargets"
+                                {
+                                    "Target"
+                                    {
+                                        "Center"                "%sentinel"
+                                        "Radius"                "%aoeRadius"
+                                        "Teams"                 "TEAM_ENEMY"
+                                        "MaxTargets"            "1"
+                                        "Random"                "1"
+                                        "ExcludedUnits"         "%hitUnits"
+                                    }
+                                    "IteratorName" "#newTarget"
+                                    "Actions"    
+                                    {
+                                        "SetToContext"
+                                        {
+                                            "Context"       "currentContext()"
+                                            "Type"          "FIELD_INTEGER"
+                                            "Key"           "#numberOfHitsDone"
+                                            "Value"         "%numberOfHitsDone + 1" 
+                                        }
+
+                                        "AddObjectToList" 
+                                        {
+                                            "List"                      "%hitUnits"
+                                            "Value"                     "%newTarget"
+                                        }
+
+                                        "Debug"
+                                        {
+                                            "Text" "First Iteration"
+                                            "Expression" "%index"
+                                        }
+
+                                        "Delay"
+                                        {
+                                            "Time"          "(%index * %timeBetweenHits)"
+                                            "Actions"
+                                            {
+                                                "TrackingProjectile"
+                                                {
+                                                    "SourcePos"             "unitPosition(%sentinel, #CastPoint)"
+                                                    "TargetPos"             "unitPosition(%newTarget)"
+                                                    "Model"					"ArcaneSentryProjectile"
+                                                    "Params"
+                                                    {
+                                                        "damage" 
+                                                        {
+                                                            "type"      "FIELD_FLOAT"
+                                                            "value"     "expr(%damage)"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
+                        "Conditional"
+                        {
+                            "Condition"             "%numberOfHitsDone > 0 && %numberOfHits - %numberOfHitsDone > 0"
+                            "Actions" 
+                            {
+                                "Times"
+                                {
+                                    "Times"             "%numberOfHits - %numberOfHitsDone"
+                                    "IteratorName"      "#index"
+                                    "Actions"
+                                    {
+                                        "ActOnTargets"
+                                        {
+                                            "Target"
+                                            {
+                                                "Center"                "%sentinel"
+                                                "Radius"                "%aoeRadius"
+                                                "Teams"                 "TEAM_ENEMY"
+                                                "MaxTargets"            "1"
+                                                "Random"                "1"
+                                            }
+                                            "IteratorName" "#newTarget"
+                                            "Actions"    
+                                            {
+                                                "SetToContext"
+                                                {
+                                                    "Context"       "currentContext()"
+                                                    "Type"          "FIELD_INTEGER"
+                                                    "Key"           "#numberOfHitsDone"
+                                                    "Value"         "%numberOfHitsDone + 1" 
+                                                }
+
+                                                "Debug"
+                                                {
+                                                    "Text" "Second Iteration"
+                                                    "Expression" "%index"
+                                                }
+
+                                                "Delay"
+                                                {
+                                                    "Time"          "(%numberOfHitsDone * %timeBetweenHits) + (%index * %timeBetweenHits)"
+                                                    "Actions"
+                                                    {
+                                                        "TrackingProjectile"
+                                                        {
+                                                            "SourcePos"             "unitPosition(%sentinel, #CastPoint)"
+                                                            "TargetPos"             "unitPosition(%newTarget)"
+                                                            "Model"					"ArcaneSentryProjectile"
+                                                            "Params"
+                                                            {
+                                                                "damage" 
+                                                                {
+                                                                    "type"      "FIELD_FLOAT"
+                                                                    "value"     "expr(%damage)"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        "Conditional"
+                        {
+                            "Condition"             "%numberOfHits - %numberOfHitsDone > 0"
+                            "Actions" 
+                            {
+                                "StartLogicTick"
+                                {
+                                    "Time"          "(%numberOfHits - %numberOfHitsDone) * %timeBetweenHits"
+                                    "TickType"      "PriorityCenter"
+                                    "Position"      "unitPosition(%sentinel)"
+                                }
+
+                                "Times"
+                                {
+                                    "Times"             "%numberOfHits - %numberOfHitsDone"
+                                    "IteratorName"      "#index"
+                                    "Actions"
+                                    {
+                                        "ActOnHexas"
+                                        {
+                                            "Center"                "unitHex(%sentinel)"
+                                            "Range"                 "%aoeRadius"
+                                            "IteratorName"          "#hexa"
+                                            "RequireEmpty"          "1"
+                                            "Max"                   "1"
+                                            "Random"                "1"
+                                            "Actions"    
+                                            {
+                                                "Delay"
+                                                {
+                                                    "Time"          "(%numberOfHitsDone * %timeBetweenHits) + (%index * %timeBetweenHits)"
+                                                    "Actions"
+                                                    {
+                                                        "TrackingProjectile"
+                                                        {
+                                                            "SourcePos"             "unitPosition(%sentinel, #CastPoint)"
+                                                            "TargetPos"             "hexPosition(%hexa)"
+                                                            "Model"                 "ArcaneSentryProjectile"
+                                                            "Params"
+                                                            {
+                                                                "damage" 
+                                                                {
+                                                                    "type"      "FIELD_FLOAT"
+                                                                    "value"     "expr(%damage)"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+    }
+
+    "OnProjectileDestinationReached" 
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"    "%TARGET"
+                "Radius"    "0"
+                "Teams"     "TEAM_ENEMY"
+            }
+
+            "IteratorName" "#newTarget"
+        
+            "Actions"    
+            {
+                "Hit"
+                {
+                    "Target"            "%newTarget"
+                    "Tags"              "stringList(#PROJECTILE, #TARGETED, #AOE)"
+                    "EffectName"        "ArcaneSentryHitFXMega" 
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_MAGICAL"
+                            "Damage"        "%damage"
+                        }
+                    }
+                }
+            }
+
+            "ActionsIfNotFound"
+            {
+                "AttachEffect"
+                {
+                    "EffectName"        "TeslaThunderStrikeHitFXMega"
+                    "Target"            "%sentinel"
+                }
+                
+            }
+        }
+    }
+}

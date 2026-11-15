@@ -1,0 +1,34 @@
+"alchemist_shred_of_darkness"
+{
+    "AbilityBehavior"       "UNIT_TARGET | POSITIVE_EFFECT | FAKE_ACTION | DOESNT_CONSUME_MOVE"
+    "AbilityTeamFilter"     "TEAM_FRIENDLY"
+    "AnimationID"           "ThunderStrike"
+    "CastFXId"              "EnchantressSporeShowerCastFXMega"
+    "Icon"                  "ShredOfDarkness"
+    "AbilityCastRange"      "0"
+    "AbilityCooldown"       "3"
+    "AbilityAPCost"         "0"
+
+     "AbilitySpecial"
+    {
+    }
+
+    "OnAbilityAction"
+    {
+        "ApplyModifier"
+        {
+            "ModifierName"      "alchemist_darkness_modifier"
+            "Target"            "%TARGET"
+        }
+    }
+
+    "Modifiers"
+    {
+        "alchemist_darkness_modifier"
+        {
+            "Tags"          "ingredient"
+            "Icon"          "Enraged02"
+            "IconPriority"  "50"
+        }
+    }
+}

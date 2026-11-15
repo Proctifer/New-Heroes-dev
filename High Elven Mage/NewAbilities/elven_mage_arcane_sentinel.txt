@@ -8,9 +8,9 @@
     "AbilityAOECenterOnCaster"  "0"
     "AbilityAOEAffectsCaster"   "0"
 
-    "AnimationID"               "SpellCastA"
+    "AnimationID"               "SpecialAttack"
     "CastFXId"                  "TeslaSpellChargeFXMega"
-    "Icon"                      "Sentry" 
+    "Icon"                      "Sentinel" 
 
     "AbilityCastRange"          "expr(%distanceToTravel)"
     "AbilityCooldown"           "2"
@@ -158,7 +158,7 @@
                 {
                     "SourcePos"             "unitPosition(%sentinel, #Chest)"
                     "TargetPos"             "%TARGET"
-                    "Model"					"ArcaneSentryProjectile"
+                    "Model"					"ChainLightningProjectile"
                     "TargetFilter"
                     {
                         "Radius"        "0"
@@ -188,9 +188,9 @@
             {
                 "TrackingProjectile"
                 {
-                    "SourcePos"             "unitPosition(%SOURCE, #Chest)"
+                    "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
                     "TargetPos"             "%TARGET"
-                    "Model"					"ArcaneSentryProjectile"
+                    "Model"					"ChainLightningProjectile"
                     "TargetFilter"
                     {
                         "Radius"        "0"
@@ -274,12 +274,6 @@
                             "Target"            "%sentinel"
                             "Animation"         "Spawn"
                         }
-
-                        "AttachEffect"
-                        {
-                            "EffectName"        "TeslaThunderStrikeHitFXMega"
-                            "Target"            "%sentinel"
-                        }
                     }
                 }
             }
@@ -299,12 +293,6 @@
                         {
                             "Target"            "%UNIT"
                             "Animation"         "Spawn"
-                        }
-
-                        "AttachEffect"
-                        {
-                            "EffectName"        "TeslaThunderStrikeHitFXMega"
-                            "Target"            "%UNIT"
                         }
 
                         "ApplyModifier"

@@ -1,5 +1,5 @@
 "UNIT_ONAGRO_NAME_0001" = "Onagro"
-"UNIT_ONAGRO_LORE" = "Big battle bois mecha madness machine."
+"UNIT_ONAGRO_LORE" = "After the Unblinded were defeated, Chim and Churri were sent back home to help settle the chaos. Onagro stomps into battle, controlling the field and causing chaos of its own."
 
 "SKILL_onagro_missile_NAME" = "Missile Launcher"
 "SKILL_onagro_missile_DESCRIPTION" = "Fires a missile at an enemy, dealing physical damage."

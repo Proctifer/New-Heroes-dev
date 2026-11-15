@@ -12,7 +12,7 @@
 
 
 "SKILL_ignus_molten_fist_NAME" = "Molten Fist"
-"SKILL_ignus_molten_fist_DESCRIPTION" = "Strikes the target enemy with a heated thrust."
+"SKILL_ignus_molten_fist_DESCRIPTION" = "Strikes the target enemy with a heated fist."
 "SKILL_ignus_molten_fist_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Restores HP if the target is <style="debuff">burning</style>."
 "SKILL_ignus_molten_fist_DESCRIPTION_DATA" = "Damage: <style="rangeofdamage">{MinDamage} - {MaxDamage} {icon#damageTrue}</style>.\nEpic healing: <style="buff">{heal} {icon#statHP}</style>\nRange: <style="highlight">MELEE</style>"
 
@@ -23,7 +23,7 @@
 
 "SKILL_ignus_mad_dash_NAME" = "Mad Dash"
 "SKILL_ignus_mad_dash_DESCRIPTION" = "Charges through enemies, dealing true damage and applying <style="debuff">burning</style> to all of them."
-"SKILL_ignus_mad_dash_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> While in <style="highlight">Burnout</style>, Ignus heals for each enemy damaged."
+"SKILL_ignus_mad_dash_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> While in <style="highlight">Burnout</style>, Ignus refreshes 1 turn of the skill's cooldown."
 "SKILL_ignus_mad_dash_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nBurn duration: <style="highlight">{burnDuration} {icon#turns}</style>\nEPIC healing: <style="buff">{epicHeal} {icon#statHP}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
 
 "SKILL_ignus_surge_of_flames_NAME" = "Surge of Flames"
@@ -43,11 +43,11 @@
 "SKILL_ignus_combustion_NAME" = "Combustion"
 "SKILL_ignus_combustion_DESCRIPTION" = "Ignus explodes, dealing current damage to himself and all enemies in a {aoeRadius}-hex AOE around him."
 "SKILL_ignus_combustion_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Ignus takes no damage from this attack in <style="highlight">Burnout</style>, but is <style="concept">stunned</style> instead."
-"SKILL_ignus_combustion_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nSelf damage: <style="damage">{damage} {icon#damageTrue}</style>\nRange: <style="highlight">SELF</style>"
+"SKILL_ignus_combustion_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nSelf damage: <style="damage">{damage} {icon#damageTrue}</style>\nBurnout Damage: <style="damage">{burnoutDamage} {icon#damageTrue}</style>\nRange: <style="highlight">SELF</style>"
 
 "SKILL_ignus_prominence_burn_NAME" = "Prominence Burn"
 "SKILL_ignus_prominence_burn_DESCRIPTION" = "Ignus unleashes 3 lines of fire in different directions, damaging and applying <style="debuff">burning</style> to all enemies struck by the attack."
-"SKILL_ignus_prominence_burn_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Unleashes 6 lines of fire while in <style="highlight">Burnout</style> at the cost of 2 HP."
+"SKILL_ignus_prominence_burn_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Unleashes 6 lines of fire while in <style="highlight">Burnout</style> at the cost of {selfDamage} HP."
 "SKILL_ignus_prominence_burn_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nRange: <style="highlight">{range}</style>"
 
 

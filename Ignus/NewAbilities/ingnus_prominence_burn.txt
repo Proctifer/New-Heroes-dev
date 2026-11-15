@@ -27,13 +27,13 @@
         "03"
         {
             "var_type"      "FIELD_EXPRESSION"
-            "range"         "stat(%CASTER, #rangedAttackRange)-1"
+            "range"         "stat(%CASTER, #rangedAttackRange)"
         }
 
         "04"
         {
             "var_type"      "FIELD_EXPRESSION"
-            "selfDamage"    "2"
+            "selfDamage"    "4"
         }
     }
 

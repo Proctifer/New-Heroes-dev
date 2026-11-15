@@ -16,11 +16,11 @@
 	"stats"
 	{
 		"level" 				"1"
-		"health_max" 			"7"
+		"health_max" 			"9"
 		"armor_max" 			"0"
-		"burnout_armor" 		"4"
+		"burnout_armor" 		"6"
 		"armor_regen_per_turn" 	"2"
-		"baseDamage"  			"4"
+		"baseDamage"  			"5"
 
 		"rangedAttackRange" 	"3"
 		
@@ -84,7 +84,7 @@
 	"stats"
 	{
 		"level" 				"2"
-		"health_max" 			"9"
+		"health_max" 			"11"
 		"armor_max" 			"0"
 		"burnout_armor" 		"6"
 		"armor_regen_per_turn" 	"2"
@@ -103,9 +103,9 @@
 	"stats"
 	{
 		"level" 				"3"
-		"health_max" 			"12"
+		"health_max" 			"13"
 		"armor_max" 			"0"
-		"burnout_armor" 		"8"
+		"burnout_armor" 		"6"
 		"armor_regen_per_turn" 	"2"
 		"baseDamage"  			"8"
 

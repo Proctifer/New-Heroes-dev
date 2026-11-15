@@ -20,7 +20,7 @@
         "02"
         {
             "var_type"          "FIELD_FLOAT"
-            "extraRange"        "2"
+            "extraRange"        "1"
         }
 
         "03"

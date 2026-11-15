@@ -10,7 +10,7 @@
 
     "AnimationID"               "SpecialAttack"
     "CastFXId"                  "TeslaSpellChargeFXMega"
-    "Icon"                      "Sentry" 
+    "Icon"                      "Sentinel" 
 
     "AbilityCastRange"          "expr(%distanceToTravel)"
     "AbilityCooldown"           "2"
@@ -188,7 +188,7 @@
             {
                 "TrackingProjectile"
                 {
-                    "SourcePos"             "unitPosition(%SOURCE, #Chest)"
+                    "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
                     "TargetPos"             "%TARGET"
                     "Model"					"ChainLightningProjectile"
                     "TargetFilter"
@@ -274,12 +274,6 @@
                             "Target"            "%sentinel"
                             "Animation"         "Spawn"
                         }
-
-                        "AttachEffect"
-                        {
-                            "EffectName"        "TeslaThunderStrikeHitFXMega"
-                            "Target"            "%sentinel"
-                        }
                     }
                 }
             }
@@ -299,12 +293,6 @@
                         {
                             "Target"            "%UNIT"
                             "Animation"         "Spawn"
-                        }
-
-                        "AttachEffect"
-                        {
-                            "EffectName"        "TeslaThunderStrikeHitFXMega"
-                            "Target"            "%UNIT"
                         }
 
                         "ApplyModifier"

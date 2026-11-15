@@ -1,0 +1,567 @@
+"elven_mage_timelapse"
+{
+    "AbilityBehavior"                   "UNIT_TARGET"
+    "AbilityTeamFilter"                 "TEAM_FRIENDLY"
+    "AnimationID"                       "SpellCastA"
+    "Icon"                              "Timelapse"
+    "CastFXId"                          "TeslaSpellChargeFXMega"
+
+    "AbilityCastRange"                  "0"
+    "AbilityCooldown"                   "3"
+    "AbilityAPCost"                     "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_EXPRESSION"
+            "damage"                    "ceil(stat(%CASTER, #attackDamage)*0.75)"
+        }
+
+        "02"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "area"                      "1"
+        }
+
+        "03"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "teleport_limit"            "3"
+        }
+
+        "03"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "duration"                  "1"
+        }
+    }
+
+    "OnCustomTargeting"
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%CASTER"
+                "ExcludedUnits"     "objectList(%CASTER)"
+                "Radius"            "20"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "ActOnHexas"
+                {
+                    "Center"                 "unitHex(%sentinel)"
+                    "Range"                  "1"
+                    "IteratorName"           "#hexa"
+                
+                    "Actions"    
+                    {
+                        "AddAsAffected"
+                        {
+                            "Hexa" "%hexa"
+                        }
+
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"      "hexPosition(%hexa)"
+                                "Radius"      "0"
+                                "Teams"       "TEAM_ENEMY"
+                                "CustomFilter""customUnitFilter(#theUnit, not(isOnState(%theUnit, #BOSS)))"
+                            }
+
+                            "IteratorName" "#newTarget"
+                        
+                            "Actions"    
+                            {
+                                "AddAsAffected"
+                                {
+                                    "Unit" "%newTarget"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "ActOnTargets"
+        {
+            "Target"
+            {
+                "Center"            "%TARGET"
+                "ExcludedUnits"     "objectList(%TARGET)"
+                "Radius"            "20"
+                "Teams"             "TEAM_ALL"
+                "Flags"             "INCLUDE_NON_TARGETABLE"
+                "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #arcane_sentinel) || isOnState(%theUnit, #second_sentinel))"
+            }
+
+            "IteratorName" "#sentinel"
+        
+            "Actions"    
+            {
+                "AttachEffect"
+                {
+                    "EffectName"                "TeslaLightningBallExplosionFXMega"
+                    "Target"                    "%sentinel"
+                }
+
+                "SetToContext"{
+                    "Context"   "currentContext()"
+                    "Key"       "#hex0"
+                    "Value"     "hexNeighbour(unitHex(%sentinel), unitHex(%sentinel), 0)"
+                    "Type"      "FIELD_OBJECT"
+                }
+                "SetToContext"{
+                    "Context"   "currentContext()"
+                    "Key"       "#hex1"
+                    "Value"     "hexNeighbour(unitHex(%sentinel), unitHex(%sentinel), 1)"
+                    "Type"      "FIELD_OBJECT"
+                }
+                "SetToContext"{
+                    "Context"   "currentContext()"
+                    "Key"       "#hex2"
+                    "Value"     "hexNeighbour(unitHex(%sentinel), unitHex(%sentinel), 2)"
+                    "Type"      "FIELD_OBJECT"
+                }
+                "SetToContext"{
+                    "Context"   "currentContext()"
+                    "Key"       "#hex3"
+                    "Value"     "hexNeighbour(unitHex(%sentinel), unitHex(%sentinel), 3)"
+                    "Type"      "FIELD_OBJECT"
+                }
+                "SetToContext"{
+                    "Context"   "currentContext()"
+                    "Key"       "#hex4"
+                    "Value"     "hexNeighbour(unitHex(%sentinel), unitHex(%sentinel), -1)"
+                    "Type"      "FIELD_OBJECT"
+                }
+                "SetToContext"{
+                    "Context"   "currentContext()"
+                    "Key"       "#hex5"
+                    "Value"     "hexNeighbour(unitHex(%sentinel), unitHex(%sentinel), -2)"
+                    "Type"      "FIELD_OBJECT"
+                }
+
+                "ActOnTargets"{
+                    "Target"{
+                        "Center"                "hexPosition(%hex0)"
+                        "Radius"                "0"
+                        "Teams"                 "TEAM_ENEMY"
+                        "CustomFilter"          "customUnitFilter(#theUnit, not(isOnState(%theUnit, #BOSS) || isOnState(%theUnit, #NO_SKULL)))"
+                    }
+                    "IteratorName" "#enemy0"
+                    "Actions"    
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "modifier_timelapsed"
+                            "Target"            "%enemy0"
+                            "Duration"          "%duration"
+                            "Refresh"           "1"
+                            "Params"
+                            {
+                                "ogHex" { 
+                                    "type"      "FIELD_OBJECT"
+                                    "value"     "%hex0"
+                                }
+                                "damage" {
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "expr(%damage)"
+                                }
+                            }
+                        }
+
+                        "MoveUnit"
+                        {
+                            "Target"      "%enemy0"
+                            "Position"    "newPoint(1000, 1000, 0)"
+                        }
+
+                        "SpawnUnit"
+                        {
+                            "UnitName"                  "#TimelapseOrb"
+                            "Position"                  "hexPosition(%hex0)"
+                            "UnitGroup"                 "unitGroup(%CASTER)"
+                            "IsAI"                      "0"
+
+                            "OnSpawn"
+                            {
+                                "#PlayActivityAnimation"
+                                {
+                                    "Target"            "%UNIT"
+                                    "Animation"         "Spawn"
+                                }
+                            }
+                        } 
+                    }
+                }
+                "ActOnTargets"{
+                    "Target"{
+                        "Center"                "hexPosition(%hex1)"
+                        "Radius"                "0"
+                        "Teams"                 "TEAM_ENEMY"
+                        "CustomFilter"          "customUnitFilter(#theUnit, not(isOnState(%theUnit, #BOSS) || isOnState(%theUnit, #NO_SKULL)))"
+                    }
+                    "IteratorName" "#enemy1"
+                    "Actions"    
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "modifier_timelapsed"
+                            "Target"            "%enemy1"
+                            "Duration"          "%duration"
+                            "Refresh"           "1"
+                            "Params"
+                            {
+                                "ogHex" { 
+                                    "type"      "FIELD_OBJECT"
+                                    "value"     "%hex1"
+                                }
+                                "damage" {
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "expr(%damage)"
+                                }
+                            }
+                        }
+
+                        "MoveUnit"
+                        {
+                            "Target"      "%enemy1"
+                            "Position"    "newPoint(1000, 1000, 0)"
+                        }
+
+                        "SpawnUnit"
+                        {
+                            "UnitName"                  "#TimelapseOrb"
+                            "Position"                  "hexPosition(%hex1)"
+                            "UnitGroup"                 "unitGroup(%CASTER)"
+                            "IsAI"                      "0"
+
+                            "OnSpawn"
+                            {
+                                "#PlayActivityAnimation"
+                                {
+                                    "Target"            "%UNIT"
+                                    "Animation"         "Spawn"
+                                }
+                            }
+                        } 
+                    }
+                }
+                "ActOnTargets"{
+                    "Target"{
+                        "Center"                "hexPosition(%hex2)"
+                        "Radius"                "0"
+                        "Teams"                 "TEAM_ENEMY"
+                        "CustomFilter"          "customUnitFilter(#theUnit, not(isOnState(%theUnit, #BOSS) || isOnState(%theUnit, #NO_SKULL)))"
+                    }
+                    "IteratorName" "#enemy2"
+                    "Actions"    
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "modifier_timelapsed"
+                            "Target"            "%enemy2"
+                            "Duration"          "%duration"
+                            "Refresh"           "1"
+                            "Params"
+                            {
+                                "ogHex" { 
+                                    "type"      "FIELD_OBJECT"
+                                    "value"     "%hex2"
+                                }
+                                "damage" {
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "expr(%damage)"
+                                }
+                            }
+                        }
+
+                        "MoveUnit"
+                        {
+                            "Target"      "%enemy2"
+                            "Position"    "newPoint(1000, 1000, 0)"
+                        }
+
+                        "SpawnUnit"
+                        {
+                            "UnitName"                  "#TimelapseOrb"
+                            "Position"                  "hexPosition(%hex2)"
+                            "UnitGroup"                 "unitGroup(%CASTER)"
+                            "IsAI"                      "0"
+
+                            "OnSpawn"
+                            {
+                                "#PlayActivityAnimation"
+                                {
+                                    "Target"            "%UNIT"
+                                    "Animation"         "Spawn"
+                                }
+                            }
+                        } 
+                    }
+                }
+                "ActOnTargets"{
+                    "Target"{
+                        "Center"                "hexPosition(%hex3)"
+                        "Radius"                "0"
+                        "Teams"                 "TEAM_ENEMY"
+                        "CustomFilter"          "customUnitFilter(#theUnit, not(isOnState(%theUnit, #BOSS) || isOnState(%theUnit, #NO_SKULL)))"
+                    }
+                    "IteratorName" "#enemy3"
+                    "Actions"    
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "modifier_timelapsed"
+                            "Target"            "%enemy3"
+                            "Duration"          "%duration"
+                            "Refresh"           "1"
+                            "Params"
+                            {
+                                "ogHex" { 
+                                    "type"      "FIELD_OBJECT"
+                                    "value"     "%hex3"
+                                }
+                                "damage" {
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "expr(%damage)"
+                                }
+                            }
+                        }
+
+                        "MoveUnit"
+                        {
+                            "Target"      "%enemy3"
+                            "Position"    "newPoint(1000, 1000, 0)"
+                        }
+
+                        "SpawnUnit"
+                        {
+                            "UnitName"                  "#TimelapseOrb"
+                            "Position"                  "hexPosition(%hex3)"
+                            "UnitGroup"                 "unitGroup(%CASTER)"
+                            "IsAI"                      "0"
+
+                            "OnSpawn"
+                            {
+                                "#PlayActivityAnimation"
+                                {
+                                    "Target"            "%UNIT"
+                                    "Animation"         "Spawn"
+                                }
+                            }
+                        } 
+                    }
+                }
+                "ActOnTargets"{
+                    "Target"{
+                        "Center"                "hexPosition(%hex4)"
+                        "Radius"                "0"
+                        "Teams"                 "TEAM_ENEMY"
+                        "CustomFilter"          "customUnitFilter(#theUnit, not(isOnState(%theUnit, #BOSS) || isOnState(%theUnit, #NO_SKULL)))"
+                    }
+                    "IteratorName" "#enemy4"
+                    "Actions"    
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "modifier_timelapsed"
+                            "Target"            "%enemy4"
+                            "Duration"          "%duration"
+                            "Refresh"           "1"
+                            "Params"
+                            {
+                                "ogHex" { 
+                                    "type"      "FIELD_OBJECT"
+                                    "value"     "%hex4"
+                                }
+                                "damage" {
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "expr(%damage)"
+                                }
+                            }
+                        }
+
+                        "MoveUnit"
+                        {
+                            "Target"      "%enemy4"
+                            "Position"    "newPoint(1000, 1000, 0)"
+                        }
+
+                        "SpawnUnit"
+                        {
+                            "UnitName"                  "#TimelapseOrb"
+                            "Position"                  "hexPosition(%hex4)"
+                            "UnitGroup"                 "unitGroup(%CASTER)"
+                            "IsAI"                      "0"
+
+                            "OnSpawn"
+                            {
+                                "#PlayActivityAnimation"
+                                {
+                                    "Target"            "%UNIT"
+                                    "Animation"         "Spawn"
+                                }
+                            }
+                        } 
+                    }
+                }
+                "ActOnTargets"{
+                    "Target"{
+                        "Center"                "hexPosition(%hex5)"
+                        "Radius"                "0"
+                        "Teams"                 "TEAM_ENEMY"
+                        "CustomFilter"          "customUnitFilter(#theUnit, not(isOnState(%theUnit, #BOSS) || isOnState(%theUnit, #NO_SKULL)))"
+                    }
+                    "IteratorName" "#enemy5"
+                    "Actions"    
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "modifier_timelapsed"
+                            "Target"            "%enemy5"
+                            "Duration"          "%duration"
+                            "Refresh"           "1"
+                            "Params"
+                            {
+                                "ogHex" { 
+                                    "type"      "FIELD_OBJECT"
+                                    "value"     "%hex5"
+                                }
+                                "damage" {
+                                    "type"      "FIELD_FLOAT"
+                                    "value"     "expr(%damage)"
+                                }
+                            }
+                        }
+
+                        "MoveUnit"
+                        {
+                            "Target"      "%enemy5"
+                            "Position"    "newPoint(1000, 1000, 0)"
+                        }
+
+                        "SpawnUnit"
+                        {
+                            "UnitName"                  "#TimelapseOrb"
+                            "Position"                  "hexPosition(%hex5)"
+                            "UnitGroup"                 "unitGroup(%CASTER)"
+                            "IsAI"                      "0"
+
+                            "OnSpawn"
+                            {
+                                "#PlayActivityAnimation"
+                                {
+                                    "Target"            "%UNIT"
+                                    "Animation"         "Spawn"
+                                }
+                            }
+                        } 
+                    }
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_timelapsed"
+        {
+            "Icon"          "EtherealLink"
+            "IconPriority"  "10"
+
+            "States"
+            {
+                "STUNNED" "1"
+                "DISABLED" "1"
+            }
+
+            "OnRemoved"
+            {
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"            "hexPosition(%ogHex)"
+                        "ExcludedUnits"     "objectList(%TARGET)"
+                        "Radius"            "0"
+                        "Teams"             "TEAM_ALL"
+                        "Flags"             "INCLUDE_NON_TARGETABLE"
+                        "CustomFilter"      "customUnitFilter(#theUnit, isOnState(%theUnit, #timelapse_orb))"
+                    }
+
+                    "IteratorName" "#orb"
+                
+                    "Actions"    
+                    {
+                        "KillUnit"
+                        {
+                            "Target"      "%orb"
+                        }
+
+                        "Delay"
+                        {
+                            "Time" "1.2"
+                            "Actions"
+                            {
+                                "AttachEffect"
+                                {
+                                    "EffectName"        "TeslaThunderStrikeHitFXMega"
+                                    "Target"            "hexPosition(%ogHex)"
+                                }
+
+                                "MoveUnit"
+                                {
+                                    "Target"      "%TARGET"
+                                    "Position"    "hexPosition(%ogHex)"
+                                }
+
+                                "Hit"
+                                {
+                                    "Target"        "%TARGET"
+                                    "EffectName"    "ArcaneSentryHitFXMega" 
+                                    "Tags"          "stringList(#MAGICAL, #AOE)"
+
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"          "DAMAGE_MAGICAL" 
+                                            "Damage"        "%damage"
+                                        }
+                                    }
+
+                                    "Actions"
+                                    {
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "modifier_timelapse_controller"
+        {
+            "Icon"          "EtherealLink"
+            "IconPriority"  "10"
+
+            
+        }
+    }
+}

@@ -24,25 +24,25 @@
         "01"
         {
             "var_type"  	"FIELD_EXPRESSION"
-            "damage"    	"ceil(stat(%CASTER, #health)/2)"
+            "damage"    	"stat(%CASTER, #health)-1"
         }
 
         "02"
         {
             "var_type"  	"FIELD_FLOAT"
-            "aoeRadius" 	"1"
+            "aoeRadius" 	"2"
         }
 
-        "03" 
+        "03"
         {
            "var_type"       	"FIELD_EXPRESSION"
             "stunDuration"  	"2"
         }
 
- 	"04"
+    	"04"
         {
-            "var_type"		"FIELD_EXPRESSION"
-            "burnoutDamage"    	"stat(%CASTER, #health)-1"
+            "var_type"		    "FIELD_EXPRESSION"
+            "selfDamage"    	"floor(stat(%CASTER, #health)/2)"
         }
     }
 
@@ -119,7 +119,7 @@
                         "AddDamage"
                         {
                             "Type"          "DAMAGE_TRUE"
-                            "Damage"        "expr(%burnoutDamage)"
+                            "Damage"        "expr(%selfDamage)"
                         }
                     }
                 }

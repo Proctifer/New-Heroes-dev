@@ -43,7 +43,7 @@
 "SKILL_ignus_combustion_NAME" = "Combustion"
 "SKILL_ignus_combustion_DESCRIPTION" = "Ignus explodes, dealing current damage to himself and all enemies in a {aoeRadius}-hex AOE around him."
 "SKILL_ignus_combustion_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Ignus takes no damage from this attack in <style="highlight">Burnout</style>, but is <style="concept">stunned</style> instead."
-"SKILL_ignus_combustion_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nSelf damage: <style="damage">{damage} {icon#damageTrue}</style>\nBurnout Damage: <style="damage">{burnoutDamage} {icon#damageTrue}</style>\nRange: <style="highlight">SELF</style>"
+"SKILL_ignus_combustion_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#damageTrue}</style>\nSelf damage: <style="damage">{damage} {icon#damageTrue}</style>\nSelf Damage: <style="damage">{selfDamage} {icon#damageTrue}</style>\nRange: <style="highlight">SELF</style>"
 
 "SKILL_ignus_prominence_burn_NAME" = "Prominence Burn"
 "SKILL_ignus_prominence_burn_DESCRIPTION" = "Ignus unleashes 3 lines of fire in different directions, damaging and applying <style="debuff">burning</style> to all enemies struck by the attack."

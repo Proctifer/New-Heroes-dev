@@ -4,7 +4,7 @@
     "AbilityTeamFilter"     "TEAM_FRIENDLY"
     "AnimationID"           "ThunderStrike"
     "CastFXId"              "OlochSealOfImmolationCastFXMega"
-    "Icon"                  "BerserkRitual"
+    "Icon"                  "SulfurDust"
     "AbilityCastRange"      "0"
     "AbilityCooldown"       "2"
     "AbilityAPCost"         "0"

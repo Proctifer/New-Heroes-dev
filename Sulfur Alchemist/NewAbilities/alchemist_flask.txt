@@ -13,7 +13,7 @@
     "AbilityAOEAffectsCaster"   "0"
 
     "AnimationID"               "Attack"
-    "Icon"                      "BigBadaboom"
+    "Icon"                      "AlchemicalFlask"
     "CastFXId"                  "OrcHunterSleepingArrowCastFXMega"
 
      "AbilitySpecial"
@@ -23,29 +23,40 @@
             "var_type"          "FIELD_EXPRESSION"
             "flaskDamage"       "stat(%CASTER, #attackDamage)"
         }
-
         "02"
         {
             "var_type"          "FIELD_FLOAT"
             "area"              "1"
         }
-
         "03"
         {
             "var_type"          "FIELD_FLOAT"
-            "poisonDuration"    "2"
+            "duration"          "2"
         }
-
+        "03"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "doubleDuration"    "4"
+        }
         "04"
         {
             "var_type"          "FIELD_EXPRESSION"
             "mainDarknessDamage""stat(%CASTER, #attackDamage) * 2"
         }
-
         "05"
         {
             "var_type"          "FIELD_EXPRESSION"
             "auxDarknessDamage" "stat(%CASTER, #attackDamage)"
+        }
+        "06"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "brewReduction"     "-2"
+        }
+        "07"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "alcoholDamage"     "2"
         }
     }
 
@@ -188,7 +199,7 @@
                                         {
                                             "ModifierName"  "modifier_new_poison"
                                             "Target"        "%HITTARGET"
-                                            "Duration"      "%poisonDuration"
+                                            "Duration"      "%duration"
                                             "Refresh"       "1"
                                         }
                                     }
@@ -228,7 +239,7 @@
                                         {
                                             "ModifierName"  "modifier_new_poison"
                                             "Target"        "%HITTARGET"
-                                            "Duration"      "%poisonDuration"
+                                            "Duration"      "%duration"
                                             "Refresh"       "1"
                                         }
                                     }
@@ -368,7 +379,113 @@
 
         "Conditional"
         {
-            "Condition" "not(hasModifier(%CASTER, #alchemist_sisters_spirits_modifier) || hasModifier(%CASTER, #alchemist_darkness_modifier))"
+            "Condition" "hasModifier(%CASTER, #alchemist_northern_brew_modifier)"
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
+                    "Actions"
+                    {
+                        "ActOnHexas"
+                        {
+                            "Center"                 "positionHex(%TARGET)"
+                            "Range"                  "%area"
+                            "IteratorName"           "#hexa"
+                        
+                            "Actions"    
+                            {
+                                "AttachEffect"
+                                {
+                                    "EffectName"    "VenomVineFXMega"
+                                    "Target"        "hexPosition(%hexa)"
+                                }
+                            }
+                        }
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"      "%TARGET"
+                                "Radius"      "%area"
+                                "Teams"       "TEAM_ENEMY"
+                            }
+                            "IteratorName" "#newTarget"
+                            "Actions"    
+                            {
+                                "Hit"
+                                {
+                                    "Target"        "%newTarget"
+                                    "Tags"          "stringList(#AOE)"
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"          "DAMAGE_TRUE" 
+                                            "Damage"        "%flaskDamage"
+                                        }
+                                    }
+                                    "Actions"
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "alchemist_weakness_brew_modifier"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%duration"
+                                            "Refresh"       "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    "ElseActions"
+                    {
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"      "%TARGET"
+                                "Radius"      "0"
+                                "Teams"       "TEAM_ENEMY"
+                            }
+                            "IteratorName" "#newTarget"
+                            "Actions"    
+                            {
+                                "Hit"
+                                {
+                                    "Target"        "%newTarget"
+                                    "EffectName"    "OrcCleaverWhirlwindHitFXMega" 
+                                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"          "DAMAGE_PHYSICAL" 
+                                            "Damage"        "%flaskDamage"
+                                        }
+                                    }
+                                    "Actions"
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "alchemist_weakness_brew_modifier"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%duration"
+                                            "Refresh"       "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "Conditional"
+        {
+            "Condition" "not(hasModifier(%CASTER, #alchemist_sisters_spirits_modifier) || hasModifier(%CASTER, #alchemist_darkness_modifier) || hasModifier(%CASTER, #alchemist_northern_brew_modifier))"
             "Actions"
             {
                 "Conditional"
@@ -462,6 +579,78 @@
 
     "Modifiers"
     {
-        
+        "alchemist_weakness_brew_modifier"
+        {
+            "Icon"          "Hexed"
+            "IconPriority"  "30"
+
+            "OnHitPreProcessDamagesGlobal"
+            {
+                "Conditional"
+                {
+                    "Condition" "hitConnected(%HIT) && equal(%TARGET, %ATTACKER) && matchesTeam(unitGroup(%TARGET), unitGroup(%ATTACKED), @TeamFilter(TEAM_ENEMY))"
+
+                    "Actions" 
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL"
+                            "Damage"        "%brewReduction"
+                        }
+
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_MAGICAL"
+                            "Damage"        "%brewReduction"
+                        }
+
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_TRUE"
+                            "Damage"        "%brewReduction"
+                        }
+
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_ARMOR"
+                            "Damage"        "%brewReduction"
+                        }
+                    }
+                }
+            }
+        }
+
+        "alcohol_poisoning_modifier"
+        {
+            "EffectName" "PoisonStatusFXMega"
+            "Tags" "dot"
+            "Icon" "Poison"
+            "IconPriority" "25"
+
+            "OnTurnFinished"
+            {
+                "Hit"
+                {
+                    "Target" "%TARGET"
+                    "EffectName" "RicochetHitFXMega" 
+                    "Tags" "stringList(#MODIFIER, #INTERNAL)"
+
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"    "DAMAGE_TRUE"
+                            "Damage"  "%alcoholDamage"
+                        }
+                    }
+                }
+            }
+            "States"
+            {
+                "ALCOHOL_POISONED" "1"
+                "WEAKENED" "1"
+            }
+        }
     }
 }

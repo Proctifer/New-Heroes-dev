@@ -27,7 +27,7 @@
         "alchemist_darkness_modifier"
         {
             "Tags"          "ingredient"
-            "Icon"          "Enraged02"
+            "Icon"          "ShieldOfShadows"
             "IconPriority"  "50"
         }
     }

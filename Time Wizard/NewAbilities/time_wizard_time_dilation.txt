@@ -1,0 +1,70 @@
+"time_wizard_time_dilation"
+{
+    "AbilityBehavior"           "UNIT_TARGET | POSITIVE_EFFECT | FAKE_ACTION | DOESNT_CONSUME_MOVE"
+    "AbilityTeamFilter"         "TEAM_FRIENDLY"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"           "4"
+    "AbilityAPCost"             "0"
+
+    "AnimationID"               "Attack"
+    "CastFXId"                  "KnightHoldTheLineCastFXMega"
+    "Icon"                      "TimeDilation2"
+
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "duration"          "1"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+        "Conditional"
+        {
+            "Condition" "equal(%TARGET, %SOURCE)"
+
+            "Actions"
+            {
+                "SetStat"
+                {
+                    "Target"    "%SOURCE"
+                    "Stat"      "#actionsAvailable"
+                    "Value"     "stat(%TARGET, #actionsAvailable) + 1"
+                }
+            }
+
+            "ElseActions"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"  "time_dilation_modifier"
+                    "Target"        "%TARGET"
+                    "Duration"      "%duration"
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "time_dilation_modifier"
+        {
+            "Icon"                          "Preparation"
+            "IconPriority"                  "10"
+
+            "OnTurnStarted"
+            {
+                "SetStat"
+                {
+                    "Target"    "%TARGET"
+                    "Stat"      "#actionsAvailable"
+                    "Value"     "stat(%TARGET, #actionsAvailable) + 1"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+	"AcidFloor" 
+	{
+		"Name" "AcidFloor"
+		"InheritsFrom" "Base"
+		"Model" "DummyUnit"
+
+		"stats"
+		{
+			"health_max" "80"
+			"skipsInitiative" "1"
+			"initiative" "-99"
+		}
+
+		"skills"
+		{ 
+ 			"1" "acid_floor_generic_buff_skill"
+  		}
+
+  		"states"
+  		{
+  			"NOT_IN_INITIATIVE_BAR" "1"
+  			"NON_TARGETABLE" "1"
+  			"NO_COLLISION" "1"
+  			"NO_LIFEBAR" "1"
+  			"NO_SKULL" "1"
+  		}
+
+  		"defaultSkill" "common_melee_attack"
+	}

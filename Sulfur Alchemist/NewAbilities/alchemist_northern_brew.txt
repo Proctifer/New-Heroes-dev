@@ -1,0 +1,63 @@
+"alchemist_northern_brew"
+{
+    "AbilityBehavior"       "UNIT_TARGET | POSITIVE_EFFECT | FAKE_ACTION | DOESNT_CONSUME_MOVE"
+    "AbilityTeamFilter"     "TEAM_FRIENDLY"
+    "AnimationID"           "ThunderStrike"
+    "CastFXId"              "SorceressHexCastFXMega"
+    "Icon"                  "NorthernBrew"
+    "AbilityCastRange"      "0"
+    "AbilityCooldown"       "2"
+    "AbilityAPCost"         "0"
+
+     "AbilitySpecial"
+    {
+    }
+
+    "OnAbilityAction"
+    {
+        "Conditional"
+        {
+            "Condition" "hasModifier(%TARGET, #alchemist_sisters_spirits_modifier)"
+            "Actions"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"      "alchemist_sisters_spirits_modifier"
+                    "Target"            "%TARGET"
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"      "alchemist_bad_batch_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
+
+            "ElseActions"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "alchemist_northern_brew_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "alchemist_northern_brew_modifier"
+        {
+            "Tags"          "ingredient"
+            "Icon"          "Hexed"
+            "IconPriority"  "50"
+        }
+
+        "alchemist_bad_batch_modifier"
+        {
+            "Tags"          "ingredient"
+            "Icon"          "Poison"
+            "IconPriority"  "50"
+        }
+    }
+}

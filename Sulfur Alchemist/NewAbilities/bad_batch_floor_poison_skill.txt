@@ -1,0 +1,177 @@
+"bad_batch_floor_poison_skill"
+{
+    "AbilityBehavior"       "POINT_TARGET | PASSIVE"
+   
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "dotDuration"            "2"
+        }
+
+        "02"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "extraDamage"         "2"
+        }
+    }
+
+    "Modifiers"
+    {
+        "bad_batch_floor_tile_modifier"
+        {
+            "EffectName"    "AcidFloorFXMega"
+            "Tags"          "floor_effect"
+            "Passive"       "1"
+
+            "OnUnitEnteredNode"
+            {
+               "AreaControl"
+               {
+
+                    "Center" "unitHex(%TARGET)"
+                    "Range" "0"
+                    "From" "%from"
+                    "To" "%to"
+                    "EnterActions"
+                    {
+                        "Conditional" 
+                        {
+                            "Condition" "matchesTeam(unitGroup(%SOURCE), unitGroup(%UNIT), @TeamFilter(TEAM_ALL))"
+                            "Actions"
+                            {
+                                "Hit"
+                                {
+                                    "Target" "%UNIT"
+                                    "Source" "%TARGET"
+                                    
+                                    "EffectName" "PoisonHitFXMega" 
+                                    "Tags" "stringList(#ENVIRONMENTAL)"
+
+                                    "InitActions"
+                                    {
+                                        "Conditional"
+                                        {
+                                            "Condition" "isOnState(%HITTARGET, #ALCOHOL_POISONED)"
+
+                                            "Actions" 
+                                            {
+                                                "AddDamage"
+                                                {
+                                                    "Type"          "DAMAGE_TRUE"
+                                                    "Damage"        "%extraDamage"
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    "Actions" 
+                                    {
+                                        "Conditional"
+                                        {
+                                            "Condition" "isOnState(%HITTARGET, #ALCOHOL_POISONED)"
+                                            
+                                            "Actions"
+                                            {
+
+                                            }
+                                            
+                                            "ElseActions" 
+                                            {
+                                                "ApplyModifier"
+                                                {
+                                                    "ModifierName"  "alcohol_poisoning_modifier"
+                                                    "Target"        "%HITTARGET"
+                                                    "Duration"      "%dotDuration"
+                                                    "Refresh"   "1"
+                                                }
+                                            }
+                                        }
+
+                                        "PlaySound"
+                                        {
+                                            "Sound" "#krl_sfx_combatGeneric_stepOnAcid"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+               }
+            }
+
+            "OnTurnStartedGlobal"
+            {
+               "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"      "%TARGET"
+                        "Radius"     "0"
+                        "Teams"     "TEAM_ALL"
+                    }
+
+                    "IteratorName" "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "Conditional" 
+                        {
+                            "Condition" "equal(activeUnit(), %newTarget)"
+
+                            "Actions"
+                            {
+                                "Hit"
+                                {
+                                    "Target" "%newTarget"
+                                    "Source" "%TARGET"
+                                    
+                                    "EffectName" "PoisonHitFXMega" 
+                                    "Tags" "stringList(#ENVIRONMENTAL)"
+
+                                    "InitActions"
+                                    {
+                                        "Conditional"
+                                        {
+                                            "Condition" "isOnState(%HITTARGET, #ALCOHOL_POISONED)"
+
+                                            "Actions" 
+                                            {
+                                                "AddDamage"
+                                                {
+                                                    "Type"          "DAMAGE_TRUE"
+                                                    "Damage"        "%extraDamage"
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    "Actions" 
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "alcohol_poisoning_modifier"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%dotDuration"
+                                            "Refresh"       "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            "OnRemoved"
+            {
+                "KillUnit"
+                {
+                    "Target"        "%TARGET"
+                }
+            }
+        }
+    }
+}

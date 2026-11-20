@@ -15,10 +15,32 @@
 
     "OnAbilityAction"
     {
-        "ApplyModifier"
+        "Conditional"
         {
-            "ModifierName"      "alchemist_sisters_spirits_modifier"
-            "Target"            "%TARGET"
+            "Condition" "hasModifier(%TARGET, #alchemist_northern_brew_modifier)"
+            "Actions"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"      "alchemist_northern_brew_modifier"
+                    "Target"            "%TARGET"
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"      "alchemist_bad_batch_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
+
+            "ElseActions"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "alchemist_sisters_spirits_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
         }
     }
 
@@ -27,7 +49,7 @@
         "alchemist_sisters_spirits_modifier"
         {
             "Tags"          "ingredient"
-            "Icon"          "Poison"
+            "Icon"          "Drained"
             "IconPriority"  "50"
         }
     }

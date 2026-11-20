@@ -1,0 +1,157 @@
+"time_wizard_retcon"
+{
+    "AbilityBehavior"       "UNIT_TARGET | POSITIVE_EFFECT"
+    "AbilityTeamFilter"     "TEAM_FRIENDLY"
+
+    "AnimationID"           "Attack"
+    "CastFXId"              "AvengingShieldCastFXMega"
+    "Icon"                  "Retcon"
+
+
+    "AbilityCastRange"      "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"       "3"
+    "AbilityAPCost"         "1"
+
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "duration"          "2"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+        "RemoveModifier"
+        {
+            "ModifierTag"    "shield"
+            "Target"         "%TARGET"
+        }
+
+        "ApplyModifier"
+        {
+            "ModifierName"    "retcon_shield_modifier"
+            "Target"         "%TARGET"
+        }
+    }
+
+    "Modifiers"
+    {
+        "retcon_shield_modifier"
+        {
+            "Tags" "shield"
+
+            "EffectName"    "AvengingShieldStatusFXMega"
+            "Icon"          "ShieldOfRetribution"
+            "IconPriority"  "50"
+
+            "OnPreHit"
+            {
+                "Conditional"
+                {
+                    "Condition" "hitConnected(%HIT) && not(hasTags(hitTags(%HIT), #CANTBESHIELDED) || hasTags(hitTags(%HIT), #INTERNAL))"
+                    "Actions" 
+                    {
+                        "CancelHit"
+                        {
+                        }
+
+                        "RemoveModifier"
+                        {
+                            "ModifierName"    "retcon_shield_modifier"
+                            "Target"         "%TARGET"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "retcon_armor_modifier"
+                            "Target"            "%TARGET"
+                            "Duration"          "%duration"
+                            "Params"
+                            {
+                                "physicalDamage" {
+                                    "type" "FIELD_FLOAT"
+                                    "value" "hitDamageOfType(%HIT, @DamageType(DAMAGE_PHYSICAL))"
+                                }
+
+                                "magicalDamage" {
+                                    "type" "FIELD_FLOAT"
+                                    "value" "hitDamageOfType(%HIT, @DamageType(DAMAGE_MAGICAL))"
+                                }
+
+                                "trueDamage" {
+                                    "type" "FIELD_FLOAT"
+                                    "value" "hitDamageOfType(%HIT, @DamageType(DAMAGE_TRUE))"
+                                }
+
+                                "armorDamage" {
+                                    "type" "FIELD_FLOAT"
+                                    "value" "hitDamageOfType(%HIT, @DamageType(DAMAGE_ARMOR))"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "retcon_armor_modifier"
+        {
+            "Icon"                      "Fortify"
+            "IconPriority"              "50"
+
+            "PropertiesAdd"
+            {
+                "armor_max"             "%physicalDamage"
+            }
+            "PropertiesAdd"
+            {
+                "armor_max"             "%magicalDamage"
+            }
+            "PropertiesAdd"
+            {
+                "armor_max"             "%trueDamage"
+            }
+            "PropertiesAdd"
+            {
+                "armor_max"             "%armorDamage"
+            }
+
+            "OnAdded"
+            {
+                "GiveArmor"
+                {
+                    "Target"            "%TARGET"
+                    "ArmorAmount"       "%physicalDamage"
+                }
+                "GiveArmor"
+                {
+                    "Target"            "%TARGET"
+                    "ArmorAmount"       "%magicalDamage"
+                }
+                "GiveArmor"
+                {
+                    "Target"            "%TARGET"
+                    "ArmorAmount"       "%trueDamage"
+                }
+                "GiveArmor"
+                {
+                    "Target"            "%TARGET"
+                    "ArmorAmount"       "%armorDamage"
+                }
+            }
+
+            "OnRemoved"
+            {
+                "GiveArmor"
+                {
+                    "Target"            "%TARGET"
+                    "ArmorAmount"       "0"
+                }
+            }
+        }
+    }
+}

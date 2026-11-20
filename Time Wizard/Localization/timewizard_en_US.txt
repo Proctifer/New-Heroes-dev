@@ -1,0 +1,36 @@
+"UNIT_TIME_WIZARD_NAME_0001" = "Time Wizard"
+"UNIT_TIME_WIZARD_LORE" = "These wizards have a mastery of ancient magic, possibly being ancient themselves. They do not bother with harming their enemies, opting to toy with them instead."
+
+
+"SKILL_time_wizard_guardian_trait_NAME" = "Guardian Wrath"
+"SKILL_time_wizard_guardian_trait_DESCRIPTION" = "Allies standing next to the Time Wizard deal additional magic damage on their attacks"
+"SKILL_time_wizard_guardian_trait_DESCRIPTION_DATA" = "Bonus damage: <style="damage">+{descDamage}</style>"
+
+"SKILL_time_wizard_entropy_beam_NAME" = "Entropy Beam"
+"SKILL_time_wizard_entropy_beam_DESCRIPTION" = "Targets an ally or enemy, granting them speed or slowing them, respectively."
+"SKILL_time_wizard_entropy_beam_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style>"
+"SKILL_time_wizard_entropy_beam_DESCRIPTION_DATA" = "Ally speed: <style="buff">{extraSpeed}</style>\nEnemy slow: <style="highlight">{reducedSpeed}</style>\nEntropy duration: <style="highlight"> {duration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_time_wizard_potentiality_rune_NAME" = "Potentiality Rune"
+"SKILL_time_wizard_potentiality_rune_DESCRIPTION" = "Applies a magic rune to an enemy. When they are next hit, they will be <style="concept">stunned</style>."
+"SKILL_time_wizard_potentiality_rune_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> If a second rune gets applied to the same target, enemies in a {epicRadius}-hex AOE will be <style="concept">stunned</style>."
+"SKILL_time_wizard_potentiality_rune_DESCRIPTION_DATA" = "Stun duration: <style="highlight"> {stunDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_time_wizard_retcon_NAME" = "Retcon"
+"SKILL_time_wizard_retcon_DESCRIPTION" = "Applies a shield to an ally that <style="buff">absorbs 100% of the next damage received</style>."
+"SKILL_time_wizard_retcon_DESCRIPTION_DATA" = "Turns the absorbed damage into armor.\nRange: <style="highlight">{AbilityCastRange}</style>"
+
+"SKILL_time_wizard_sands_of_time_NAME" = "Sands of Time"
+"SKILL_time_wizard_sands_of_time_DESCRIPTION" = "Summons swirling sand on a tile. Enemies who walk onto it have their speed reduced. If they end their turn on the tile, they are put <style="concept">asleep</style>."
+"SKILL_time_wizard_sands_of_time_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#iconDamageType}</style>\nDrained damage: <style="damage">{drainedDamage}{icon#damageTrue}</style>\nMax. Targets: <style="highlight">{maxTargets}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_time_wizard_sands_of_time_DESCRIPTION_EXTRA" = "<style="debuff">Drained</style> lasts until either the target or the High Enchantress falls.</style>"
+
+"SKILL_time_wizard_rewind_NAME" = "Rewind"
+"SKILL_time_wizard_rewind_DESCRIPTION" = "The Time Wizard refreshes all of his cooldowns."
+"SKILL_time_wizard_rewind_DESCRIPTION_DATA" = "Range: <style="highlight">SELF</style>"
+
+"SKILL_time_wizard_time_dilation_NAME" = "Time Dilation"
+"SKILL_time_wizard_time_dilation_DESCRIPTION" = "Grants one of his allies an extra skill use on their turn."
+"SKILL_time_wizard_time_dilation_DESCRIPTION_DATA" = "Range: <style="highlight">{AbilityCastRange}</style>"
+
+

@@ -32,7 +32,6 @@
 
 		"skills"
 		{
-			"11" 		"musketeer_double_barrel_provider_trait"
 			"100" 		"crafty_endturn_trait"
  		}
 
@@ -51,8 +50,8 @@
 
  			"3"
  			{
- 				"1" "musketeer_shrapnel_shot"
- 				"2" "musketeer_open_season"
+ 				"1" "alchemist_northern_brew"
+ 				"2" "alchemist_bloodsydian_powder"
  			}
  		}
 

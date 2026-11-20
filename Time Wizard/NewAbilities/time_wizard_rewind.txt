@@ -1,0 +1,45 @@
+"time_wizard_rewind"
+{
+    "AbilityBehavior"           "UNIT_TARGET | POSITIVE_EFFECT | FAKE_ACTION | DOESNT_CONSUME_MOVE"
+    "AbilityTeamFilter"         "TEAM_FRIENDLY"
+    "AbilityCastRange"          "0"
+    "AbilityCooldown"           "%rewindCooldown"
+    "AbilityAPCost"             "0"
+
+    "AnimationID"               "Attack"
+    "CastFXId"                  "KnightHoldTheLineCastFXMega"
+    "Icon"                      "Rewind"
+
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "cooldownOffset"      "999"
+        }
+
+        "02"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "rewindCooldown"      "4"
+        }
+    }
+
+
+    "OnAbilityAction"
+    {
+        "OffsetCooldown"
+        {
+            "Target" "%TARGET"
+            "Offset" "0-%cooldownOffset"
+        }
+
+        "OffsetCooldown"
+        {
+            "Target"                "%TARGET"
+            "ConcreteAbility"       "%ABILITY"
+            "Offset"                "%rewindCooldown"
+        }
+    }
+}

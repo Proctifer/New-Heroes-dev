@@ -1,0 +1,157 @@
+"time_wizard_potentiality_rune"
+{
+    "AbilityBehavior"           "UNIT_TARGET | FAKE_ACTION | DOESNT_CONSUME_MOVE"
+    "AbilityTeamFilter"         "TEAM_ENEMY"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+
+    "AbilityCooldown"           "2"
+    "AbilityAPCost"             "0"
+    "AnimationID"               "Attack"
+    "CastFXId"                  "HighSorcererSummonHexBlastCastFXMega"
+    "Icon"                      "PotentialityRune"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "runeDuration"      "2"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "epicRadius"            "1"
+        }
+
+        "03"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "stunDuration"      "1"
+        }
+    }
+
+
+    "OnAbilityAction"
+    { 
+        "Hit"
+        {
+            "Target"                "%TARGET"
+            "EffectName"            "SorceressHexBlastHitFXMega" 
+            "Tags"                  "stringList(#PROJECTILE, #TARGETED, #MAGICAL, #INTERNAL)"
+
+            "InitActions"
+            {
+            }
+          
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "not(isOnState(%HITTARGET, #DEAD))"
+
+                    "Actions" 
+                    {
+                        "Conditional"
+                        {
+                            "Condition" "hasModifier(%TARGET, #potentiality_rune_modifier)"
+
+                            "Actions" 
+                            {
+                                "ActOnTargets"
+                                {
+                                    "Target"
+                                    {
+                                        "Center"        "unitPosition(%TARGET)"
+                                        "Radius"        "%epicRadius"
+                                        "Teams"         "TEAM_ENEMY"
+                                    }
+
+                                    "IteratorName" "#newTarget"
+                                
+                                    "Actions"    
+                                    {
+                                        "AttachEffect"
+                                        {
+                                            "EffectName"    "StunHitFXMega"
+                                            "Target"        "%newTarget"
+                                        }
+        
+                                        "AttachEffect"
+                                        {
+                                            "EffectName"    "SorceressTrebuchetExplosionFXMega"
+                                            "Target"        "unitPosition(%TARGET)"
+                                        }
+                                        
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "modifier_stunned"
+                                            "Target"        "%newTarget"
+                                            "Duration"      "%stunDuration"
+                                            "Refresh"       "1"
+                                        }
+                                        
+                                        "RemoveModifier"
+                                        {
+                                            "ModifierName"  "potentiality_rune_modifier"
+                                            "Target"        "%TARGET"
+                                        }
+                                    }
+                                }
+                            }
+
+                            "ElseActions"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"  "potentiality_rune_modifier"
+                                    "Target"        "%TARGET"
+                                    "Duration"      "%runeDuration"
+                                    "Refresh"       "1"
+                                } 
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "potentiality_rune_modifier"
+        {
+            "Icon"                          "Hexed"
+            "IconPriority"                  "60"
+
+            "OnHitEnd"
+            {
+                "Conditional"
+                {
+                    "Condition" "not(hasTags(hitTags(%HIT), #INTERNAL)) && hasModifier(%TARGET, #potentiality_rune_modifier)"
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_stunned"
+                            "Target"        "%TARGET"
+                            "Duration"      "%stunDuration"
+                        }
+
+                        "AttachEffect"
+                        {
+                            "EffectName"    "StunHitFXMega"
+                            "Target"        "%TARGET"
+                        }     
+                        
+                        "RemoveModifier"
+                        {
+                            "ModifierName"  "potentiality_rune_modifier"
+                            "Target"        "%TARGET"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

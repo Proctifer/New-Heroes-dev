@@ -1,0 +1,129 @@
+"time_wizard_entropy_beam"
+{
+    "AbilityBehavior"           "UNIT_TARGET"
+    "AbilityTeamFilter"         "TEAM_ALL"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCastMinRange"       "stat(%CASTER, #rangedAttackMinRange)"
+    "AbilityCooldown"           "0"
+    "AbilityAPCost"             "1"
+
+    "AnimationID"               "Attack"
+    "Icon"                      "EntropyBeam"
+    "CastFXId"                  "SorceressHexCastFXMega"
+
+    "AbilitySpecial" 
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "reducedSpeed"      "-1"
+        }
+
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "extraSpeed"        "1"
+        }
+
+        "03"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "duration"          "1"
+        }
+    }
+
+    "OnAbilityAction"
+    {
+        "PlaySound"
+        {
+            "Sound" "#krl_sfx_combatSorceress_exoburstRay"
+        }
+                        
+        "TrackingProjectile"
+        {
+            "Target"               "%TARGET"
+            "SourcePos"             "unitPosition(%SOURCE, #CastPoint)"
+            "TargetPos"             "unitPosition(%TARGET, #Chest)"
+            "Model"                 "SorceressExoburstRayProjectile"
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {
+        "Hit"
+        {
+            "Target"                "%TARGET"
+            "Tags"                  "stringList(#PROJECTILE, #TARGETED)"
+
+            "InitActions"
+            {
+            }
+
+            "Actions"
+            {
+                "Conditional"
+                {
+                    "Condition" "matchesTeam(unitGroup(%SOURCE), unitGroup(%TARGET), @TeamFilter(TEAM_ENEMY))"
+                    "Actions" 
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName"        "SorceressRootingCurseHitFXMega"
+                            "Target"            "%TARGET"
+                        }  
+                        
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "entropy_debuff_modifier"
+                            "Target"            "%TARGET"
+                            "Duration"          "%duration"
+                        }
+                    }
+
+                    "ElseActions" 
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName"        "AjaxsBlessingActivatesFXMega"
+                            "Target"            "%TARGET"
+                        }  
+                        
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "entropy_buff_modifier"
+                            "Target"            "%TARGET"
+                            "Duration"          "%duration"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "Modifiers"
+    {
+        "entropy_buff_modifier"
+        {
+            "EffectName"                "GeraldRallyStatusFXMega"
+            "Icon"                      "Rally"
+            "IconPriority"              "50"
+
+            "PropertiesAdd"
+            {
+                "walkSpeed"             "%extraSpeed"
+            }
+        }
+
+        "entropy_debuff_modifier"
+        {
+            "EffectName"                "AjaxsBlessingAuraFXMega"
+            "Icon"                      "Rally"
+            "IconPriority"              "50"
+
+            "PropertiesAdd"
+            {
+                "walkSpeed"             "%reducedSpeed"
+            }
+        }
+    }
+}

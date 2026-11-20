@@ -30,7 +30,7 @@
 
 	"skills"
 	{
-		"11" 	"time_wizard_guardian_trait"
+		"11" 	"time_wizard_guardian_spirit_trait"
 		"100" 	"magic_endturn_trait"
 	}
 
@@ -87,7 +87,7 @@
 		"baseDamage"  "0"
 
 		"rangedAttackRange" "6" 
-		"walkSpeed" "3"
+		"walkSpeed" "2"
 	}
 }
 
@@ -109,6 +109,6 @@
 		"baseDamage"  "0"
 
 		"rangedAttackRange" "6"
-		"walkSpeed" "3"
+		"walkSpeed" "2"
 	}
 }

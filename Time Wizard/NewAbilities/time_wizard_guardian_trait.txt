@@ -1,7 +1,5 @@
 "time_wizard_guardian_trait"
 {
-    
-    
     "AbilityBehavior"   "UNIT_TARGET | POSITIVE_EFFECT | PASSIVE"
     "Icon"              "Guardian"
 
@@ -9,14 +7,8 @@
     {
         "01"
         {
-            "var_type"      "FIELD_EXPRESSION"
-            "extraDamage"   "stat(%TARGET, #level)"
-        }
-
-        "02"
-        {
-            "var_type"      "FIELD_EXPRESSION"
-            "descDamage"   "stat(%CASTER, #level)"
+            "var_type"          "FIELD_FLOAT"
+            "extraDamage"       "1"
         }
     }
 
@@ -24,8 +16,8 @@
     {
         "time_wizard_guardian_modifier"
         {
-            "Passive" "1"
-            "EffectName" "AjaxsBlessingAuraFXMega"
+            "Passive"       "1"
+            "EffectName"    "AjaxsBlessingAuraFXMega"
 
             "OnHitPreProcessDamagesGlobal"
             {
@@ -38,7 +30,7 @@
                         "AddDamage"
                         {
                             "Type"              "DAMAGE_MAGICAL"
-                            "Damage"            "expr(%extraDamage)"
+                            "Damage"            "%extraDamage"
                         }
 
                         "AttachEffect"

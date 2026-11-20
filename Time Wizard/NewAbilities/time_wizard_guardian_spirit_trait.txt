@@ -1,0 +1,48 @@
+"time_wizard_guardian_spirit_trait"
+{
+    "AbilityBehavior"   "UNIT_TARGET | POSITIVE_EFFECT | PASSIVE"
+    "Icon"              "Guardian"
+
+     "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "cooldownOffset"    "1"
+        }
+    }
+
+    "Modifiers"
+    {
+        "time_wizard_guardian_spirit_modifier"
+        {
+            "Passive"       "1"
+            "EffectName"    "AjaxsBlessingAuraFXMega"
+
+            "OnTurnFinishedGlobal"
+            {
+                "Conditional" 
+                {
+                    "Condition" "matchesTeam(unitGroup(%TARGET), unitGroup(%UNIT), @TeamFilter(TEAM_FRIENDLY)) && safeEquals(hexDistance(unitHex(%TARGET), unitHex(%UNIT)), 1)"
+
+                    "Actions"
+                    {
+                        "OffsetCooldown"
+                        {
+                            "Target" "%UNIT"
+                            "Offset" "0-%cooldownOffset"
+                        }
+
+                        "UnitRaiseMessage"
+                        {
+                            "Unit"  "%UNIT"
+                            "#Text" "REPLENISHED!!"
+                            "Icon"  "ArcaneReplenish"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

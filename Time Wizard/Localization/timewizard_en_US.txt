@@ -2,9 +2,9 @@
 "UNIT_TIME_WIZARD_LORE" = "These wizards have a mastery of ancient magic, possibly being ancient themselves. They do not bother with harming their enemies, opting to toy with them instead."
 
 
-"SKILL_time_wizard_guardian_trait_NAME" = "Guardian Wrath"
-"SKILL_time_wizard_guardian_trait_DESCRIPTION" = "Allies standing next to the Time Wizard deal additional magic damage on their attacks"
-"SKILL_time_wizard_guardian_trait_DESCRIPTION_DATA" = "Bonus damage: <style="damage">+{descDamage}</style>"
+"SKILL_time_wizard_guardian_spirit_trait_NAME" = "Guardian Spirit"
+"SKILL_time_wizard_guardian_spirit_trait_DESCRIPTION" = "Allies ending their next to the Time Wizard have their cooldowns reduced."
+"SKILL_time_wizard_guardian_spirit_trait_DESCRIPTION_DATA" = "Cooldown reduction: <style="highlight">{cooldownOffset} {icon#turns}</style>"
 
 "SKILL_time_wizard_entropy_beam_NAME" = "Entropy Beam"
 "SKILL_time_wizard_entropy_beam_DESCRIPTION" = "Targets an ally or enemy, granting them speed or slowing them, respectively."

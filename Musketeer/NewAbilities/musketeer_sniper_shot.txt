@@ -12,7 +12,7 @@
     "Icon" 										"SniperShot"
     "CastFXId" 									"KebabCastFXMega"
 	"AbilityCanExecute"                 		"hasModifier(%SOURCE, #musketeer_ammo_this_turn_modifier)"
-	"AbilityCustomTargetFilter"         		"not(isOnState(%UNIT, #BOSS))"
+	"AbilityCustomTargetFilter"         		"not(isOnState(%UNIT, #BOSS) || isOnState(%UNIT, #NO_SKULL))"
 
    
     "AbilitySpecial" 

@@ -87,9 +87,9 @@
 		"level" "2"
 			
 		"health_max" "5"
-		"armor_max" "6"
+		"armor_max" "5"
 		"armor_regen_per_turn" "2"
-		"baseDamage"  "4"
+		"baseDamage"  "3"
 
 		"rangedAttackRange" "4" 
 		"rangedAttackMinRange" "2"
@@ -109,7 +109,7 @@
 		"health_max" "6"
 		"armor_max" "8"
 		"armor_regen_per_turn" "3"
-		"baseDamage"  "5"
+		"baseDamage"  "4"
 
 		"rangedAttackRange" "5" 
 		"rangedAttackMinRange" "2"

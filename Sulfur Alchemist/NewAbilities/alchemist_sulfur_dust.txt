@@ -11,6 +11,10 @@
 
      "AbilitySpecial"
     {
+        "01"{
+            "var_type"          "FIELD_EXPRESSION"
+            "splashDamage"      "ceil(stat(%CASTER, #attackDamage)/2)"
+        }
     }
 
     "OnAbilityAction"
@@ -28,7 +32,7 @@
         {
             "Tags"          "ingredient"
             "Icon"          "Burn"
-            "IconPriority"  "50"
+            "IconPriority"  "40"
         }
     }
 }

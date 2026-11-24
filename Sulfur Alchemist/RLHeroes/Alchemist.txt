@@ -17,13 +17,13 @@
 		{
 			"level" "1"
 
-			"health_max" 				"3"
+			"health_max" 				"5"
 			"armor_max" 				"0"
 			"armor_regen_per_turn" 		"0"
 
-			"baseDamage"  				"2"
+			"baseDamage"  				"3"
 
-			"rangedAttackRange" 		"4" 
+			"rangedAttackRange" 		"3" 
 			"rangedAttackMinRange" 		"2"
 			
 			
@@ -78,11 +78,11 @@
 		{
 			"level" "2"
 
-			"health_max" 				"4"
+			"health_max" 				"6"
 			"armor_max" 				"0"
 			"armor_regen_per_turn" 		"0"
 
-			"baseDamage"  				"3"
+			"baseDamage"  				"4"
 
 			"rangedAttackRange" 		"4"
 			"rangedAttackMinRange" 		"2"
@@ -99,13 +99,13 @@
 		{
 			"level" "3"
 
-			"health_max" 				"5"
+			"health_max" 				"7"
 			"armor_max" 				"0"
 			"armor_regen_per_turn" 		"0"
 
-			"baseDamage"  				"4"
+			"baseDamage"  				"5"
 
-			"rangedAttackRange" 		"7"
+			"rangedAttackRange" 		"4"
 			"rangedAttackMinRange" 		"2"
 			
 			"walkSpeed" 				"2"

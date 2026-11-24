@@ -18,7 +18,7 @@
 "SKILL_cleric_communion_DESCRIPTION_EXTRA" = "<style="extra">The Cleric must buff an ally in order to gain the effect.</style>"
 
 "SKILL_cleric_salvation_NAME" = "Salvation"
-"SKILL_cleric_salvation_DESCRIPTION" = "Prays for a miracle, reducing the attack damage stat of enemies in a targeted area to 1 for 1 turn."
+"SKILL_cleric_salvation_DESCRIPTION" = "Prays for a miracle, reducing the attack damage stat of enemies in a targeted area to 1."
 "SKILL_cleric_salvation_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> Increased duration if the Cleric has the <style="highlight">Communion</style> buff."
 "SKILL_cleric_salvation_DESCRIPTION_DATA" = "Duration: <style="highlight">{duration}</style> {icon#turns}\nEPIC duration: <style="highlight">{extraDuration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
 

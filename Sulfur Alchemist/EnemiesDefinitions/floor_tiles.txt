@@ -1,6 +1,6 @@
-	"AcidFloor" 
+	"BadBatchFloor" 
 	{
-		"Name" "AcidFloor"
+		"Name" "BadBatchFloor"
 		"InheritsFrom" "Base"
 		"Model" "DummyUnit"
 
@@ -26,4 +26,55 @@
   		}
 
   		"defaultSkill" "common_melee_attack"
+	}
+	
+	"CorruptionFloor" 
+	{
+		"Name" "CORRUPTION_FLOOR"
+		"InheritsFrom" "Base"
+		"Model" "LavaGeyser"
+
+		"stats"
+		{
+			"health_max" "80"
+			"skipsInitiative" "1"
+			"initiative" "-99"
+		}
+
+		"skills"
+		{ 
+ 			"1" "corruption_floor_damage_skill"
+  		}
+
+  		"states"
+  		{
+  			"HIDE_DAMAGE" "1"
+			"CANT_BE_KNOCKED_BACK" "1"
+			"CANT_BE_POISONED" "1"
+			"CANT_BE_BURNT" "1"
+			"CANT_BE_BLED" "1"
+			"CANT_BE_ROOTED" "1"
+			"CANT_BE_ASLEPT" "1"
+			"CANT_BE_FROZEN" "1"
+			"NO_SKULL" "1"
+			"FIXED_POSITION" "1"
+			"NO_CHECK_END_FIGHT" "1"
+  			"NO_LIFEBAR" "1"
+  			"NOT_IN_INITIATIVE_BAR" "1"
+  			"NON_TARGETABLE" "1"
+  			"NO_COLLISION" "1"
+			"STUNNED"            "1"
+  		}
+
+  		"defaultSkill" "common_melee_attack"
+
+  		"soundConfig"
+		{
+			"assetId" 					"DynamicSoundGroupLavaGeyserSounds"
+			"sounds"
+			{
+				"receiveDamage" 		"krl_sfx_combatGeneric_plantHit"
+				"death" 				"krl_sfx_combatGeneric_plantHit"
+			}
+		}
 	}

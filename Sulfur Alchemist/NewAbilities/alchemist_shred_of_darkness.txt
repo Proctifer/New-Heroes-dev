@@ -11,14 +11,40 @@
 
      "AbilitySpecial"
     {
+        "01"{
+            "var_type"          "FIELD_FLOAT"
+            "darknessMultiplier""2"
+        }
     }
 
     "OnAbilityAction"
     {
-        "ApplyModifier"
+        "Conditional"
         {
-            "ModifierName"      "alchemist_darkness_modifier"
-            "Target"            "%TARGET"
+            "Condition" "hasModifier(%TARGET, #alchemist_bloodsydian_modifier)"
+            "Actions"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"      "alchemist_bloodsydian_modifier"
+                    "Target"            "%TARGET"
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"      "alchemist_void_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
+
+            "ElseActions"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "alchemist_darkness_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
         }
     }
 
@@ -27,7 +53,14 @@
         "alchemist_darkness_modifier"
         {
             "Tags"          "ingredient"
-            "Icon"          "ShieldOfShadows"
+            "Icon"          "EtherealLink"
+            "IconPriority"  "50"
+        }
+
+        "alchemist_void_modifier"
+        {
+            "Tags"          "ingredient"
+            "Icon"          "EldritchFocus"
             "IconPriority"  "50"
         }
     }

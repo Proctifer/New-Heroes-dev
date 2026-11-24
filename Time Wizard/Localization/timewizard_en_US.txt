@@ -1,5 +1,5 @@
 "UNIT_TIME_WIZARD_NAME_0001" = "Time Wizard"
-"UNIT_TIME_WIZARD_LORE" = "These wizards have a mastery of ancient magic, possibly being ancient themselves. They do not bother with harming their enemies, opting to toy with them instead."
+"UNIT_TIME_WIZARD_LORE" = "These wizards possess a mastery of ancient magic, possibly being ancient themselves. They do not bother with harming their enemies, opting to toy with them instead."
 
 
 "SKILL_time_wizard_guardian_spirit_trait_NAME" = "Guardian Spirit"

@@ -11,6 +11,11 @@
 
      "AbilitySpecial"
     {
+        "01"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "brewReduction"     "-2"
+        }
     }
 
     "OnAbilityAction"
@@ -49,7 +54,7 @@
         "alchemist_northern_brew_modifier"
         {
             "Tags"          "ingredient"
-            "Icon"          "Hexed"
+            "Icon"          "UndyingRage"
             "IconPriority"  "50"
         }
 

@@ -6,19 +6,45 @@
     "CastFXId"              "RuptureCastFXMega"
     "Icon"                  "BloodsydianPowder"
     "AbilityCastRange"      "0"
-    "AbilityCooldown"       "2"
+    "AbilityCooldown"       "4"
     "AbilityAPCost"         "0"
 
      "AbilitySpecial"
     {
+        "01"{
+            "var_type"          "FIELD_EXPRESSION"
+            "bloodDuration"    "ceil(stat(%CASTER, #health)/2)"
+        }
     }
 
     "OnAbilityAction"
     {
-        "ApplyModifier"
+        "Conditional"
         {
-            "ModifierName"      "alchemist_bloodsydian_modifier"
-            "Target"            "%TARGET"
+            "Condition" "hasModifier(%TARGET, #alchemist_darkness_modifier)"
+            "Actions"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"      "alchemist_darkness_modifier"
+                    "Target"            "%TARGET"
+                }
+
+                "ApplyModifier"
+                {
+                    "ModifierName"      "alchemist_void_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
+
+            "ElseActions"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"      "alchemist_bloodsydian_modifier"
+                    "Target"            "%TARGET"
+                }
+            }
         }
     }
 

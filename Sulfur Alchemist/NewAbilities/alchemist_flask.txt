@@ -1,76 +1,70 @@
 "alchemist_flask"
 {
-    "AbilityBehavior"           "POINT_TARGET | NEGATIVE_EFFECT | AOE | NEEDS_VALID_TERRAIN"
-    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
-    "AbilityCastMinRange"       "1"
-    "AbilityCooldown"           "0"
-    "AbilityPrewarmCooldown"    "1"
-    "AbilityAPCost"             "1"
-
-    "AbilityAOERange"           "0"
-    "AbilityAOEKind"            "RANGE_CIRCLE"
-    "AbilityAOECenterOnCaster"  "0"
-    "AbilityAOEAffectsCaster"   "0"
+    "AbilityBehavior"           "UNIT_TARGET | AOE"
+    "AbilityTeamFilter"         "TEAM_ENEMY"
 
     "AnimationID"               "Attack"
     "Icon"                      "AlchemicalFlask"
     "CastFXId"                  "OrcHunterSleepingArrowCastFXMega"
+   
+    "AbilityAOEKind"            "RANGE_CIRCLE"
+    "AbilityAOECenterOnCaster"  "0"
+    "AbilityAOEAffectsCaster"   "0"
+    "AbilityAOETeamFilter"      "TEAM_ENEMY"
 
-     "AbilitySpecial"
+    "AbilityAOERange"           "0"
+    "AbilityCastRange"          "stat(%CASTER, #rangedAttackRange)"
+    "AbilityCooldown"           "0"
+    "AbilityAPCost"             "1"
+
+    "AbilitySpecial"
     {
-        "01"
-        {
+        "01"{
             "var_type"          "FIELD_EXPRESSION"
             "flaskDamage"       "stat(%CASTER, #attackDamage)"
         }
-        "02"
-        {
+        "02"{
+            "var_type"          "FIELD_EXPRESSION"
+            "splashDamage"      "ceil(stat(%CASTER, #attackDamage)/2)"
+        }
+        "03"{
             "var_type"          "FIELD_FLOAT"
             "area"              "1"
         }
-        "03"
-        {
+        "04"{
             "var_type"          "FIELD_FLOAT"
             "duration"          "2"
         }
-        "03"
-        {
+        "05"{
+            "var_type"          "FIELD_EXPRESSION"
+            "bloodDuration"    "ceil(stat(%CASTER, #health)/2)"
+        }
+        "06"{
             "var_type"          "FIELD_FLOAT"
-            "doubleDuration"    "4"
+            "darknessMultiplier""2"
         }
-        "04"
-        {
-            "var_type"          "FIELD_EXPRESSION"
-            "mainDarknessDamage""stat(%CASTER, #attackDamage) * 2"
-        }
-        "05"
-        {
-            "var_type"          "FIELD_EXPRESSION"
-            "auxDarknessDamage" "stat(%CASTER, #attackDamage)"
-        }
-        "06"
-        {
+        "07"{
             "var_type"          "FIELD_FLOAT"
             "brewReduction"     "-2"
         }
-        "07"
-        {
+        "08"{
             "var_type"          "FIELD_FLOAT"
             "alcoholDamage"     "2"
         }
+        "09"{
+            "var_type"          "FIELD_FLOAT"
+            "floorDuration"     "2"
+        }
     }
-
     "OnCustomTargeting"
     {
-        "Conditional"
-        {
-            "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
+        "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
         
             "Actions"    
             {
                 "ActOnHexas"
                 {
-                    "Center"                 "positionHex(%TARGET)"
+                    "Center"                 "unitHex(%TARGET)"
                     "Range"                  "%area"
                     "IteratorName"           "#hexa"
                 
@@ -105,13 +99,13 @@
             }
         }
     }
-
     "OnAbilityAction"
-    { 
+    {
         "TrackingProjectile"
         {
+            "Target"            "%TARGET"
             "SourcePos"         "unitPosition(%SOURCE, #CastPoint)"
-            "TargetPos"         "%TARGET"
+            "TargetPos"         "unitPosition(%TARGET)"
             "Model"             "BombardierBadaboomProjectile"
             "Params"
             {
@@ -120,43 +114,59 @@
                     "type"              "FIELD_FLOAT"
                     "value"             "expr(%flaskDamage)"
                 }
-
-                "mainDarknessDamage"
+                "splashDamage"
                 {
                     "type"              "FIELD_FLOAT"
-                    "value"             "expr(%mainDarknessDamage)"
+                    "value"             "expr(%splashDamage)"
                 }
-
-                "auxDarknessDamage"
+                "bloodDuration"
                 {
                     "type"              "FIELD_FLOAT"
-                    "value"             "expr(%auxDarknessDamage)"
+                    "value"             "expr(%bloodDuration)"
                 }
             }
         }   
     }
-
-    "OnProjectileHitUnit"
-    {   
+   "OnProjectileHitUnit"
+    {
         "AttachEffect"
         {
             "EffectName"            "BigBadaboomLandFXMega"
-            "Target"                "%TARGET"
+            "Target"                "unitPosition(%TARGET, #Base)"
         }
-
-        "Conditional"
-        {
-            "Condition" "hasModifier(%CASTER, #alchemist_sisters_spirits_modifier)"
+        "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sisters_spirits_modifier)"
             "Actions"
             {
-                "Conditional"
+                "Hit"
                 {
-                    "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
+                    "Target"        "%TARGET"
+                    "EffectName"    "RicochetHitFXMega" 
+                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_TRUE" 
+                            "Damage"        "%flaskDamage"
+                        }
+                    }
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_new_poison"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%duration"
+                            "Refresh"       "1"
+                        }
+                    }
+                }
+                "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
                     "Actions"
                     {
                         "ActOnHexas"
                         {
-                            "Center"                 "positionHex(%TARGET)"
+                            "Center"                 "unitHex(%TARGET)"
                             "Range"                  "%area"
                             "IteratorName"           "#hexa"
                         
@@ -173,16 +183,17 @@
                         {
                             "Target"
                             {
-                                "Center"      "%TARGET"
+                                "Center"      "unitPosition(%TARGET)"
                                 "Radius"      "%area"
                                 "Teams"       "TEAM_ENEMY"
+                                "ExcludedUnits" "objectList(%TARGET)"
                             }
-                            "IteratorName" "#newTarget"
+                            "IteratorName" "#splashTarget"
                             "Actions"    
                             {
                                 "Hit"
                                 {
-                                    "Target"        "%newTarget"
+                                    "Target"        "%splashTarget"
                                     "EffectName"    "PoisonHitFXMega" 
                                     "Tags"          "stringList(#AOE)"
                                     "InitActions"
@@ -190,47 +201,7 @@
                                         "AddDamage"
                                         {
                                             "Type"          "DAMAGE_TRUE" 
-                                            "Damage"        "%flaskDamage"
-                                        }
-                                    }
-                                    "Actions"
-                                    {
-                                        "ApplyModifier"
-                                        {
-                                            "ModifierName"  "modifier_new_poison"
-                                            "Target"        "%HITTARGET"
-                                            "Duration"      "%duration"
-                                            "Refresh"       "1"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    "ElseActions"
-                    {
-                        "ActOnTargets"
-                        {
-                            "Target"
-                            {
-                                "Center"      "%TARGET"
-                                "Radius"      "0"
-                                "Teams"       "TEAM_ENEMY"
-                            }
-                            "IteratorName" "#newTarget"
-                            "Actions"    
-                            {
-                                "Hit"
-                                {
-                                    "Target"        "%newTarget"
-                                    "EffectName"    "RicochetHitFXMega" 
-                                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
-                                    "InitActions"
-                                    {
-                                        "AddDamage"
-                                        {
-                                            "Type"          "DAMAGE_TRUE" 
-                                            "Damage"        "%flaskDamage"
+                                            "Damage"        "%splashDamage"
                                         }
                                     }
                                     "Actions"
@@ -250,31 +221,46 @@
                 }
             }
         }
-
-        "Conditional"
-        {
-            "Condition" "hasModifier(%CASTER, #alchemist_darkness_modifier)"
+        "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_darkness_modifier)"
             "Actions"
             {
-                "Conditional"
+                "Hit"
                 {
-                    "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
+                    "Target"        "%TARGET"
+                    "EffectName"    "EnchantressSporeShowerHitFXMega" 
+                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL" 
+                            "Damage"        "%flaskDamage * %darknessMultiplier"
+                        }
+                    }
+                    "Actions"
+                    {
+                    }
+                }
+                
+                "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
                     "Actions"
                     {
                         "ActOnTargets"
                         {
                             "Target"
                             {
-                                "Center"      "%TARGET"
-                                "Radius"      "0"
-                                "Teams"       "TEAM_ENEMY"
+                                "Center"        "unitPosition(%TARGET)"
+                                "Radius"        "%area"
+                                "Teams"         "TEAM_ENEMY"
+                                "ExcludedUnits" "objectList(%TARGET)"
                             }
-                            "IteratorName" "#mainTarget"
+                            "IteratorName" "#splashTarget"
                             "Actions"    
                             {
                                 "Hit"
                                 {
-                                    "Target"        "%mainTarget"
+                                    "Target"        "%splashTarget"
                                     "EffectName"    "EnchantressSporeShowerHitFXMega" 
                                     "Tags"          "stringList(#PROJECTILE, #TARGETED)"
 
@@ -283,7 +269,7 @@
                                         "AddDamage"
                                         {
                                             "Type"          "DAMAGE_PHYSICAL" 
-                                            "Damage"        "%mainDarknessDamage"
+                                            "Damage"        "%splashDamage * %darknessMultiplier"
                                         }
                                     }
                                     "Actions"
@@ -296,108 +282,57 @@
                                     }
                                 }
                             }
-                            "ActionsIfNotFound"
-                            {
-                                "ActOnTargets"
-                                {
-                                    "Target"
-                                    {
-                                        "Center"        "%TARGET"
-                                        "Radius"        "%area"
-                                        "Teams"         "TEAM_ENEMY"
-                                        "ExcludedUnits" "objectList(%mainTarget)"
-                                    }
-                                    "IteratorName" "#auxTarget"
-                                    "Actions"    
-                                    {
-                                        "Hit"
-                                        {
-                                            "Target"        "%auxTarget"
-                                            "EffectName"    "EnchantressSporeShowerHitFXMega" 
-                                            "Tags"          "stringList(#PROJECTILE, #TARGETED)"
-
-                                            "InitActions"
-                                            {
-                                                "AddDamage"
-                                                {
-                                                    "Type"          "DAMAGE_PHYSICAL" 
-                                                    "Damage"        "%auxDarknessDamage"
-                                                }
-                                            }
-                                            "Actions"
-                                            {
-                                                "AttachEffect"
-                                                {
-                                                    "EffectName"            "DwarfzookaExplosionFXMega"
-                                                    "Target"                "%TARGET"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    "ElseActions"
-                    {
-                        "ActOnTargets"
-                        {
-                            "Target"
-                            {
-                                "Center"      "%TARGET"
-                                "Radius"      "0"
-                                "Teams"       "TEAM_ENEMY"
-                            }
-                            "IteratorName" "#newTarget"
-                            "Actions"    
-                            {
-                                "Hit"
-                                {
-                                    "Target"        "%newTarget"
-                                    "EffectName"    "EnchantressSporeShowerHitFXMega" 
-                                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
-
-                                    "InitActions"
-                                    {
-                                        "AddDamage"
-                                        {
-                                            "Type"          "DAMAGE_PHYSICAL" 
-                                            "Damage"        "%mainDarknessDamage"
-                                        }
-                                    }
-                                    "Actions"
-                                    {
-                                    }
-                                }
-                            }
                         }
                     }
                 }
             }
         }
-
-        "Conditional"
-        {
-            "Condition" "hasModifier(%CASTER, #alchemist_northern_brew_modifier)"
+        "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_northern_brew_modifier)"
             "Actions"
             {
-                "Conditional"
+                "AttachEffect"
                 {
-                    "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
+                    "EffectName"    "SulfuricBlastSmokeFXMega"
+                    "Target"        "%TARGET"
+                }
+                "Hit"
+                {
+                    "Target"        "%TARGET"
+                    "EffectName"    "OrcCleaverWhirlwindHitFXMega" 
+                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL" 
+                            "Damage"        "%flaskDamage"
+                        }
+                    }
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "alchemist_weakness_brew_modifier"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%duration"
+                            "Refresh"       "1"
+                        }
+                    }
+                }
+                "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
                     "Actions"
                     {
                         "ActOnHexas"
                         {
-                            "Center"                 "positionHex(%TARGET)"
+                            "Center"                 "unitHex(%TARGET)"
                             "Range"                  "%area"
                             "IteratorName"           "#hexa"
                         
-                            "Actions"    
+                            "Actions"
                             {
                                 "AttachEffect"
                                 {
-                                    "EffectName"    "VenomVineFXMega"
+                                    "EffectName"    "SulfuricBlastSmokeFXMega"
                                     "Target"        "hexPosition(%hexa)"
                                 }
                             }
@@ -406,63 +341,24 @@
                         {
                             "Target"
                             {
-                                "Center"      "%TARGET"
+                                "Center"      "unitPosition(%TARGET)"
                                 "Radius"      "%area"
                                 "Teams"       "TEAM_ENEMY"
+                                "ExcludedUnits" "objectList(%TARGET)"
                             }
-                            "IteratorName" "#newTarget"
-                            "Actions"    
+                            "IteratorName" "#splashTarget"
+                            "Actions"
                             {
                                 "Hit"
                                 {
-                                    "Target"        "%newTarget"
+                                    "Target"        "%splashTarget"
                                     "Tags"          "stringList(#AOE)"
                                     "InitActions"
                                     {
                                         "AddDamage"
                                         {
-                                            "Type"          "DAMAGE_TRUE" 
-                                            "Damage"        "%flaskDamage"
-                                        }
-                                    }
-                                    "Actions"
-                                    {
-                                        "ApplyModifier"
-                                        {
-                                            "ModifierName"  "alchemist_weakness_brew_modifier"
-                                            "Target"        "%HITTARGET"
-                                            "Duration"      "%duration"
-                                            "Refresh"       "1"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    "ElseActions"
-                    {
-                        "ActOnTargets"
-                        {
-                            "Target"
-                            {
-                                "Center"      "%TARGET"
-                                "Radius"      "0"
-                                "Teams"       "TEAM_ENEMY"
-                            }
-                            "IteratorName" "#newTarget"
-                            "Actions"    
-                            {
-                                "Hit"
-                                {
-                                    "Target"        "%newTarget"
-                                    "EffectName"    "OrcCleaverWhirlwindHitFXMega" 
-                                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
-                                    "InitActions"
-                                    {
-                                        "AddDamage"
-                                        {
                                             "Type"          "DAMAGE_PHYSICAL" 
-                                            "Damage"        "%flaskDamage"
+                                            "Damage"        "%splashDamage"
                                         }
                                     }
                                     "Actions"
@@ -482,15 +378,399 @@
                 }
             }
         }
-
-        "Conditional"
-        {
-            "Condition" "not(hasModifier(%CASTER, #alchemist_sisters_spirits_modifier) || hasModifier(%CASTER, #alchemist_darkness_modifier) || hasModifier(%CASTER, #alchemist_northern_brew_modifier))"
+        "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_bloodsydian_modifier)"
             "Actions"
             {
-                "Conditional"
+                "Hit"
                 {
-                    "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
+                    "Target"        "%TARGET"
+                    "EffectName"    "BullRushHitFXMega" 
+                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL" 
+                            "Damage"        "%flaskDamage"
+                        }
+                    }
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_new_bleeding"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%duration"
+                            "Refresh"       "1"
+                        }
+                    }
+                }
+                "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
+                    "Actions"
+                    {
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"      "unitPosition(%TARGET)"
+                                "Radius"      "%area"
+                                "Teams"       "TEAM_ENEMY"
+                                "ExcludedUnits" "objectList(%TARGET)"
+                            }
+                            "IteratorName" "#splashTarget"
+                            "Actions"    
+                            {
+                                "Hit"
+                                {
+                                    "Target"        "%splashTarget"
+                                    "EffectName"    "RuptureHitFXMega" 
+                                    "Tags"          "stringList(#AOE)"
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"          "DAMAGE_PHYSICAL" 
+                                            "Damage"        "%splashDamage"
+                                        }
+                                    }
+                                    "Actions"
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "modifier_new_bleeding"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%duration"
+                                            "Refresh"       "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_void_modifier)"
+            "Actions"
+            {
+                "AttachEffect"
+                {
+                    "EffectName"       "SummonCultistSmokeFXMega"
+                    "Target"           "%TARGET"
+                }
+                "Hit"
+                {
+                    "Target"        "%TARGET"
+                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
+                    "EffectName"    "EnchantressSporeShowerHitFXMega" 
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_TRUE" 
+                            "Damage"        "%flaskDamage * %darknessMultiplier"
+                        }
+                    }
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_new_bleeding"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%duration"
+                            "Refresh"       "1"
+                        }
+                    }
+                }
+                "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
+                    "Actions"
+                    {
+                        "ActOnHexas"
+                        {
+                            "Center"                 "unitHex(%TARGET)"
+                            "Range"                  "%area"
+                            "IteratorName"           "#hexa"
+                        
+                            "Actions" {
+                                "AttachEffect"
+                                {
+                                    "EffectName"       "SummonCultistSmokeFXMega"
+                                    "Target"           "hexPosition(%hexa)"
+                                }
+                            }
+                        }
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"      "unitPosition(%TARGET)"
+                                "Radius"      "%area"
+                                "Teams"       "TEAM_ENEMY"
+                                "ExcludedUnits" "objectList(%TARGET)"
+                            }
+                            "IteratorName" "#splashTarget"
+                            "Actions"    
+                            {
+                                "Hit"
+                                {
+                                    "Target"        "%splashTarget"
+                                    "Tags"          "stringList(#AOE)"
+                                    "EffectName"    "EnchantressSporeShowerHitFXMega" 
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"          "DAMAGE_TRUE" 
+                                            "Damage"        "%splashDamage * %darknessMultiplier"
+                                        }
+                                    }
+                                    "Actions"
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "modifier_new_bleeding"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%duration"
+                                            "Refresh"       "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_bad_batch_modifier)"
+            "Actions"
+            {
+                "AttachEffect"
+                {
+                    "EffectName"    "AcidFloorExplosionFXMega"
+                    "Target"        "%TARGET"
+                }
+                "PlaySound" { "Sound" "#krl_sfx_combatGeneric_stepOnAcid" }
+                "Hit"
+                {
+                    "Target"        "%TARGET"
+                    "EffectName"    "PoisonHitFXMega" 
+                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL" 
+                            "Damage"        "%flaskDamage"
+                        }
+                    }
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "alcohol_poisoning_modifier"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%duration"
+                            "Refresh"       "1"
+                        }
+                    }
+                }
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"    "%TARGET"
+                        "Radius"    "0"
+                        "Teams"     "TEAM_ALL"
+                        "Flags"     "INCLUDE_NON_TARGETABLE"
+                    }
+                    "IteratorName" "#newTarget"
+                    "Actions"    
+                    {
+                        "RemoveModifier"
+                        {
+                            "ModifierTag"    "floor_effect"
+                            "Target"         "%newTarget"
+                        }
+                    }
+                }
+                "SpawnUnit"
+                {
+                    "UnitName" "#DummyUnit"
+                    "Position" "unitPosition(%TARGET)"
+                    "UnitGroup" "unitGroup(%TARGET)"
+                    "IsAI" "0"
+                    "InheritsInitiative" "1"
+                    "OnSpawn"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "bad_batch_floor_tile_modifier"
+                            "Target"            "%UNIT"
+                            "Duration"          "%floorDuration"
+                        }
+                    }
+                }
+                "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
+                    "Actions"
+                    {
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"      "unitPosition(%TARGET)"
+                                "Radius"      "%area"
+                                "Teams"       "TEAM_ENEMY"
+                                "ExcludedUnits" "objectList(%TARGET)"
+                            }
+                            "IteratorName" "#splashTarget"
+                            "Actions"
+                            {
+                                "Hit"
+                                {
+                                    "Target"        "%splashTarget"
+                                    "Tags"          "stringList(#AOE)"
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"          "DAMAGE_PHYSICAL" 
+                                            "Damage"        "%splashDamage"
+                                        }
+                                    }
+                                    "Actions"
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "alcohol_poisoning_modifier"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%duration"
+                                            "Refresh"       "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        "SpawnUnit"
+                        {
+                            "UnitName"               "#DummyUnit"
+                            "Position"               "unitPosition(%TARGET)"
+                            "UnitGroup"              "unitGroup(%CASTER)"
+                            "IsAI"                   "0"
+                            "Nick"                   "#FireballFloorController"
+                            "InheritsInitiative"     "1"
+
+                            "OnSpawn"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"   "remove_another_unit_modifier"
+                                    "Target"         "%UNIT"
+                                    "Duration"       "2"
+                                    "Params"
+                                    {
+                                        "UNIT" {
+                                            "type"      "FIELD_OBJECT"
+                                            "value"     "%UNIT"
+                                        }
+                                    }
+                                }
+                                "SetToContext"
+                                {
+                                    "Context"        "projectileContext(%projectile)"
+                                    "Key"            "#controllerUnit"
+                                    "Value"          "%UNIT"
+                                    "Type"           "FIELD_OBJECT"
+                                }
+                            }
+                        }
+                        "ActOnHexas"
+                        {
+                            "Center"                 "unitHex(%TARGET)"
+                            "Range"                  "%area"
+                            "IteratorName"           "#hexa"
+                        
+                            "Actions"    
+                            {
+                                "ActOnTargets"
+                                {
+                                    "Target"
+                                    {
+                                        "Center"        "hexPosition(%hexa)"
+                                        "Radius"        "0"
+                                        "Teams"         "TEAM_ALL"
+                                        "Flags"         "INCLUDE_NON_TARGETABLE"
+                                    }
+                                    "IteratorName"      "#newTarget"
+                                
+                                    "Actions"    
+                                    {
+                                        "RemoveModifier"
+                                        {
+                                            "ModifierTag"    "floor_effect"
+                                            "Target"         "%newTarget"
+                                        }
+                                    }
+                                }
+                                "SpawnUnit"
+                                {
+                                    "UnitName"               "#DummyUnit"
+                                    "Position"               "hexPosition(%hexa)"
+                                    "UnitGroup"              "unitGroup(%CASTER)"
+                                    "IsAI"                   "0"
+                                    "Nick"                   "#FireballFloor"
+                                    "InheritsInitiative"     "1"
+                                    
+                                    "OnSpawn"
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"    "bad_batch_floor_tile_modifier"
+                                            "Target"          "%UNIT"
+                                        }
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"      "remove_another_unit_modifier"
+                                            "Target"            "wrapContext(projectileContext(%projectile), %controllerUnit)"
+                                            "Params"
+                                            {
+                                                "UNIT" {
+                                                    "type"          "FIELD_OBJECT"
+                                                    "value"         "%UNIT"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        "Conditional" { "Condition" "not(hasModifier(%CASTER, #alchemist_sisters_spirits_modifier) || hasModifier(%CASTER, #alchemist_darkness_modifier) || 
+                                        hasModifier(%CASTER, #alchemist_northern_brew_modifier) || hasModifier(%CASTER, #alchemist_bloodsydian_modifier) || 
+                                        hasModifier(%CASTER, #alchemist_void_modifier) || hasModifier(%CASTER, #alchemist_bad_batch_modifier))"
+            "Actions"
+            {
+                "Hit"
+                {
+                    "Target"        "%TARGET"
+                    "EffectName"    "OrcCleaverWhirlwindHitFXMega" 
+                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
+
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_PHYSICAL" 
+                            "Damage"        "%flaskDamage"
+                        }
+                    }
+                    "Actions"
+                    {
+                    }
+                }
+                "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
                     "Actions"
                     {
                         "AttachEffect"
@@ -498,14 +778,14 @@
                             "EffectName"            "FireballExplosionFXMega"
                             "Target"                "%TARGET"
                         }
-                        
                         "ActOnTargets"
                         {
                             "Target"
                             {
-                                "Center"      "%TARGET"
-                                "Radius"      "%area"
-                                "Teams"       "TEAM_ENEMY"
+                                "Center"        "unitPosition(%TARGET)"
+                                "Radius"        "%area"
+                                "Teams"         "TEAM_ENEMY"
+                                "ExcludedUnits" "objectList(%TARGET)"
                             }
                             "IteratorName" "#newTarget"
                             "Actions"    
@@ -521,42 +801,7 @@
                                         "AddDamage"
                                         {
                                             "Type"          "DAMAGE_PHYSICAL" 
-                                            "Damage"        "%flaskDamage"
-                                        }
-                                    }
-                                    "Actions"
-                                    {
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    "ElseActions"
-                    {
-                        "ActOnTargets"
-                        {
-                            "Target"
-                            {
-                                "Center"      "%TARGET"
-                                "Radius"      "0"
-                                "Teams"       "TEAM_ENEMY"
-                            }
-                            "IteratorName" "#newTarget"
-                            "Actions"    
-                            {
-                                "Hit"
-                                {
-                                    "Target"        "%newTarget"
-                                    "EffectName"    "OrcCleaverWhirlwindHitFXMega" 
-                                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
-
-                                    "InitActions"
-                                    {
-                                        "AddDamage"
-                                        {
-                                            "Type"          "DAMAGE_PHYSICAL" 
-                                            "Damage"        "%flaskDamage"
+                                            "Damage"        "%splashDamage"
                                         }
                                     }
                                     "Actions"
@@ -569,7 +814,6 @@
                 }
             }
         }
-
         "RemoveModifier"
         {
             "ModifierTag"       "ingredient"
@@ -581,7 +825,7 @@
     {
         "alchemist_weakness_brew_modifier"
         {
-            "Icon"          "Hexed"
+            "Icon"          "UndyingRage"
             "IconPriority"  "30"
 
             "OnHitPreProcessDamagesGlobal"

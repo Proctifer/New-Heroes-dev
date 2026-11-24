@@ -1,0 +1,176 @@
+"corruption_floor_damage_skill"
+{
+    "AbilityBehavior"       "POINT_TARGET | PASSIVE"
+   
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "dotDuration"            "2"
+        }
+
+        "02"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "extraDamage"         "3"
+        }
+    }
+
+    "Modifiers"
+    {
+        "corruption_floor_tile_modifier"
+        {
+            "Tags"                  "floor_effect"
+            "Passive"               "1"
+
+            "OnUnitEnteredNode"
+            {
+               "AreaControl"
+               {
+
+                    "Center" "unitHex(%TARGET)"
+                    "Range" "0"
+                    "From" "%from"
+                    "To" "%to"
+                    "EnterActions"
+                    {
+                        "Conditional" 
+                        {
+                            "Condition" "matchesTeam(unitGroup(%SOURCE), unitGroup(%UNIT), @TeamFilter(TEAM_ALL)) && not(isOnState(%UNIT, #WONT_TRIGGER_ACID_FLOOR))"
+                            "Actions"
+                            {
+                                "Hit"
+                                {
+                                    "Target" "%UNIT"
+                                    "Source" "%TARGET"
+                                    
+                                    "EffectName" "PoisonHitFXMega" 
+                                    "Tags" "stringList(#ENVIRONMENTAL)"
+
+                                    "InitActions"
+                                    {
+                                        "Conditional"
+                                        {
+                                            "Condition" "isOnState(%HITTARGET, #POISONED)"
+
+                                            "Actions" 
+                                            {
+                                                "AddDamage"
+                                                {
+                                                    "Type"          "DAMAGE_TRUE"
+                                                    "Damage"        "%extraDamage"
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    "Actions" 
+                                    {
+                                        "Conditional"
+                                        {
+                                            "Condition" "isOnState(%HITTARGET, #POISONED)"
+                                            
+                                            "Actions"
+                                            {
+
+                                            }
+                                            
+                                            "ElseActions" 
+                                            {
+                                                "ApplyModifier"
+                                                {
+                                                    "ModifierName"  "modifier_new_poison"
+                                                    "Target"        "%HITTARGET"
+                                                    "Duration"      "%dotDuration"
+                                                    "Refresh"   "1"
+                                                }
+                                            }
+                                        }
+
+                                        "PlaySound"
+                                        {
+                                            "Sound" "#krl_sfx_combatGeneric_stepOnAcid"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+               }
+            }
+
+            "OnTurnStartedGlobal"
+            {
+               "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"      "%TARGET"
+                        "Radius"     "0"
+                        "Teams"     "TEAM_ALL"
+                    }
+
+                    "IteratorName" "#newTarget"
+                
+                    "Actions"    
+                    {
+                        "Conditional" 
+                        {
+                            "Condition" "equal(activeUnit(), %newTarget) && not(isOnState(%newTarget, #WONT_TRIGGER_ACID_FLOOR))"
+
+                            "Actions"
+                            {
+                                "Hit"
+                                {
+                                    "Target" "%newTarget"
+                                    "Source" "%TARGET"
+                                    
+                                    "EffectName" "PoisonHitFXMega" 
+                                    "Tags" "stringList(#ENVIRONMENTAL)"
+
+                                    "InitActions"
+                                    {
+                                        "Conditional"
+                                        {
+                                            "Condition" "isOnState(%HITTARGET, #POISONED)"
+
+                                            "Actions" 
+                                            {
+                                                "AddDamage"
+                                                {
+                                                    "Type"          "DAMAGE_TRUE"
+                                                    "Damage"        "%extraDamage"
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    "Actions" 
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "modifier_new_poison"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%dotDuration"
+                                            "Refresh"   "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            "OnRemoved"
+            {
+                "KillUnit"
+                {
+                    "Target"        "%TARGET"
+                }
+            }
+        }
+    }
+}

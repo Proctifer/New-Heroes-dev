@@ -44,8 +44,8 @@
         {
             "Tags" "shield"
 
-            "EffectName"    "AvengingShieldStatusFXMega"
-            "Icon"          "ShieldOfRetribution"
+            "EffectName"    "DemonLordNethershieldStatusFXMega"
+            "Icon"          "NetherShield"
             "IconPriority"  "50"
 
             "OnPreHit"

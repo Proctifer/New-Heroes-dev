@@ -7,9 +7,9 @@
 "SKILL_time_wizard_guardian_spirit_trait_DESCRIPTION_DATA" = "Cooldown reduction: <style="highlight">{cooldownOffset} {icon#turns}</style>"
 
 "SKILL_time_wizard_entropy_beam_NAME" = "Entropy Beam"
-"SKILL_time_wizard_entropy_beam_DESCRIPTION" = "Targets an ally or enemy, granting them speed or slowing them, respectively."
+"SKILL_time_wizard_entropy_beam_DESCRIPTION" = "Targets an ally or enemy, granting them speed or <style="concept">slowing</style> them, respectively."
 "SKILL_time_wizard_entropy_beam_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style>"
-"SKILL_time_wizard_entropy_beam_DESCRIPTION_DATA" = "Ally speed: <style="buff">{extraSpeed}</style>\nEnemy slow: <style="highlight">{reducedSpeed}</style>\nEntropy duration: <style="highlight"> {duration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
+"SKILL_time_wizard_entropy_beam_DESCRIPTION_DATA" = "Ally speed: <style="buff">+{extraSpeed}</style>\nEnemy slow: <style="damage">{reducedSpeed}</style>\nEntropy duration: <style="highlight"> {duration} {icon#turns}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
 
 "SKILL_time_wizard_potentiality_rune_NAME" = "Potentiality Rune"
 "SKILL_time_wizard_potentiality_rune_DESCRIPTION" = "Applies a magic rune to an enemy. When they are next hit, they will be <style="concept">stunned</style>."
@@ -21,9 +21,8 @@
 "SKILL_time_wizard_retcon_DESCRIPTION_DATA" = "Turns the absorbed damage into armor.\nRange: <style="highlight">{AbilityCastRange}</style>"
 
 "SKILL_time_wizard_sands_of_time_NAME" = "Sands of Time"
-"SKILL_time_wizard_sands_of_time_DESCRIPTION" = "Summons swirling sand on a tile. Enemies who walk onto it have their speed reduced. If they end their turn on the tile, they are put <style="concept">asleep</style>."
-"SKILL_time_wizard_sands_of_time_DESCRIPTION_DATA" = "Damage: <style="damage">{damage} {icon#iconDamageType}</style>\nDrained damage: <style="damage">{drainedDamage}{icon#damageTrue}</style>\nMax. Targets: <style="highlight">{maxTargets}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
-"SKILL_time_wizard_sands_of_time_DESCRIPTION_EXTRA" = "<style="debuff">Drained</style> lasts until either the target or the High Enchantress falls.</style>"
+"SKILL_time_wizard_sands_of_time_DESCRIPTION" = "Summons swirling sand in a selected hex and random adjacent hexes. Enemies who walk across it are <style="concept">slowed</style>. If they end their turn on the tile, they are put <style="concept">asleep</style>."
+"SKILL_time_wizard_sands_of_time_DESCRIPTION_DATA" = "Slow effect: <style="damage">{reducedSpeed}</style>\nExtra hexes: <style="highlight">{extraHexes}</style>\nRange: <style="highlight">{AbilityCastRange}</style>"
 
 "SKILL_time_wizard_rewind_NAME" = "Rewind"
 "SKILL_time_wizard_rewind_DESCRIPTION" = "The Time Wizard refreshes all of his cooldowns."
@@ -34,3 +33,20 @@
 "SKILL_time_wizard_time_dilation_DESCRIPTION_DATA" = "Range: <style="highlight">{AbilityCastRange}</style>"
 
 
+"COMBAT_MODIFIER_entropy_buff_modifier_TITLE" = "Positive Entropy"
+"COMBAT_MODIFIER_entropy_buff_modifier_DESCRIPTION" = "This unit has increased speed."
+
+"COMBAT_MODIFIER_entropy_debuff_modifier_TITLE" = "Negative Entropy"
+"COMBAT_MODIFIER_entropy_debuff_modifier_DESCRIPTION" = "This unit has decreased speed."
+
+"COMBAT_MODIFIER_potentiality_rune_modifier_TITLE" = "Potentiality Rune"
+"COMBAT_MODIFIER_potentiality_rune_modifier_DESCRIPTION" = "The next hit on this target will also apply <style="concept">stunned</style>."
+
+"COMBAT_MODIFIER_time_dilation_modifier_TITLE" = "Time Dilation"
+"COMBAT_MODIFIER_time_dilation_modifier_DESCRIPTION" = "This unit has an extra skill use on their turn."
+
+"COMBAT_MODIFIER_retcon_shield_modifier_TITLE" = "Retcon Shield"
+"COMBAT_MODIFIER_retcon_shield_modifier_DESCRIPTION" = "The next attack on this unit will be negated and turned into armor."
+
+"COMBAT_MODIFIER_retcon_armor_modifier_TITLE" = "Retcon Armor"
+"COMBAT_MODIFIER_retcon_armor_modifier_DESCRIPTION" = "This unit has extra armor."

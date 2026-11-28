@@ -16,6 +16,12 @@
             "var_type"          "FIELD_FLOAT"
             "brewReduction"     "-2"
         }
+        
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "duration"          "2"
+        }
     }
 
     "OnAbilityAction"

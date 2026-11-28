@@ -6,7 +6,7 @@
     "CastFXId"              "EnchantressSporeShowerCastFXMega"
     "Icon"                  "ShredOfDarkness"
     "AbilityCastRange"      "0"
-    "AbilityCooldown"       "3"
+    "AbilityCooldown"       "4"
     "AbilityAPCost"         "0"
 
      "AbilitySpecial"

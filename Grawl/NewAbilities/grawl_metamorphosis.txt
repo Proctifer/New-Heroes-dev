@@ -77,22 +77,30 @@
 
             "OnHitPreProcessDamages"
             {
-                "AddDamage"
+                "Conditional" 
                 {
-                    "Type"              "DAMAGE_PHYSICAL"
-                    "Damage"            "%damageReduction"
-                }
-				
-				"AddDamage"
-                {
-                    "Type"              "DAMAGE_ARMOR"
-                    "Damage"            "%damageReduction"
-                }
-				
-				"AttachEffect"
-                {
-                    "EffectName"      "MartyrsInspirationShieldFXMega" 
-                    "Target"          "%TARGET"
+                    "Condition" "hitConnected(%HIT) && (hitDamageOfType(%HIT, @DamageType(DAMAGE_PHYSICAL)) > 0 || hitDamageOfType(%HIT, @DamageType(DAMAGE_ARMOR)) > 0)"
+
+                    "Actions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_PHYSICAL"
+                            "Damage"            "%damageReduction"
+                        }
+                        
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_ARMOR"
+                            "Damage"            "%damageReduction"
+                        }
+                        
+                        "AttachEffect"
+                        {
+                            "EffectName"      "MartyrsInspirationShieldFXMega" 
+                            "Target"          "%TARGET"
+                        }
+                    }
                 }
 			}
 
@@ -111,16 +119,24 @@
 			
 			"OnHitPreProcessDamages"
             {
-                "AddDamage"
+                "Conditional" 
                 {
-                    "Type"              "DAMAGE_MAGICAL"
-                    "Damage"            "%damageReductionMagical"
-                }
-				
-				"AttachEffect"
-                {
-                    "EffectName"      "RegsonEldritchSyphonActivateFXMega" 
-                    "Target"          "%TARGET"
+                    "Condition" "hitConnected(%HIT) && hitDamageOfType(%HIT, @DamageType(DAMAGE_MAGICAL)) > 0"
+
+                    "Actions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"              "DAMAGE_MAGICAL"
+                            "Damage"            "%damageReductionMagical"
+                        }
+                        
+                        "AttachEffect"
+                        {
+                            "EffectName"      "RegsonEldritchSyphonActivateFXMega" 
+                            "Target"          "%TARGET"
+                        }
+                    }
                 }
 			}
 

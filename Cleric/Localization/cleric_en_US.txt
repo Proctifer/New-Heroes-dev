@@ -54,4 +54,4 @@
 "COMBAT_MODIFIER_cleric_divine_intervention_modifier_DESCRIPTION" = "This unit is protected, reducing all incoming damage by 1."
 
 "COMBAT_MODIFIER_modifier_whack_epic_TITLE" = "Bolstered"
-"COMBAT_MODIFIER_modifier_whack_epic_DESCRIPTION" = "The Cleric has gained armor from killing a unit."
+"COMBAT_MODIFIER_modifier_whack_epic_DESCRIPTION" = "The Cleric has gained armor from hitting a unit."

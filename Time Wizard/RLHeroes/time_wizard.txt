@@ -44,7 +44,7 @@
 		"2" 
 		{
 			"1" "time_wizard_retcon"
-			"2" "high_enchantress_leeching_chain02"
+			"2" "time_wizard_sands_of_time"
 		}
 
 		"3"

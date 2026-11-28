@@ -49,11 +49,16 @@
         }
         "08"{
             "var_type"          "FIELD_FLOAT"
-            "alcoholDamage"     "2"
+            "alcoholDamage"     "1"
         }
         "09"{
             "var_type"          "FIELD_FLOAT"
             "floorDuration"     "2"
+        }
+        "10"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "stunDuration"      "1"
         }
     }
     "OnCustomTargeting"
@@ -129,41 +134,16 @@
     }
    "OnProjectileHitUnit"
     {
-        "AttachEffect"
-        {
-            "EffectName"            "BigBadaboomLandFXMega"
-            "Target"                "unitPosition(%TARGET, #Base)"
-        }
         "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sisters_spirits_modifier)"
             "Actions"
             {
-                "Hit"
-                {
-                    "Target"        "%TARGET"
-                    "EffectName"    "RicochetHitFXMega" 
-                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
-                    "InitActions"
-                    {
-                        "AddDamage"
-                        {
-                            "Type"          "DAMAGE_TRUE" 
-                            "Damage"        "%flaskDamage"
-                        }
-                    }
-                    "Actions"
-                    {
-                        "ApplyModifier"
-                        {
-                            "ModifierName"  "modifier_new_poison"
-                            "Target"        "%HITTARGET"
-                            "Duration"      "%duration"
-                            "Refresh"       "1"
-                        }
-                    }
-                }
                 "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
                     "Actions"
                     {
+                        "MarkHitLegendary"
+                        {
+                        }
+                        
                         "ActOnHexas"
                         {
                             "Center"                 "unitHex(%TARGET)"
@@ -174,7 +154,7 @@
                             {
                                 "AttachEffect"
                                 {
-                                    "EffectName"    "VenomVineFXMega"
+                                    "EffectName"    "SulfuricBlastSmokeFXMega"
                                     "Target"        "hexPosition(%hexa)"
                                 }
                             }
@@ -186,7 +166,6 @@
                                 "Center"      "unitPosition(%TARGET)"
                                 "Radius"      "%area"
                                 "Teams"       "TEAM_ENEMY"
-                                "ExcludedUnits" "objectList(%TARGET)"
                             }
                             "IteratorName" "#splashTarget"
                             "Actions"    
@@ -194,13 +173,12 @@
                                 "Hit"
                                 {
                                     "Target"        "%splashTarget"
-                                    "EffectName"    "PoisonHitFXMega" 
                                     "Tags"          "stringList(#AOE)"
                                     "InitActions"
                                     {
                                         "AddDamage"
                                         {
-                                            "Type"          "DAMAGE_TRUE" 
+                                            "Type"          "DAMAGE_PHYSICAL" 
                                             "Damage"        "%splashDamage"
                                         }
                                     }
@@ -213,7 +191,47 @@
                                             "Duration"      "%duration"
                                             "Refresh"       "1"
                                         }
+
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"      "modifier_stunned"
+                                            "Target"            "%HITTARGET"
+                                            "Duration"          "%stunDuration"
+                                        }
                                     }
+                                }
+                            }
+                        }
+                    }
+                    "ElseActions"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName"    "VenomVineFXMega"
+                            "Target"        "unitPosition(%TARGET)"
+                        }
+                        
+                        "Hit"
+                        {
+                            "Target"        "%TARGET"
+                            "EffectName"    "RicochetHitFXMega" 
+                            "Tags"          "stringList(#PROJECTILE, #TARGETED)"
+                            "InitActions"
+                            {
+                                "AddDamage"
+                                {
+                                    "Type"          "DAMAGE_PHYSICAL" 
+                                    "Damage"        "%flaskDamage"
+                                }
+                            }
+                            "Actions"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"  "modifier_new_poison"
+                                    "Target"        "%HITTARGET"
+                                    "Duration"      "%duration"
+                                    "Refresh"       "1"
                                 }
                             }
                         }
@@ -290,53 +308,9 @@
         "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_northern_brew_modifier)"
             "Actions"
             {
-                "AttachEffect"
-                {
-                    "EffectName"    "SulfuricBlastSmokeFXMega"
-                    "Target"        "%TARGET"
-                }
-                "Hit"
-                {
-                    "Target"        "%TARGET"
-                    "EffectName"    "OrcCleaverWhirlwindHitFXMega" 
-                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
-                    "InitActions"
+                "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_darkness_modifier)"    
+                    "Actions" 
                     {
-                        "AddDamage"
-                        {
-                            "Type"          "DAMAGE_PHYSICAL" 
-                            "Damage"        "%flaskDamage"
-                        }
-                    }
-                    "Actions"
-                    {
-                        "ApplyModifier"
-                        {
-                            "ModifierName"  "alchemist_weakness_brew_modifier"
-                            "Target"        "%HITTARGET"
-                            "Duration"      "%duration"
-                            "Refresh"       "1"
-                        }
-                    }
-                }
-                "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
-                    "Actions"
-                    {
-                        "ActOnHexas"
-                        {
-                            "Center"                 "unitHex(%TARGET)"
-                            "Range"                  "%area"
-                            "IteratorName"           "#hexa"
-                        
-                            "Actions"
-                            {
-                                "AttachEffect"
-                                {
-                                    "EffectName"    "SulfuricBlastSmokeFXMega"
-                                    "Target"        "hexPosition(%hexa)"
-                                }
-                            }
-                        }
                         "ActOnTargets"
                         {
                             "Target"
@@ -344,31 +318,122 @@
                                 "Center"      "unitPosition(%TARGET)"
                                 "Radius"      "%area"
                                 "Teams"       "TEAM_ENEMY"
-                                "ExcludedUnits" "objectList(%TARGET)"
                             }
                             "IteratorName" "#splashTarget"
                             "Actions"
                             {
-                                "Hit"
+                                "ApplyModifier"
                                 {
+                                    "ModifierName"  "alchemist_weakness_brew_modifier"
                                     "Target"        "%splashTarget"
-                                    "Tags"          "stringList(#AOE)"
-                                    "InitActions"
+                                    "Duration"      "%duration"
+                                    "Refresh"       "1"
+                                    "Params"
                                     {
-                                        "AddDamage"
+                                        "brewReduction"
                                         {
-                                            "Type"          "DAMAGE_PHYSICAL" 
-                                            "Damage"        "%splashDamage"
+                                            "type"      "FIELD_FLOAT"
+                                            "value"     "hasModifier(%CASTER, #alchemist_darkness_modifier) ? %brewReduction * %darknessMultiplier : %brewReduction"
                                         }
                                     }
+                                }
+                            }
+                        }
+                    } 
+                    "ElseActions"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName"    "AcidFloorExplosionFXMega"
+                            "Target"        "%TARGET"
+                        }
+                        "Hit"
+                        {
+                            "Target"        "%TARGET"
+                            "EffectName"    "OrcCleaverWhirlwindHitFXMega" 
+                            "Tags"          "stringList(#PROJECTILE, #TARGETED)"
+                            "InitActions"
+                            {
+                                "AddDamage"
+                                {
+                                    "Type"          "DAMAGE_PHYSICAL" 
+                                    "Damage"        "%flaskDamage"
+                                }
+                            }
+                            "Actions"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"  "alchemist_weakness_brew_modifier"
+                                    "Target"        "%HITTARGET"
+                                    "Duration"      "%duration"
+                                    "Refresh"       "1"
+                                    "Params"
+                                    {
+                                        "brewReduction"
+                                        {
+                                            "type"      "FIELD_FLOAT"
+                                            "value"     "hasModifier(%CASTER, #alchemist_darkness_modifier) ? %brewReduction * %darknessMultiplier : %brewReduction"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
+                            "Actions"
+                            {
+                                "ActOnHexas"
+                                {
+                                    "Center"                 "unitHex(%TARGET)"
+                                    "Range"                  "%area"
+                                    "IteratorName"           "#hexa"
+                                
                                     "Actions"
                                     {
-                                        "ApplyModifier"
+                                    }
+                                }
+                                "ActOnTargets"
+                                {
+                                    "Target"
+                                    {
+                                        "Center"      "unitPosition(%TARGET)"
+                                        "Radius"      "%area"
+                                        "Teams"       "TEAM_ENEMY"
+                                        "ExcludedUnits" "objectList(%TARGET)"
+                                    }
+                                    "IteratorName" "#splashTarget"
+                                    "Actions"
+                                    {
+                                        "Hit"
                                         {
-                                            "ModifierName"  "alchemist_weakness_brew_modifier"
-                                            "Target"        "%HITTARGET"
-                                            "Duration"      "%duration"
-                                            "Refresh"       "1"
+                                            "Target"        "%splashTarget"
+                                            "Tags"          "stringList(#AOE)"
+                                            "InitActions"
+                                            {
+                                                "AddDamage"
+                                                {
+                                                    "Type"          "DAMAGE_PHYSICAL" 
+                                                    "Damage"        "hasModifier(%CASTER, #alchemist_darkness_modifier) ? 0 : %splashDamage"
+                                                }
+                                            }
+                                            "Actions"
+                                            {
+                                                "ApplyModifier"
+                                                {
+                                                    "ModifierName"  "alchemist_weakness_brew_modifier"
+                                                    "Target"        "%HITTARGET"
+                                                    "Duration"      "%duration"
+                                                    "Refresh"       "1"
+                                                    "Params"
+                                                    {
+                                                        "brewReduction"
+                                                        {
+                                                            "type"      "FIELD_FLOAT"
+                                                            "value"     "hasModifier(%CASTER, #alchemist_darkness_modifier) ? %brewReduction * %darknessMultiplier : %brewReduction"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -438,6 +503,94 @@
                                         "ApplyModifier"
                                         {
                                             "ModifierName"  "modifier_new_bleeding"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%duration"
+                                            "Refresh"       "1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_devil_spit_modifier)"
+            "Actions"
+            {
+                "Hit"
+                {
+                    "Target"        "%TARGET"
+                    "EffectName"    "BullRushHitFXMega" 
+                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
+                    "InitActions"
+                    {
+                        "AddDamage"
+                        {
+                            "Type"          "DAMAGE_TRUE" 
+                            "Damage"        "%flaskDamage"
+                        }
+                    }
+                    "Actions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_new_bleeding"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%duration"
+                            "Refresh"       "1"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_new_poison"
+                            "Target"        "%HITTARGET"
+                            "Duration"      "%duration"
+                            "Refresh"       "1"
+                        }
+                    }
+                }
+                "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
+                    "Actions"
+                    {
+                        "ActOnTargets"
+                        {
+                            "Target"
+                            {
+                                "Center"      "unitPosition(%TARGET)"
+                                "Radius"      "%area"
+                                "Teams"       "TEAM_ENEMY"
+                                "ExcludedUnits" "objectList(%TARGET)"
+                            }
+                            "IteratorName" "#splashTarget"
+                            "Actions"    
+                            {
+                                "Hit"
+                                {
+                                    "Target"        "%splashTarget"
+                                    "EffectName"    "RuptureHitFXMega" 
+                                    "Tags"          "stringList(#AOE)"
+                                    "InitActions"
+                                    {
+                                        "AddDamage"
+                                        {
+                                            "Type"          "DAMAGE_TRUE" 
+                                            "Damage"        "%splashDamage"
+                                        }
+                                    }
+                                    "Actions"
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "modifier_new_bleeding"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%duration"
+                                            "Refresh"       "1"
+                                        }
+
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "modifier_new_poison"
                                             "Target"        "%HITTARGET"
                                             "Duration"      "%duration"
                                             "Refresh"       "1"
@@ -749,27 +902,10 @@
         }
         "Conditional" { "Condition" "not(hasModifier(%CASTER, #alchemist_sisters_spirits_modifier) || hasModifier(%CASTER, #alchemist_darkness_modifier) || 
                                         hasModifier(%CASTER, #alchemist_northern_brew_modifier) || hasModifier(%CASTER, #alchemist_bloodsydian_modifier) || 
-                                        hasModifier(%CASTER, #alchemist_void_modifier) || hasModifier(%CASTER, #alchemist_bad_batch_modifier))"
+                                        hasModifier(%CASTER, #alchemist_void_modifier) || hasModifier(%CASTER, #alchemist_bad_batch_modifier) || 
+                                        hasModifier(%CASTER, #alchemist_devil_spit_modifier))"
             "Actions"
             {
-                "Hit"
-                {
-                    "Target"        "%TARGET"
-                    "EffectName"    "OrcCleaverWhirlwindHitFXMega" 
-                    "Tags"          "stringList(#PROJECTILE, #TARGETED)"
-
-                    "InitActions"
-                    {
-                        "AddDamage"
-                        {
-                            "Type"          "DAMAGE_PHYSICAL" 
-                            "Damage"        "%flaskDamage"
-                        }
-                    }
-                    "Actions"
-                    {
-                    }
-                }
                 "Conditional" { "Condition" "hasModifier(%CASTER, #alchemist_sulfur_modifier)"
                     "Actions"
                     {
@@ -785,7 +921,6 @@
                                 "Center"        "unitPosition(%TARGET)"
                                 "Radius"        "%area"
                                 "Teams"         "TEAM_ENEMY"
-                                "ExcludedUnits" "objectList(%TARGET)"
                             }
                             "IteratorName" "#newTarget"
                             "Actions"    
@@ -808,6 +943,37 @@
                                     {
                                     }
                                 }
+                            }
+                        }
+                    }
+
+                    "ElseActions"
+                    {
+                        "AttachEffect"
+                        {
+                            "EffectName"            "BigBadaboomLandFXMega"
+                            "Target"                "%TARGET"
+                        }
+                        "AttachEffect"
+                        {
+                            "EffectName"        "ShadowStrikeTeleportFXMega"
+                            "Target"            "%TARGET"
+                        }
+                        "Hit"
+                        {
+                            "Target"        "%TARGET"
+                            "Tags"          "stringList(#PROJECTILE, #TARGETED)"
+
+                            "InitActions"
+                            {
+                                "AddDamage"
+                                {
+                                    "Type"          "DAMAGE_PHYSICAL" 
+                                    "Damage"        "%flaskDamage"
+                                }
+                            }
+                            "Actions"
+                            {
                             }
                         }
                     }

@@ -1,0 +1,158 @@
+"sand_floor_skill"
+{
+    
+    
+    "AbilityBehavior"       "POINT_TARGET | PASSIVE"
+   
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "slowDuration"        "2"
+        }
+        
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "sleepDuration"     "2"
+        }
+    }
+
+    "Modifiers"
+    {
+        "sand_floor_modifier"
+        {
+            "EffectName" "ThornsFloorFXMega"
+            "Tags" "floor_effect"
+            "Passive" "1"
+
+            "OnUnitEnteredNode"
+            {
+               "AreaControl"
+               {
+                    "Center" "unitHex(%TARGET)"
+                    "Range" "0"
+                    "From" "%from"
+                    "To" "%to"
+                    "EnterActions"
+                    {
+                        "Conditional"
+                        {
+                            "Condition" "matchesTeam(unitGroup(%SOURCE), unitGroup(%UNIT), @TeamFilter(TEAM_ALL))"
+                            "Actions"
+                            {
+                                "Hit"
+                                {
+                                    "Target" "%UNIT"
+                                    "Source" "%TARGET"
+                                    "EffectName" "ThornsAttackWithoutBloodFXMega" 
+                                    "Tags" "stringList(#ENVIRONMENTAL)"
+
+                                    "InitActions"
+                                    {
+                                        "InterruptUnit"
+                                        {
+                                            "Target" "%HITTARGET"
+                                        }
+                                    }
+
+                                    "Actions"
+                                    {
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "entropy_debuff_modifier"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%slowDuration"
+                                            "Refresh"       "1"
+                                        }
+
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "modifier_sand_slow_miss_move_return"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%slowDuration"
+                                            "Refresh"       "1"
+                                        }
+
+                                        "Conditional"
+                                        {
+                                            "Condition" "equal(stat(%HITTARGET, #walkSpeedUsed), stat(%HITTARGET, #walkSpeed))"
+                                            "Actions"
+                                            {
+                                                "SetStat"
+                                                {
+                                                    "Target"    "%HITTARGET"
+                                                    "Stat"      "#walkSpeedAvailable"
+                                                    "Value"     "0"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            "OnTurnFinishedGlobal"
+            {
+                "Conditional" 
+                {
+                    "Condition" "matchesTeam(unitGroup(%TARGET), unitGroup(%UNIT), @TeamFilter(TEAM_ENEMY)) && safeEquals(hexDistance(unitHex(%TARGET), unitHex(%UNIT)), 0)"
+
+                    "Actions"
+                    {
+                        "Hit"
+                        {
+                            "Target" "%UNIT"
+                            "Source" "%TARGET"
+                            "Tags" "stringList(#ENVIRONMENTAL)"
+
+                            "InitActions"
+                            {
+                            }
+
+                            "Actions"
+                            {
+                                "ApplyModifier"
+                                {
+                                    "ModifierName"      "modifier_asleep"
+                                    "Target"            "%HITTARGET"
+                                    "Duration"          "%sleepDuration"
+                                    "Refresh"           "1"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "modifier_sand_slow_miss_move_return"
+        {
+            "OnUnitEnteredNode"
+            {
+                "Conditional"
+                {
+                    "Condition" "equal(%UNIT, %TARGET) && equal(stat(%TARGET, #walkSpeedUsed), stat(%TARGET, #walkSpeed))"
+                    "Actions"
+                    {
+                        "InterruptUnit"
+                        {
+                            "Target" "%TARGET"
+                        }
+                        
+                        "SetStat"
+                        {
+                            "Target"    "%TARGET"
+                            "Stat"      "#walkSpeedAvailable"
+                            "Value"     "0"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

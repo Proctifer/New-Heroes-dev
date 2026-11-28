@@ -13,7 +13,7 @@
         "02"
         {
             "var_type"            "FIELD_FLOAT"
-            "extraDamage"         "2"
+            "alcoholDamage"         "1"
         }
     }
 
@@ -60,7 +60,7 @@
                                                 "AddDamage"
                                                 {
                                                     "Type"          "DAMAGE_TRUE"
-                                                    "Damage"        "%extraDamage"
+                                                    "Damage"        "%alcoholDamage"
                                                 }
                                             }
                                         }
@@ -74,7 +74,6 @@
                                             
                                             "Actions"
                                             {
-
                                             }
                                             
                                             "ElseActions" 
@@ -84,7 +83,15 @@
                                                     "ModifierName"  "alcohol_poisoning_modifier"
                                                     "Target"        "%HITTARGET"
                                                     "Duration"      "%dotDuration"
-                                                    "Refresh"   "1"
+                                                    "Refresh"       "1"
+                                                }
+
+                                                "ApplyModifier"
+                                                {
+                                                    "ModifierName"  "alchemist_weakness_brew_modifier"
+                                                    "Target"        "%HITTARGET"
+                                                    "Duration"      "%dotDuration"
+                                                    "Refresh"       "1"
                                                 }
                                             }
                                         }
@@ -141,7 +148,7 @@
                                                 "AddDamage"
                                                 {
                                                     "Type"          "DAMAGE_TRUE"
-                                                    "Damage"        "%extraDamage"
+                                                    "Damage"        "%alcoholDamage"
                                                 }
                                             }
                                         }
@@ -152,6 +159,14 @@
                                         "ApplyModifier"
                                         {
                                             "ModifierName"  "alcohol_poisoning_modifier"
+                                            "Target"        "%HITTARGET"
+                                            "Duration"      "%dotDuration"
+                                            "Refresh"       "1"
+                                        }
+
+                                        "ApplyModifier"
+                                        {
+                                            "ModifierName"  "alchemist_weakness_brew_modifier"
                                             "Target"        "%HITTARGET"
                                             "Duration"      "%dotDuration"
                                             "Refresh"       "1"

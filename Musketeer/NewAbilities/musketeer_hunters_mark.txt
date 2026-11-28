@@ -149,7 +149,7 @@
     {
         "hunters_mark_modifier"
         {
-            "EffectName"                    "TrollEnrageStatusFXMega"
+            "EffectName"                    "DarkKnightImperviousStatusFXMega"
             "Icon"                          "Hexed"
             "IconPriority"                  "60"
 

@@ -12,12 +12,14 @@
 "SKILL_alchemist_flask_DESCRIPTION_DATA" = "Damage: <style="damage">{flaskDamage}</style> {icon#damagePhysical}\nRange: <style="highlight">{AbilityCastRange}</style>"
 
 "SKILL_alchemist_sulfur_dust_NAME" = "Sulfur Dust"
-"SKILL_alchemist_sulfur_dust_DESCRIPTION" = "Combines with other mixtues to give them an explosive effect on enemies in a 1-hex AOE."
+"SKILL_alchemist_sulfur_dust_DESCRIPTION" = "Gives the flask an explosive effect on enemies in a 1-hex radius."
 "SKILL_alchemist_sulfur_dust_DESCRIPTION_DATA" = "Splash damage: <style="damage">{splashDamage}</style> {icon#damagePhysical}\nRange: <style="highlight">SELF</style>"
+"SKILL_alchemist_sulfur_dust_DESCRIPTION_EXTRA" = "<style="extra">Mixture effects are applied.</style>"
 
 "SKILL_alchemist_sisters_spirits_NAME" = "Sisters' Spirits"
 "SKILL_alchemist_sisters_spirits_DESCRIPTION" = "A wicked concoction that can have undesirable effects on your foes."
-"SKILL_alchemist_sisters_spirits_DESCRIPTION_DATA" = "Poison duration: <style="highlight">{duration} {icon#turns}</style>\nRange: <style="highlight">SELF</style>"
+"SKILL_alchemist_sisters_spirits_DESCRIPTION_EPIC" = "<style="epic">EPIC:</style> When used alongside <style="highlight">sulfur dust</style>, targeted enemies are also <style="concept">stunned</style>."
+"SKILL_alchemist_sisters_spirits_DESCRIPTION_DATA" = "Poison duration: <style="highlight">{duration} {icon#turns}</style>\nEPIC stun duration: <style="highlight">{stunDuration} {icon#turns}</style>\nRange: <style="highlight">SELF</style>"
 
 "SKILL_alchemist_shred_of_darkness_NAME" = "Shred of Darkness"
 "SKILL_alchemist_shred_of_darkness_DESCRIPTION" = "The volatile remains of an ancient evil. It amplifies anything it touches."
@@ -25,34 +27,45 @@
 
 "SKILL_alchemist_northern_brew_NAME" = "Northern Brew"
 "SKILL_alchemist_northern_brew_DESCRIPTION" = "An infamous potion from the North that weakens enemy attacks."
-"SKILL_alchemist_northern_brew_DESCRIPTION_DATA" = "Damage reduction: <style="buff">{brewReduction}</style>\nRange: <style="highlight">SELF</style>"
+"SKILL_alchemist_northern_brew_DESCRIPTION_DATA" = "Damage reduction: <style="buff">{brewReduction}</style>\nBrew duration: <style="highlight">{duration} {icon#turns}</style>\nRange: <style="highlight">SELF</style>"
 
 "SKILL_alchemist_bloodsydian_powder_NAME" = "Bloodsydian Powder"
 "SKILL_alchemist_bloodsydian_powder_DESCRIPTION" = "Pulverized crystals of another realm. Causes the potion to inflict <style="debuff">bleeding</style>."
-"SKILL_alchemist_bloodsydian_powder_DESCRIPTION_DATA" = "Increased duration: <style="highlight">{bloodDuration} {icon#turns}</style>\nRange: <style="highlight">SELF</style>"
+"SKILL_alchemist_bloodsydian_powder_DESCRIPTION_DATA" = "Bleeding duration: <style="highlight">{bloodDuration} {icon#turns}</style>\nRange: <style="highlight">SELF</style>"
+"SKILL_alchemist_bloodsydian_powder_DESCRIPTION_EXTRA" = "<style="extra">When mixed with materials the flask deals true damage.</style>"
 
 
-"COMBAT_MODIFIER_alchemist_sulfur_modifier_TITLE" = "Sulfuric Blast"
+"COMBAT_MODIFIER_alchemist_sulfur_modifier_TITLE" = "Sulfur"
 "COMBAT_MODIFIER_alchemist_sulfur_modifier_DESCRIPTION" = "The alchemist's potion will affect enemies in a 1-hex AOE."
 
 "COMBAT_MODIFIER_alchemist_sisters_spirits_modifier_TITLE" = "Wicked Potion"
 "COMBAT_MODIFIER_alchemist_sisters_spirits_modifier_DESCRIPTION" = "Inflicts <style="debuff">poisoned</style> on enemies."
 
-"COMBAT_MODIFIER_alchemist_northern_brew_modifier_TITLE" = "Brewmaster's Brew"
-"COMBAT_MODIFIER_alchemist_northern_brew_modifier_DESCRIPTION" = "Reduces damage dealt from an enemy's attack."
-
-"COMBAT_MODIFIER_alchemist_bad_batch_modifier_TITLE" = "Bad Batch"
-"COMBAT_MODIFIER_alchemist_bad_batch_modifier_DESCRIPTION" = "Inflicts <style="debuff">alcohol poisoning</style> on enemies and spills toxic brew on the ground.\n\n<style="extra">Does NOT count as</style> <style="debuff">weakened</style>."
-
 "COMBAT_MODIFIER_alchemist_darkness_modifier_TITLE" = "Darkness"
 "COMBAT_MODIFIER_alchemist_darkness_modifier_DESCRIPTION" = "The effects of the potion are amplified."
 
+"COMBAT_MODIFIER_alchemist_northern_brew_modifier_TITLE" = "Brewmaster's Brew"
+"COMBAT_MODIFIER_alchemist_northern_brew_modifier_DESCRIPTION" = "Reduces damage dealt from an enemy's attack."
+
 "COMBAT_MODIFIER_alchemist_bloodsydian_modifier_TITLE" = "Crimson Concoction"
 "COMBAT_MODIFIER_alchemist_bloodsydian_modifier_DESCRIPTION" = "Inflicts <style="debuff">bleeding</style> on enemies."
+
+
+"COMBAT_MODIFIER_alchemist_sulfuric_blast_modifier_TITLE" = "Sulfuric Blast"
+"COMBAT_MODIFIER_alchemist_sulfuric_blast_modifier_DESCRIPTION" = "Enemies within a 1-hex AOE will be <style="concept">stunned</style> and <style="debuff">poisoned</style>."
+
+"COMBAT_MODIFIER_alchemist_bad_batch_modifier_TITLE" = "Bad Batch"
+"COMBAT_MODIFIER_alchemist_bad_batch_modifier_DESCRIPTION" = "A toxic brew that inflicts <style="debuff">alcohol poisoning</style> and applies <style="highlight">Brewmaster's Brew</style> to enemies.\nThe potion is also spilled on the ground.\n\n<style="extra">Does NOT count as</style> <style="debuff">weakened</style>."
+
+"COMBAT_MODIFIER_alchemist_devil_spit_modifier_TITLE" = "Devil's Spit"
+"COMBAT_MODIFIER_alchemist_devil_spit_modifier_DESCRIPTION" = "Deals true damage and inflicts <style="debuff">bleeding</style> and <style="debuff">poisoned</style>."
 
 "COMBAT_MODIFIER_alchemist_void_modifier_TITLE" = "Unstable Void"
 "COMBAT_MODIFIER_alchemist_void_modifier_DESCRIPTION" = "Deals true damage and applies <style="debuff">bleeding</style>.\n\n<style="extra">Deals normal darkness damage to bosses.</style>"
 
 
 "COMBAT_MODIFIER_alcohol_poisoning_modifier_TITLE" = "Alcohol Poisoning"
-"COMBAT_MODIFIER_alcohol_poisoning_modifier_DESCRIPTION" = "Deals <style="damage">{alcoholDamage} true damage</style> at the end of the unit's turn.\n\n<style="extra">Does NOT count as</style> <style="debuff">weakened</style>."
+"COMBAT_MODIFIER_alcohol_poisoning_modifier_DESCRIPTION" = "Deals <style="damage">{alcoholDamage} true damage</style> at the end of the unit's turn.\n\n<style="extra">Counts as</style> <style="debuff">weakened</style>."
+
+"COMBAT_MODIFIER_alchemist_weakness_brew_modifier_TITLE" = "Weakness Brew"
+"COMBAT_MODIFIER_alchemist_weakness_brew_modifier_DESCRIPTION" = "This enemy's attacks have reduced damage.\n\nDamage reduction: <style="highlight">{brewReduction}</style>."

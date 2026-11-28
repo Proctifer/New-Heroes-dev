@@ -11,9 +11,16 @@
 
      "AbilitySpecial"
     {
-        "01"{
+        "01"
+        {
             "var_type"          "FIELD_FLOAT"
             "duration"          "2"
+        }
+        
+        "02"
+        {
+            "var_type"          "FIELD_FLOAT"
+            "stunDuration"      "1"
         }
     }
 
@@ -39,10 +46,32 @@
 
             "ElseActions"
             {
-                "ApplyModifier"
+                "Conditional"
                 {
-                    "ModifierName"      "alchemist_sisters_spirits_modifier"
-                    "Target"            "%TARGET"
+                    "Condition" "hasModifier(%TARGET, #alchemist_bloodsydian_modifier)"
+                    "Actions"
+                    {
+                        "RemoveModifier"
+                        {
+                            "ModifierName"      "alchemist_bloodsydian_modifier"
+                            "Target"            "%TARGET"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "alchemist_devil_spit_modifier"
+                            "Target"            "%TARGET"
+                        }
+                    }
+
+                    "ElseActions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "alchemist_sisters_spirits_modifier"
+                            "Target"            "%TARGET"
+                        }
+                    }
                 }
             }
         }
@@ -54,6 +83,13 @@
         {
             "Tags"          "ingredient"
             "Icon"          "Drained"
+            "IconPriority"  "50"
+        }
+
+        "alchemist_devil_spit_modifier"
+        {
+            "Tags"          "ingredient"
+            "Icon"          "Reassembling"
             "IconPriority"  "50"
         }
     }

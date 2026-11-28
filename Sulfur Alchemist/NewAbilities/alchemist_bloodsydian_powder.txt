@@ -19,6 +19,8 @@
 
     "OnAbilityAction"
     {
+        
+        
         "Conditional"
         {
             "Condition" "hasModifier(%TARGET, #alchemist_darkness_modifier)"
@@ -39,10 +41,32 @@
 
             "ElseActions"
             {
-                "ApplyModifier"
+                "Conditional"
                 {
-                    "ModifierName"      "alchemist_bloodsydian_modifier"
-                    "Target"            "%TARGET"
+                    "Condition" "hasModifier(%TARGET, #alchemist_sisters_spirits_modifier)"
+                    "Actions"
+                    {
+                        "RemoveModifier"
+                        {
+                            "ModifierName"      "alchemist_sisters_spirits_modifier"
+                            "Target"            "%TARGET"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "alchemist_devil_spit_modifier"
+                            "Target"            "%TARGET"
+                        }
+                    }
+
+                    "ElseActions"
+                    {
+                        "ApplyModifier"
+                        {
+                            "ModifierName"      "alchemist_bloodsydian_modifier"
+                            "Target"            "%TARGET"
+                        }
+                    }
                 }
             }
         }

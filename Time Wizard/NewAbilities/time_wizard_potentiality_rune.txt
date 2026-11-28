@@ -121,8 +121,9 @@
     {
         "potentiality_rune_modifier"
         {
-            "Icon"                          "Hexed"
-            "IconPriority"                  "60"
+            "Icon"                  "Hexed"
+            "IconPriority"          "60"
+            "EffectName"            "StunStatusFXMega"
 
             "OnHitEnd"
             {

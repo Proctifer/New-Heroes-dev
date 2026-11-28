@@ -116,7 +116,7 @@
 
         "entropy_debuff_modifier"
         {
-            "EffectName"                "AjaxsBlessingAuraFXMega"
+            "EffectName"                "EnchantressParasiteBlastDebuffFXMega"
             "Icon"                      "Rally"
             "IconPriority"              "50"
 
